@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Margin } from "../../ui";
+import { Margin, Text } from "../../ui";
 
 const Style = {
   Wrapper: styled.div`
@@ -22,8 +22,19 @@ export default function Footer() {
     <>
       <Style.Wrapper>
         <Style.Content>
-          <Style.WingleLogo />
+          <Style.WingleLogo src="footer-logo.png" alt="wingle-logo" />
           <Margin direction="column" size={32} />
+          <Text.Caption2 color="gray500">
+            공식 노션 바로가기 | 윙글 SNS 바로가기
+          </Text.Caption2>
+          <Margin direction="column" size={11} />
+          <Text.Caption2 color="gray500">
+            문의 | wingle.kr@gmail.com
+          </Text.Caption2>
+          <Margin direction="column" size={11} />
+          <Text.Caption2 color="gray500">
+            이용약관 | 개인정보처리방침
+          </Text.Caption2>
         </Style.Content>
       </Style.Wrapper>
     </>
