@@ -60,14 +60,10 @@ type StyleText = {
 };
 
 export const Text = {
-  Title: styled.span<StyleText>`
-    font-family: "Times New Roman", Times, serif;
-    letter-spacing: 5px;
-    /* font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-    letter-spacing: 8px; */
-
-    font-weight: 700;
-    font-size: 34px;
+  Title1: styled.span<StyleText>`
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 140%;
     /* common */
     display: ${({ box }) => (box ? "block" : "inline")};
     cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
@@ -75,9 +71,21 @@ export const Text = {
       color ? theme.color[color] : theme.color.white};
     height: fit-content;
   `,
-  Subtitle: styled.span<StyleText>`
-    font-weight: 500;
-    font-size: 26px;
+  Title2: styled.span<StyleText>`
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 140%;
+    /* common */
+    display: ${({ box }) => (box ? "block" : "inline")};
+    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
+    color: ${({ color, theme }) =>
+      color ? theme.color[color] : theme.color.white};
+    height: fit-content;
+  `,
+  Title3: styled.span<StyleText>`
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 150%;
     /* common */
     display: ${({ box }) => (box ? "block" : "inline")};
     cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
@@ -87,7 +95,8 @@ export const Text = {
   `,
   Body: styled.span<StyleText>`
     font-weight: 400;
-    font-size: 22px;
+    font-size: 16px;
+    line-height: 140%;
     /* common */
     display: ${({ box }) => (box ? "block" : "inline")};
     cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
@@ -95,39 +104,10 @@ export const Text = {
       color ? theme.color[color] : theme.color.white};
     height: fit-content;
   `,
-  Maintext: styled.span<StyleText>`
-    font-weight: 500;
-    font-size: 20px;
-    /* common */
-    display: ${({ box }) => (box ? "block" : "inline")};
-    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
-    color: ${({ color, theme }) =>
-      color ? theme.color[color] : theme.color.white};
-    height: fit-content;
-  `,
-  Minitext: styled.span<StyleText>`
-    font-weight: 400;
-    font-size: 12px;
-    /* common */
-    display: ${({ box }) => (box ? "block" : "inline")};
-    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
-    color: ${({ color, theme }) =>
-      color ? theme.color[color] : theme.color.white};
-    height: fit-content;
-  `,
-  Menu: styled.span<StyleText>`
-    font-weight: 400;
-    font-size: 12px;
-    /* common */
-    display: ${({ box }) => (box ? "block" : "inline")};
-    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
-    color: ${({ color, theme }) =>
-      color ? theme.color[color] : theme.color.white};
-    height: fit-content;
-  `,
-  Number: styled.span<StyleText>`
+  Body1: styled.span<StyleText>`
     font-weight: 400;
     font-size: 16px;
+    line-height: 150%;
     /* common */
     display: ${({ box }) => (box ? "block" : "inline")};
     cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
@@ -135,14 +115,26 @@ export const Text = {
       color ? theme.color[color] : theme.color.white};
     height: fit-content;
   `,
-  ErrorSign: styled.span<StyleText>`
+  Body2: styled.span<StyleText>`
     font-weight: 500;
-    font-size: 12px;
+    font-size: 14px;
+    line-height: 140%;
     /* common */
     display: ${({ box }) => (box ? "block" : "inline")};
     cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
     color: ${({ color, theme }) =>
-      color ? theme.color[color] : theme.color.red500};
+      color ? theme.color[color] : theme.color.white};
+    height: fit-content;
+  `,
+  Caption1: styled.span<StyleText>`
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 140%;
+    /* common */
+    display: ${({ box }) => (box ? "block" : "inline")};
+    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
+    color: ${({ color, theme }) =>
+      color ? theme.color[color] : theme.color.white};
     height: fit-content;
   `,
 };
@@ -193,19 +185,19 @@ const ButtonBox = styled.button<StyleButton>`
       : "#434343"};
 `;
 
-export const Button = (
-  props: StyledComponentProps<"button", DefaultTheme, StyleButton, never>
-) => (
-  <ButtonBox {...props}>
-    <Text.Menu
-      color={props.thema === "white" ? "black" : "white"}
-      pointer={props.cursor ? false : true}
-      style={props.cursor ? { cursor: props.cursor } : {}}
-    >
-      {props.text}
-    </Text.Menu>
-  </ButtonBox>
-);
+// export const Button = (
+//   props: StyledComponentProps<"button", DefaultTheme, StyleButton, never>
+// ) => (
+//   <ButtonBox {...props}>
+//     <Text.Menu
+//       color={props.thema === "white" ? "black" : "white"}
+//       pointer={props.cursor ? false : true}
+//       style={props.cursor ? { cursor: props.cursor } : {}}
+//     >
+//       {props.text}
+//     </Text.Menu>
+//   </ButtonBox>
+// );
 
 type StyleHover = {
   box?: boolean;
