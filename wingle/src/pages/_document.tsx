@@ -36,7 +36,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>어어어엉</Head>
+        <Head></Head>
         <body>
           <Main />
           <NextScript />

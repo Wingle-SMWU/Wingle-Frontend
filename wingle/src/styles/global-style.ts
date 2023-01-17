@@ -12,6 +12,7 @@ export const GlobalStyle = createGlobalStyle`
         display: none;
     }
     html{
+        background-color: #eeeef2;
         font-size: 11px;
         -webkit-text-size-adjust: none;
         font-family: -apple-system,BlinkMacSystemFont,helvetica,Apple SD Gothic Neo,sans-serif;       
@@ -21,6 +22,8 @@ export const GlobalStyle = createGlobalStyle`
         }
         -ms-overflow-style: none;
         scrollbar-width: none;
+        display: flex;
+        justify-content: center;
     }
     button {
         background: none;
