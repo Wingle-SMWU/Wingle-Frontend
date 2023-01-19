@@ -27,14 +27,18 @@ const Style = {
   `,
 
   Description: styled.textarea`
+    font-family: pretendard;
     width: 100%;
-    min-height: 500px;
+    min-height: 250px;
     padding: 30px 0px;
     border: 1px solid white;
     font-size: 16px;
     color: #222223;
     outline: none;
     resize: none;
+    display: flex;
+    justify-content: center;
+
     ::placeholder {
       font-weight: 400;
       color: gray;
