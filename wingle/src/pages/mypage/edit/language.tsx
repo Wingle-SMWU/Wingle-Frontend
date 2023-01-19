@@ -15,9 +15,12 @@ const Style = {
     padding: 24px;
   `,
   Header: styled.div`
-    width: 500px;
-    height: 56px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   `,
+  Left: styled.div``,
   GoBackArrow: styled.img`
     margin-right: 12px;
     cursor: pointer;
@@ -30,14 +33,23 @@ export default function language() {
       <Style.Wapper>
         <Style.Content>
           <Style.Header>
-            <Style.GoBackArrow
-              src="/back-arrow.svg"
-              alt="뒤로가기"
-              onClick={() => router.push(`/mypage/edit`)}
-            />
+            <Style.Left>
+              <Style.GoBackArrow
+                src="/back-arrow.svg"
+                alt="뒤로가기"
+                onClick={() => router.push(`/mypage/edit`)}
+              />
 
-            {/* 뒤로가기 버튼 누르면 정말 나가시겠어요? 모달 띄우기 */}
-            <Text.Title1 color="gray900">사용 가능 언어</Text.Title1>
+              {/* 뒤로가기 버튼 누르면 정말 나가시겠어요? 모달 띄우기 */}
+              <Text.Title1 color="gray900">사용 가능 언어</Text.Title1>
+            </Style.Left>
+            <Text.Body1
+              color="gray900"
+              onClick={() => router.push(`/mypage/edit`)}
+              pointer
+            >
+              완료
+            </Text.Body1>
           </Style.Header>
         </Style.Content>
       </Style.Wapper>

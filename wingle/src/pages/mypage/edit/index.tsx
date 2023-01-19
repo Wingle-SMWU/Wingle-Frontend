@@ -15,7 +15,7 @@ const Style = {
     padding: 24px;
   `,
   Header: styled.div`
-    width: 500px;
+    width: 100%;
     height: 56px;
   `,
   GoBackArrow: styled.img`
