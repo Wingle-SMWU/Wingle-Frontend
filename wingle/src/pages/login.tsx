@@ -1,59 +1,84 @@
 import React, { useState } from "react";
-import Image from "next/image";
+import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
+import { ST } from "next/dist/shared/lib/utils";
+
+const Style = {
+  Header: styled.div`
+    width: 200px;
+    margin: 0 auto;
+    padding: 48px;
+  `,
+
+  AccountWrapper: styled.div`
+    padding-bottom: 30px;
+  `,
+  InputField: styled.div`
+    margin: 0 auto;
+    width: 452px;
+    height: 50px;
+    border: 1px solid #dcdce0;
+    border-radius: 8px;
+    margin-bottom:18px;
+
+    & > input {
+      border: none;
+      padding-left: 16px;
+      padding: 14px;
+      border-radius: 8px;
+      height: 22px;
+
+      &::placeholder {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 140%
+        color: #959599;
+      }
+    }
+  `,
+
+  ButtonWrapper: styled.div`
+    text-align: center;
+  `,
+  LoginButton: styled.button`
+    width: 452px;
+    height: 50px;
+    background-color: #eeeef2;
+    color: #959599;
+    border-radius: 8px;
+    padding-botton: 24px;
+  `,
+  RegisterButton: styled.button`
+    width: 50px;
+    margin: 20px;
+    border-bottom: 1px solid #49494d;
+    color: #49494d;
+  `,
+};
 
 export default function Login() {
   const [email, setEmail] = useState("");
   return (
     <>
-      <Header>
-        <img src="wingle.png" alt="logo" />
-        <Text>다 함께 즐기는 국제 교류 커퓨니티</Text>
-      </Header>
-      <Wrapper>
-        <InputGroup placeholder="이메일" value={email} />
-        <InputGroup placeholder="비밀번호" value={email} />
-      </Wrapper>
-      <Wrapper>
-        <LoginButton>로그인</LoginButton>
-        <RegisterButton>회원가입</RegisterButton>
-      </Wrapper>
+      <Style.Header>
+        <img src="login/loginLogo.svg" alt="logo"></img>
+        <Margin direction="column" size={8} />
+        <Text.Body6 color="gray700">다함께 즐기는 국제교류 커뮤니티</Text.Body6>
+      </Style.Header>
+
+      <Style.AccountWrapper>
+        <Style.InputField>
+          <input type="email" placeholder="이메일"></input>
+        </Style.InputField>
+        <Style.InputField>
+          <input type="password" placeholder="비밀번호"></input>
+        </Style.InputField>
+      </Style.AccountWrapper>
+
+      <Style.ButtonWrapper>
+        <Style.LoginButton>로그인</Style.LoginButton>
+        <Style.RegisterButton>회원가입</Style.RegisterButton>
+      </Style.ButtonWrapper>
     </>
   );
 }
-
-const Header = styled.div`
-  width: 200px;
-  text-align: center;
-  margin: 0 auto;
-  padding-top: 48px;
-`;
-
-const Text = styled.div`
-  padding-top: 15px;
-`;
-
-const Wrapper = styled.div`
-  text-align: center;
-  margin: 0 auto;
-  padding-top: 48px;
-`;
-
-const InputGroup = styled.input`
-  width: 452px;
-  height: 50px;
-  border-radius: 8px;
-  border: 1px solid #dcdce0;
-  margin-bottom: 20px;
-`;
-
-const LoginButton = styled.button`
-  width: 452px;
-  height: 50px;
-  background-color: #eeeef2;
-`;
-const RegisterButton = styled.button`
-  width: 50px;
-  margin: 20px;
-  border-bottom: 1px solid black;
-`;

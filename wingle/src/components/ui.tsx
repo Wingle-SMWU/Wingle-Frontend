@@ -93,7 +93,8 @@ export const Text = {
       color ? theme.color[color] : theme.color.white};
     height: fit-content;
   `,
-  Body: styled.span<StyleText>`
+
+  Body1: styled.span<StyleText>`
     font-weight: 400;
     font-size: 16px;
     line-height: 140%;
@@ -104,7 +105,7 @@ export const Text = {
       color ? theme.color[color] : theme.color.white};
     height: fit-content;
   `,
-  Body1: styled.span<StyleText>`
+  Body2: styled.span<StyleText>`
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;
@@ -115,7 +116,40 @@ export const Text = {
       color ? theme.color[color] : theme.color.white};
     height: fit-content;
   `,
-  Body2: styled.span<StyleText>`
+  Body3: styled.span<StyleText>`
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 140%;
+    /* common */
+    display: ${({ box }) => (box ? "block" : "inline")};
+    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
+    color: ${({ color, theme }) =>
+      color ? theme.color[color] : theme.color.white};
+    height: fit-content;
+  `,
+  Body4: styled.span<StyleText>`
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 140%;
+    /* common */
+    display: ${({ box }) => (box ? "block" : "inline")};
+    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
+    color: ${({ color, theme }) =>
+      color ? theme.color[color] : theme.color.white};
+    height: fit-content;
+  `,
+  Body5: styled.span<StyleText>`
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    /* common */
+    display: ${({ box }) => (box ? "block" : "inline")};
+    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
+    color: ${({ color, theme }) =>
+      color ? theme.color[color] : theme.color.white};
+    height: fit-content;
+  `,
+  Body6: styled.span<StyleText>`
     font-weight: 500;
     font-size: 14px;
     line-height: 140%;
@@ -126,7 +160,41 @@ export const Text = {
       color ? theme.color[color] : theme.color.white};
     height: fit-content;
   `,
+  Body7: styled.span<StyleText>`
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 140%;
+    /* common */
+    display: ${({ box }) => (box ? "block" : "inline")};
+    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
+    color: ${({ color, theme }) =>
+      color ? theme.color[color] : theme.color.white};
+    height: fit-content;
+  `,
+
   Caption1: styled.span<StyleText>`
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    /* common */
+    display: ${({ box }) => (box ? "block" : "inline")};
+    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
+    color: ${({ color, theme }) =>
+      color ? theme.color[color] : theme.color.white};
+    height: fit-content;
+  `,
+  Caption2: styled.span<StyleText>`
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 140%;
+    /* common */
+    display: ${({ box }) => (box ? "block" : "inline")};
+    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
+    color: ${({ color, theme }) =>
+      color ? theme.color[color] : theme.color.white};
+    height: fit-content;
+  `,
+  Caption3: styled.span<StyleText>`
     font-weight: 600;
     font-size: 12px;
     line-height: 140%;
@@ -174,7 +242,6 @@ const ButtonBox = styled.button<StyleButton>`
         : thema === "white"
         ? "#ffffff"
         : "#434343"};
-
   background-color: ${({ thema, bg }) =>
     bg
       ? bg
