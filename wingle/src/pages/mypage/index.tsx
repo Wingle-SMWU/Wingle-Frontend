@@ -10,7 +10,7 @@ const Style = {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: 1px solid red;
+    /* border: 1px solid red; */
   `,
   Content: styled.div`
     padding: 24px;

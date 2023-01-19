@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import router from "next/router";
 import { Text } from "@/src/components/ui";
-import { useState } from "react";
 
 const Style = {
   Wapper: styled.div`
@@ -10,7 +9,7 @@ const Style = {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: 1px solid red;
+    /* border: 1px solid red; */
   `,
   Content: styled.div`
     padding: 24px;
