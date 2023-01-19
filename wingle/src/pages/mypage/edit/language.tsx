@@ -27,7 +27,7 @@ const Style = {
   `,
 };
 
-export default function language() {
+export default function Language() {
   return (
     <>
       <Style.Wapper>

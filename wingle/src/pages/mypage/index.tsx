@@ -1,6 +1,7 @@
 import Footer from "@/src/components/layout/Footer";
 import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
+import router from "next/router";
 import styled from "styled-components";
 
 const Style = {
@@ -33,7 +34,11 @@ export default function Mypage() {
 
           <>
             <Margin direction="column" size={34} />
-            <Text.Body1 color="gray900" pointer>
+            <Text.Body1
+              color="gray900"
+              pointer
+              onClick={() => router.push(`/mypage/postList`)}
+            >
               내가 쓴 게시글
             </Text.Body1>
             <Margin direction="column" size={34} />

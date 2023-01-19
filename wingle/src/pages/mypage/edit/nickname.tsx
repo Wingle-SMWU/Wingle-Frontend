@@ -27,7 +27,7 @@ const Style = {
   `,
 };
 
-export default function nickname() {
+export default function Nickname() {
   return (
     <>
       <Style.Wapper>

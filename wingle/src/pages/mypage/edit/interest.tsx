@@ -28,7 +28,7 @@ const Style = {
   `,
 };
 
-export default function interest() {
+export default function Interest() {
   return (
     <>
       <Style.Wapper>
