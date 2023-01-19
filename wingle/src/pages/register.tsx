@@ -1,58 +1,57 @@
-import styled, { ThemeProvider } from "styled-components";
-import { GlobalStyle } from "../styles/global-style";
-import { theme } from "../styles/theme";
-import React, { FormEvent, useState } from "react";
+import React, { useState } from "react";
+import { Text, Margin } from "@/src/components/ui";
+import styled from "styled-components";
 
+const Style = {
+  Wrapper: styled.div`
+    padding-left: 24px;
+    padding-right: 24px;
+  `,
+  HeaderWrapper: styled.div`
+    padding: 16px;
+    display: flex;
+  `,
+
+  QuestionLogo: styled.img`
+    padding-left: 5px;
+  `,
+  UploadButton: styled.button`
+    width: 452px;
+    border: 1px solid #6c6c70;
+    height: 52px;
+    border-radius: 8px;
+  `,
+  UploadLogo: styled.img`
+    padding-right: 10px;
+    padding-top: 15px;
+  `,
+};
 export default function Register() {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<any>({});
-
   return (
     <>
-      <Header>
-        <Image>
-          <img src="back.png" alt="back" />
-        </Image>
-        <Text>회원가입</Text>
-      </Header>
-      <Container>
-        <Title>학생증 인증</Title>
-        <Icon>
-          <img src="question.png" alt="question" />
-        </Icon>
-      </Container>
+      <Style.Wrapper>
+        <Style.HeaderWrapper>
+          <img src="login/arrow_back.svg" alt="arrow"></img>
+          <Margin direction="row" size={14} />
+          <Text.Title2 color="gray900">회원가입</Text.Title2>
+        </Style.HeaderWrapper>
+        <Margin direction="column" size={48} />
+
+        <Text.Title1 color="gray900">
+          학생증 인증
+          <Style.QuestionLogo
+            src="login/question.svg"
+            alt="question"
+          ></Style.QuestionLogo>
+        </Text.Title1>
+
+        <Margin direction="column" size={16} />
+
+        <Style.UploadButton>
+          <Style.UploadLogo src="login/upload.svg" alt="upload" />
+          <Text.Body1 color="gray700">학생증 업로드</Text.Body1>
+        </Style.UploadButton>
+      </Style.Wrapper>
     </>
   );
 }
-
-const Header = styled.div`
-  text-align: left;
-  display: flex;
-  padding-bottom: 20px;
-`;
-
-const Image = styled.button`
-  padding: 20px;
-`;
-
-const Text = styled.h1`
-  padding-top: 23px;
-  font-size: 20px;
-  font-weight: 700;
-`;
-
-const Container = styled.div`
-  padding: 20px;
-  display: flex;
-`;
-
-const Title = styled.h1`
-  font-size: 25px;
-  font-weight: 700;
-`;
-
-const Icon = styled.button`
-  padding: 5px;
-`;

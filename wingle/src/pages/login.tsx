@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
-import { ST } from "next/dist/shared/lib/utils";
+import router from "next/router";
 
 const Style = {
   Header: styled.div`
@@ -47,12 +47,18 @@ const Style = {
     color: #959599;
     border-radius: 8px;
     padding-botton: 24px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22.4px;
   `,
   RegisterButton: styled.button`
-    width: 50px;
+    width: 56px;
     margin: 20px;
     border-bottom: 1px solid #49494d;
     color: #49494d;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 20px;
   `,
 };
 
@@ -77,7 +83,9 @@ export default function Login() {
 
       <Style.ButtonWrapper>
         <Style.LoginButton>로그인</Style.LoginButton>
-        <Style.RegisterButton>회원가입</Style.RegisterButton>
+        <Style.RegisterButton onClick={() => router.push("/register")}>
+          회원가입
+        </Style.RegisterButton>
       </Style.ButtonWrapper>
     </>
   );
