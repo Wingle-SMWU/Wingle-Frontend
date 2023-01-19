@@ -61,7 +61,7 @@ type StyleText = {
 
 export const Text = {
   Title1: styled.span<StyleText>`
-    font-weight: 600;
+    font-weight: 700;
     font-size: 24px;
     line-height: 140%;
     /* common */
@@ -72,7 +72,7 @@ export const Text = {
     height: fit-content;
   `,
   Title2: styled.span<StyleText>`
-    font-weight: 600;
+    font-weight: 700;
     font-size: 20px;
     line-height: 140%;
     /* common */
@@ -95,7 +95,7 @@ export const Text = {
   `,
 
   Body1: styled.span<StyleText>`
-    font-weight: 400;
+    font-weight: 700;
     font-size: 16px;
     line-height: 140%;
     /* common */
@@ -106,7 +106,7 @@ export const Text = {
     height: fit-content;
   `,
   Body2: styled.span<StyleText>`
-    font-weight: 400;
+    font-weight: 500;
     font-size: 16px;
     line-height: 150%;
     /* common */
@@ -117,7 +117,7 @@ export const Text = {
     height: fit-content;
   `,
   Body3: styled.span<StyleText>`
-    font-weight: 500;
+    font-weight: 400;
     font-size: 16px;
     line-height: 140%;
     /* common */
@@ -128,7 +128,7 @@ export const Text = {
     height: fit-content;
   `,
   Body4: styled.span<StyleText>`
-    font-weight: 600;
+    font-weight: 400;
     font-size: 16px;
     line-height: 140%;
     /* common */
@@ -139,7 +139,7 @@ export const Text = {
     height: fit-content;
   `,
   Body5: styled.span<StyleText>`
-    font-weight: 400;
+    font-weight: 700;
     font-size: 14px;
     line-height: 140%;
     /* common */
@@ -161,7 +161,7 @@ export const Text = {
     height: fit-content;
   `,
   Body7: styled.span<StyleText>`
-    font-weight: 600;
+    font-weight: 400;
     font-size: 14px;
     line-height: 140%;
     /* common */
@@ -173,7 +173,7 @@ export const Text = {
   `,
 
   Caption1: styled.span<StyleText>`
-    font-weight: 400;
+    font-weight: 700;
     font-size: 12px;
     line-height: 140%;
     /* common */
@@ -195,7 +195,7 @@ export const Text = {
     height: fit-content;
   `,
   Caption3: styled.span<StyleText>`
-    font-weight: 600;
+    font-weight: 400;
     font-size: 12px;
     line-height: 140%;
     /* common */
