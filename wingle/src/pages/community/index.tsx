@@ -49,8 +49,6 @@ export default function Community() {
       ? "community/list/list_profile_flag.png"
       : "community/list/wingle-manager.svg";
 
-  console.log(tab);
-
   return (
     <>
       <Header tab={tab} onChangeTab={onChangeTab}></Header>
