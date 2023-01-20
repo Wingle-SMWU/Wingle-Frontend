@@ -1,4 +1,4 @@
-// 교류 탭일 때
+// 교류 탭
 import ListCard from "./listCard";
 
 export default function InteractTab(props: { imgUrl: string }) {

@@ -1,4 +1,4 @@
-// 자유 탭일 때
+// 자유 탭
 import ListCard from "./listCard";
 
 export default function FreeTab(props: { imgUrl: string }) {

@@ -1,4 +1,4 @@
-// 공지 탭일 때
+// 공지 탭
 import ListCard from "./listCard";
 
 export default function NoticeTab(props: { imgUrl: string }) {

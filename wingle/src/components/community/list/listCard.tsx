@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Text } from "../../ui";
 
-// 카드 한장
 const Style = {
   Contents: styled.div`
     display: flex;
