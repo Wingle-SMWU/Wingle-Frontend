@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Text } from "../../ui";
 
@@ -24,17 +25,27 @@ const Style = {
 };
 
 export default function Footer() {
+  const router = useRouter();
+
+  const onClickMoveToMessage = () => {
+    router.push("/message");
+  };
+
+  const onClickMoveToMypage = () => {
+    router.push("/mypage");
+  };
+
   return (
     <Style.Footer>
       <Style.FooterMenu>
         <Style.FooterMenuImg src="community/list/comu_normal.svg" />
         <Text.Caption2 color="gray900">커뮤니티</Text.Caption2>
       </Style.FooterMenu>
-      <Style.FooterMenu>
+      <Style.FooterMenu onClick={onClickMoveToMessage}>
         <Style.FooterMenuImg src="community/list/message_disable.svg" />
         <Text.Caption2 color="gray500">쪽지</Text.Caption2>
       </Style.FooterMenu>
-      <Style.FooterMenu>
+      <Style.FooterMenu onClick={onClickMoveToMypage}>
         <Style.FooterMenuImg src="community/list/mypage_disabled.svg" />
         <Text.Caption2 color="gray500">마이페이지</Text.Caption2>
       </Style.FooterMenu>
