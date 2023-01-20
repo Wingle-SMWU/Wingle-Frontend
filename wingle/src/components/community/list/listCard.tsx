@@ -32,11 +32,11 @@ const Style = {
   `,
 };
 
-export default function ListCard() {
+export default function ListCard(props: { imgUrl: string }) {
   return (
     <Style.Contents>
       <Style.ContentsHeader>
-        <Style.ContentsHeaderImg src="community/list/wingle-default.svg" />
+        <Style.ContentsHeaderImg src={props.imgUrl} />
         <Style.ContentsHeaderInfo>
           <Text.Body6 color="gray900">한국윙그리</Text.Body6>
           <Text.Caption3 color="gray500">10분 전</Text.Caption3>
