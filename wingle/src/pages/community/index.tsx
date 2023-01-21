@@ -7,13 +7,16 @@ import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 import styled from "styled-components";
 
+type Tab = {
+  tab?: string;
+};
+
 export default function Community() {
   const router = useRouter();
-
   const [tab, setTab] = useState("자유");
 
   const onClickMoveToWrite = () => {
-    router.push("/community/create");
+    router.push({ pathname: `/community/create`, query: { tab } });
   };
 
   const onClickTab = (event: any) => {
@@ -37,7 +40,7 @@ export default function Community() {
     <>
       <Header tab={tab} onClickTab={onClickTab}></Header>
       <Style.Body>
-        <Style.CreateAbsolutePoint>
+        <Style.CreateAbsolutePoint tab={tab}>
           <Style.CreateIcon
             src="community/list/new_write.svg"
             onClick={onClickMoveToWrite}
@@ -61,8 +64,9 @@ const Style = {
     background-color: white;
   `,
 
-  CreateAbsolutePoint: styled.div`
+  CreateAbsolutePoint: styled.div<Tab>`
     position: absolute;
+    display: ${({ tab }) => (tab === "공지" ? "none" : "block")};
   `,
 
   CreateIcon: styled.img`
