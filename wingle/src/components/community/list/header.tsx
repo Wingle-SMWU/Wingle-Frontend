@@ -1,6 +1,37 @@
 import styled from "styled-components";
 import { Text } from "../../ui";
 
+type Tab = {
+  tab?: boolean;
+};
+
+const TabArr = ["자유", "교류", "공지"];
+
+export default function Header(props: {
+  tab: string;
+  onClickTab: (event: any) => void;
+}) {
+  return (
+    <>
+      <Style.Header>
+        <Text.Title2 color="gray900">커뮤니티</Text.Title2>
+      </Style.Header>
+      <Style.HeaderBar>
+        {TabArr.map((el) => (
+          <Style.TextUnderLine tab={el === props.tab} key={el}>
+            <Text.Title3
+              color={el === props.tab ? "gray900" : "gray500"}
+              onClick={props.onClickTab}
+            >
+              {el}
+            </Text.Title3>
+          </Style.TextUnderLine>
+        ))}
+      </Style.HeaderBar>
+    </>
+  );
+}
+
 const Style = {
   Header: styled.div`
     display: flex;
@@ -18,67 +49,9 @@ const Style = {
     gap: 24px;
   `,
 
-  TextUnderLineOrange: styled.div`
-    border-bottom: 2px solid #ff812e;
-    padding-bottom: 6px;
-  `,
-
-  TextUnderLineNone: styled.div`
-    border-bottom: 2px solid #fff;
+  TextUnderLine: styled.div<Tab>`
+    border-bottom: ${({ tab }) =>
+      tab ? "2px solid #ff812e" : "2px solid #fff"};
     padding-bottom: 6px;
   `,
 };
-
-export default function Header(props: {
-  tab: string;
-  onChangeTab: (event: any) => void;
-}) {
-  return (
-    <>
-      <Style.Header>
-        <Text.Title2 color="gray900">커뮤니티</Text.Title2>
-      </Style.Header>
-      <Style.HeaderBar>
-        {props.tab === "자유" ? (
-          <Style.TextUnderLineOrange>
-            <Text.Title3 color="gray900" onClick={props.onChangeTab}>
-              자유
-            </Text.Title3>
-          </Style.TextUnderLineOrange>
-        ) : (
-          <Style.TextUnderLineNone>
-            <Text.Title3 color="gray500" onClick={props.onChangeTab}>
-              자유
-            </Text.Title3>
-          </Style.TextUnderLineNone>
-        )}
-        {props.tab === "교류" ? (
-          <Style.TextUnderLineOrange>
-            <Text.Title3 color="gray900" onClick={props.onChangeTab}>
-              교류
-            </Text.Title3>
-          </Style.TextUnderLineOrange>
-        ) : (
-          <Style.TextUnderLineNone>
-            <Text.Title3 color="gray500" onClick={props.onChangeTab}>
-              교류
-            </Text.Title3>
-          </Style.TextUnderLineNone>
-        )}
-        {props.tab === "공지" ? (
-          <Style.TextUnderLineOrange>
-            <Text.Title3 color="gray900" onClick={props.onChangeTab}>
-              공지
-            </Text.Title3>
-          </Style.TextUnderLineOrange>
-        ) : (
-          <Style.TextUnderLineNone>
-            <Text.Title3 color="gray500" onClick={props.onChangeTab}>
-              공지
-            </Text.Title3>
-          </Style.TextUnderLineNone>
-        )}
-      </Style.HeaderBar>
-    </>
-  );
-}

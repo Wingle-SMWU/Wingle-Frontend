@@ -1,54 +1,67 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Text } from "../../ui";
 
+const FooterMenuArr = [
+  {
+    name: "커뮤니티",
+    page: "/community",
+    normalImg: "/community/list/comu_normal.svg",
+    disableImg: "/community/list/comu_disable.svg",
+  },
+  {
+    name: "쪽지",
+    page: "/message",
+    normalImg: "/community/list/message_normal.svg",
+    disableImg: "/community/list/message_disable.svg",
+  },
+  {
+    name: "마이페이지",
+    page: "/mypage",
+    normalImg: "/community/list/wingle-manager.svg",
+    disableImg: "/community/list/mypage_disable.svg",
+  },
+];
+
+export default function Footer() {
+  const router = useRouter();
+  const menu = router.asPath;
+
+  return (
+    <Style.Footer>
+      {FooterMenuArr.map((el) => (
+        <Style.FooterMenu key={el.name} href={el.page}>
+          <Style.FooterMenuImg
+            src={menu === el.page ? el.normalImg : el.disableImg}
+          />
+          <Text.Caption2 color={menu === el.page ? "gray900" : "gray500"}>
+            {el.name}
+          </Text.Caption2>
+        </Style.FooterMenu>
+      ))}
+    </Style.Footer>
+  );
+}
+
 const Style = {
   Footer: styled.div`
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 71px;
     border-top: 1px solid #eeeef2;
   `,
 
-  FooterMenu: styled.div`
+  FooterMenu: styled(Link)`
     width: 104px;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 12.5px 24px;
+    text-decoration: none;
   `,
 
   FooterMenuImg: styled.img``,
 };
-
-export default function Footer() {
-  const router = useRouter();
-
-  const onClickMoveToMessage = () => {
-    router.push("/message");
-  };
-
-  const onClickMoveToMypage = () => {
-    router.push("/mypage");
-  };
-
-  return (
-    <Style.Footer>
-      <Style.FooterMenu>
-        <Style.FooterMenuImg src="community/list/comu_normal.svg" />
-        <Text.Caption2 color="gray900">커뮤니티</Text.Caption2>
-      </Style.FooterMenu>
-      <Style.FooterMenu onClick={onClickMoveToMessage}>
-        <Style.FooterMenuImg src="community/list/message_disable.svg" />
-        <Text.Caption2 color="gray500">쪽지</Text.Caption2>
-      </Style.FooterMenu>
-      <Style.FooterMenu onClick={onClickMoveToMypage}>
-        <Style.FooterMenuImg src="community/list/mypage_disabled.svg" />
-        <Text.Caption2 color="gray500">마이페이지</Text.Caption2>
-      </Style.FooterMenu>
-    </Style.Footer>
-  );
-}
