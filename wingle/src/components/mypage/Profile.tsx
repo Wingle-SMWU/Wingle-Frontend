@@ -92,6 +92,7 @@ export default function Profile() {
         <Style.UserInfoBox>
           <Style.UserNicknameAndSex>
             <Text.Body1 color="gray900">닉네임</Text.Body1>
+            {/* {gender ? 여자 이미지 : 남자 이미지} */}
             <Style.UserSexImg src="" alt="성별" />
           </Style.UserNicknameAndSex>
           <Text.Body6 color="gray800">국적</Text.Body6>

@@ -18,6 +18,26 @@ const Style = {
     width: 88px;
     height: 88px;
     margin: 30px 0px;
+    border: 1px solid green;
+    position: relative;
+  `,
+  ProfileImage: styled.img`
+    width: 88px;
+    height: 88px;
+    position: absolute;
+    border-radius: 100px;
+    border: 1px solid red;
+    background-color: red;
+  `,
+  CameraIcon: styled.img`
+    width: 24px;
+    height: 24px;
+    border: 1px solid black;
+    background-color: black;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    z-index: 1;
   `,
   NicknameChangeBox: styled.div``,
   InputNickname: styled.input`
@@ -66,7 +86,10 @@ export default function Nickname() {
             </Text.Body1>
           </Style.Header>
           <>
-            <Style.ImageChangeBox>이미지</Style.ImageChangeBox>
+            <Style.ImageChangeBox>
+              <Style.ProfileImage src="" alt="프로필 이미지" />
+              <Style.CameraIcon src="" alt="" />
+            </Style.ImageChangeBox>
 
             <Style.NicknameChangeBox>
               <Text.Body5 color="gray700">닉네임</Text.Body5>{" "}
