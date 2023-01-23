@@ -31,7 +31,6 @@ const Style = {
     font-family: pretendard;
     width: 100%;
     min-height: 250px;
-    padding: 30px 0px;
     border: 1px solid white;
     font-size: 16px;
     color: #222223;
@@ -64,7 +63,8 @@ export default function Introduce() {
               <Text.Title1 color="gray900">자기소개</Text.Title1>
             </Style.Left>
             <Text.Body1
-              color="gray900"
+              color="gray500" // 비활성화 상태
+              // 활성화 상태에서는 color="gray900"
               onClick={() => router.push(`/mypage/edit`)}
               // onClick={handleSubmit} 얘도 추가해야함
               pointer
