@@ -1,3 +1,4 @@
+import Modal from "@/src/components/community/modal";
 import { Text } from "@/src/components/ui";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
@@ -7,18 +8,23 @@ export default function Create() {
   const router = useRouter();
   const currentTab = router.query.tab;
   const [contents, setContents] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(event.target.value);
   };
 
+  const onClickModal = () => {
+    setModalVisible((prev) => !prev);
+  };
+
   return (
-    <>
+    <Style.Wrapper>
       <Style.Header>
         <Style.HeaderLeft>
           <Style.BackArrow
             src="/community/arrow_back.svg"
-            onClick={() => router.back()}
+            onClick={onClickModal}
           />
           <Text.Title2 color="gray900">{currentTab}게시판 글 작성</Text.Title2>
         </Style.HeaderLeft>
@@ -30,13 +36,18 @@ export default function Create() {
         <Style.Contents
           placeholder="자유롭게 글을 작성해보세요!"
           onChange={onChangeContents}
-        ></Style.Contents>
+        />
       </Style.Body>
-    </>
+      {modalVisible && <Modal type="create" onClickModal={onClickModal} />}
+    </Style.Wrapper>
   );
 }
 
 const Style = {
+  Wrapper: styled.div`
+    position: relative;
+  `,
+
   Header: styled.div`
     display: flex;
     flex-direction: row;
@@ -56,7 +67,6 @@ const Style = {
   `,
 
   CreateButton: styled.button`
-    background-color: #fff;
     border: none;
   `,
 
@@ -67,7 +77,7 @@ const Style = {
   Contents: styled.textarea`
     width: 100%;
     height: 100%;
-    max-height: 622px;
+    max-height: 850px;
     font-weight: 400;
     font-size: 16px;
     line-height: 140%;
@@ -78,6 +88,6 @@ const Style = {
     resize: none;
     border: none;
     padding: 0;
-    background-color: yellow;
+    background-color: inherit;
   `,
 };
