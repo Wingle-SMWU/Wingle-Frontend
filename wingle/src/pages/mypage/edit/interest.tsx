@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import router from "next/router";
 import { Text } from "@/src/components/ui";
+import SelectInterest from "@/src/components/mypage/SelectInterest";
 
 const Style = {
   Wapper: styled.div`
@@ -46,13 +47,16 @@ export default function Interest() {
               <Text.Title1 color="gray900">관심사</Text.Title1>
             </Style.Left>
             <Text.Body1
-              color="gray900"
+              color="gray500" // 비활성화 상태
+              // 활성화 상태에서는 color="gray900"
               onClick={() => router.push(`/mypage/edit`)}
               pointer
             >
               완료
             </Text.Body1>
           </Style.Header>
+          <SelectInterest />
+          {/* SelectInterest 파일 수정 필요, props 연결 */}
         </Style.Content>
       </Style.Wapper>
     </>
