@@ -19,6 +19,7 @@ const Style = {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
   `,
   Left: styled.div``,
 
