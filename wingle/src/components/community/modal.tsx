@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import styled from "styled-components";
 import { Margin, Text } from "../ui";
 
