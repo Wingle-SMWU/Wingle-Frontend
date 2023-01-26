@@ -4,13 +4,13 @@ import styled from "styled-components";
 
 const Style = {
   ContentWrapper: styled.div`
-    padding-bottom: 16px;
+    padding-bottom: 24px;
   `,
   Content: styled.div`
     display: flex;
   `,
   InputField: styled.div<StyledInputProps>`
-  width: ${(props) => (props.small ? "345px" : "451px")};
+  width: ${(props) => (props.small ? "345px" : "452px")};
   height: 50px;
   border: 1px solid #dcdce0;
   border-radius: 8px;
@@ -55,6 +55,9 @@ export interface propsType {
 }
 interface StyledInputProps {
   small: boolean;
+}
+interface StyledWrapperProps {
+  padding: boolean;
 }
 export default function InputBox({
   title,

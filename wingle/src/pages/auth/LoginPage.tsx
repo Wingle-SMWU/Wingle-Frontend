@@ -67,7 +67,7 @@ export default function Login() {
   return (
     <>
       <Style.Header>
-        <img src="login/loginLogo.svg" alt="logo"></img>
+        <img src="auth/loginLogo.svg" alt="logo"></img>
         <Margin direction="column" size={8} />
         <Text.Body6 color="gray700">다함께 즐기는 국제교류 커뮤니티</Text.Body6>
       </Style.Header>
@@ -83,7 +83,7 @@ export default function Login() {
 
       <Style.ButtonWrapper>
         <Style.LoginButton>로그인</Style.LoginButton>
-        <Style.RegisterButton onClick={() => router.push("/register")}>
+        <Style.RegisterButton onClick={() => router.push("auth/SignupPage")}>
           회원가입
         </Style.RegisterButton>
       </Style.ButtonWrapper>

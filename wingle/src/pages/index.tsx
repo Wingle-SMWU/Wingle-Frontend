@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Login from "./login";
+import Login from "./auth/LoginPage";
 
 export default function Home() {
   return (

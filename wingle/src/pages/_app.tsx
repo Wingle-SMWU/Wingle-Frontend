@@ -8,7 +8,7 @@ import styled from "styled-components";
 const Style = {
   Wrapper: styled.div`
     width: 500px;
-
+    height: 2000px;
     background-color: white;
   `,
 };
