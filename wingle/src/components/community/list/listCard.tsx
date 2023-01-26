@@ -1,9 +1,19 @@
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Text } from "../../ui";
 
-export default function ListCard(props: { imgUrl: string }) {
+export default function ListCard(props: { imgUrl: string; isNotice: boolean }) {
+  const router = useRouter();
+
+  const onClickMoveToDetail = () => {
+    if (props.isNotice) {
+      return;
+    }
+    router.push({ pathname: `/community/detail`, query: { ...router.query } });
+  };
+
   return (
-    <Style.Contents>
+    <Style.Contents onClick={onClickMoveToDetail}>
       <Style.ContentsHeader>
         <Style.ContentsHeaderImg src={props.imgUrl} />
         <Style.ContentsHeaderInfo>

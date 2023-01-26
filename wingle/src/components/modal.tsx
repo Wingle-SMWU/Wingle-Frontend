@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import styled from "styled-components";
-import { Margin, Text } from "../ui";
+import { Margin, Text } from "./ui";
 
 export default function Modal(props: {
   type: string;
@@ -13,27 +13,45 @@ export default function Modal(props: {
   };
 
   const modalTitle = useMemo(() => {
-    if (props.type === "create") {
+    if (props.type === "create-back") {
       return "정말 나가시겠어요?";
     }
-    if (props.type === "detail") {
+    if (props.type === "detail-delete-contents") {
       return "게시글을 삭제 하시겠어요?";
     }
-    if (props.type === "detail-comment") {
+    if (props.type === "detail-delete-comment") {
       return "댓글을 삭제 하시겠어요?";
     }
     return "";
   }, [props.type]);
 
   const modalContents = useMemo(() => {
-    if (props.type === "create") {
-      return "글 작성을 완료하지 않고 페이지를 벗어나면 작성한 게시글이 사라져요.";
+    if (props.type === "create-back") {
+      return (
+        <>
+          글 작성을 완료하지 않고 페이지를 벗어나면
+          <br></br>
+          작성한 게시글이 사라져요.
+        </>
+      );
     }
-    if (props.type === "detail") {
-      return "삭제된 게시글은 복구할 수 없으니 신중하게 생각해주세요.";
+    if (props.type === "detail-delete-contents") {
+      return (
+        <>
+          삭제된 게시글은 복구할 수 없으니
+          <br></br>
+          신중하게 생각해주세요.
+        </>
+      );
     }
-    if (props.type === "detail-comment") {
-      return "삭제된 댓글은 복구할 수 없으니 신중하게 생각해주세요.";
+    if (props.type === "detail-delete-comment") {
+      return (
+        <>
+          삭제된 댓글은 복구할 수 없으니
+          <br></br>
+          신중하게 생각해주세요.
+        </>
+      );
     }
     return "";
   }, [props.type]);
@@ -43,7 +61,7 @@ export default function Modal(props: {
       <Style.Modal>
         <Style.AbsolutePoint>
           <Style.CloseIcon
-            src="/community/create/close.svg"
+            src="/community/modal/close-black.svg"
             onClick={props.onClickModal}
           />
         </Style.AbsolutePoint>
@@ -105,9 +123,6 @@ const Style = {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    span {
-      padding: 0px 10px;
-    }
   `,
 
   Title: styled.div`

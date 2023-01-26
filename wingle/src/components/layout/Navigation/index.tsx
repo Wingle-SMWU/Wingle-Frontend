@@ -3,49 +3,49 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Text } from "../../ui";
 
-const FooterMenuArr = [
+const NavigationMenuArr = [
   {
     name: "커뮤니티",
     page: "/community",
-    normalImg: "/community/list/comu_normal.svg",
-    disableImg: "/community/list/comu_disable.svg",
+    normalImg: "/community/list/comu-normal.svg",
+    disableImg: "/community/list/comu-disable.svg",
   },
   {
     name: "쪽지",
     page: "/message",
-    normalImg: "/community/list/message_normal.svg",
-    disableImg: "/community/list/message_disable.svg",
+    normalImg: "/community/list/message-normal.svg",
+    disableImg: "/community/list/message-disable.svg",
   },
   {
     name: "마이페이지",
     page: "/mypage",
     normalImg: "/community/list/wingle-manager.svg",
-    disableImg: "/community/list/mypage_disable.svg",
+    disableImg: "/community/list/mypage-disable.svg",
   },
 ];
 
-export default function Footer() {
+export default function Navigation() {
   const router = useRouter();
   const menu = router.asPath;
 
   return (
-    <Style.Footer>
-      {FooterMenuArr.map((el) => (
-        <Style.FooterMenu key={el.name} href={el.page}>
-          <Style.FooterMenuImg
-            src={menu === el.page ? el.normalImg : el.disableImg}
+    <Style.Wrapper>
+      {NavigationMenuArr.map((el) => (
+        <Style.NavigationMenu key={el.name} href={el.page}>
+          <Style.NavigationMenuImg
+            src={menu.includes(el.page) ? el.normalImg : el.disableImg}
           />
-          <Text.Caption2 color={menu === el.page ? "gray900" : "gray500"}>
+          <Text.Caption2 color={menu.includes(el.page) ? "gray900" : "gray500"}>
             {el.name}
           </Text.Caption2>
-        </Style.FooterMenu>
+        </Style.NavigationMenu>
       ))}
-    </Style.Footer>
+    </Style.Wrapper>
   );
 }
 
 const Style = {
-  Footer: styled.div`
+  Wrapper: styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -54,7 +54,7 @@ const Style = {
     border-top: 1px solid #eeeef2;
   `,
 
-  FooterMenu: styled(Link)`
+  NavigationMenu: styled(Link)`
     width: 104px;
     display: flex;
     flex-direction: column;
@@ -63,5 +63,5 @@ const Style = {
     text-decoration: none;
   `,
 
-  FooterMenuImg: styled.img``,
+  NavigationMenuImg: styled.img``,
 };
