@@ -1,11 +1,12 @@
-import Footer from "@/src/components/community/list/footer";
 import FreeTab from "@/src/components/community/list/freeTab";
 import Header from "@/src/components/community/list/header";
 import InteractTab from "@/src/components/community/list/interactTab";
 import NoticeTab from "@/src/components/community/list/noticeTab";
+import { getImageUrl } from "@/src/modules/utils";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import styled from "styled-components";
+import Navigation from "@/src/components/layout/Navigation";
 
 type Tab = {
   tab: string;
@@ -29,34 +30,25 @@ export default function Community() {
     router.push({ query: { tab: event.target.textContent } });
   };
 
-  const imgUrl: string = useMemo(() => {
-    if (currentTab === "자유") {
-      return "community/list/wingle-default.svg";
-    }
-    if (currentTab === "교류") {
-      return "community/list/list_profile_flag.png";
-    }
-    if (currentTab === "공지") {
-      return "community/list/wingle-manager.svg";
-    }
-    return "";
-  }, [currentTab]);
-
   return (
     <>
-      <Header tab={currentTab} onClickTab={onClickTab}></Header>
+      <Header tab={currentTab} onClickTab={onClickTab} />
       <Style.Body>
         <Style.CreateAbsolutePoint tab={currentTab}>
           <Style.CreateIcon
-            src="community/list/new_write.svg"
+            src="community/list/new-write.svg"
             onClick={onClickMoveToWrite}
           />
         </Style.CreateAbsolutePoint>
-        {currentTab === "교류" && <InteractTab imgUrl={imgUrl}></InteractTab>}
-        {currentTab === "공지" && <NoticeTab imgUrl={imgUrl}></NoticeTab>}
-        {currentTab === "자유" && <FreeTab imgUrl={imgUrl}></FreeTab>}
+        {currentTab === "교류" && (
+          <InteractTab imgUrl={getImageUrl(currentTab)} />
+        )}
+        {currentTab === "공지" && (
+          <NoticeTab imgUrl={getImageUrl(currentTab)} />
+        )}
+        {currentTab === "자유" && <FreeTab imgUrl={getImageUrl(currentTab)} />}
       </Style.Body>
-      <Footer></Footer>
+      <Navigation />
     </>
   );
 }
