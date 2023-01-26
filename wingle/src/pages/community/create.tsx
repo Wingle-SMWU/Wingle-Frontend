@@ -1,4 +1,4 @@
-import Modal from "@/src/components/community/modal";
+import Modal from "@/src/components/modal";
 import { Text } from "@/src/components/ui";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
@@ -23,7 +23,7 @@ export default function Create() {
       <Style.Header>
         <Style.HeaderLeft>
           <Style.BackArrow
-            src="/community/arrow_back.svg"
+            src="/community/arrow-back.svg"
             onClick={onClickModal}
           />
           <Text.Title2 color="gray900">{currentTab}게시판 글 작성</Text.Title2>
@@ -36,9 +36,10 @@ export default function Create() {
         <Style.Contents
           placeholder="자유롭게 글을 작성해보세요!"
           onChange={onChangeContents}
+          maxLength={1000}
         />
       </Style.Body>
-      {modalVisible && <Modal type="create" onClickModal={onClickModal} />}
+      {modalVisible && <Modal type="create-back" onClickModal={onClickModal} />}
     </Style.Wrapper>
   );
 }
@@ -76,8 +77,7 @@ const Style = {
 
   Contents: styled.textarea`
     width: 100%;
-    height: 100%;
-    max-height: 850px;
+    height: 800px;
     font-weight: 400;
     font-size: 16px;
     line-height: 140%;
