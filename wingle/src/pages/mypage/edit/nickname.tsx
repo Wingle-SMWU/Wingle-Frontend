@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
+import { useState } from "react";
+import Modal from "@/src/components/modal";
 
 const Style = {
   Wapper: styled.div`
@@ -61,6 +63,11 @@ const Style = {
 };
 
 export default function Nickname() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const onClickModal = () => {
+    setModalVisible((prev) => !prev);
+  };
   return (
     <>
       <Style.Wapper>
@@ -70,10 +77,8 @@ export default function Nickname() {
               <Style.GoBackArrow
                 src="/back-arrow.svg"
                 alt="뒤로가기"
-                onClick={() => router.push(`/mypage/edit`)}
+                onClick={onClickModal}
               />
-
-              {/* 뒤로가기 버튼 누르면 정말 나가시겠어요? 모달 띄우기 */}
               <Text.Title1 color="gray900">프로필 수정</Text.Title1>
             </Style.Left>
             <Text.Body1
@@ -102,6 +107,9 @@ export default function Nickname() {
             </Style.NicknameChangeBox>
           </>
         </Style.Content>
+        {modalVisible && (
+          <Modal type="profile-back" onClickModal={onClickModal} />
+        )}
       </Style.Wapper>
     </>
   );

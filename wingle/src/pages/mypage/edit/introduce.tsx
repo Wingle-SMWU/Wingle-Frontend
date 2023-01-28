@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import router from "next/router";
 import { Text } from "@/src/components/ui";
+import Modal from "@/src/components/modal";
+import { useState } from "react";
 
 const Style = {
   Wapper: styled.div`
@@ -47,6 +49,11 @@ const Style = {
 };
 
 export default function Introduce() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const onClickModal = () => {
+    setModalVisible((prev) => !prev);
+  };
   return (
     <>
       <Style.Wapper>
@@ -56,10 +63,8 @@ export default function Introduce() {
               <Style.GoBackArrow
                 src="/back-arrow.svg"
                 alt="뒤로가기"
-                onClick={() => router.push(`/mypage/edit`)}
+                onClick={onClickModal}
               />
-
-              {/* 뒤로가기 버튼 누르면 정말 나가시겠어요? 모달 띄우기 */}
               <Text.Title1 color="gray900">자기소개</Text.Title1>
             </Style.Left>
             <Text.Body1
@@ -78,6 +83,9 @@ export default function Introduce() {
             placeholder="자기소개를 작성해주세요! (최대 400자)"
           />
         </Style.Content>
+        {modalVisible && (
+          <Modal type="profile-back" onClickModal={onClickModal} />
+        )}
       </Style.Wapper>
     </>
   );

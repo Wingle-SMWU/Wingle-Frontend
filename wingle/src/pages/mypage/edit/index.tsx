@@ -1,5 +1,7 @@
+import Modal from "@/src/components/modal";
 import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
+import { useState } from "react";
 import styled from "styled-components";
 
 const Style = {
@@ -90,6 +92,11 @@ const Style = {
   `,
 };
 export default function Edit() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const onClickModal = () => {
+    setModalVisible((prev) => !prev);
+  };
   return (
     <>
       <Style.Wapper>
@@ -100,8 +107,6 @@ export default function Edit() {
               alt="뒤로가기"
               onClick={() => router.push(`/mypage`)}
             />
-
-            {/* 뒤로가기 버튼 누르면 정말 나가시겠어요? 모달 띄우기 */}
             <Text.Title1 color="gray900">프로필 수정</Text.Title1>
           </Style.Header>
           <>
@@ -167,6 +172,9 @@ export default function Edit() {
             </Style.Interest>
           </Style.EditList>
         </Style.Content>
+        {modalVisible && (
+          <Modal type="profile-back" onClickModal={onClickModal} />
+        )}
       </Style.Wapper>
     </>
   );
