@@ -31,7 +31,7 @@ export default function Community() {
   };
 
   return (
-    <>
+    <Style.Wrapper>
       <Header tab={currentTab} onClickTab={onClickTab} />
       <Style.Body>
         <Style.CreateAbsolutePoint tab={currentTab}>
@@ -49,16 +49,23 @@ export default function Community() {
         {currentTab === "자유" && <FreeTab imgUrl={getImageUrl(currentTab)} />}
       </Style.Body>
       <Navigation />
-    </>
+    </Style.Wrapper>
   );
 }
 
 const Style = {
+  Wrapper: styled.div`
+    width: 100%;
+    height: 100%;
+    position: relative;
+  `,
+
   Body: styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 780px;
+    height: 100%;
+    max-height: 780px;
     background-color: white;
   `,
 
