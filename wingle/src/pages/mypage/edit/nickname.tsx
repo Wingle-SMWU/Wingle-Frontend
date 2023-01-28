@@ -47,6 +47,10 @@ const Style = {
     height: 52px;
     border: 1px solid #dcdce0;
     border-radius: 8px;
+    padding-left: 16px;
+    ::placeholder {
+      color: #959599;
+    }
   `,
   Header: styled.div`
     width: 100%;
@@ -99,7 +103,8 @@ export default function Nickname() {
             <Style.NicknameChangeBox>
               <Text.Body5 color="gray700">닉네임</Text.Body5>{" "}
               <Margin direction="column" size={8} />
-              <Style.InputNickname />
+              <Style.InputNickname placeholder="기존 닉네임" />
+              {/** 기존 닉네임 자리에 {nickname} */}
               <Margin direction="column" size={8} />
               <Text.Caption3 color="gray900">
                 한글/영어 2글자 이상 10글자 이하
