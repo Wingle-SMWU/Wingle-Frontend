@@ -3,6 +3,10 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Text } from "../../ui";
 
+type Radius = {
+  isRadius: boolean;
+};
+
 const NavigationMenuArr = [
   {
     name: "커뮤니티",
@@ -33,6 +37,7 @@ export default function Navigation() {
       {NavigationMenuArr.map((el) => (
         <Style.NavigationMenu key={el.name} href={el.page}>
           <Style.NavigationMenuImg
+            isRadius={el.name === "마이페이지"}
             src={menu.includes(el.page) ? el.normalImg : el.disableImg}
           />
           <Text.Caption2 color={menu.includes(el.page) ? "gray900" : "gray500"}>
@@ -52,6 +57,8 @@ const Style = {
     align-items: center;
     justify-content: center;
     border-top: 1px solid #eeeef2;
+    position: absolute;
+    bottom: 0;
   `,
 
   NavigationMenu: styled(Link)`
@@ -63,5 +70,9 @@ const Style = {
     text-decoration: none;
   `,
 
-  NavigationMenuImg: styled.img``,
+  NavigationMenuImg: styled.img<Radius>`
+    width: 28px;
+    height: 28px;
+    border-radius: ${({ isRadius }) => (isRadius ? "50%" : "none")};
+  `,
 };

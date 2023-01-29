@@ -1,4 +1,5 @@
 import Footer from "@/src/components/layout/Footer";
+import Navigation from "@/src/components/layout/Navigation";
 import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
@@ -12,6 +13,7 @@ const Style = {
     flex-direction: column;
     justify-content: space-between;
     /* border: 1px solid red; */
+    position: relative;
   `,
   Content: styled.div`
     padding: 24px;
@@ -48,6 +50,7 @@ export default function Mypage() {
           </>
         </Style.Content>
         <Footer />
+        <Navigation />
       </Style.Wapper>
     </>
   );
