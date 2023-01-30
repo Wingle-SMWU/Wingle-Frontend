@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
-import InputBox from "../../components/authpage/registerInput";
+import InputBox from "../../components/authpage/SignUpInput";
 import DropDown from "../../components/authpage/dropDown";
 import StudentCard from "../../components/authpage/studentCard";
 import { InputInfo } from "../../components/authpage/inputInformation";
@@ -29,7 +29,11 @@ export default function SignUp() {
     <>
       <Style.Wrapper>
         <Style.HeaderWrapper>
-          <img src="/auth/arrow_back.svg" alt="arrow"></img>
+          <img
+            src="/auth/arrow_back.svg"
+            alt="arrow"
+            onClick={() => router.push("/")}
+          ></img>
           <Margin direction="row" size={14} />
           <Text.Title2 color="gray900">회원가입</Text.Title2>
         </Style.HeaderWrapper>
@@ -38,6 +42,7 @@ export default function SignUp() {
         <Margin direction="column" size={16} />
         {InputInfo.map((info) => (
           <InputBox
+            key={info.title}
             title={info.title}
             type={info.type}
             placeholder={info.placeholder}
