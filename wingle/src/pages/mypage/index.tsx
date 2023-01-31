@@ -83,8 +83,8 @@ export default function Mypage() {
           </>
         )}
         </> */}
-                        <Style.EditBtn>
-                            <Text.Caption1 color="gray700" pointer onClick={() => router.push(`/mypage/edit`)}>
+                        <Style.EditBtn onClick={() => router.push(`/mypage/edit`)}>
+                            <Text.Caption1 color="gray700" pointer>
                                 수정
                             </Text.Caption1>
                         </Style.EditBtn>
