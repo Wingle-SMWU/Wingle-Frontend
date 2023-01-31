@@ -29,6 +29,7 @@ const Style = {
         border-radius: 100px;
         border: 1px solid red;
         background-color: red;
+        cursor: pointer;
     `,
     CameraIcon: styled.img`
         width: 24px;
@@ -38,6 +39,7 @@ const Style = {
         right: 0%;
         bottom: 0%;
         z-index: 0;
+        cursor: pointer;
     `,
     NicknameChangeBox: styled.div``,
     InputNickname: styled.input`

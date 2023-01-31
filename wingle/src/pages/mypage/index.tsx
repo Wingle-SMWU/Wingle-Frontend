@@ -25,6 +25,7 @@ const Style = {
     Profile: styled.div`
         display: flex;
         align-items: center;
+        border-bottom: 1px solid #eeeef2;
     `,
 
     RegisterBtn: styled.button`

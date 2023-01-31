@@ -125,9 +125,7 @@ export default function Edit() {
                     <Style.EditList>
                         <Margin direction="column" size={32} />
                         <Style.Language>
-                            <Text.Body1 color="gray900" pointer>
-                                사용 가능 언어
-                            </Text.Body1>
+                            <Text.Body1 color="gray900">사용 가능 언어</Text.Body1>
                             <Style.EditBtn
                                 src="/modify.svg"
                                 alt="연필"
@@ -138,9 +136,7 @@ export default function Edit() {
 
                         <Margin direction="column" size={32} />
                         <Style.Introduce>
-                            <Text.Body1 color="gray900" pointer>
-                                자기소개
-                            </Text.Body1>
+                            <Text.Body1 color="gray900">자기소개</Text.Body1>
                             <Style.EditBtn
                                 src="/modify.svg"
                                 alt="연필"
@@ -151,9 +147,7 @@ export default function Edit() {
 
                         <Margin direction="column" size={32} />
                         <Style.Interest>
-                            <Text.Body1 color="gray900" pointer>
-                                관심사
-                            </Text.Body1>
+                            <Text.Body1 color="gray900">관심사</Text.Body1>
                             <Style.EditBtn
                                 src="/modify.svg"
                                 alt="연필"
