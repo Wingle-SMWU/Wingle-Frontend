@@ -14,12 +14,26 @@ const Style = {
     UserImgBox: styled.div`
         width: 56px;
         height: 56px;
-        border: 1px solid green;
+        position: relative;
     `,
     UserProfileImg: styled.img`
-        border: 1px solid #eeeef2;
+        width: 56px;
+        height: 56px;
+        position: absolute;
+        border-radius: 100px;
+        border: 1px solid red;
     `,
-    UserFlagImg: styled.img``,
+    UserFlagImg: styled.img`
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        border: 1px solid black;
+        background-color: black;
+        border-radius: 100px;
+        right: 0%;
+        bottom: 0%;
+        z-index: 1;
+    `,
     UserInfoBox: styled.div`
         width: 340px;
         height: 86px;
@@ -70,7 +84,7 @@ export default function Profile() {
             <Style.UserBox>
                 <Style.UserImgBox>
                     <Style.UserProfileImg src="" alt="프로필" />
-                    {/* <Style.UserFlagImg src="" alt="국기" /> */}
+                    <Style.UserFlagImg src="" alt="국기" />
                 </Style.UserImgBox>
                 <Style.UserInfoBox>
                     <Style.UserNicknameAndSex>
