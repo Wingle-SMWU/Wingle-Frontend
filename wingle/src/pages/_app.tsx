@@ -7,8 +7,9 @@ import { theme } from "../styles/theme";
 import styled from "styled-components";
 const Style = {
   Wrapper: styled.div`
-    width: 500px;
-    height: 951px;
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
     background-color: white;
   `,
 };
