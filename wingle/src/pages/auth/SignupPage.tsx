@@ -17,14 +17,39 @@ const Style = {
     padding: 16px;
     display: flex;
   `,
-  CompleteButton: styled.button`
+  CompleteButton: styled.button<StyledInputProps>`
     height: 50px;
-    background-color: #eeeef2;
+    background-color: ${(props) => (props.complete ? "#FF812E" : "#EEEEF2")};
     border-radius: 8px;
     width: 452px;
+    margin-bottom: 333px;
   `,
 };
+
+interface StyledInputProps {
+  complete: boolean;
+}
+
 export default function SignUp() {
+  useEffect(() => {
+    handleComplete();
+  });
+  const [error, setError] = useState(false);
+  const [check, setCheck] = useState(false);
+  const [complete, setComplete] = useState(false);
+  const getError = (error: any) => {
+    setError(error);
+  };
+  const getCheck = (check: any) => {
+    setCheck(check);
+  };
+  const handleComplete = () => {
+    if (error === false && check === true) {
+      setComplete(true);
+    } else {
+      setComplete(false);
+    }
+  };
   return (
     <>
       <Style.Wrapper>
@@ -40,23 +65,21 @@ export default function SignUp() {
         <StudentCard />
         <Text.Title1 color="gray900">학생 정보</Text.Title1>
         <Margin direction="column" size={16} />
-        {InputInfo.map((info) => (
-          <InputBox
-            key={info.title}
-            title={info.title}
-            type={info.type}
-            placeholder={info.placeholder}
-            button={info.button}
-            small={info.small}
-          />
-        ))}
+        <InputBox getError={getError} />
         <DropDown />
         <GenderSelectBox />
-        <AgreeBox />
+        <AgreeBox getCheck={getCheck} />
         <Style.CompleteButton
-          onClick={() => router.replace("SignupCompletePage")}
+          complete={complete}
+          onClick={() =>
+            complete
+              ? router.replace("SignupCompletePage")
+              : console.log("disabled")
+          }
         >
-          <Text.Body1 color="gray500">작성완료</Text.Body1>
+          <Text.Body1 color={complete ? "white" : "gray500"}>
+            작성완료
+          </Text.Body1>
         </Style.CompleteButton>
       </Style.Wrapper>
     </>

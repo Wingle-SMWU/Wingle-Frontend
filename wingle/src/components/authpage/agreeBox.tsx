@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
 import { ST } from "next/dist/shared/lib/utils";
@@ -31,9 +31,12 @@ interface StyledInputProps {
   Condition: boolean;
 }
 
-function WrapperComponent({ title, content, icon, must }: any) {
+function WrapperComponent({ title, content, icon, must, handleCheck }: any) {
   const [isAgreed, setAgreed] = useState(false);
   const [isActive, setActive] = useState(false);
+  useEffect(() => {
+    handleCheck(isAgreed);
+  });
   return (
     <>
       <Style.ContentWrapper>
@@ -71,23 +74,57 @@ function WrapperComponent({ title, content, icon, must }: any) {
   );
 }
 
-export default function AgreeBox() {
+export default function AgreeBox({ getCheck }: any) {
+  useEffect(() => {
+    handleCheck();
+    getCheck(check);
+  });
+  const [first, checkFirst] = useState(false);
+  const [second, checkSecond] = useState(false);
+  const [third, checkThird] = useState(false);
+  const [check, setCheck] = useState(false);
+  const handleFirstCheckValue = (check: any) => {
+    checkFirst(check);
+  };
+  const handleSecondCheckValue = (check: any) => {
+    checkSecond(check);
+  };
+
+  const handleThirdCheckValue = (check: any) => {
+    checkThird(check);
+  };
+
+  const handleCheck = () => {
+    if (first === true && second === true) {
+      setCheck(true);
+    } else {
+      setCheck(false);
+    }
+  };
+
   return (
     <>
       <Text.Body1 color="gray700">이용약관 동의</Text.Body1>
       <Style.Wrapper>
-        <WrapperComponent title="서비스 이용약관" icon={true} must={"(필수)"} />
+        <WrapperComponent
+          title="서비스 이용약관"
+          icon={true}
+          must={"(필수)"}
+          handleCheck={handleFirstCheckValue}
+        />
         <Margin direction="column" size={18} />
         <WrapperComponent
           title="개인정보 수집 및 이용동의"
           icon={true}
           must={"(필수)"}
+          handleCheck={handleSecondCheckValue}
         />
         <Margin direction="column" size={18} />
         <WrapperComponent
           title="이벤트, 프로모션알림 메일 수신"
           icon={false}
           must={"(선택)"}
+          handleCheck={handleThirdCheckValue}
         />
       </Style.Wrapper>
     </>
