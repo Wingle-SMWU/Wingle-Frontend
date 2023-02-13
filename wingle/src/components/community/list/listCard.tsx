@@ -1,15 +1,23 @@
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 import styled from "styled-components";
 import { Text } from "../../ui";
 
 export default function ListCard(props: { imgUrl: string; isNotice: boolean }) {
   const router = useRouter();
 
+  const currentTab: string = useMemo(() => {
+    if (!router.query.tab) {
+      return "자유";
+    }
+    return String(router.query.tab);
+  }, [router.query.tab]);
+
   const onClickMoveToDetail = () => {
     if (props.isNotice) {
       return;
     }
-    router.push({ pathname: `/community/detail`, query: { ...router.query } });
+    router.push({ pathname: `/community/detail`, query: { tab: currentTab } });
   };
 
   return (
@@ -37,6 +45,7 @@ const Style = {
     border-bottom: 1px solid #eeeef2;
     gap: 2px;
     padding: 12px 24px;
+    background-color: #fff;
   `,
 
   ContentsHeader: styled.div`

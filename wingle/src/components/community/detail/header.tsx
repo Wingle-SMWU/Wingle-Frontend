@@ -12,9 +12,7 @@ export default function Header(props: { currentTab: string }) {
           src="/community/arrow-back.svg"
           onClick={() => router.back()}
         />
-        <Text.Title2 color="gray900">
-          {props.currentTab === "undefined" ? "자유" : props.currentTab}게시판
-        </Text.Title2>
+        <Text.Title2 color="gray900">{props.currentTab}게시판</Text.Title2>
       </Style.Header>
     </Style.Wrapper>
   );
