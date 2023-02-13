@@ -18,7 +18,9 @@ export default function Detail() {
         <Body />
         <Comment currentTab={currentTab} />
       </Style.DetailTop>
-      <CommentInput />
+      <Style.CommentInputFixed>
+        <CommentInput />
+      </Style.CommentInputFixed>
     </Style.Wrapper>
   );
 }
@@ -31,5 +33,14 @@ const Style = {
     justify-content: space-between;
   `,
 
-  DetailTop: styled.div``,
+  DetailTop: styled.div`
+    padding-bottom: 56px;
+  `,
+
+  CommentInputFixed: styled.div`
+    width: 100%;
+    max-width: 500px;
+    position: fixed;
+    bottom: 0px;
+  `,
 };

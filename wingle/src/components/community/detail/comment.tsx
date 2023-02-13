@@ -46,6 +46,7 @@ const Style = {
     width: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
   `,
 
   CommentCount: styled.div`
