@@ -27,10 +27,10 @@ export default function Detail() {
 
 const Style = {
   Wrapper: styled.div`
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: #fff;
   `,
 
   DetailTop: styled.div`
