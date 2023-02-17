@@ -46,7 +46,7 @@ export default function Create() {
 
 const Style = {
   Wrapper: styled.div`
-    position: relative;
+    width: 100%;
   `,
 
   Header: styled.div`
@@ -77,7 +77,7 @@ const Style = {
 
   Contents: styled.textarea`
     width: 100%;
-    height: 800px;
+    height: 600px;
     font-weight: 400;
     font-size: 16px;
     line-height: 140%;

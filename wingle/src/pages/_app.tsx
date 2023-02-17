@@ -11,6 +11,7 @@ const Style = {
     max-width: 500px;
     height: 100vh;
     background-color: white;
+    margin: auto;
   `,
 };
 
