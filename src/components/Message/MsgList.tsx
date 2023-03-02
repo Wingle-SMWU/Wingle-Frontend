@@ -46,7 +46,7 @@ function betweenTime(value: string) {
   return `${Math.floor(betweenTimeDay / 365)}년 전`;
 }
 
-const MsgList = (list: IProps) => {
+const MsgList = ({ list }: { list: IProps }) => {
   const { axiosCreateRoom } = useMsgAPI();
   const {
     image,

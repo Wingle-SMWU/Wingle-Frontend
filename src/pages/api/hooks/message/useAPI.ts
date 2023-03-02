@@ -1,8 +1,9 @@
 import axios from "axios";
+import { SERVER_URL } from "../..";
 
 const useAPI = () => {
   const config = {
-    baseURL: process.env.REACT_APP_HOST,
+    baseURL: SERVER_URL,
     withCredentials: true,
     headers: {
       ContentType: "application/json",
