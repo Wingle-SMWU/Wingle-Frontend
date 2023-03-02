@@ -21,7 +21,7 @@ const SendMsg = ({ list }: Iprops) => {
     <Container>
       <Box>
         <MessageInfoBox>
-          <Date>{convertDate(createdTime)}</Date>
+          <DateBox>{convertDate(createdTime)}</DateBox>
           <MessageContainer>
             <p>{content}</p>
           </MessageContainer>
@@ -56,7 +56,7 @@ const MessageInfoBox = styled.div`
   gap: 4px;
 `;
 
-const Date = styled.span`
+const DateBox = styled.span`
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
