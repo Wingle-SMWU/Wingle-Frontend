@@ -12,7 +12,6 @@ const Style = {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        /* border: 1px solid red; */
         position: relative;
     `,
     Content: styled.div`
@@ -102,7 +101,7 @@ export default function Mypage() {
                     </>
                 </Style.Content>
                 <Footer />
-                <Navigation />
+                <Navigation tab={""} />
             </Style.Wapper>
         </>
     );

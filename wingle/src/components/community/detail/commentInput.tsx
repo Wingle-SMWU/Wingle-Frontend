@@ -42,17 +42,18 @@ export default function CommentInput() {
 
 const Style = {
   Wrapper: styled.div`
-    padding: 16px 24px 17px 24px;
+    padding: 12px 24px 12px 24px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid #eeeef2;
+    background-color: #fff;
   `,
 
   CommentInput: styled.textarea`
     width: 100%;
-    max-height: 66px;
+    max-height: 56px;
     border: none;
     font-weight: 400;
     font-size: 16px;

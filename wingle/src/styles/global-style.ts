@@ -22,8 +22,6 @@ export const GlobalStyle = createGlobalStyle`
         }
         -ms-overflow-style: none;
         scrollbar-width: none;
-        display: flex;
-        justify-content: center;
     }
     button {
         background: none;

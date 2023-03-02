@@ -18,18 +18,29 @@ export default function Detail() {
         <Body />
         <Comment currentTab={currentTab} />
       </Style.DetailTop>
-      <CommentInput />
+      <Style.CommentInputFixed>
+        <CommentInput />
+      </Style.CommentInputFixed>
     </Style.Wrapper>
   );
 }
 
 const Style = {
   Wrapper: styled.div`
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: #fff;
   `,
 
-  DetailTop: styled.div``,
+  DetailTop: styled.div`
+    padding-bottom: 56px;
+  `,
+
+  CommentInputFixed: styled.div`
+    width: 100%;
+    max-width: 500px;
+    position: fixed;
+    bottom: 0px;
+  `,
 };

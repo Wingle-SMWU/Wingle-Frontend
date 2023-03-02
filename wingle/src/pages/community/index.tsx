@@ -8,10 +8,6 @@ import { useMemo } from "react";
 import styled from "styled-components";
 import Navigation from "@/src/components/layout/Navigation";
 
-type Tab = {
-  tab: string;
-};
-
 export default function Community() {
   const router = useRouter();
 
@@ -22,10 +18,6 @@ export default function Community() {
     return String(router.query.tab);
   }, [router.query.tab]);
 
-  const onClickMoveToWrite = () => {
-    router.push({ pathname: `/community/create`, query: { tab: currentTab } });
-  };
-
   const onClickTab = (event: any) => {
     router.push({ query: { tab: event.target.textContent } });
   };
@@ -33,52 +25,21 @@ export default function Community() {
   return (
     <Style.Wrapper>
       <Header tab={currentTab} onClickTab={onClickTab} />
-      <Style.Body>
-        <Style.CreateAbsolutePoint tab={currentTab}>
-          <Style.CreateIcon
-            src="community/list/new-write.svg"
-            onClick={onClickMoveToWrite}
-          />
-        </Style.CreateAbsolutePoint>
-        {currentTab === "교류" && (
-          <InteractTab imgUrl={getImageUrl(currentTab)} />
-        )}
-        {currentTab === "공지" && (
-          <NoticeTab imgUrl={getImageUrl(currentTab)} />
-        )}
-        {currentTab === "자유" && <FreeTab imgUrl={getImageUrl(currentTab)} />}
-      </Style.Body>
-      <Navigation />
+      {currentTab === "교류" && (
+        <InteractTab imgUrl={getImageUrl(currentTab)} />
+      )}
+      {currentTab === "공지" && <NoticeTab imgUrl={getImageUrl(currentTab)} />}
+      {currentTab === "자유" && <FreeTab imgUrl={getImageUrl(currentTab)} />}
+      <Navigation tab={currentTab} />
     </Style.Wrapper>
   );
 }
 
 const Style = {
   Wrapper: styled.div`
-    width: 100%;
-    height: 100%;
-    position: relative;
-  `,
-
-  Body: styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
-    max-height: 780px;
     background-color: white;
-  `,
-
-  CreateAbsolutePoint: styled.div<Tab>`
-    position: absolute;
-    display: ${({ tab }) => (tab === "공지" ? "none" : "block")};
-  `,
-
-  CreateIcon: styled.img`
-    width: 50px;
-    height: 50px;
-    position: relative;
-    left: 428px;
-    top: 710px;
+    padding-bottom: 72px;
   `,
 };

@@ -6,12 +6,12 @@ import Modal from "@/src/components/modal";
 
 const Style = {
     Wapper: styled.div`
-        width: 100%;
+        width: 500px;
+        min-width: 360px;
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        /* border: 1px solid red; */
     `,
     Content: styled.div`
         padding: 24px;
@@ -43,11 +43,11 @@ const Style = {
     `,
     NicknameChangeBox: styled.div``,
     InputNickname: styled.input`
-        width: 100%;
+        width: 93%;
         height: 52px;
         border: 1px solid #dcdce0;
         border-radius: 8px;
-        padding-left: 16px;
+        padding: 0px 16px;
         ::placeholder {
             color: #959599;
         }
