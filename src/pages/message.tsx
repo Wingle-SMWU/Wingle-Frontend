@@ -16,7 +16,7 @@ interface RoomListProps {
 }
 
 const message = () => {
-  const { msgRoomList } = useGetRoom();
+  const { getMsgRoomList } = useGetRoom();
 
   return (
     <Container>
@@ -24,8 +24,8 @@ const message = () => {
         <Text.Title1 color="gray900">쪽지함</Text.Title1>
       </TopContainer>
       <MsgContainer>
-        {msgRoomList ? (
-          msgRoomList.map((list: RoomListProps) => {
+        {getMsgRoomList ? (
+          getMsgRoomList.map((list: RoomListProps) => {
             return <MsgList list={list} key={list.roomId} />;
           })
         ) : (

@@ -1,15 +1,20 @@
 import useMsgAPI from "./useMsgAPI";
 
-const useGetRoom = () => {
+interface Iprops {
+  page: number;
+  size: number;
+}
+
+const useGetRoom = ({ page, size }: Iprops) => {
   const { getAllRoomLists } = useMsgAPI();
 
   const msgRoomList = async () => {
     try {
-      return getAllRoomLists();
+      await getAllRoomLists(page, size);
     } catch (data) {
       console.log(data);
+      console.log("쪽지 불러오기 실패");
     }
-    throw new Error("쪽지 불러오기 실패");
   };
 
   return [msgRoomList];

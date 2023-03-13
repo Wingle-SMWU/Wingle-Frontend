@@ -60,7 +60,7 @@ const MsgList = ({ list }: { list: IProps }) => {
 
   const router = useRouter();
   const handleMoveChatRoom = () => {
-    axiosCreateRoom(messageId).then((res) => {
+    axiosCreateRoom().then((res) => {
       router.push(`/messages/:roomId?page=${res}&size=${res}`);
     });
   };

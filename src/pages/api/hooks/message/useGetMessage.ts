@@ -7,7 +7,7 @@ interface User {
   memberId: number;
 }
 
-const useGetMessage = (roomId: number) => {
+const useGetMessage = (page: number, size: number) => {
   const { getRoomAllMessage } = useMsgAPI();
 
   const [roomList, setRoomList] = useState<any>([]); // 화면
@@ -17,7 +17,7 @@ const useGetMessage = (roomId: number) => {
 
   const getmessageData = async () => {
     try {
-      return getRoomAllMessage(roomId);
+      return getRoomAllMessage(page, size);
     } catch (data: any) {
       setRoomList(data);
       setMessageList(data);
