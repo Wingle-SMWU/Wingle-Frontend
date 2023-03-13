@@ -1,4 +1,4 @@
-import useAPI from "./useAPI";
+import useAPI from "../useAPI";
 
 function useMsgAPI() {
   const api = useAPI();

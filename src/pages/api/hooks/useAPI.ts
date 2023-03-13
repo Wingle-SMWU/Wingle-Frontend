@@ -1,13 +1,14 @@
 import axios from "axios";
-import { SERVER_URL } from "../..";
+import { SERVER_URL } from ".";
+import { getAccessTokenFromLocalStorage } from "../../../utils/accessTokenHandler";
 
 const useAPI = () => {
   const config = {
     baseURL: SERVER_URL,
     withCredentials: true,
     headers: {
-      ContentType: "application/json",
-      Authorization: "access token",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAccessTokenFromLocalStorage()}`,
     },
   };
 
@@ -16,7 +17,7 @@ const useAPI = () => {
     (response) => response,
     (err) => {
       // console.log(err);
-      if (err.response.data.message !== "Token Expired") return;
+      // if (err.response.data.message !== "Token Expired") return;
     }
   );
 
