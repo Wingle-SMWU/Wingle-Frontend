@@ -23,9 +23,9 @@ export default function MessageSend() {
 
   const [text, setText] = useState("");
   const { nickName, id } = useParams();
-  const { roomId } = useParams(); // 채널 구분
+  const { page, size } = useParams(); // 채널 구분
   const { roomList, messageList, setMessageList, myInfo, receiverInfo } =
-    useGetMessage(roomId!);
+    useGetMessage(page!, size!);
   const { image, nickname } = roomList;
 
   const client: any = useRef({});
@@ -34,12 +34,12 @@ export default function MessageSend() {
   const [newMsg, setNewMsg] = useState<NewMsgProps>();
 
   // 쪽지 리스트 누르면 보이는 메시지 보내기에 들어갈 메시지 내용
-  const handleChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 
   // 엔터키로 쪽지 보내기
-  const handleSendMessage = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) return;
     if (e.key === "Enter" && text) {
       publish(text);
@@ -55,23 +55,13 @@ export default function MessageSend() {
   const publish = (text: string) => {
     if (!client.current.connected) return;
     client.current.publish({
-      destination: `/pub/chats/message/${roomId}`,
+      destination: `/messages`,
       body: JSON.stringify({
         roomId: id,
         content: text,
       }),
     });
     setText("");
-  };
-
-  const subscribe = () => {
-    client.current.subscribe(`/sub/room/${roomId}`, (body: any) => {
-      const json_body = JSON.parse(body.body);
-      setNewMsg(json_body);
-      console.log("구독");
-
-      // refetch();
-    });
   };
 
   useEffect(() => {

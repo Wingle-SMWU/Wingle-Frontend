@@ -7,7 +7,7 @@ interface User {
   memberId: number;
 }
 
-const useGetMessage = (page: number, size: number) => {
+const useGetMessage = (page: number | string, size: number | string) => {
   const { getRoomAllMessage } = useMsgAPI();
 
   const [roomList, setRoomList] = useState<any>([]); // 화면

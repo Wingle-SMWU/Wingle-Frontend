@@ -3,8 +3,8 @@ import SendDisable from "../../../public/images/message/sendDisable.svg";
 
 interface IconProps {
   text: string;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onCick: () => void;
 }
 
@@ -39,7 +39,7 @@ const TextBox = styled.div`
   border-top: 0.8px solid #eeeef2;
 `;
 
-const TextInput = styled.textarea`
+const TextInput = styled.input`
   border: none;
   width: 100%;
   height: 19px;

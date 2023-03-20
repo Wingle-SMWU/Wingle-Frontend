@@ -1,14 +1,9 @@
 import useMsgAPI from "./useMsgAPI";
 
-interface Iprops {
-  page: number;
-  size: number;
-}
-
-const useGetRoom = ({ page, size }: Iprops) => {
+const useGetRoom = () => {
   const { getAllRoomLists } = useMsgAPI();
 
-  const msgRoomList = async () => {
+  const msgRoomList = async (page: number, size: number) => {
     try {
       await getAllRoomLists(page, size);
     } catch (data) {
@@ -17,7 +12,7 @@ const useGetRoom = ({ page, size }: Iprops) => {
     }
   };
 
-  return [msgRoomList];
+  return { msgRoomList };
 };
 
 export default useGetRoom;
