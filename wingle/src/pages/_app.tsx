@@ -7,12 +7,8 @@ import { theme } from "../styles/theme";
 import styled from "styled-components";
 const Style = {
   Wrapper: styled.div`
-<<<<<<< HEAD
-    width: 500px;
-=======
     width: 100%;
     max-width: 500px;
->>>>>>> 1a1754d43a871927b8ae41376a4b5cba1fd8ea71
     height: 100vh;
     background-color: white;
   `,
