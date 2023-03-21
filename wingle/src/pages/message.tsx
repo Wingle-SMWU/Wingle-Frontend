@@ -3,6 +3,7 @@ import useGetRoom from "./api/hooks/message/useGetRoom";
 import MsgList from "../components/Message/MsgList";
 import { Text } from "../components/ui";
 import Message from "../../public/images/message/message.svg";
+import Navigation from "@/src/components/layout/Navigation";
 
 interface RoomListProps {
   roomId: number;
@@ -36,6 +37,7 @@ const message = () => {
             </EmptyBox>
           </EmptyContainer>
         )}
+        <Navigation tab={""} />
       </MsgContainer>
     </Container>
   );
@@ -49,7 +51,7 @@ const Container = styled.div`
 const TopContainer = styled.div`
   position: sticky;
   display: flex;
-  padding: 14px;
+  padding: 14px 24px;
 `;
 
 const MsgContainer = styled.div`

@@ -201,8 +201,7 @@ const Container = styled.div`
 const TitleBox = styled.div`
   position: sticky;
   display: flex;
-  padding: 14px;
-  top: 4px;
+  padding: 14px 24px;
   background: #ffffff;
   border-bottom: 1px solid #eeeef2;
   box-sizing: border-box;

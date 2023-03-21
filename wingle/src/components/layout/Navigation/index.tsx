@@ -36,10 +36,6 @@ export default function Navigation(props: { tab: string }) {
   const router = useRouter();
   const menu = router.asPath;
 
-  const onClickMoveToWrite = () => {
-    router.push({ pathname: `/community/create`, query: { tab: props.tab } });
-  };
-
   return (
     <Style.Wrapper>
       <Style.Box>
@@ -56,11 +52,6 @@ export default function Navigation(props: { tab: string }) {
             </Text.Caption2>
           </Style.NavigationMenu>
         ))}
-        <Style.CreateIcon
-          tab={props.tab}
-          src="community/list/new-write.svg"
-          onClick={onClickMoveToWrite}
-        />
       </Style.Box>
     </Style.Wrapper>
   );
@@ -85,15 +76,6 @@ const Style = {
     align-items: center;
     justify-content: center;
     position: relative;
-  `,
-
-  CreateIcon: styled.img<Tab>`
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    bottom: 94px;
-    right: 24px;
-    display: ${({ tab }) => (tab === "공지" ? "none" : "block")};
   `,
 
   NavigationMenu: styled(Link)`
