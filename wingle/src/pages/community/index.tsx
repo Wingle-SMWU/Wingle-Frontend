@@ -8,8 +8,16 @@ import { useMemo } from "react";
 import styled from "styled-components";
 import Navigation from "@/src/components/layout/Navigation";
 
-export default function Community() {
+type Tab = {
+  tab: string;
+};
+
+export default function Community(props: { tab: string }) {
   const router = useRouter();
+
+  const onClickMoveToWrite = () => {
+    router.push({ pathname: `/community/create`, query: { tab: props.tab } });
+  };
 
   const currentTab: string = useMemo(() => {
     if (!router.query.tab) {
@@ -30,6 +38,13 @@ export default function Community() {
       )}
       {currentTab === "공지" && <NoticeTab imgUrl={getImageUrl(currentTab)} />}
       {currentTab === "자유" && <FreeTab imgUrl={getImageUrl(currentTab)} />}
+      <Style.Box>
+        <Style.CreateIcon
+          tab={props.tab}
+          src="community/list/new-write.svg"
+          onClick={onClickMoveToWrite}
+        />
+      </Style.Box>
       <Navigation tab={currentTab} />
     </Style.Wrapper>
   );
@@ -41,5 +56,20 @@ const Style = {
     flex-direction: column;
     background-color: white;
     padding-bottom: 72px;
+  `,
+
+  Box: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-right: 30px;
+  `,
+
+  CreateIcon: styled.img<Tab>`
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    bottom: 94px;
+    display: ${({ tab }) => (tab === "공지" ? "none" : "block")};
   `,
 };

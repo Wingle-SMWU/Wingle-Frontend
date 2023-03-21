@@ -14,7 +14,7 @@ export default function Header(props: {
   return (
     <>
       <Style.Header>
-        <Text.Title2 color="gray900">커뮤니티</Text.Title2>
+        <Text.Title1 color="gray900">커뮤니티</Text.Title1>
       </Style.Header>
       <Style.HeaderBar>
         {TabArr.map((el) => (
