@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Modal from "@/src/components/modal";
 
 const Style = {
@@ -41,15 +41,32 @@ const Style = {
     z-index: 0;
     cursor: pointer;
   `,
-  NicknameChangeBox: styled.div``,
+  NicknameChangeBox: styled.div`
+    .message {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 140%;
+      &.success {
+        color: #959599;
+      }
+      &.error {
+        color: #ff2727;
+      }
+    }
+  `,
   InputNickname: styled.input`
     width: 93%;
     height: 52px;
     border: 1px solid #dcdce0;
     border-radius: 8px;
     padding: 0px 16px;
+    margin-bottom: 8px;
+
     ::placeholder {
       color: #959599;
+    }
+    :focus {
+      border: 1px solid #dcdce0;
     }
   `,
   Header: styled.div`
@@ -69,10 +86,28 @@ const Style = {
 
 export default function Nickname() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [name, setName] = useState<string>("");
+  const [nameMessage, setNameMessage] = useState<string>("");
+  const [isName, setIsName] = useState<boolean>(false);
+
+  const onChangeName = useCallback((e: any) => {
+    const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
+    const nameCurrent = e.target.value;
+    setName(nameCurrent);
+
+    if (!nameRegex.test(nameCurrent)) {
+      setNameMessage("한글/영어 2글자 이상 10글자 이하");
+      setIsName(false);
+    } else {
+      setNameMessage("사용 가능한 형식입니다.");
+      setIsName(true);
+    }
+  }, []);
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
+
   return (
     <>
       <Style.Wapper>
@@ -104,12 +139,18 @@ export default function Nickname() {
             <Style.NicknameChangeBox>
               <Text.Body5 color="gray700">닉네임</Text.Body5>{" "}
               <Margin direction="column" size={8} />
-              <Style.InputNickname placeholder="기존 닉네임" />
+              <Style.InputNickname
+                placeholder="기존 닉네임"
+                type="text"
+                onChange={onChangeName}
+              />
+              {name.length > 0 && (
+                <span className={`message ${isName ? "success" : "error"}`}>
+                  {nameMessage}
+                </span>
+              )}
               {/** 기존 닉네임 자리에 {nickname} */}
               <Margin direction="column" size={8} />
-              <Text.Caption3 color="gray900">
-                한글/영어 2글자 이상 10글자 이하
-              </Text.Caption3>
             </Style.NicknameChangeBox>
           </>
         </Style.Content>
