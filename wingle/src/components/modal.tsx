@@ -13,7 +13,7 @@ export default function Modal(props: {
   };
 
   const modalTitle = useMemo(() => {
-    if (props.type === "create-back") {
+    if (props.type === "create-back" || "profile-back") {
       return "정말 나가시겠어요?";
     }
     if (props.type === "detail-delete-contents") {
@@ -50,6 +50,15 @@ export default function Modal(props: {
           삭제된 댓글은 복구할 수 없으니
           <br></br>
           신중하게 생각해주세요.
+        </>
+      );
+    }
+    if (props.type === "profile-back") {
+      return (
+        <>
+          지금 나가시면 변경 내용이
+          <br></br>
+          저장되지 않습니다.
         </>
       );
     }
