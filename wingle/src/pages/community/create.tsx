@@ -3,6 +3,7 @@ import { Text } from "@/src/components/ui";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
+import useCommunityAPI from "../api/hooks/community/useCommunityAPI";
 
 export default function Create() {
   const router = useRouter();
@@ -18,6 +19,19 @@ export default function Create() {
     setModalVisible((prev) => !prev);
   };
 
+  const { axiosCreateArticle } = useCommunityAPI();
+  const onClickcreateButton = () =>{
+    // TODO: forumId는 상태관리 필요
+    // TODO: 이미지 업로드
+    const newArticle = new FormData();
+    newArticle.append('forumId', '1');
+    newArticle.append('content', contents);
+
+    axiosCreateArticle(newArticle).then(() => {
+      router.back();
+    });
+  }
+
   return (
     <Style.Wrapper>
       <Style.Header>
@@ -28,7 +42,9 @@ export default function Create() {
           />
           <Text.Title2 color="gray900">{currentTab}게시판 글 작성</Text.Title2>
         </Style.HeaderLeft>
-        <Style.CreateButton>
+        <Style.CreateButton 
+        onClick={onClickcreateButton}  
+        >
           <Text.Body1 color={contents ? "gray900" : "gray500"}>등록</Text.Body1>
         </Style.CreateButton>
       </Style.Header>
