@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import styled from "styled-components";
 import { Margin, Text } from "./ui";
+import useDeleteComment from "../pages/api/hooks/community/useDeleteCommnet";
 
 export default function Modal(props: {
   type: string;
@@ -9,6 +10,8 @@ export default function Modal(props: {
 }) {
   const router = useRouter();
   const onClickOk = () => {
+    // 여기서 delete comment 커스텀 훅 사용
+    useDeleteComment()
     router.back();
   };
 
