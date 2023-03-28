@@ -130,7 +130,7 @@ export const Text = {
   Body4: styled.span<StyleText>`
     font-weight: 400;
     font-size: 16px;
-    line-height: 140%;
+    line-height: 150%;
     /* common */
     display: ${({ box }) => (box ? "block" : "inline")};
     cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
@@ -171,7 +171,6 @@ export const Text = {
       color ? theme.color[color] : theme.color.white};
     height: fit-content;
   `,
-
   Caption1: styled.span<StyleText>`
     font-weight: 700;
     font-size: 12px;
@@ -218,7 +217,7 @@ export const Margin = styled.div<StyleMargin>`
 `;
 
 type StyleButton = {
-  thema: "black" | "white" | "red";
+  thema: "black" | "white" | "orange500";
   bg?: string;
   text?: string | ReactNode;
   width?: string;
