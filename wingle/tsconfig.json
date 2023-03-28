@@ -22,6 +22,11 @@
     "allowSyntheticDefaultImports": true,
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/authpage/countryList.tsx"
+  ],
   "exclude": ["node_modules"]
 }

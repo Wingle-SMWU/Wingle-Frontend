@@ -241,7 +241,6 @@ const ButtonBox = styled.button<StyleButton>`
         : thema === "white"
         ? "#ffffff"
         : "#434343"};
-
   background-color: ${({ thema, bg }) =>
     bg
       ? bg
