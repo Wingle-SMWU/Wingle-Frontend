@@ -33,5 +33,10 @@
     "@svgr/webpack": "^6.5.1",
     "@types/styled-components": "^5.1.26",
     "babel-plugin-styled-components": "^2.0.7"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }
