@@ -3,8 +3,12 @@ import Head from "next/head";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "../styles/global-style";
 import { theme } from "../styles/theme";
-
+import { RecoilRoot } from "recoil";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { useState } from "react";
 import styled from "styled-components";
+
+
 const Style = {
   Wrapper: styled.div`
     width: 500px;
@@ -15,19 +19,40 @@ const Style = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  );
+
+  
+
   return (
     <>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>국제교류 온라인 플랫폼, Wingle</title>
-        <link rel="icon" href="/logo_favicon.jpeg" />
-      </Head>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <Style.Wrapper>
-          <Component {...pageProps} />
-        </Style.Wrapper>
-      </ThemeProvider>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+            <title>국제교류 온라인 플랫폼, Wingle</title>
+            <link rel="icon" href="/logo_favicon.jpeg" />
+          </Head>
+          <GlobalStyle />
+          <ThemeProvider theme={theme}>
+            <Style.Wrapper>
+              <Component {...pageProps} />
+            </Style.Wrapper>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </RecoilRoot>
     </>
   );
 }
