@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useGetRoom from "./api/hooks/message/useGetRoom";
+import useGetRoom from "../hooks/message/useGetRoom";
 import MsgList from "../components/Message/MsgList";
 import { Text } from "../components/ui";
 import Message from "../../public/images/message/message.svg";

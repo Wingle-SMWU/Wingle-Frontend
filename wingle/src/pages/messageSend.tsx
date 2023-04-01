@@ -1,6 +1,6 @@
 import { Text, Margin } from "../components/ui";
 import styled from "styled-components";
-import useGetMessage from "./api/hooks/message/useGetMessage";
+import useGetMessage from "../hooks/message/useGetMessage";
 import React, { KeyboardEvent, useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import SendMsg from "../components/Message/SendMsg";
@@ -24,8 +24,10 @@ export default function MessageSend() {
   const [text, setText] = useState("");
   const { nickName, id } = useParams();
   const { page, size } = useParams(); // 채널 구분
-  const { roomList, messageList, setMessageList, myInfo, receiverInfo } =
-    useGetMessage(page!, size!);
+  const { roomList, messageList, setMessageList, myInfo, receiverInfo } = useGetMessage(
+    page!,
+    size!
+  );
   const { image, nickname } = roomList;
 
   const client: any = useRef({});

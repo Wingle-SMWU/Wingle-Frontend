@@ -1,6 +1,6 @@
 import axios from "axios";
 import { SERVER_URL } from ".";
-import { getAccessTokenFromLocalStorage } from "../../../utils/accessTokenHandler";
+import { getAccessTokenFromLocalStorage } from "../utils/accessTokenHandler";
 
 const useAPI = () => {
   const config = {

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useMsgAPI from "@/src/pages/api/hooks/message/useMsgAPI";
+import useMsgAPI from "@/src/hooks/message/useMsgAPI";
 import { useRouter } from "next/router";
 
 // 쪽지함에서 보는 개별 메시지 리스트
@@ -19,9 +19,7 @@ function betweenTime(value: string) {
   let today: number | Date = new Date();
   let timeValue: number | Date = new Date(value);
 
-  const betweenTime = Math.floor(
-    (today.getTime() - timeValue.getTime()) / 1000 / 60
-  );
+  const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
 
   if (betweenTime < 1) return "방금 전";
   if (betweenTime < 60) {
@@ -48,15 +46,7 @@ function betweenTime(value: string) {
 
 const MsgList = ({ list }: { list: IProps }) => {
   const { axiosCreateRoom } = useMsgAPI();
-  const {
-    image,
-    nickname,
-    createdTime,
-    recentChat,
-    roomId,
-    messageId,
-    isSender,
-  } = list;
+  const { image, nickname, createdTime, recentChat, roomId, messageId, isSender } = list;
 
   const router = useRouter();
   const handleMoveChatRoom = () => {
