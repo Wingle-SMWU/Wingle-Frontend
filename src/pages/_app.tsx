@@ -9,7 +9,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     width: 500px;
     max-width: 500px;
@@ -47,9 +47,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           </Head>
           <GlobalStyle />
           <ThemeProvider theme={theme}>
-            <Style.Wrapper>
+            <S.Wrapper>
               <Component {...pageProps} />
-            </Style.Wrapper>
+            </S.Wrapper>
           </ThemeProvider>
         </QueryClientProvider>
       </RecoilRoot>
