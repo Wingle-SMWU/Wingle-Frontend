@@ -12,8 +12,7 @@ const Style = {
   InputField: styled.div<StyledInputProps>`
   width: ${(props) => (props.small ? "345px" : "452px")};
   height: 50px;
-  border:${(props) =>
-    props.error ? "1px solid #FF7070" : "1px solid #dcdce0;"}; 
+  border:${(props) => (props.error ? "1px solid #FF7070" : "1px solid #dcdce0;")}; 
   border-radius: 8px;
 margin-bottom:8px;
 
@@ -115,8 +114,7 @@ export default function InputBox({ getError }: any) {
     }
   };
   const handlePW = (e: any) => {
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,15}$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,15}$/;
     if (!passwordRegex.test(e.target.value)) {
       setErrorPW(true);
     } else {
@@ -194,20 +192,14 @@ export default function InputBox({ getError }: any) {
           <Style.ButtonWrapper small={true} error={errorCertify}>
             <Style.Button
               onClick={() => {
-                data.CertificationNumber === "123"
-                  ? setErrorCertify(false)
-                  : setErrorCertify(true);
+                data.CertificationNumber === "123" ? setErrorCertify(false) : setErrorCertify(true);
               }}
             >
               인증 확인
             </Style.Button>
           </Style.ButtonWrapper>
         </Style.Content>
-        <ErrorMent
-          error={errorCertify}
-          errorMent="인증정보가 일치하지 않습니다."
-          ment=" "
-        />
+        <ErrorMent error={errorCertify} errorMent="인증정보가 일치하지 않습니다." ment=" " />
       </Style.ContentWrapper>
 
       <Text.Body1 color="gray700">비밀번호</Text.Body1>
@@ -226,10 +218,7 @@ export default function InputBox({ getError }: any) {
               }}
             />
           </Style.InputField>
-          <Style.ButtonWrapper
-            small={false}
-            error={false}
-          ></Style.ButtonWrapper>
+          <Style.ButtonWrapper small={false} error={false}></Style.ButtonWrapper>
         </Style.Content>
         <ErrorMent
           error={errorPW}
@@ -247,22 +236,13 @@ export default function InputBox({ getError }: any) {
               type="string"
               placeholder="비밀번호"
               onChange={(e) => {
-                e.target.value === data.PW
-                  ? setErrorPWCheck(false)
-                  : setErrorPWCheck(true);
+                e.target.value === data.PW ? setErrorPWCheck(false) : setErrorPWCheck(true);
               }}
             />
           </Style.InputField>
-          <Style.ButtonWrapper
-            small={false}
-            error={false}
-          ></Style.ButtonWrapper>
+          <Style.ButtonWrapper small={false} error={false}></Style.ButtonWrapper>
         </Style.Content>
-        <ErrorMent
-          error={errorPWCheck}
-          errorMent="정보를 정확히 입력해주세요."
-          ment=" "
-        />
+        <ErrorMent error={errorPWCheck} errorMent="정보를 정확히 입력해주세요." ment=" " />
       </Style.ContentWrapper>
 
       <Text.Body1 color="gray700">이름</Text.Body1>
@@ -281,10 +261,7 @@ export default function InputBox({ getError }: any) {
               }}
             />
           </Style.InputField>
-          <Style.ButtonWrapper
-            small={false}
-            error={false}
-          ></Style.ButtonWrapper>
+          <Style.ButtonWrapper small={false} error={false}></Style.ButtonWrapper>
         </Style.Content>
         <ErrorMent
           error={errorName}
@@ -313,11 +290,7 @@ export default function InputBox({ getError }: any) {
             <Style.Button>중복 확인</Style.Button>
           </Style.ButtonWrapper>
         </Style.Content>
-        <ErrorMent
-          error={errorNickName}
-          errorMent="한글/영어 두글자 이상 10글자 이하 "
-          ment="  "
-        />
+        <ErrorMent error={errorNickName} errorMent="한글/영어 두글자 이상 10글자 이하 " ment="  " />
       </Style.ContentWrapper>
     </>
   );

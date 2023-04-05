@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
-import InputBox from "../../components/authpage/SignUpInput";
-import DropDown from "../../components/authpage/dropDown";
-import StudentCard from "../../components/authpage/studentCard";
-import { InputInfo } from "../../components/authpage/inputInformation";
-import GenderSelectBox from "@/src/components/authpage/genderSelect";
-import AgreeBox from "@/src/components/authpage/agreeBox";
+import InputBox from "../../components/authpage/signup/signUpInput";
+import DropDown from "../../components/authpage/signup/dropDown";
+import StudentCard from "../../components/authpage/signup/studentCard";
+import { InputInfo } from "../../components/authpage/signup/inputInformation";
+import GenderSelectBox from "../../components/authpage/signup/genderSelect";
+import AgreeBox from "@/src/components/authpage/signup/agreeBox";
 import router from "next/router";
 import Image from "next/image";
 
