@@ -92,6 +92,7 @@ export default function Login() {
     {
       onSuccess: (data) => {
         console.log(`로그인 성공! ${data}`);
+        // TODO: 나중에 토큰 로컬스토리지 넣기, 메인 페이지로 라우팅
       },
       onError: (error) => {
         console.log(`로그인 실패! ${error}`);
