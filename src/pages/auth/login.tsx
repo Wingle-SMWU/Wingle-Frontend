@@ -54,13 +54,14 @@ const S = {
   LoginButton: styled.button`
     width: 452px;
     height: 50px;
-    background-color: #eeeef2;
-    color: #959599;
+    background-color: ${({ disabled }) => (disabled ? "#eee" : "#ff812e")};
+    color: ${({ disabled }) => (disabled ? "#959599" : "#fff")};
     border-radius: 8px;
     margin: 0 auto;
     font-weight: 700;
     font-size: 16px;
     line-height: 22.4px;
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   `,
 
   RegisterButton: styled.button`
@@ -129,7 +130,12 @@ export default function Login() {
       </S.AccountWrapper>
 
       <S.ButtonWrapper>
-        <S.LoginButton onClick={handleLogin}>로그인</S.LoginButton>
+        <S.LoginButton
+          disabled={email.length < 8 || !email.includes("@") || !email.includes(".") || !password}
+          onClick={handleLogin}
+        >
+          로그인
+        </S.LoginButton>
         <S.RegisterButton onClick={() => router.push("auth/signup")}>회원가입</S.RegisterButton>
       </S.ButtonWrapper>
     </>
