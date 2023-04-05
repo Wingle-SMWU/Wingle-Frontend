@@ -16,8 +16,11 @@ const S = {
     padding-right: 24px;
   `,
   HeaderWrapper: styled.div`
-    padding: 16px;
+    padding: 16px 0;
     display: flex;
+  `,
+  BackButton: styled(Image)`
+    cursor: pointer;
   `,
   CompleteButton: styled.button<SdInputProps>`
     height: 50px;
@@ -56,12 +59,12 @@ export default function SignUp() {
     <>
       <S.Wrapper>
         <S.HeaderWrapper>
-          <Image
+          <S.BackButton
             src="/auth/arrow_back.svg"
             alt="arrow"
             width={24}
             height={24}
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/auth/login")}
           />
           <Margin direction="row" size={14} />
           <Text.Title2 color="gray900">회원가입</Text.Title2>
