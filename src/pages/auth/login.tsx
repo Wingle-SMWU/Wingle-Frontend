@@ -3,6 +3,9 @@ import styled from "styled-components";
 import Image from "next/image";
 import router from "next/router";
 import { Text, Margin } from "@/src/components/ui";
+import axios from "axios";
+import { useMutation } from "react-query";
+import { SERVER_URL } from "@/src/hooks";
 
 const S = {
   Header: styled.div`
@@ -42,7 +45,10 @@ const S = {
   `,
 
   ButtonWrapper: styled.div`
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   `,
 
   LoginButton: styled.button`
@@ -52,16 +58,14 @@ const S = {
     color: #959599;
     border-radius: 8px;
     margin: 0 auto;
-    display: block;
-    padding-bottom: 24px;
     font-weight: 700;
     font-size: 16px;
     line-height: 22.4px;
   `,
 
   RegisterButton: styled.button`
-    width: 56px;
     margin: 20px;
+    width: 56px;
     border-bottom: 1px solid #49494d;
     color: #49494d;
     font-weight: 800;
@@ -73,9 +77,28 @@ const S = {
 
 export default function Login() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { mutate: loginMutation, isLoading } = useMutation(
+    async () => {
+      const response = await axios.post(`${SERVER_URL}/api/login`, {
+        email,
+        password,
+      });
+      return response.data;
+    },
+    {
+      onSuccess: (data) => {
+        console.log(`로그인 성공! ${data}`);
+      },
+      onError: (error) => {
+        console.log("로그인 실패!");
+      },
+    }
+  );
 
   const handleLogin = () => {
-    // TODO: 로그인 처리
+    loginMutation();
   };
 
   return (
@@ -96,7 +119,12 @@ export default function Login() {
           />
         </S.InputField>
         <S.InputField>
-          <input type="password" placeholder="비밀번호" />
+          <input
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </S.InputField>
       </S.AccountWrapper>
 
