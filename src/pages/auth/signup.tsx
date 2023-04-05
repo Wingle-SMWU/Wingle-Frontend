@@ -9,6 +9,7 @@ import GenderSelectBox from "@/src/components/authpage/genderSelect";
 import AgreeBox from "@/src/components/authpage/agreeBox";
 import router from "next/router";
 import Image from "next/image";
+
 const Style = {
   Wrapper: styled.div`
     padding-left: 24px;
@@ -68,9 +69,7 @@ export default function SignUp() {
         <AgreeBox getCheck={getCheck} />
         <Style.CompleteButton
           complete={complete}
-          onClick={() =>
-            complete ? router.replace("SignupCompletePage") : console.log("disabled")
-          }
+          onClick={() => (complete ? router.replace("complete") : console.log("disabled"))}
         >
           <Text.Body1 color={complete ? "white" : "gray500"}>작성완료</Text.Body1>
         </Style.CompleteButton>

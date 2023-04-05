@@ -51,11 +51,12 @@ const S = {
     background-color: #eeeef2;
     color: #959599;
     border-radius: 8px;
+    margin: 0 auto;
+    display: block;
     padding-bottom: 24px;
     font-weight: 700;
     font-size: 16px;
     line-height: 22.4px;
-    cursor: pointer;
   `,
 
   RegisterButton: styled.button`
@@ -101,7 +102,7 @@ export default function Login() {
 
       <S.ButtonWrapper>
         <S.LoginButton onClick={handleLogin}>로그인</S.LoginButton>
-        <S.RegisterButton onClick={() => router.push("auth/SignupPage")}>회원가입</S.RegisterButton>
+        <S.RegisterButton onClick={() => router.push("auth/signup")}>회원가입</S.RegisterButton>
       </S.ButtonWrapper>
     </>
   );

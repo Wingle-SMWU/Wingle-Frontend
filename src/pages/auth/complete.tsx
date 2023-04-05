@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Margin, Text } from "@/src/components/ui";
 import Image from "next/image";
+
 const Style = {
   Wrapper: styled.div`
     padding-left: 24px;
