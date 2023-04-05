@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import { Text, Margin } from "@/src/components/ui";
 import axios from "axios";
 import { useMutation } from "react-query";
@@ -77,10 +77,11 @@ const S = {
 };
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { mutate: loginMutation, isLoading } = useMutation(
+  const { mutate: login, isLoading } = useMutation(
     async () => {
       const response = await axios.post(`${SERVER_URL}/api/login`, {
         email,
@@ -93,14 +94,22 @@ export default function Login() {
         console.log(`로그인 성공! ${data}`);
       },
       onError: (error) => {
-        console.log("로그인 실패!");
+        console.log(`로그인 실패! ${error}`);
       },
     }
   );
 
-  const handleLogin = () => {
-    loginMutation();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    login();
   };
+
+  const handleSignup = () => {
+    router.push("auth/signup");
+  };
+
+  const isButtonDisabled =
+    email.length < 8 || !email.includes("@") || !email.includes(".") || !password;
 
   return (
     <>
@@ -110,34 +119,33 @@ export default function Login() {
         <Text.Body6 color="gray700">다함께 즐기는 국제교류 커뮤니티</Text.Body6>
       </S.Header>
 
-      <S.AccountWrapper>
-        <S.InputField>
-          <input
-            type="email"
-            placeholder="이메일"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </S.InputField>
-        <S.InputField>
-          <input
-            type="password"
-            placeholder="비밀번호"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </S.InputField>
-      </S.AccountWrapper>
+      <form onSubmit={handleSubmit}>
+        <S.AccountWrapper>
+          <S.InputField>
+            <input
+              type="email"
+              placeholder="이메일"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </S.InputField>
+          <S.InputField>
+            <input
+              type="password"
+              placeholder="비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </S.InputField>
+        </S.AccountWrapper>
 
-      <S.ButtonWrapper>
-        <S.LoginButton
-          disabled={email.length < 8 || !email.includes("@") || !email.includes(".") || !password}
-          onClick={handleLogin}
-        >
-          로그인
-        </S.LoginButton>
-        <S.RegisterButton onClick={() => router.push("auth/signup")}>회원가입</S.RegisterButton>
-      </S.ButtonWrapper>
+        <S.ButtonWrapper>
+          <S.LoginButton disabled={isButtonDisabled} type="submit">
+            로그인
+          </S.LoginButton>
+          <S.RegisterButton onClick={handleSignup}>회원가입</S.RegisterButton>
+        </S.ButtonWrapper>
+      </form>
     </>
   );
 }
