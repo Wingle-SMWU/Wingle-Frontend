@@ -8,6 +8,7 @@ import { InputInfo } from "../../components/authpage/inputInformation";
 import GenderSelectBox from "@/src/components/authpage/genderSelect";
 import AgreeBox from "@/src/components/authpage/agreeBox";
 import router from "next/router";
+import Image from "next/image";
 const Style = {
   Wrapper: styled.div`
     padding-left: 24px;
@@ -54,11 +55,7 @@ export default function SignUp() {
     <>
       <Style.Wrapper>
         <Style.HeaderWrapper>
-          <img
-            src="/auth/arrow_back.svg"
-            alt="arrow"
-            onClick={() => router.push("/")}
-          ></img>
+          <Image src="/auth/arrow_back.svg" alt="arrow" onClick={() => router.push("/")} />
           <Margin direction="row" size={14} />
           <Text.Title2 color="gray900">회원가입</Text.Title2>
         </Style.HeaderWrapper>
@@ -72,14 +69,10 @@ export default function SignUp() {
         <Style.CompleteButton
           complete={complete}
           onClick={() =>
-            complete
-              ? router.replace("SignupCompletePage")
-              : console.log("disabled")
+            complete ? router.replace("SignupCompletePage") : console.log("disabled")
           }
         >
-          <Text.Body1 color={complete ? "white" : "gray500"}>
-            작성완료
-          </Text.Body1>
+          <Text.Body1 color={complete ? "white" : "gray500"}>작성완료</Text.Body1>
         </Style.CompleteButton>
       </Style.Wrapper>
     </>

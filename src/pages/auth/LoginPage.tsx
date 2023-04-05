@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
 import router from "next/router";
+import Image from "next/image";
 
 const Style = {
   Header: styled.div`
@@ -67,7 +68,7 @@ export default function Login() {
   return (
     <>
       <Style.Header>
-        <img src="auth/loginLogo.svg" alt="logo"></img>
+        <Image src="auth/loginLogo.svg" alt="logo" />
         <Margin direction="column" size={8} />
         <Text.Body6 color="gray700">다함께 즐기는 국제교류 커뮤니티</Text.Body6>
       </Style.Header>

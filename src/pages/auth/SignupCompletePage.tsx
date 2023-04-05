@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Margin, Text } from "@/src/components/ui";
+import Image from "next/image";
 const Style = {
   Wrapper: styled.div`
     padding-left: 24px;
@@ -31,16 +32,12 @@ export default function SignupComplete() {
         <Style.TitleWrapper>가입이 승인되면</Style.TitleWrapper>
         <Style.TitleWrapper>메일을 보내드릴게요</Style.TitleWrapper>
         <Margin direction="column" size={8} />
-        <Style.ContentWrapper>
-          메일이 오지 않는다면 스펨함을 확인하거나
-        </Style.ContentWrapper>
-        <Style.ContentWrapper>
-          wingle.kr@gmail.com으로 문의해주세요.
-        </Style.ContentWrapper>
+        <Style.ContentWrapper>메일이 오지 않는다면 스펨함을 확인하거나</Style.ContentWrapper>
+        <Style.ContentWrapper>wingle.kr@gmail.com으로 문의해주세요.</Style.ContentWrapper>
       </Style.Wrapper>
       <Margin direction="column" size={77} />
       <Style.IMGWrapper>
-        <img src="/auth/completed.svg" />
+        <Image src="/auth/completed.svg" alt="완료 이미지" />
       </Style.IMGWrapper>
     </>
   );
