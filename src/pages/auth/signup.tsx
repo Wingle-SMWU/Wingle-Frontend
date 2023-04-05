@@ -10,7 +10,7 @@ import AgreeBox from "@/src/components/authpage/agreeBox";
 import router from "next/router";
 import Image from "next/image";
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     padding-left: 24px;
     padding-right: 24px;
@@ -19,7 +19,7 @@ const Style = {
     padding: 16px;
     display: flex;
   `,
-  CompleteButton: styled.button<StyledInputProps>`
+  CompleteButton: styled.button<SdInputProps>`
     height: 50px;
     background-color: ${(props) => (props.complete ? "#FF812E" : "#EEEEF2")};
     border-radius: 8px;
@@ -28,7 +28,7 @@ const Style = {
   `,
 };
 
-interface StyledInputProps {
+interface SdInputProps {
   complete: boolean;
 }
 
@@ -54,12 +54,18 @@ export default function SignUp() {
   };
   return (
     <>
-      <Style.Wrapper>
-        <Style.HeaderWrapper>
-          <Image src="/auth/arrow_back.svg" alt="arrow" onClick={() => router.push("/")} />
+      <S.Wrapper>
+        <S.HeaderWrapper>
+          <Image
+            src="/auth/arrow_back.svg"
+            alt="arrow"
+            width={24}
+            height={24}
+            onClick={() => router.push("/")}
+          />
           <Margin direction="row" size={14} />
           <Text.Title2 color="gray900">회원가입</Text.Title2>
-        </Style.HeaderWrapper>
+        </S.HeaderWrapper>
         <StudentCard />
         <Text.Title1 color="gray900">학생 정보</Text.Title1>
         <Margin direction="column" size={16} />
@@ -67,13 +73,13 @@ export default function SignUp() {
         <DropDown />
         <GenderSelectBox />
         <AgreeBox getCheck={getCheck} />
-        <Style.CompleteButton
+        <S.CompleteButton
           complete={complete}
           onClick={() => (complete ? router.replace("complete") : console.log("disabled"))}
         >
           <Text.Body1 color={complete ? "white" : "gray500"}>작성완료</Text.Body1>
-        </Style.CompleteButton>
-      </Style.Wrapper>
+        </S.CompleteButton>
+      </S.Wrapper>
     </>
   );
 }
