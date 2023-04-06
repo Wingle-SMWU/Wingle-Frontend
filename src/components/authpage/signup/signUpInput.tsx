@@ -10,28 +10,28 @@ const Style = {
     display: flex;
   `,
   InputField: styled.div<StyledInputProps>`
-  width: ${(props) => (props.small ? "345px" : "452px")};
-  height: 50px;
-  border:${(props) => (props.error ? "1px solid #FF7070" : "1px solid #dcdce0;")}; 
-  border-radius: 8px;
-margin-bottom:8px;
-
-  & > input {
-    width:300px;
-    border: none;
-    
-    padding: 14px;
+    width: ${(props) => (props.small ? "345px" : "452px")};
+    height: 50px;
+    border: ${(props) => (props.error ? "1px solid #FF7070" : "1px solid #dcdce0;")};
     border-radius: 8px;
-    height: 22px;
+    margin-bottom: 8px;
 
-    &::placeholder {
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 140%
-      color: #959599;
+    & > input {
+      width: 300px;
+      border: none;
+
+      padding: 14px;
+      border-radius: 8px;
+      height: 22px;
+
+      &::placeholder {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 140%;
+        color: #959599;
+      }
     }
-  }
-`,
+  `,
   Button: styled.button`
     font-size: 16px;
     font-weight: 700;
