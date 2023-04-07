@@ -7,75 +7,6 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import { SERVER_URL } from "@/src/hooks";
 
-const S = {
-  Header: styled.div`
-    width: 200px;
-    margin: 0 auto;
-    padding: 48px;
-  `,
-
-  AccountWrapper: styled.div`
-    padding-bottom: 30px;
-  `,
-
-  InputField: styled.div`
-    margin: 0 auto;
-    width: 452px;
-    height: 50px;
-    border: 1px solid #dcdce0;
-    border-radius: 8px;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-
-    & > input {
-      border: none;
-      padding: 0 16px;
-      border-radius: 8px;
-      height: 100%;
-      flex: 1;
-
-      &::placeholder {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 140%;
-        color: #959599;
-      }
-    }
-  `,
-
-  ButtonWrapper: styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  `,
-
-  LoginButton: styled.button`
-    width: 452px;
-    height: 50px;
-    background-color: ${({ disabled }) => (disabled ? "#eee" : "#ff812e")};
-    color: ${({ disabled }) => (disabled ? "#959599" : "#fff")};
-    border-radius: 8px;
-    margin: 0 auto;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 22.4px;
-    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-  `,
-
-  RegisterButton: styled.button`
-    margin: 20px;
-    width: 56px;
-    border-bottom: 1px solid #49494d;
-    color: #49494d;
-    font-weight: 800;
-    font-size: 16px;
-    line-height: 20px;
-    cursor: pointer;
-  `,
-};
-
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -150,3 +81,72 @@ export default function Login() {
     </>
   );
 }
+
+const S = {
+  Header: styled.div`
+    width: 200px;
+    margin: 0 auto;
+    padding: 48px;
+  `,
+
+  AccountWrapper: styled.div`
+    padding-bottom: 30px;
+  `,
+
+  InputField: styled.div`
+    margin: 0 auto;
+    width: 452px;
+    height: 50px;
+    border: 1px solid #dcdce0;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+
+    & > input {
+      border: none;
+      padding: 0 16px;
+      border-radius: 8px;
+      height: 100%;
+      flex: 1;
+
+      &::placeholder {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 140%;
+        color: #959599;
+      }
+    }
+  `,
+
+  ButtonWrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  `,
+
+  LoginButton: styled.button`
+    width: 452px;
+    height: 50px;
+    background-color: ${({ disabled }) => (disabled ? "#eee" : "#ff812e")};
+    color: ${({ disabled }) => (disabled ? "#959599" : "#fff")};
+    border-radius: 8px;
+    margin: 0 auto;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22.4px;
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  `,
+
+  RegisterButton: styled.button`
+    margin: 20px;
+    width: 56px;
+    border-bottom: 1px solid #49494d;
+    color: #49494d;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
+  `,
+};
