@@ -11,6 +11,7 @@ import router from "next/router";
 import Image from "next/image";
 import { useMutation } from "react-query";
 import axios from "axios";
+import { SERVER_URL } from "@/src/hooks";
 
 interface SdInputProps {
   complete: boolean;
@@ -56,7 +57,7 @@ export default function SignUp() {
   };
 
   const signUpMutation = useMutation((signUpData: SignUpData) =>
-    axios.post("/api/signup", signUpData)
+    axios.post(`${SERVER_URL}/api/signup`, signUpData)
   );
 
   const handleSignUpSubmit = () => {
