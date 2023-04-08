@@ -3,31 +3,7 @@ import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
 import { ST } from "next/dist/shared/lib/utils";
 
-const Style = {
-  Wrapper: styled.div`
-    margin-top: 8px;
-    margin-bottom: 48px;
-  `,
-  ContentWrapper: styled.div`
-    display: flex;
-  `,
-  Content: styled.div<StyledInputProps>`
-    display: ${(props) => (props.Condition ? `block` : `none`)};
-    overflow: auto;
-    margin-top: 8px;
-    padding: 16px;
-    background-color: #fff3eb;
-    border: 1px solid #ffb07e;
-    border-radius: 8px;
-    height: 140px;
-  `,
-  Img: styled.div<StyledInputProps>`
-    margin-left: auto;
-    display: ${(props) => (props.Condition ? `block` : `none`)};
-  `,
-};
-
-interface StyledInputProps {
+interface SdInputProps {
   Condition: boolean;
 }
 
@@ -39,13 +15,9 @@ function WrapperComponent({ title, content, icon, must, handleCheck }: any) {
   });
   return (
     <>
-      <Style.ContentWrapper>
+      <S.ContentWrapper>
         <img
-          src={
-            isAgreed === true
-              ? "/auth/selectedCheck.svg"
-              : "/auth/unselectedCheck.svg"
-          }
+          src={isAgreed === true ? "/auth/selectedCheck.svg" : "/auth/unselectedCheck.svg"}
           onClick={() => {
             setAgreed((prev) => !prev);
           }}
@@ -53,23 +25,21 @@ function WrapperComponent({ title, content, icon, must, handleCheck }: any) {
         <Margin direction="row" size={8} />
         <Text.Body2 color="gray900">{title}</Text.Body2>
         <Margin direction="row" size={3} />
-        <Text.Body2 color={icon === true ? "orange500" : "gray500"}>
-          {must}
-        </Text.Body2>
+        <Text.Body2 color={icon === true ? "orange500" : "gray500"}>{must}</Text.Body2>
 
-        <Style.Img Condition={icon}>
+        <S.Img Condition={icon}>
           <img
             src="/auth/arrow_down.svg"
             onClick={() => {
               setActive((prev) => !prev);
             }}
           />
-        </Style.Img>
-      </Style.ContentWrapper>
+        </S.Img>
+      </S.ContentWrapper>
 
-      <Style.Content Condition={isActive}>
+      <S.Content Condition={isActive}>
         <Text.Body6 color="gray700">{content}</Text.Body6>
-      </Style.Content>
+      </S.Content>
     </>
   );
 }
@@ -105,7 +75,7 @@ export default function AgreeBox({ getCheck }: any) {
   return (
     <>
       <Text.Body1 color="gray700">이용약관 동의</Text.Body1>
-      <Style.Wrapper>
+      <S.Wrapper>
         <WrapperComponent
           title="서비스 이용약관"
           icon={true}
@@ -126,7 +96,31 @@ export default function AgreeBox({ getCheck }: any) {
           must={"(선택)"}
           handleCheck={handleThirdCheckValue}
         />
-      </Style.Wrapper>
+      </S.Wrapper>
     </>
   );
 }
+
+const S = {
+  Wrapper: styled.div`
+    margin-top: 8px;
+    margin-bottom: 48px;
+  `,
+  ContentWrapper: styled.div`
+    display: flex;
+  `,
+  Content: styled.div<SdInputProps>`
+    display: ${(props) => (props.Condition ? `block` : `none`)};
+    overflow: auto;
+    margin-top: 8px;
+    padding: 16px;
+    background-color: #fff3eb;
+    border: 1px solid #ffb07e;
+    border-radius: 8px;
+    height: 140px;
+  `,
+  Img: styled.div<SdInputProps>`
+    margin-left: auto;
+    display: ${(props) => (props.Condition ? `block` : `none`)};
+  `,
+};
