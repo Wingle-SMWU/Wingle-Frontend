@@ -12,7 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const { mutate: login, isLoading } = useMutation(
-    async () => postLogin(email, password),
+    () => postLogin(email, password),
     {
       onSuccess: (data) => {
         console.log(`로그인 성공! ${data}`);
