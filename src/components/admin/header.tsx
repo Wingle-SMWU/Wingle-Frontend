@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <S.Header>
       <S.Logo>
-        <Image src='admin/logo.svg' alt='logo' width={28} height={28} />
+        <Image src='/admin/logo.svg' alt='logo' width={28} height={28} />
       </S.Logo>
       <S.Title>Wingle Admin</S.Title>
     </S.Header>
@@ -36,7 +36,7 @@ const S = {
     top: 21px;
     width: 105px;
     height: 22px;
-    font-family: "Pretendard";
+    font-family: Pretendard;
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
