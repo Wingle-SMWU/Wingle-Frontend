@@ -25,14 +25,14 @@ const S = {
     position: absolute;
     width: 28px;
     height: 28px;
-    left: 277px;
+    left: 257px;
     top: 18px;
   `,
   Title: styled.div`
     position: absolute;
     width: 105px;
     height: 22px;
-    left: 317px;
+    left: 297px;
     top: 21px;
     width: 105px;
     height: 22px;
