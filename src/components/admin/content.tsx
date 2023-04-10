@@ -10,7 +10,44 @@ const dummy = [
     id: '01',
     name: '김첨지',
     nationality: '외국인',
-  }
+  },
+  {
+    id: '999999',
+    name: '금쪽이',
+    nationality: '한국인'
+  },
+  {
+    id: '01',
+    name: '김첨지',
+    nationality: '외국인',
+  },  {
+    id: '999999',
+    name: '금쪽이',
+    nationality: '한국인'
+  },
+  {
+    id: '01',
+    name: '김첨지',
+    nationality: '외국인',
+  },  {
+    id: '999999',
+    name: '금쪽이',
+    nationality: '한국인'
+  },
+  {
+    id: '01',
+    name: '김첨지',
+    nationality: '외국인',
+  },  {
+    id: '999999',
+    name: '금쪽이',
+    nationality: '한국인'
+  },
+  {
+    id: '01',
+    name: '김첨지',
+    nationality: '외국인',
+  },
 ];
 
 export default function Content() {
@@ -34,7 +71,6 @@ export default function Content() {
           )
         })}
       </div>
-
     </S.Content>
   )
 }

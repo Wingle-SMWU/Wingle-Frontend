@@ -21,6 +21,7 @@ const S = {
     padding: 0px 0px 0px 248px;
     gap: 24px;
     width: 1440px;
+    width: 100%;
     height: 44px;
     border-bottom: 1px solid #eeeef2;
     flex: none;
