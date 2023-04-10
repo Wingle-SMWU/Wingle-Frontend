@@ -1,0 +1,87 @@
+import Contents from '@/src/components/admin/detail/contents'
+import Header from '@/src/components/admin/header'
+import styled from 'styled-components'
+
+export default function Detail() {
+  return (
+    <S.Main>
+      <Header />
+      <S.TabBar><p>수락대기</p></S.TabBar>
+      <S.Card />
+      <Contents />
+      <S.Button>
+        <button type='submit' form='form'>가입수락</button>
+      </S.Button>
+    </S.Main>
+  )
+}
+
+const S = {
+  Main: styled.div`
+    width: 100%;
+    height: 1500px;
+    background-color: white;
+    position: relative;
+  `,
+  TabBar: styled.div`
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px 0px 0px 248px;
+    gap: 24px;
+    width: 1440px;
+    height: 44px;
+    left: 0px;
+    top: 143px;
+    border-bottom: 1px solid #EEEEF2;
+    > p {
+      padding: 8px;
+      width: 63px;
+      height: 27px;
+      font-family: Pretendard;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 150%;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #222223;
+    }
+  `,
+  Card: styled.div`
+    position: absolute;
+    width: 700px;
+    height: 600px;
+    left: 373px;
+    top: 123px;
+    background: #eeeeee;
+    background-image: url('/logo_favicon.jpeg');
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+  `,
+  Button: styled.div`
+    position: absolute;
+    width: 1440px;
+    height: 80px;
+    left: 0px;
+    bottom: 0px;
+    border-top: 1px solid #EEEEF2;
+    > button {
+      position: absolute;
+      left: 992px;
+      top: 15px;
+      width: 200px;
+      height: 50px;
+      padding: 14px 16px;
+      background: #FF812E;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 16px;
+      color: #FFFFFF;
+      font-family: Pretendard;
+    }
+  `
+}
