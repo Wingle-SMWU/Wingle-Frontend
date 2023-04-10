@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { Text, Margin } from "@/src/components/ui";
-import axios from "axios";
 import { useMutation } from "react-query";
-import { SERVER_URL } from "@/src/hooks";
+import { postLogin } from "@/src/api/auth/loginApi";
 
 export default function Login() {
   const router = useRouter();
@@ -13,13 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const { mutate: login, isLoading } = useMutation(
-    async () => {
-      const response = await axios.post(`${SERVER_URL}/api/login`, {
-        email,
-        password,
-      });
-      return response.data;
-    },
+    async () => postLogin(email, password),
     {
       onSuccess: (data) => {
         console.log(`로그인 성공! ${data}`);
@@ -27,6 +20,8 @@ export default function Login() {
       },
       onError: (error) => {
         console.log(`로그인 실패! ${error}`);
+        // 로그인 실패시 에러 메시지 출력
+        alert("로그인 실패! 이메일과 비밀번호를 확인해주세요.");
       },
     }
   );
@@ -81,6 +76,7 @@ export default function Login() {
     </>
   );
 }
+
 
 const S = {
   Header: styled.div`
