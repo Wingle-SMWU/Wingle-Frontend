@@ -1,26 +1,32 @@
+import { useState } from 'react'
 import Contents from '@/src/components/admin/detail/contents'
+import Modal from '@/src/components/admin/detail/modal'
 import Header from '@/src/components/admin/header'
 import styled from 'styled-components'
 
 export default function Detail() {
+
+  const [isOpen, setIsOpen] = useState<string>('');
+
   return (
-    <S.Main>
+    <S.Main modal={isOpen}>
       <Header />
       <S.TabBar><p>수락대기</p></S.TabBar>
       <S.Card />
-      <Contents />
-      <S.Button>
-        <button type='submit' form='form'>가입수락</button>
+      <Contents setIsOpen={setIsOpen} />
+      {isOpen && <Modal setIsOpen={setIsOpen}>{isOpen}</Modal>}
+      <S.Button onClick={() => setIsOpen('수락')}>
+        <button type='button'>가입수락</button>
       </S.Button>
     </S.Main>
   )
 }
 
 const S = {
-  Main: styled.div`
+  Main: styled.div<{modal: string}>`
     width: 100%;
     height: 1500px;
-    background-color: white;
+    background: ${({ modal }) => (modal ? '#eeeef2' : 'white')};
     position: relative;
   `,
   TabBar: styled.div`
@@ -56,7 +62,6 @@ const S = {
     height: 600px;
     left: 373px;
     top: 123px;
-    background: #eeeeee;
     background-image: url('/logo_favicon.jpeg');
     background-size: auto;
     background-repeat: no-repeat;

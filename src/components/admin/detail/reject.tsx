@@ -1,10 +1,13 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
+import Modal from './modal';
 
-type Layout = {
+type RejectFactor = {
   children: ReactNode;
+  setIsOpen: React.Dispatch<React.SetStateAction<string>>;
 }
-export default function Reject({ children }: Layout) {
+
+export default function Reject({ children, setIsOpen }: RejectFactor) {
   return (
     <S.Reject>
       <div>
@@ -13,7 +16,7 @@ export default function Reject({ children }: Layout) {
       </div>
       <S.Button>
         <button type='button'>내용 저장</button>
-        {children === '거절사유' && <button type='button'>거절 사유 전송</button>}
+        {children === '거절사유' && <button type='button' onClick={() => setIsOpen('거절')}>거절 사유 전송</button>}
       </S.Button>
     </S.Reject>
   )
@@ -49,6 +52,7 @@ const S = {
         border-radius: 8px;
         padding: 8px;
         color: #222223;
+        background: transparent;
       }
     }
   `,

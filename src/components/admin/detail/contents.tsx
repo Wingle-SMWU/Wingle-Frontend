@@ -2,12 +2,16 @@ import styled from 'styled-components'
 import Profile from './profile'
 import Reject from './reject'
 
-export default function Contents() {
+type ContentsFactor = {
+  setIsOpen: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Contents({ setIsOpen }: ContentsFactor) {
   return (
     <S.Contents id='form'>
       <Profile />
-      <Reject>거절사유</Reject>
-      <Reject>메모</Reject>
+      <Reject setIsOpen={setIsOpen}>거절사유</Reject>
+      <Reject setIsOpen={setIsOpen}>메모</Reject>
     </S.Contents>
   )
 }
