@@ -18,11 +18,10 @@ export default function Content({ data }: AdminUsersResp) {
       <div>
         {data.map((user, idx) => {
           return (
-            <S.Item key={user.userId}>
+            <S.Item key={user.userId} nation={user.nation}>
               <li><p>{data.length - idx}</p></li>
               <li><p>{user.name}</p></li>
-              <li><p>{user.nation === 'KR' ? USER_NATIONALITY[0] : USER_NATIONALITY[1] }</p></li>
-              <li>{' '}</li>
+              <li><p>{user.nation === 'KR' ? USER_NATIONALITY[0] : !user.nation ? '입력필요' : USER_NATIONALITY[1] }</p></li>
             </S.Item>
           )
         })}
@@ -97,7 +96,7 @@ const S = {
       height: 44px;
     }
   `,
-  Item: styled.ul`
+  Item: styled.ul<{nation: string | null}>`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -146,13 +145,15 @@ const S = {
     padding: 4px 12px;
     margin: auto 0;
     > p {
-      width: 32px;
+      width: 100%;
       height: 17px;
       font-family: 'Pretendard';
       font-style: normal;
       font-weight: 700;
       font-size: 12px;
       color: #6C6C70;
+      color: ${({nation}) => (nation === 'KR' ? '#6C6C70' : !nation ? 'red' : '#FF9856')};
+      text-align: center;
       flex: none;
       flex-grow: 0;
     }
