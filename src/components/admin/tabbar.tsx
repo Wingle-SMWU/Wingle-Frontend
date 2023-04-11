@@ -1,19 +1,20 @@
-import { useState } from 'react';
-import styled from 'styled-components'
+import { ADMIN_TAB_LIST } from '@/src/constants/constants';
+import styled from 'styled-components';
 
-export default function Tabbar() {
-  
-  const list: string[] = ['수락대기','수락완료', '수락거절']; 
-  const [currIdx, setCurrIdx] = useState(0);
+type TabbarFactor = {
+  currIdx: number;
+  handleClickTabBar: (idx: number) => void;
+}
 
+export default function Tabbar({ currIdx, handleClickTabBar }: TabbarFactor) {
   return (
     <S.Tabbar>
       <S.Content>
-        {list.map((el: string, idx: number): JSX.Element => (
+        {ADMIN_TAB_LIST.map((el: string, idx: number): JSX.Element => (
           <li 
             key={idx} 
             className={idx === currIdx ? 'selected' : ''} 
-            onClick={() => setCurrIdx(idx)}
+            onClick={() => handleClickTabBar(idx)}
           >{el}</li>
         ))}
       </S.Content>
@@ -69,5 +70,4 @@ const S = {
       padding-bottom: 7px;
     }
   `,
-  
 }
