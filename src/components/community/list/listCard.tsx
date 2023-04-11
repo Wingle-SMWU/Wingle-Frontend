@@ -30,7 +30,7 @@ export default function ListCard(props: { imgUrl: string; isNotice: boolean, art
     if (props.isNotice) {
       return;
     }
-    router.push({ pathname: `/community/detail`, query: { tab: currentTab } });
+    router.push({ pathname: `/community/detail`, query: { tab: currentTab, forumId: forumId, articleId: articleId } });
   };
   
   return (

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Modal from "../../modal";
 import { Margin, Text } from "../../ui";
 
-export default function Profile(props: { currentTab: string }) {
+export default function Profile(props: { currentTab: string, userNickname: string, createdTime: string }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const onClickModal = () => {
@@ -18,8 +18,9 @@ export default function Profile(props: { currentTab: string }) {
           <Style.ProfileImg src={getImageUrl(props.currentTab)} />
           <Margin direction="row" size={10} />
           <Style.ProfileInfo>
-            <Text.Body6 color="gray900">한국윙그리</Text.Body6>
+            <Text.Body6 color="gray900">{props.userNickname}</Text.Body6>
             <Text.Caption3 color="gray500">10분 전</Text.Caption3>
+            {/* 시간 처리 함수 이후 제작 */}
           </Style.ProfileInfo>
         </Style.ProfileLeft>
         <Style.CancelImg
