@@ -4,7 +4,85 @@ import { Margin, Text } from "@/src/components/ui";
 import { useState, useCallback } from "react";
 import Modal from "@/src/components/modal";
 
-const Style = {
+export default function Nickname() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [name, setName] = useState<string>("");
+  const [nameMessage, setNameMessage] = useState<string>("");
+  const [isName, setIsName] = useState<boolean>(false);
+
+  const onChangeName = useCallback((e: any) => {
+    const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
+    const nameCurrent = e.target.value;
+    setName(nameCurrent);
+
+    if (!nameRegex.test(nameCurrent)) {
+      setNameMessage("한글/영어 2글자 이상 10글자 이하");
+      setIsName(false);
+    } else {
+      setNameMessage("사용 가능한 형식입니다.");
+      setIsName(true);
+    }
+  }, []);
+
+  const onClickModal = () => {
+    setModalVisible((prev) => !prev);
+  };
+
+  return (
+    <>
+      <S.Wapper>
+        <S.Content>
+          <S.Header>
+            <S.Left>
+              <S.GoBackArrow
+                src="/back-arrow.svg"
+                alt="뒤로가기"
+                onClick={onClickModal}
+              />
+              <Text.Title1 color="gray900">프로필 수정</Text.Title1>
+            </S.Left>
+            <Text.Body1
+              color="gray500" // 비활성화 상태
+              // 활성화 상태에서는 color="gray900"
+              onClick={() => router.push(`/mypage/edit`)}
+              pointer
+            >
+              완료
+            </Text.Body1>
+          </S.Header>
+          <>
+            <S.ImageChangeBox>
+              <S.ProfileImage src="" alt="프로필 이미지" />
+              <S.CameraIcon src="/mypage/camera.svg" alt="변경 아이콘" />
+            </S.ImageChangeBox>
+
+            <S.NicknameChangeBox>
+              <Text.Body5 color="gray700">닉네임</Text.Body5>{" "}
+              <Margin direction="column" size={8} />
+              <S.InputNickname
+                placeholder="기존 닉네임"
+                type="text"
+                onChange={onChangeName}
+              />
+              {name.length > 0 && (
+                <span className={`message ${isName ? "success" : "error"}`}>
+                  {nameMessage}
+                </span>
+              )}
+              {/** 기존 닉네임 자리에 {nickname} */}
+              <Margin direction="column" size={8} />
+            </S.NicknameChangeBox>
+          </>
+        </S.Content>
+        {modalVisible && (
+          <Modal type="profile-back" onClickModal={onClickModal} />
+        )}
+      </S.Wapper>
+    </>
+  );
+}
+
+const S = {
   Wapper: styled.div`
     width: 500px;
     min-width: 360px;
@@ -83,81 +161,3 @@ const Style = {
     cursor: pointer;
   `,
 };
-
-export default function Nickname() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [name, setName] = useState<string>("");
-  const [nameMessage, setNameMessage] = useState<string>("");
-  const [isName, setIsName] = useState<boolean>(false);
-
-  const onChangeName = useCallback((e: any) => {
-    const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
-    const nameCurrent = e.target.value;
-    setName(nameCurrent);
-
-    if (!nameRegex.test(nameCurrent)) {
-      setNameMessage("한글/영어 2글자 이상 10글자 이하");
-      setIsName(false);
-    } else {
-      setNameMessage("사용 가능한 형식입니다.");
-      setIsName(true);
-    }
-  }, []);
-
-  const onClickModal = () => {
-    setModalVisible((prev) => !prev);
-  };
-
-  return (
-    <>
-      <Style.Wapper>
-        <Style.Content>
-          <Style.Header>
-            <Style.Left>
-              <Style.GoBackArrow
-                src="/back-arrow.svg"
-                alt="뒤로가기"
-                onClick={onClickModal}
-              />
-              <Text.Title1 color="gray900">프로필 수정</Text.Title1>
-            </Style.Left>
-            <Text.Body1
-              color="gray500" // 비활성화 상태
-              // 활성화 상태에서는 color="gray900"
-              onClick={() => router.push(`/mypage/edit`)}
-              pointer
-            >
-              완료
-            </Text.Body1>
-          </Style.Header>
-          <>
-            <Style.ImageChangeBox>
-              <Style.ProfileImage src="" alt="프로필 이미지" />
-              <Style.CameraIcon src="/mypage/camera.svg" alt="변경 아이콘" />
-            </Style.ImageChangeBox>
-
-            <Style.NicknameChangeBox>
-              <Text.Body5 color="gray700">닉네임</Text.Body5>{" "}
-              <Margin direction="column" size={8} />
-              <Style.InputNickname
-                placeholder="기존 닉네임"
-                type="text"
-                onChange={onChangeName}
-              />
-              {name.length > 0 && (
-                <span className={`message ${isName ? "success" : "error"}`}>
-                  {nameMessage}
-                </span>
-              )}
-              {/** 기존 닉네임 자리에 {nickname} */}
-              <Margin direction="column" size={8} />
-            </Style.NicknameChangeBox>
-          </>
-        </Style.Content>
-        {modalVisible && (
-          <Modal type="profile-back" onClickModal={onClickModal} />
-        )}
-      </Style.Wapper>
-    </>
-  );
-}
