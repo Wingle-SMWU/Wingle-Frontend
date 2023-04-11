@@ -1,71 +1,27 @@
 import styled from 'styled-components'
+import { ADMIN_CONTENT_MENU, USER_NATIONALITY } from '@/src/constants/constants';
+import { AdminUserResp } from '../../types/admin.type';
 
-const dummy = [
-  {
-    id: '999999',
-    name: '금쪽이',
-    nationality: '한국인'
-  },
-  {
-    id: '01',
-    name: '김첨지',
-    nationality: '외국인',
-  },
-  {
-    id: '999999',
-    name: '금쪽이',
-    nationality: '한국인'
-  },
-  {
-    id: '01',
-    name: '김첨지',
-    nationality: '외국인',
-  },  {
-    id: '999999',
-    name: '금쪽이',
-    nationality: '한국인'
-  },
-  {
-    id: '01',
-    name: '김첨지',
-    nationality: '외국인',
-  },  {
-    id: '999999',
-    name: '금쪽이',
-    nationality: '한국인'
-  },
-  {
-    id: '01',
-    name: '김첨지',
-    nationality: '외국인',
-  },  {
-    id: '999999',
-    name: '금쪽이',
-    nationality: '한국인'
-  },
-  {
-    id: '01',
-    name: '김첨지',
-    nationality: '외국인',
-  },
-];
+type AdminUsersResp = {
+  data: AdminUserResp[];
+}
 
-export default function Content() {
+export default function Content({ data }: AdminUsersResp) {
+  
   return (
     <S.Content>
       <S.Menu>
-        <li><p>No</p></li>
-        <li><p>Name</p></li>
-        <li><p>구분</p></li>
-        <li></li>
+        {ADMIN_CONTENT_MENU.map((menu, idx) => (
+          <li key={idx}><p>{menu}</p></li>
+        ))}
       </S.Menu>
       <div>
-        {dummy.map(user => {
+        {data.map((user, idx) => {
           return (
-            <S.Item key={user.id}>
-              <li><p>{user.id}</p></li>
+            <S.Item key={user.userId}>
+              <li><p>{data.length - idx}</p></li>
               <li><p>{user.name}</p></li>
-              <li><p>{user.nationality}</p></li>
+              <li><p>{user.nation === 'KR' ? USER_NATIONALITY[0] : USER_NATIONALITY[1] }</p></li>
               <li>{' '}</li>
             </S.Item>
           )
