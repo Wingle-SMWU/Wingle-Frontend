@@ -5,26 +5,29 @@ import { useRouter } from "next/router";
 import { Text, Margin } from "@/src/components/ui";
 import { useMutation } from "react-query";
 import { postLogin } from "@/src/api/auth/loginApi";
+import { saveRefreshTokenToLocalStorage } from "@/src/utils/refreshTokenHandler";
+import { saveAccessTokenToLocalStorage } from "@/src/utils/accessTokenHandler";
 
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { mutate: login, isLoading } = useMutation(
-    () => postLogin(email, password),
-    {
-      onSuccess: (data) => {
-        console.log(`로그인 성공! ${data}`);
-        // TODO: 나중에 토큰 로컬스토리지 넣기, 메인 페이지로 라우팅
-      },
-      onError: (error) => {
-        console.log(`로그인 실패! ${error}`);
-        // 로그인 실패시 에러 메시지 출력
-        alert("로그인 실패! 이메일과 비밀번호를 확인해주세요.");
-      },
-    }
-  );
+  const { mutate: login, isLoading } = useMutation(() => postLogin(email, password), {
+    onSuccess: (res) => {
+      console.log(`${res.message} ${res.data.refreshToken}`);
+      // 액세스토큰 리프레쉬 토큰 로컬스토리지 넣기, admin에 따라 라우팅
+      const { refreshToken, accessToken, admin } = res.data;
+      saveRefreshTokenToLocalStorage(refreshToken);
+      saveAccessTokenToLocalStorage(accessToken);
+      // router.push(admin ? "/admin" : "/main");
+    },
+    onError: (error) => {
+      console.log(`로그인 실패! ${error}`);
+      // 로그인 실패시 에러 메시지 출력
+      alert("로그인 실패! 이메일과 비밀번호를 확인해주세요.");
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,7 +79,6 @@ export default function Login() {
     </>
   );
 }
-
 
 const S = {
   Header: styled.div`
