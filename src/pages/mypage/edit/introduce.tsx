@@ -4,7 +4,50 @@ import { Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState } from "react";
 
-const Style = {
+export default function Introduce() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const onClickModal = () => {
+    setModalVisible((prev) => !prev);
+  };
+  return (
+    <>
+      <S.Wapper>
+        <S.Content>
+          <S.Header>
+            <S.Left>
+              <S.GoBackArrow
+                src="/back-arrow.svg"
+                alt="뒤로가기"
+                onClick={onClickModal}
+              />
+              <Text.Title1 color="gray900">자기소개</Text.Title1>
+            </S.Left>
+            <Text.Body1
+              color="gray500" // 비활성화 상태
+              // 활성화 상태에서는 color="gray900"
+              onClick={() => router.push(`/mypage/edit`)}
+              // onClick={handleSubmit} 얘도 추가해야함
+              pointer
+            >
+              완료
+            </Text.Body1>
+          </S.Header>
+
+          <S.Description
+            maxLength={400}
+            placeholder="자기소개를 작성해주세요! (최대 400자)"
+          />
+        </S.Content>
+        {modalVisible && (
+          <Modal type="profile-back" onClickModal={onClickModal} />
+        )}
+      </S.Wapper>
+    </>
+  );
+}
+
+const S = {
   Wapper: styled.div`
     width: 500px;
     min-width: 360px;
@@ -48,46 +91,3 @@ const Style = {
     }
   `,
 };
-
-export default function Introduce() {
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const onClickModal = () => {
-    setModalVisible((prev) => !prev);
-  };
-  return (
-    <>
-      <Style.Wapper>
-        <Style.Content>
-          <Style.Header>
-            <Style.Left>
-              <Style.GoBackArrow
-                src="/back-arrow.svg"
-                alt="뒤로가기"
-                onClick={onClickModal}
-              />
-              <Text.Title1 color="gray900">자기소개</Text.Title1>
-            </Style.Left>
-            <Text.Body1
-              color="gray500" // 비활성화 상태
-              // 활성화 상태에서는 color="gray900"
-              onClick={() => router.push(`/mypage/edit`)}
-              // onClick={handleSubmit} 얘도 추가해야함
-              pointer
-            >
-              완료
-            </Text.Body1>
-          </Style.Header>
-
-          <Style.Description
-            maxLength={400}
-            placeholder="자기소개를 작성해주세요! (최대 400자)"
-          />
-        </Style.Content>
-        {modalVisible && (
-          <Modal type="profile-back" onClickModal={onClickModal} />
-        )}
-      </Style.Wapper>
-    </>
-  );
-}
