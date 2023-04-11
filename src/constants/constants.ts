@@ -1,0 +1,1 @@
+export const USER_NATIONALITY = ['한국인', '외국인'];
