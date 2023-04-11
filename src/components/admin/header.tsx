@@ -16,7 +16,6 @@ const S = {
   Header: styled.div`
     width: 1440px;
     height: 64px;
-    background: #ffffff;
     flex: none;
     order: 0;
     flex-grow: 0;
