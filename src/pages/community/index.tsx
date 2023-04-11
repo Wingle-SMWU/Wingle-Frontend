@@ -4,9 +4,11 @@ import InteractTab from "@/src/components/community/list/interactTab";
 import NoticeTab from "@/src/components/community/list/noticeTab";
 import { getImageUrl } from "@/src/modules/utils";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import Navigation from "@/src/components/layout/Navigation";
+import { getForums } from "@/src/api/community/get/forums";
+import { useQuery } from "react-query";
 
 type Tab = {
   tab: string;
@@ -14,30 +16,40 @@ type Tab = {
 
 export default function Community(props: { tab: string }) {
   const router = useRouter();
-
+  
+  const { data, isLoading, isError } = useQuery({
+    queryFn: getForums,
+    queryKey: ['forums'],
+  });
+  
   const onClickMoveToWrite = () => {
     router.push({ pathname: `/community/create`, query: { tab: props.tab } });
   };
 
   const currentTab: string = useMemo(() => {
     if (!router.query.tab) {
-      return "자유";
+      return '자유';
     }
     return String(router.query.tab);
   }, [router.query.tab]);
-
+  
   const onClickTab = (event: any) => {
     router.push({ query: { tab: event.target.textContent } });
   };
 
+  if (isLoading) return <div>로딩중</div>
+  if (isError) return <div>에러</div>
+  
+  const TabArr = data.data;
+
   return (
     <Style.Wrapper>
       <Header tab={currentTab} onClickTab={onClickTab} />
-      {currentTab === "교류" && (
+      {currentTab === TabArr[1].name && (
         <InteractTab imgUrl={getImageUrl(currentTab)} />
       )}
-      {currentTab === "공지" && <NoticeTab imgUrl={getImageUrl(currentTab)} />}
-      {currentTab === "자유" && <FreeTab imgUrl={getImageUrl(currentTab)} />}
+      {currentTab === TabArr[2].name && <NoticeTab imgUrl={getImageUrl(currentTab)} />}
+      {currentTab === TabArr[0].name && <FreeTab imgUrl={getImageUrl(currentTab)} />}
       <Style.Box>
         <Style.CreateIcon
           tab={props.tab}
@@ -49,7 +61,6 @@ export default function Community(props: { tab: string }) {
     </Style.Wrapper>
   );
 }
-
 const Style = {
   Wrapper: styled.div`
     display: flex;

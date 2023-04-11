@@ -1,29 +1,39 @@
 import styled from "styled-components";
 import { Text } from "../../ui";
+import { useQuery } from "react-query";
+import { getForums } from "@/src/api/community/get/forums";
 
 type Tab = {
   tab?: boolean;
 };
 
-const TabArr = ["자유", "교류", "공지"];
-
 export default function Header(props: {
   tab: string;
   onClickTab: (event: any) => void;
 }) {
+  const { data, isLoading, isError } = useQuery({
+    queryFn: getForums,
+    queryKey: ['forums'],
+  });
+
+  if (isLoading) return <div>로딩중</div>
+  if (isError) return <div>에러</div>
+  
+  const TabArr = data.data;
+  
   return (
     <>
       <Style.Header>
         <Text.Title1 color="gray900">커뮤니티</Text.Title1>
       </Style.Header>
       <Style.HeaderBar>
-        {TabArr.map((el) => (
-          <Style.TextUnderLine tab={el === props.tab} key={el}>
+        {TabArr.map((el: {name: string, id: number}) => (
+          <Style.TextUnderLine tab={el.name === props.tab} key={el.id}>
             <Text.Title3
-              color={el === props.tab ? "gray900" : "gray500"}
+              color={el.name === props.tab ? "gray900" : "gray500"}
               onClick={props.onClickTab}
             >
-              {el}
+              {el.name}
             </Text.Title3>
           </Style.TextUnderLine>
         ))}
