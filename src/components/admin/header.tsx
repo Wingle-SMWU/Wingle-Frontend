@@ -1,13 +1,16 @@
 import Image from 'next/image';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 export default function Header() {
   return (
     <S.Header>
-      <S.Logo>
-        <Image src='/admin/logo.svg' alt='logo' width={28} height={28} />
-      </S.Logo>
-      <S.Title>Wingle Admin</S.Title>
+      <Link href='/admin'>
+        <S.Logo>
+          <Image src='/admin/logo.svg' alt='logo' width={28} height={28} />
+        </S.Logo>
+        <S.Title>Wingle Admin</S.Title>
+      </Link>
     </S.Header>
   )
 }
