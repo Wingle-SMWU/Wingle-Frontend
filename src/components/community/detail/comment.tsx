@@ -3,13 +3,25 @@ import { useState } from "react";
 import styled from "styled-components";
 import Modal from "../../modal";
 import { Text } from "../../ui";
+import { useQuery } from "react-query";
+import { getComments } from "@/src/api/community/get/comments";
 
-export default function Comment(props: { currentTab: string }) {
+export default function Comment(props: { currentTab: string, forumId: string, articleId: string }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
+
+  const { data, isLoading, isError } = useQuery({
+    queryFn: getComments,
+    queryKey: ['getComment', props.forumId, props.articleId, 0, 10],
+  });
+
+  if (isLoading) return <div>로딩중</div>
+  if (isError) return <div>에러</div>
+  
+  console.log(data);
 
   return (
     <Style.Wrapper>
