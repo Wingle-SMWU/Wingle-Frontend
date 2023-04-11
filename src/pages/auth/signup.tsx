@@ -10,25 +10,10 @@ import AgreeBox from "@/src/components/authpage/signup/agreeBox";
 import router from "next/router";
 import Image from "next/image";
 import { useMutation } from "react-query";
-import axios from "axios";
-import { SERVER_URL } from "@/src/hooks";
+import { SignUpData, postSignUp } from "@/src/api/auth/signUpApi";
 
 interface SdInputProps {
   complete: boolean;
-}
-
-interface SignUpData {
-  idCardImage: string;
-  email: string;
-  password: string;
-  name: string;
-  isNicknameChecked: boolean;
-  nickname: string;
-  gender: boolean;
-  nation: string;
-  termsOfUse: boolean;
-  termsOfPersonalInformation: boolean;
-  termsOfPromotion: boolean;
 }
 
 export default function SignUp() {
@@ -56,27 +41,14 @@ export default function SignUp() {
     }
   };
 
-  const signUpMutation = useMutation((signUpData: SignUpData) =>
-    axios.post(`${SERVER_URL}/api/signup`, signUpData)
+  const { mutate: signUpMutation } = useMutation((signUpData: SignUpData) =>
+    postSignUp(signUpData)
   );
 
   const handleSignUpSubmit = () => {
-    // TODO: 제출
-    // if (complete) {
-    //   signUpMutation.mutate({
-    //     idCardImage: "image",
-    //     email: "wingle@gmail.com",
-    //     password: "1234!",
-    //     name: "김윙글",
-    //     isNicknameChecked: true,
-    //     nickname: "윙그리",
-    //     gender: true,
-    //     nation: "kr",
-    //     termsOfUse: true,
-    //     termsOfPersonalInformation: true,
-    //     termsOfPromotion: false,
-    //   });
-    // }
+    if (complete) {
+      signUpMutation;
+    }
   };
 
   return (
