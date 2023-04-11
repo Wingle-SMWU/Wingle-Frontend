@@ -1,12 +1,21 @@
+import { useState } from 'react';
 import styled from 'styled-components'
 
 export default function Tabbar() {
+  
+  const list: string[] = ['수락대기','수락완료', '수락거절']; 
+  const [currIdx, setCurrIdx] = useState(0);
+
   return (
     <S.Tabbar>
       <S.Content>
-        <li>수락대기</li>
-        <li>수락완료</li>
-        <li>수락거절</li>
+        {list.map((el: string, idx: number): JSX.Element => (
+          <li 
+            key={idx} 
+            className={idx === currIdx ? 'selected' : ''} 
+            onClick={() => setCurrIdx(idx)}
+          >{el}</li>
+        ))}
       </S.Content>
     </S.Tabbar>
   )
@@ -49,14 +58,16 @@ const S = {
       text-align: center;
       font-family: Pretendard;
       cursor: pointer;
+      color: #959599;
+      &:hover {
+        color: #222223
+      }
     }
-    >li:nth-child(1) {
+    .selected {
       color: #222223;
       border-bottom: 2px solid #FF812E;
       padding-bottom: 7px;
     }
-    >li:not(first-child) {
-      color: #959599;
-    }
   `,
+  
 }
