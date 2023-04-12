@@ -3,4 +3,5 @@ export interface AdminUserResp {
   createdTime: string;
   name: string;
   nation: string | null;
+  idCardImage?: string;
 }

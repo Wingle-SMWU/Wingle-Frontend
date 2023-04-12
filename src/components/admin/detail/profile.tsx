@@ -1,21 +1,17 @@
 import styled from 'styled-components'
+import { AdminUserResp } from '../../../types/admin.type';
 
-export default function Profile() {
+type ProfileFactor = {
+  data: AdminUserResp;
+}
 
-  const data = {
-    "userId": 5,
-    "name": "성이름",
-    "createdTime": "2023-02-21T01:06:53.014058",
-    "idCardImage": "https://wingle-bucket.s3.ap-northeast-2.amazonaws.com/idCardImage/20230221010652431045299841939.png",
-    "nation": "KR"
-  }
-
+export default function Profile({ data }: ProfileFactor) {
   return (
     <S.Profile>
-      <div><p>No</p><p>{data.userId}</p></div>
-      <div><p>이름</p><p>{data.name}</p></div>
-      <div><p>구분</p><p>{data.nation}</p></div>
-      <div><p>가입신청일</p><p>{data.createdTime}</p></div>
+      <div><p>No</p><p>{data?.userId}</p></div>
+      <div><p>이름</p><p>{data?.name}</p></div>
+      <div><p>구분</p><p>{data?.nation}</p></div>
+      <div><p>가입신청일</p><p>{data?.createdTime}</p></div>
     </S.Profile>
   )
 }

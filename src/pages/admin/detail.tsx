@@ -14,16 +14,6 @@ export default function Detail() {
   const [isOpen, setIsOpen] = useState('');
   const userId = useRouter().asPath.split('?').at(-1);
 
-
-// data.data
-//   "data": {
-//     "userId": 5,
-//     "name": "성이름",
-//     "createdTime": "2023-02-21T01:06:53.014058",
-//     "idCardImage": "https://wingle-bucket.s3.ap-northeast-2.amazonaws.com/idCardImage/20230221010652431045299841939.png",
-//     "nation": "KR"
-// }
-
   const { data, isLoading, error } = useQuery('getUser', () => adminListAPI.getUser({path: 'waiting', userId}), {
     onSuccess: (res) => console.log(res),
     onError: (res) => console.log(res),
@@ -34,8 +24,8 @@ export default function Detail() {
     <S.Main modal={isOpen}>
       <Header />
       <S.TabBar><p>수락대기</p></S.TabBar>
-      <S.Card card={data && data.data.idCardImage}/>
-      <Contents setIsOpen={setIsOpen} />
+      <S.Card card={data?.data.idCardImage}/>
+      <Contents data={data} setIsOpen={setIsOpen} />
       {isOpen && <Modal setIsOpen={setIsOpen}>{isOpen}</Modal>}
       <S.Button onClick={() => setIsOpen('수락')}>
         <button type='button'>가입수락</button>
