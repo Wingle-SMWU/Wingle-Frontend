@@ -19,7 +19,7 @@ export default function Header(props: {
   if (isLoading) return <div>로딩중</div>
   if (isError) return <div>에러</div>
   
-  const TabArr = data.data;
+  const TabArr = data;
   
   return (
     <>

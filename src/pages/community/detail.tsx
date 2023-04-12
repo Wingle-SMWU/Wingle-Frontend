@@ -14,15 +14,13 @@ export default function Detail() {
   const forumId = `${router.query.forumId}`;
   const articleId = `${router.query.articleId}`;
 
-  const { data, isLoading, isError } = useQuery({
+  const { data: article, isLoading, isError } = useQuery({
     queryFn: getArticle,
     queryKey: ['article', forumId, articleId],
   });
 
   if (isLoading) return <div>로딩중</div>
   if (isError) return <div>에러</div>
-
-  const article = data.data;
 
   return (
     <Style.Wrapper>
@@ -33,7 +31,7 @@ export default function Detail() {
         <Comment currentTab={currentTab} forumId={forumId} articleId={articleId} />
       </Style.DetailTop>
       <Style.CommentInputFixed>
-        <CommentInput />
+        <CommentInput forumId={article.forumId} articleId={article.articleId} />
       </Style.CommentInputFixed>
     </Style.Wrapper>
   );
