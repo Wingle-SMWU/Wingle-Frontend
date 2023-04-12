@@ -2,16 +2,16 @@ import { useQuery } from "react-query";
 import ListCard from "./listCard";
 import { getArticles } from "@/src/api/community/get/articlesList";
 
-export default function InteractTab(props: { imgUrl: string }) {
+export default function InteractTab(props: { forumId: number, imgUrl: string }) {
   const { data, isLoading, isError } = useQuery({
     queryFn: getArticles,
-    queryKey: ['articles', 0, 30, false],
+    queryKey: ['articles', props.forumId, 0, 30, false],
   });
 
   if (isLoading) return <div>로딩중</div>
   if (isError) return <div>에러</div>
   
-  const articles = data.data.filter((article: Article) =>  article.forumId === 0);
+  const articles = data.filter((article: Article) =>  article.forumId === 0);
   
   return (
     <>
