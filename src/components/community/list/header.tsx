@@ -11,15 +11,13 @@ export default function Header(props: {
   tab: string;
   onClickTab: (event: any) => void;
 }) {
-  const { data, isLoading, isError } = useQuery({
+  const { data: TabArr, isLoading, isError } = useQuery({
     queryFn: getForums,
     queryKey: ['forums'],
   });
 
   if (isLoading) return <div>로딩중</div>
   if (isError) return <div>에러</div>
-  
-  const TabArr = data;
   
   return (
     <>
