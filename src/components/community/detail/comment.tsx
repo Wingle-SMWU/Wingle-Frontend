@@ -5,6 +5,7 @@ import Modal from "../../modal";
 import { Text } from "../../ui";
 import { useQuery } from "react-query";
 import { getComments } from "@/src/api/community/get/comments";
+import instance from "@/src/api/axiosModule";
 
 export default function Comment(props: { currentTab: string, forumId: string, articleId: string }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -13,42 +14,60 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
     setModalVisible((prev) => !prev);
   };
 
-  const { data, isLoading, isError } = useQuery({
+  const { data: comments, isLoading, isError, isIdle } = useQuery({
     queryFn: getComments,
-    queryKey: ['getComment', props.forumId, props.articleId, 0, 10],
+    queryKey: ['comments', props.forumId, props.articleId, 0, 10],
   });
 
-  if (isLoading) return <div>로딩중</div>
+  if (isLoading || isIdle) return <div>로딩중</div>
   if (isError) return <div>에러</div>
-  
-  console.log(data);
 
   return (
     <Style.Wrapper>
       <Style.CommentCount>
-        <Text.Body3 color="gray900">댓글 10</Text.Body3>
+        <Text.Body3 color="gray900">댓글 {comments.length}</Text.Body3>
       </Style.CommentCount>
-      <Style.Comment>
-        <Style.CommentTop>
-          <Style.CommentTopLeft>
-            <Style.ProfileImg src={getImageUrl(props.currentTab)} />
-            <Style.ProfileInfo>
-              <Text.Body6 color="gray900">한국윙그리</Text.Body6>
-              <Text.Caption3 color="gray500">10분 전</Text.Caption3>
-            </Style.ProfileInfo>
-          </Style.CommentTopLeft>
-          <Style.CancelImg
-            src="/community/detail/close-gray.svg"
-            onClick={onClickModal}
-          />
-        </Style.CommentTop>
-        <Style.CommentBottom>
-          <Text.Body3 color="gray900">그건좀 그렇지않나요?</Text.Body3>
-        </Style.CommentBottom>
-      </Style.Comment>
+      {comments.map((comment) => {
+        const {
+          content,
+          createdTime,
+          updatedTime,
+          id,
+          isMine,
+          userId,
+          userImage,
+          userNation,
+          userNickname,
+        } = comment;
+        return (
+          <>
+            <Style.Comment key={id}>
+              <Style.CommentTop>
+                <Style.CommentTopLeft>
+                  <Style.ProfileImg src={getImageUrl(props.currentTab)} />
+                  <Style.ProfileInfo>
+                    <Text.Body6 color="gray900">{userNickname}</Text.Body6>
+                    <Text.Caption3 color="gray500">10분 전</Text.Caption3>
+                    {/* 시간은 이후에 수정 */}
+                  </Style.ProfileInfo>
+                </Style.CommentTopLeft>
+                <Style.CancelImg
+                  src="/community/detail/close-gray.svg"
+                  onClick={onClickModal}
+                />
+              </Style.CommentTop>
+              <Style.CommentBottom>
+                <Text.Body3 color="gray900">{content}</Text.Body3>
+              </Style.CommentBottom>
+            </Style.Comment>
+          </>
+        )
+      })}
+
       {modalVisible && (
         <Modal type="detail-delete-comment" onClickModal={onClickModal} />
       )}
+      
     </Style.Wrapper>
   );
 }
