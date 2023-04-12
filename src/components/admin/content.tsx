@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 import { ADMIN_CONTENT_MENU, USER_NATIONALITY } from '@/src/constants/constants';
 import { AdminUserResp } from '../../types/admin.type';
+import Link from 'next/link';
 
 type AdminUsersResp = {
   data: AdminUserResp[];
 }
 
 export default function Content({ data }: AdminUsersResp) {
-
   return (
     <S.Content>
       <S.Menu>
@@ -18,13 +18,15 @@ export default function Content({ data }: AdminUsersResp) {
       <div>
         {data?.map((user, idx) => {
           return (
-            <S.Item key={user.userId} nation={user.nation}>
+            <Link key={user.userId} href={`/admin/detail?${user.userId}`}>
+              <S.Item nation={user.nation}>
               <li><p>{data.length - idx}</p></li>
               <li><p>{user.name}</p></li>
               <li><p>{user.nation === 'KR' ? USER_NATIONALITY[0] : !user.nation ? '입력필요' : USER_NATIONALITY[1] }</p></li>
             </S.Item>
-          )
-        })}
+            </Link>
+          )}
+        )}
       </div>
     </S.Content>
   )
@@ -40,7 +42,10 @@ const S = {
     width: 946px;
     height: 664px;
     left: 248px;
-    top: 124px;  
+    top: 124px;
+    a {
+      text-decoration: none;
+    }
   `,
   Menu: styled.ul`
     display: flex;
@@ -106,6 +111,12 @@ const S = {
   flex: none;
   flex-grow: 0;
   border-bottom: 1px solid #EEEEF2;
+  &: hover {
+    cursor: pointer;
+    > li:nth-child(2) {
+      opacity: 70%;
+    }
+  }
   > li {
     display: flex;
     flex-direction: column;
@@ -114,6 +125,7 @@ const S = {
     gap: 8px;
     flex: none;
     flex-grow: 0;
+    text-decoration: none;
     > p {
       width: 182px;
       height: 22px;
