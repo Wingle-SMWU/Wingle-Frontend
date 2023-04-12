@@ -1,18 +1,29 @@
 import Pagination from 'react-js-pagination';
 import styled from 'styled-components';
+import { AdminUserResp } from '../../types/admin.type';
 
+type AdminUsersResp = {
+  data: AdminUserResp[];
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+}
 
-export default function PageBtn() {
+export default function PageBtn({ data, page, setPage }: AdminUsersResp) {
+
+  const handleChangePage = (e: number) => {
+    setPage(e);
+  }
+
   return (
     <S.Button>
       <Pagination 
-        activePage={1}
+        activePage={page}
         itemsCountPerPage={10}
-        totalItemsCount={55}
-        pageRangeDisplayed={5}
-        prevPageText={"<"}
+        totalItemsCount={40}         // 총 데이터 개수 필요함
+        pageRangeDisplayed={10}
+        prevPageText={"<"}  
         nextPageText={">"}
-        onChange={() => console.log('zz')}
+        onChange={handleChangePage}
       />
     </S.Button>
   )
