@@ -10,6 +10,11 @@ type GetUser = {
   userId: string | string[] | undefined;
 }
 
+type PostPermission = {
+  path: string;
+  userId: string | undefined;
+}
+
 export const adminListAPI = {
   url: '/admin/list',
 
@@ -22,4 +27,13 @@ export const adminListAPI = {
     const res = await instance.get(`${adminListAPI.url}/${path}/${userId}`);
     return res.data;
   } 
+}
+
+export const adminPerAPI = {
+  url: '/admin/permission',
+
+  postAccept: async({ path, userId }: PostPermission) => {
+    const res = await instance.post(`${adminPerAPI.url}/${path}`, {userId});
+    return res.data;
+  }
 }
