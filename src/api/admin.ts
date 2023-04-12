@@ -5,11 +5,11 @@ type GetList = {
   page: number;
 }
 
-export const adminAPI = {
-  url: '/admin',
+export const adminListAPI = {
+  url: '/admin/list',
 
-  getList: async ({ path, page }: GetList) => {
-    const res = await instance.get(`${adminAPI.url}/list/${path}/${page}`);
+  get: async ({ path, page }: GetList) => {
+    const res = await instance.get(`${adminListAPI.url}/${path}/${page}`);
     return res.data;
   },
 }

@@ -1,6 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
-import { adminAPI } from '@/src/api/admin';
 import Content from '@/src/components/admin/content';
 import Header from '@/src/components/admin/header';
 import PageBtn from '@/src/components/admin/pageBtn';
@@ -16,16 +14,7 @@ export default function Admin() {
   const [page, setPage] = useState(1);
   const path = ADMIN_GET_LIST[currIdx];
 
-  // const { data } = useQuery([path, {path, page}], () => adminAPI.getList({ path, page: page - 1 }), {
-  //   onSuccess: (res) => {
-  //     console.log(res);
-  //   },
-  //   onError: (res) => console.log(res),
-  // });
-
-  const { data, isLoading, error } = useGetAdminUserList({path, page})
-
-
+  const { data, isLoading, error } = useGetAdminUserList({path, page});
 
   const handleClickTabBar = useCallback((idx: number) => {
     setCurrIdx(idx);
