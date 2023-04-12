@@ -1,9 +1,44 @@
 import { ChangeEvent, useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import { Margin } from "../../ui";
+import instance from "@/src/api/axiosModule";
+import { useMutation, useQueryClient } from "react-query";
 
-export default function CommentInput() {
-  const [comment, setComment] = useState("");
+export default function CommentInput(props: { forumId: number, articleId: number }) {
+  const [comment, setComment] = useState<string>("");
+
+  const fetchComments = async () => {
+    const response = await instance.post(`/community/articles/comments`, {
+      forumId: props.forumId,
+      articleId: props.articleId,
+      originCommentId: 0,
+      content: comment,
+    });
+    return response.data;
+  }
+
+  const queryClient = useQueryClient();
+
+  const updateComment = useMutation(fetchComments, {
+    onMutate: async (newComment) => {
+      await queryClient.cancelQueries('comments');
+      const prevComments = queryClient.getQueryData('comments');
+      if(prevComments) {
+        queryClient.setQueryData('comments', (prevData : any) => {
+          console.log(prevData);
+          return { ...prevData, data: [...prevData.data, newComment]}
+        });
+      }
+      return { prevComments };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries('comments');
+    },
+    onError: (error, payload, context) => {
+      console.log(`댓글 작성 실패! ${error}`);
+      queryClient.setQueryData('comments', context?.prevComments);
+    }
+  });
 
   const onChangeComment = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
@@ -27,6 +62,7 @@ export default function CommentInput() {
         rows={1}
         ref={inputRef}
         onInput={handleResizeHeight}
+        value={comment}
       />
       <Margin direction="row" size={8}></Margin>
       <Style.PostIcon
@@ -35,6 +71,10 @@ export default function CommentInput() {
             ? "/community/detail/send.svg"
             : "/community/detail/send-disable.svg"
         }
+        onClick={() => {
+          comment && updateComment.mutate();
+          setComment("");
+        }}
       />
     </Style.Wrapper>
   );
