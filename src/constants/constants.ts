@@ -4,3 +4,4 @@ export const ADMIN_TAB_LIST: string[] = ['수락대기', '수락완료', '수락
 
 export const ADMIN_CONTENT_MENU: string[] = ['No', 'Name', '구분'];
 
+export const ADMIN_GET_LIST: string[] = ['waiting', 'acceptance', 'rejection'];

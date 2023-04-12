@@ -7,7 +7,7 @@ type AdminUsersResp = {
 }
 
 export default function Content({ data }: AdminUsersResp) {
-  
+
   return (
     <S.Content>
       <S.Menu>
@@ -16,7 +16,7 @@ export default function Content({ data }: AdminUsersResp) {
         ))}
       </S.Menu>
       <div>
-        {data.map((user, idx) => {
+        {data?.map((user, idx) => {
           return (
             <S.Item key={user.userId} nation={user.nation}>
               <li><p>{data.length - idx}</p></li>
