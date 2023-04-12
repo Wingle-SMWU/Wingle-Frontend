@@ -19,13 +19,12 @@ export default function Detail() {
     onError: (res) => console.log(res),
   })
 
-
   return (
     <S.Main modal={isOpen}>
       <Header />
       <S.TabBar><p>수락대기</p></S.TabBar>
       <S.Card card={data?.data.idCardImage}/>
-      <Contents data={data} setIsOpen={setIsOpen} />
+      <Contents userId={userId} data={data} setIsOpen={setIsOpen} />
       {isOpen && <Modal setIsOpen={setIsOpen}>{isOpen}</Modal>}
       <S.Button onClick={() => setIsOpen('수락')}>
         <button type='button'>가입수락</button>

@@ -1,18 +1,18 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-import Modal from './modal';
 
 type RejectFactor = {
   children: ReactNode;
   setIsOpen: React.Dispatch<React.SetStateAction<string>>;
+  handleChangeReason: React.ChangeEventHandler<HTMLTextAreaElement>;
 }
 
-export default function Reject({ children, setIsOpen }: RejectFactor) {
+export default function Reject({ children, setIsOpen, handleChangeReason}: RejectFactor) {
   return (
     <S.Reject>
       <div>
         <p>{children}</p>
-        <p><textarea /></p>
+        <p><textarea onChange={handleChangeReason} /></p>
       </div>
       <S.Button>
         <button type='button'>내용 저장</button>
