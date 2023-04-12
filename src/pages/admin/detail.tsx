@@ -3,16 +3,38 @@ import Contents from '@/src/components/admin/detail/contents'
 import Modal from '@/src/components/admin/detail/modal'
 import Header from '@/src/components/admin/header'
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
+import { useQuery } from 'react-query'
+import { adminListAPI } from '@/src/api/admin'
+
+
 
 export default function Detail() {
 
-  const [isOpen, setIsOpen] = useState<string>('');
+  const [isOpen, setIsOpen] = useState('');
+  const userId = useRouter().asPath.split('?').at(-1);
+
+
+// data.data
+//   "data": {
+//     "userId": 5,
+//     "name": "성이름",
+//     "createdTime": "2023-02-21T01:06:53.014058",
+//     "idCardImage": "https://wingle-bucket.s3.ap-northeast-2.amazonaws.com/idCardImage/20230221010652431045299841939.png",
+//     "nation": "KR"
+// }
+
+  const { data, isLoading, error } = useQuery('getUser', () => adminListAPI.getUser({path: 'waiting', userId}), {
+    onSuccess: (res) => console.log(res),
+    onError: (res) => console.log(res),
+  })
+
 
   return (
     <S.Main modal={isOpen}>
       <Header />
       <S.TabBar><p>수락대기</p></S.TabBar>
-      <S.Card />
+      <S.Card card={data && data.data.idCardImage}/>
       <Contents setIsOpen={setIsOpen} />
       {isOpen && <Modal setIsOpen={setIsOpen}>{isOpen}</Modal>}
       <S.Button onClick={() => setIsOpen('수락')}>
@@ -56,13 +78,13 @@ const S = {
       color: #222223;
     }
   `,
-  Card: styled.div`
+  Card: styled.div<{card: string}>`
     position: absolute;
     width: 700px;
     height: 600px;
     left: 373px;
     top: 123px;
-    background-image: url('/logo_favicon.jpeg');
+    background-image: ${({ card }) => (card ? `url(${card})` : 'url(/logo_favicon.jpeg)')};
     background-size: auto;
     background-repeat: no-repeat;
     background-position: center;
