@@ -14,13 +14,15 @@ export default function PageBtn({ data, page, setPage }: AdminUsersResp) {
     setPage(e);
   }
 
+  console.log(page)
+
   return (
-    <S.Button>
+    <S.Button page={page}>
       <Pagination 
         activePage={page}
         itemsCountPerPage={10}
-        totalItemsCount={40}         // 총 데이터 개수 필요함
-        pageRangeDisplayed={10}
+        totalItemsCount={400}         // 총 데이터 개수 필요함
+        pageRangeDisplayed={5}
         prevPageText={"<"}  
         nextPageText={">"}
         onChange={handleChangePage}
@@ -30,7 +32,7 @@ export default function PageBtn({ data, page, setPage }: AdminUsersResp) {
 }
 
 const S = {
-  Button: styled.ul`
+  Button: styled.ul<{page: number}>`
     position: absolute;
     width: 248px;
     height: 40px;
@@ -43,6 +45,7 @@ const S = {
       align-items: center;
       padding: 4px 8px;
       gap: 8px;
+      position: relative;
     }
     ul.pagination li {
       display: inline-block;
@@ -57,7 +60,7 @@ const S = {
         display: none;
       }
       :nth-child(2) {
-        display: none;
+        visibility: ${({page}) => (page === 1 ? 'hidden' : '')};
       }
       :nth-last-child(2) a {
         color: #49494D;
