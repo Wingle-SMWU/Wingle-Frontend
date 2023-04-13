@@ -1,16 +1,15 @@
 import { adminPerAPI } from '@/src/api/admin';
 import { useMutation } from 'react-query';
 
-type MutateFactor = {
-  userId: string | undefined;
-  reason?: string;
-}
 
-export default function usePostPermission({ userId, reason }: MutateFactor) {
+export default function usePostPermission(userId: string | undefined, reason: string) {
 
-  let path = reason ? 'rejection' : 'acceptance';
+  const path = reason ? 'rejection' : 'acceptance';
 
-  const { mutate, isLoading, error } = useMutation(() => adminPerAPI.post({path, userId, reason}), {
+  const body = { userId: userId };
+  if(reason) body['reason'] = reason;
+
+  const { mutate, isLoading, error } = useMutation(() => adminPerAPI.post(path, body), {
     onSuccess: (res) => console.log(res),
     onError: (res) => console.log(res),
   });

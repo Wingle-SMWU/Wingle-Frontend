@@ -1,13 +1,23 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import { useMutation } from 'react-query';
+import { adminTempAPI } from '../../../api/admin';
+import usePostTemp from '@/src/hooks/admin/usePostTemp';
 
 type RejectFactor = {
-  children: ReactNode;
-  setIsOpen: React.Dispatch<React.SetStateAction<string>>;
-  handleChangeReason: React.ChangeEventHandler<HTMLTextAreaElement>;
+  children: ReactNode
+  userId: string | undefined
+  reason: string
+  setReason: React.Dispatch<React.SetStateAction<string>>
+  setIsOpen: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function Reject({ children, setIsOpen, handleChangeReason}: RejectFactor) {
+export default function Reject({ children, userId, setIsOpen, reason, setReason}: RejectFactor) {
+
+  const handleChangeReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => setReason(e.target.value);
+
+  const { mutate, isLoading, error } = usePostTemp(children, userId, reason);
+
   return (
     <S.Reject>
       <div>
@@ -15,7 +25,7 @@ export default function Reject({ children, setIsOpen, handleChangeReason}: Rejec
         <p><textarea onChange={handleChangeReason} /></p>
       </div>
       <S.Button>
-        <button type='button'>내용 저장</button>
+        <button type='button' onClick={() => mutate()} >내용 저장</button>
         {children === '거절사유' && <button type='button' onClick={() => setIsOpen('거절')}>거절 사유 전송</button>}
       </S.Button>
     </S.Reject>
