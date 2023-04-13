@@ -57,11 +57,11 @@ const S = {
     flex: none;
     order: 0;
     flex-grow: 0;
+    background: #FCFCFE;
     > li {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      background: #FCFCFE;
       padding: 12px 16px;
       gap: 8px;
       flex: none;
