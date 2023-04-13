@@ -1,31 +1,33 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
-import { useMutation } from 'react-query';
-import { adminTempAPI } from '../../../api/admin';
 import usePostTemp from '@/src/hooks/admin/usePostTemp';
 
 type RejectFactor = {
   children: ReactNode
   userId: number
-  reason: string
-  setReason: React.Dispatch<React.SetStateAction<string>>
+  inputs: { reject: string, memo: string }
+  setInputs: React.Dispatch<React.SetStateAction<{ reject: string, memo: string }>>
   setIsOpen: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function Reject({ children, userId, setIsOpen, reason, setReason}: RejectFactor) {
+export default function Reject({ children, userId, setIsOpen, inputs, setInputs}: RejectFactor) {
 
-  const handleChangeReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => setReason(e.target.value);
+  const { mutate, isLoading, error } = usePostTemp(children, userId, inputs);
 
-  const { mutate, isLoading, error } = usePostTemp(children, userId, reason);
+  const handleChangeReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if(e.target.name === '거절사유') setInputs({...inputs, reject: e.target.value});
+    if(e.target.name === '메모') setInputs({...inputs, memo: e.target.value });
+  }
+
 
   return (
     <S.Reject>
       <div>
         <p>{children}</p>
-        <p><textarea onChange={handleChangeReason} /></p>
+        <p><textarea name={`${children}`} onChange={handleChangeReason} /></p>
       </div>
       <S.Button>
-        <button type='button' onClick={() => mutate()} >내용 저장</button>
+        <button type='button' name={`${children}`} onClick={() => mutate()} >내용 저장</button>
         {children === '거절사유' && <button type='button' onClick={() => setIsOpen('거절')}>거절 사유 전송</button>}
       </S.Button>
     </S.Reject>

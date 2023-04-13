@@ -11,9 +11,9 @@ type PostPermission = {
   reason?: string;
 }
 
-type postTempStore = {
+type PostTempStore = {
   userId: number;
-  reason?: string;
+  reject?: string;
   memo?: string;
 }
 
@@ -43,7 +43,7 @@ export const adminPerAPI = {
 export const adminTempAPI = {
   url: '/admin/user',
 
-  post: async(path: string, body: postTempStore) => {
+  post: async(path: string, body: PostTempStore) => {
     const res = await instance.post(`${adminTempAPI.url}/${path}`, body);
     return res.data;
   }

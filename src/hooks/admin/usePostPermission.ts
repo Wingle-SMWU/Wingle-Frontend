@@ -7,7 +7,7 @@ export default function usePostPermission(userId: number, reason: string) {
 
   const path = reason ? 'rejection' : 'acceptance';
 
-  const body = { userId: userId };
+  const body = { userId };
   if(reason) body['reason'] = reason;
 
   const router = useRouter();

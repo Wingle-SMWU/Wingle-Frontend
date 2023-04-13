@@ -1,14 +1,21 @@
 import { useMutation } from 'react-query';
 import { adminTempAPI } from '../../api/admin';
 import { ReactNode } from 'react';
-import { ADMIN_TEMP_STORE } from '@/src/constants/constants';
 
-export default function usePostTemp(children: ReactNode, userId: number, val: string) {
+export default function usePostTemp(
+  children: ReactNode, 
+  userId: number, 
+  val: { reject: string, memo: string }) {
 
-  const path = ADMIN_TEMP_STORE[children];
-  const body = { userId };
-  body[ADMIN_TEMP_STORE[children]] = val;
-
+  let path = '', body = {userId, path};
+  if(children === '거절사유') {
+    path = 'reject';
+    body = { userId, path: val.reject }
+  }
+  if(children === '메모') {
+    path = 'memo';
+    body = { userId, path: val.memo }
+  }
 
   const { mutate, isLoading, error } = useMutation(() => adminTempAPI.post(path, body), {
     onSuccess: (res) => console.log(res),

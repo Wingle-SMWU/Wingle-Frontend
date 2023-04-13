@@ -13,10 +13,12 @@ type ContentsFactor = {
 
 export default function Contents({ data, userId, setIsOpen }: ContentsFactor) {
 
-  const [reason, setReason] = useState('');
+  const [inputs, setInputs] = useState({
+    reject: '',
+    memo: '',
+  })
   
-  const { mutate, isLoading, error } = usePostPermission(userId, reason);
-
+  const { mutate, isLoading, error } = usePostPermission(userId, inputs.reject);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,8 +28,8 @@ export default function Contents({ data, userId, setIsOpen }: ContentsFactor) {
   return (
     <S.Contents id='form' onSubmit={handleSubmit}>
       <Profile data={data} />
-      <Reject setIsOpen={setIsOpen} reason={reason} setReason={setReason} userId={userId}>거절사유</Reject>
-      <Reject setIsOpen={setIsOpen} reason={reason} setReason={setReason} userId={userId}>메모</Reject>
+      <Reject setIsOpen={setIsOpen} inputs={inputs} setInputs={setInputs} userId={userId}>거절사유</Reject>
+      <Reject setIsOpen={setIsOpen} inputs={inputs} setInputs={setInputs} userId={userId}>메모</Reject>
     </S.Contents>
   )
 }
