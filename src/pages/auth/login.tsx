@@ -35,7 +35,7 @@ export default function Login() {
   };
 
   const handleSignup = () => {
-    router.push("auth/signup");
+    router.push("/auth/signup");
   };
 
   const isButtonDisabled =
@@ -44,7 +44,7 @@ export default function Login() {
   return (
     <>
       <S.Header>
-        <Image src="/auth/loginLogo.svg" alt="logo" width={200} height={200} />
+        <Image src="/auth/loginLogo.svg" alt="logo" priority width={200} height={200} />
         <Margin direction="column" size={8} />
         <Text.Body6 color="gray700">다함께 즐기는 국제교류 커뮤니티</Text.Body6>
       </S.Header>
@@ -73,13 +73,14 @@ export default function Login() {
           <S.LoginButton disabled={isButtonDisabled} type="submit">
             로그인
           </S.LoginButton>
-          <S.RegisterButton onClick={handleSignup}>회원가입</S.RegisterButton>
+          <S.RegisterButton type="button" onClick={handleSignup}>
+            회원가입
+          </S.RegisterButton>
         </S.ButtonWrapper>
       </form>
     </>
   );
 }
-
 
 const S = {
   Header: styled.div`
