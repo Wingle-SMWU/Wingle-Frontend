@@ -7,18 +7,9 @@ import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import styled from "styled-components";
+import { useRouter } from 'next/router';
 
-
-const S = {
-  Wrapper: styled.div`
-    width: 500px;
-    max-width: 500px;
-    height: 100vh;
-    background-color: white;
-  `,
-};
-
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -31,7 +22,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       })
   );
 
-  
+  const router = useRouter();
+  const page = router.pathname.split('/')[1];
 
   return (
     <>
@@ -47,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </Head>
           <GlobalStyle />
           <ThemeProvider theme={theme}>
-            <S.Wrapper>
+            <S.Wrapper page={page}>
               <Component {...pageProps} />
             </S.Wrapper>
           </ThemeProvider>
@@ -57,4 +49,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+const S = {
+  Wrapper: styled.div<{page: string}>`
+    width: ${({page}) => (page !== 'admin' ? '500px' : '')};
+    max-width: ${({page}) => (page !== 'admin' ? '500px' : '')};
+    height: ${({page}) => (page !== 'admin' ? '100vh' : '')};
+    background-color: ${({page}) => (page !== 'admin' ? 'white' : '')};
+  `,
+};
