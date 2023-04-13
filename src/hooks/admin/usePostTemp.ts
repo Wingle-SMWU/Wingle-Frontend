@@ -7,14 +7,15 @@ export default function usePostTemp(
   userId: number, 
   val: { reject: string, memo: string }) {
 
-  let path = '', body = {userId, path};
+  let path = '';
+  let body = {};
   if(children === '거절사유') {
     path = 'reject';
-    body = { userId, path: val.reject }
+    body = { userId, 'reject': val.reject }
   }
   if(children === '메모') {
     path = 'memo';
-    body = { userId, path: val.memo }
+    body = { userId, 'memo': val.memo }
   }
 
   const { mutate, isLoading, error } = useMutation(() => adminTempAPI.post(path, body), {

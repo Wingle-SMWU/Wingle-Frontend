@@ -12,7 +12,7 @@ type PostPermission = {
 }
 
 type PostTempStore = {
-  userId: number;
+  userId?: number;
   reject?: string;
   memo?: string;
 }
