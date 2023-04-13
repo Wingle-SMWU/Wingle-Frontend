@@ -3,16 +3,16 @@ import instance from './axiosModul'
 type GetList = {
   path: string;
   page?: number;
-  userId?: string | string[] | undefined;
+  userId?: number;
 }
 
 type PostPermission = {
-  userId: string | undefined;
+  userId: number
   reason?: string;
 }
 
 type postTempStore = {
-  userId: string | undefined;
+  userId: number;
   reason?: string;
   memo?: string;
 }

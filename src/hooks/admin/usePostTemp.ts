@@ -3,7 +3,7 @@ import { adminTempAPI } from '../../api/admin';
 import { ReactNode } from 'react';
 import { ADMIN_TEMP_STORE } from '@/src/constants/constants';
 
-export default function usePostTemp(children: ReactNode, userId: string | undefined, val: string) {
+export default function usePostTemp(children: ReactNode, userId: number, val: string) {
 
   const path = ADMIN_TEMP_STORE[children];
   const body = { userId };

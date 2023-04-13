@@ -2,7 +2,7 @@ import { adminPerAPI } from '@/src/api/admin';
 import { useMutation } from 'react-query';
 
 
-export default function usePostPermission(userId: string | undefined, reason: string) {
+export default function usePostPermission(userId: number, reason: string) {
 
   const path = reason ? 'rejection' : 'acceptance';
 

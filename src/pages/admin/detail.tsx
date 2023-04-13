@@ -12,7 +12,7 @@ import { adminListAPI } from '@/src/api/admin'
 export default function Detail() {
 
   const [isOpen, setIsOpen] = useState('');
-  const userId = useRouter().asPath.split('?').at(-1);
+  const userId = Number(useRouter().asPath.split('?').at(-1));
 
   const { data, isLoading, error } = useQuery('getUser', () => adminListAPI.getUser({path: 'waiting', userId}), {
     onSuccess: (res) => console.log(res),

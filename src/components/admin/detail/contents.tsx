@@ -7,7 +7,7 @@ import Reject from './reject'
 
 type ContentsFactor = {
   data: AdminUserResp;
-  userId: string | undefined;
+  userId: number;
   setIsOpen: React.Dispatch<React.SetStateAction<string>>;
 }
 

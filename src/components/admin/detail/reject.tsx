@@ -6,7 +6,7 @@ import usePostTemp from '@/src/hooks/admin/usePostTemp';
 
 type RejectFactor = {
   children: ReactNode
-  userId: string | undefined
+  userId: number
   reason: string
   setReason: React.Dispatch<React.SetStateAction<string>>
   setIsOpen: React.Dispatch<React.SetStateAction<string>>
