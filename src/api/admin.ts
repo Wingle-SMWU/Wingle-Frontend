@@ -18,10 +18,10 @@ type PostTempStore = {
 }
 
 export const adminListAPI = {
-  url: '/admin/list',
+  url: '/admin',
 
   get: async ({ path, page }: GetList) => {
-    const res = await instance.get(`${adminListAPI.url}/${path}/${page}`);
+    const res = await instance.get(`${adminListAPI.url}/list/${path}/${page}`);
     return res.data;
   },
 

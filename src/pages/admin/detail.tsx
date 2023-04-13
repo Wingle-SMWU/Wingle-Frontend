@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Contents from '@/src/components/admin/detail/contents'
 import Modal from '@/src/components/admin/detail/modal'
 import Header from '@/src/components/admin/header'
@@ -6,29 +6,36 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 import { adminListAPI } from '@/src/api/admin'
-
-
+import { useSetRecoilState } from 'recoil';
+import { postOrderStateAtom } from '../../atoms/admin';
 
 export default function Detail() {
-
   const [isOpen, setIsOpen] = useState('');
-  const userId = Number(useRouter().asPath.split('?').at(-1));
+  const userId = Number(useRouter().asPath.split('?').at(-2));
+  const postOrder = Number(useRouter().asPath.split('?').at(-1));
+  const setPostOrder = useSetRecoilState(postOrderStateAtom);
 
-  const { data, isLoading, error } = useQuery('getUser', () => adminListAPI.getUser({path: 'waiting', userId}), {
+  const { data, isLoading, error } = useQuery(['getUser', userId], () => adminListAPI.getUser({path: 'waiting', userId}), {
     onSuccess: (res) => console.log(res),
     onError: (res) => console.log(res),
   })
 
+  useEffect(() => setPostOrder(postOrder));
+
   return (
     <S.Main modal={isOpen}>
+
       <Header />
       <S.TabBar><p>수락대기</p></S.TabBar>
       <S.Card card={data?.data.idCardImage}/>
-      <Contents userId={userId} data={data} setIsOpen={setIsOpen} />
+      <Contents userId={userId} data={data?.data} setIsOpen={setIsOpen} />
+
       {isOpen && <Modal setIsOpen={setIsOpen}>{isOpen}</Modal>}
+
       <S.Button onClick={() => setIsOpen('수락')}>
         <button type='button'>가입수락</button>
       </S.Button>
+
     </S.Main>
   )
 }
@@ -73,8 +80,8 @@ const S = {
     height: 600px;
     left: 373px;
     top: 123px;
-    background-image: ${({ card }) => (card ? `url(${card})` : 'url(/logo_favicon.jpeg)')};
-    background-size: auto;
+    background-image: ${({ card }) => (card ? `url(${card})` : '')};
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
   `,

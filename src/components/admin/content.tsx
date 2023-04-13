@@ -18,7 +18,7 @@ export default function Content({ data }: AdminUsersResp) {
       <div>
         {data?.map((user, idx) => {
           return (
-            <Link key={user.userId} href={`/admin/detail?${user.userId}`}>
+            <Link key={user.userId} href={`/admin/detail?${user.userId}?${data.length - idx}`}>
               <S.Item nation={user.nation}>
               <li><p>{data.length - idx}</p></li>
               <li><p>{user.name}</p></li>
