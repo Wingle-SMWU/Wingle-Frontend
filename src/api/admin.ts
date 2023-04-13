@@ -7,9 +7,14 @@ type GetList = {
 }
 
 type PostPermission = {
-  path: string;
   userId: string | undefined;
   reason?: string;
+}
+
+type postTempStore = {
+  userId: string | undefined;
+  reason?: string;
+  memo?: string;
 }
 
 export const adminListAPI = {
@@ -29,18 +34,17 @@ export const adminListAPI = {
 export const adminPerAPI = {
   url: '/admin/permission',
 
-  // postAccept: async({ path, userId }: PostPermission) => {
-  //   const res = await instance.post(`${adminPerAPI.url}/${path}`, {userId});
-  //   return res.data;
-  // },
+  post: async(path: string, body: PostPermission) => {
+    const res = await instance.post(`${adminPerAPI.url}/${path}`, body);
+    return res.data;
+  }
+}
 
-  // postReject: async({ path, userId, reason}: PostPermission) => {
-  //   const res = await instance.post(`${adminPerAPI.url}/${path}`, {userId, reason});
-  //   return res.data;
-  // },
+export const adminTempAPI = {
+  url: '/admin/user',
 
-  post: async({ path, userId, reason }: PostPermission) => {
-    const res = await instance.post(`${adminPerAPI.url}/${path}`, {userId, reason});
+  post: async(path: string, body: postTempStore) => {
+    const res = await instance.post(`${adminTempAPI.url}/${path}`, body);
     return res.data;
   }
 }
