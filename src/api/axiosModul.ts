@@ -25,7 +25,7 @@ instance.interceptors.request.use(
 
     // 만료되지 않은 access token이 있는 경우에는 해당 토큰을 사용
     if (accessToken !== null) {
-      config.headers.Authorization = JSON.parse(`${accessToken}`);
+      config.headers.Authorization = accessToken;
     }
 
     return config;
