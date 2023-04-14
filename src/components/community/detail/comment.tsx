@@ -5,15 +5,18 @@ import Modal from "../../modal";
 import { Text } from "../../ui";
 import { useQuery } from "react-query";
 import { getComments } from "@/src/api/community/get/comments";
-import instance from "@/src/api/axiosModule";
 
 export default function Comment(props: { currentTab: string, forumId: string, articleId: string }) {
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [deleteInform, setDeleteInform] = useState({
+    forumId: "",
+    articleId: "",
+    id: 0,
+  })
+  
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
-
   const { data: comments, isLoading, isError, isIdle } = useQuery({
     queryFn: getComments,
     queryKey: ['comments', props.forumId, props.articleId, 0, 10],
@@ -21,13 +24,13 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
 
   if (isLoading || isIdle) return <div>로딩중</div>
   if (isError) return <div>에러</div>
-
+  
   return (
     <Style.Wrapper>
       <Style.CommentCount>
         <Text.Body3 color="gray900">댓글 {comments.length}</Text.Body3>
       </Style.CommentCount>
-      {comments.map((comment) => {
+      {comments.map((comment, i) => {
         const {
           content,
           createdTime,
@@ -53,7 +56,15 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
                 </Style.CommentTopLeft>
                 <Style.CancelImg
                   src="/community/detail/close-gray.svg"
-                  onClick={onClickModal}
+                  onClick={() => {
+                    onClickModal();
+                    setDeleteInform({
+                      ...deleteInform,
+                      forumId: props.forumId,
+                      articleId: props.articleId,
+                      id: id,
+                    }) 
+                  }}
                 />
               </Style.CommentTop>
               <Style.CommentBottom>
@@ -65,7 +76,7 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
       })}
 
       {modalVisible && (
-        <Modal type="detail-delete-comment" onClickModal={onClickModal} />
+        <Modal type="detail-delete-comment" deleteInform={deleteInform} onClickModal={onClickModal} />
       )}
       
     </Style.Wrapper>
