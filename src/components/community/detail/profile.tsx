@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Modal from "../../modal";
 import { Margin, Text } from "../../ui";
 
-export default function Profile(props: { currentTab: string, userNickname: string, createdTime: string }) {
+export default function Profile(props: { currentTab: string, userNickname: string, createdTime: string, forumId: string, articleId: string }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const onClickModal = () => {
@@ -29,7 +29,7 @@ export default function Profile(props: { currentTab: string, userNickname: strin
         />
       </Style.Profile>
       {modalVisible && (
-        <Modal type="detail-delete-contents" onClickModal={onClickModal} />
+        <Modal type="detail-delete-contents" deleteInform={{forumId: props.forumId, articleId: props.articleId, id: 0}} onClickModal={onClickModal} />
       )}
     </>
   );
