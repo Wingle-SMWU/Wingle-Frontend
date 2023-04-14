@@ -26,7 +26,7 @@ export default function Detail() {
     <Style.Wrapper>
       <Style.DetailTop>
         <Header currentTab={currentTab} />
-        <Profile currentTab={currentTab} userNickname={article.userNickname} createdTime={article.createdTime}/>
+        <Profile currentTab={currentTab} userNickname={article.userNickname} createdTime={article.createdTime} forumId={forumId} articleId={articleId}/>
         <Body content={article.content}/>
         <Comment currentTab={currentTab} forumId={forumId} articleId={articleId} />
       </Style.DetailTop>
