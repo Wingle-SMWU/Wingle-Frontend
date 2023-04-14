@@ -56,7 +56,7 @@ instance.interceptors.response.use(
       return axios(config);
     }
 
-    if (response.status === 404 && response.data.message === "다시 로그인해주세요.") {
+    if (response.status === 404) {
       localStorage.clear();
       window.location.href = "/login";
     }
@@ -90,9 +90,7 @@ const getAccessToken = async () => {
       saveAccessTokenToLocalStorage(`${grantType} ${accessToken}`);
 
       // 새로운 refresh token이 발급된 경우에는 해당 토큰도 로컬 스토리지에 저장
-      if (refreshToken !== undefined) {
-        saveRefreshTokenToLocalStorage(`${refreshToken}`);
-      }
+      saveRefreshTokenToLocalStorage(`${refreshToken}`);
 
       return accessToken;
     }
