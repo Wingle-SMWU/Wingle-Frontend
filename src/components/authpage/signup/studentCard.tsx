@@ -2,24 +2,53 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Text, Margin } from "@/src/components/ui";
 import Image from "next/image";
+import { useRecoilState } from "recoil";
+import { signUpFormDataAtom, SignUpFormData } from "@/src/atoms/auth/signUpAtoms";
 
 type SdInputProps = {
   isActive: boolean;
 };
-type UploadButtonProps = {
-  onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
 
 export default function StudentCard() {
-  const [isActive, setIsActive] = useState(false);
-  const [error, setError] = useState(false);
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [signUpFormData, setSignUpFormData] = useRecoilState(signUpFormDataAtom);
+
+  // const handleFileUpload = (target: any) => {
+  //   const file = target?.files?.[0];
+  //   if (!file || file.size > 20000000) {
+  //     setError(true);
+  //     return;
+  //   }
+  //   setError(false);
+  //   const reader = new FileReader();
+  //   reader.onload = (e) => {
+  //     setSignUpFormData((prev: Omit<SignUpFormData, "idCardImage">) => ({
+  //       ...prev,
+  //       idCardImage: e.target?.result as string,
+  //     }));
+  //   };
+  //   reader.readAsDataURL(file as Blob);
+  // };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file && file.size > 20000000) {
-      setError(true);
-    } else {
+    const imageFile = event.target.files?.[0];
+    if (imageFile) {
+      const fileSizeInMB = imageFile.size / (1024 * 1024);
+      if (fileSizeInMB > 20) {
+        // 20MB 이하인 경우에만 처리
+        setError(true);
+        return;
+      }
       setError(false);
+      const reader = new FileReader();
+      reader.readAsDataURL(imageFile);
+      reader.onload = () => {
+        setSignUpFormData((prev: SignUpFormData) => ({
+          ...prev,
+          idCardImage: reader.result as string,
+        }));
+      };
     }
   };
 
@@ -46,15 +75,24 @@ export default function StudentCard() {
         </S.Description>
       </S.DescriptionContent>
 
-      <S.UploadButton onClick={handleFileUpload}>
-        <S.UploadLogo src="/auth/upload.svg" alt="upload" />
-        <Text.Body1 color="gray700">학생증 업로드</Text.Body1>
+      <S.UploadButton>
+        <label htmlFor="file-input">
+          <input
+            id="file-input"
+            type="file"
+            accept=".jpeg, .jpg, .png"
+            onChange={handleFileUpload}
+            style={{ display: "none" }}
+          />
+          <S.UploadLogo src="/auth/upload.svg" alt="upload" />
+          <Text.Body1 color="gray700">학생증 업로드</Text.Body1>
+        </label>
       </S.UploadButton>
       <Margin direction="column" size={8} />
 
       {error ? (
         <S.ErrorWrapper>
-          <Image src="/auth/error.svg" alt="question" />
+          <Image src="/auth/error.svg" alt="question" width={16} height={16} />
           <Margin direction="row" size={8} />
           <Text.Caption3 color="red500">파일 업로드를 실패했습니다</Text.Caption3>
         </S.ErrorWrapper>
@@ -90,7 +128,7 @@ const S = {
   ErrorWrapper: styled.div`
     display: flex;
   `,
-  UploadButton: styled.button<UploadButtonProps>`
+  UploadButton: styled.button`
     width: 452px;
     border: 1px solid #6c6c70;
     height: 52px;
