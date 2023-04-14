@@ -4,26 +4,29 @@ import InteractTab from "@/src/components/community/list/interactTab";
 import NoticeTab from "@/src/components/community/list/noticeTab";
 import { getImageUrl } from "@/src/modules/utils";
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import styled from "styled-components";
 import Navigation from "@/src/components/layout/Navigation";
 import { getForums } from "@/src/api/community/get/forums";
 import { useQuery } from "react-query";
 
-type Tab = {
-  tab: string;
-};
-
 export default function Community(props: { tab: string }) {
+
   const router = useRouter();
   
-  const { data, isLoading, isError } = useQuery({
+  const { data: TabArr, isLoading, isError } = useQuery({
     queryFn: getForums,
     queryKey: ['forums'],
   });
   
+  const getForumId = () => {
+    const forum = TabArr.filter((forum: { id: number, name: string }) => forum.name === currentTab)
+    return forum[0].id;
+  };
+
   const onClickMoveToWrite = () => {
-    router.push({ pathname: `/community/create`, query: { tab: props.tab } });
+    const forumId = getForumId();
+    router.push({ pathname: `/community/create`, query: { tab: currentTab, forumId: forumId } });
   };
 
   const currentTab: string = useMemo(() => {
@@ -40,16 +43,13 @@ export default function Community(props: { tab: string }) {
   if (isLoading) return <div>로딩중</div>
   if (isError) return <div>에러</div>
   
-  const TabArr = data.data;
-
+  
   return (
     <Style.Wrapper>
       <Header tab={currentTab} onClickTab={onClickTab} />
-      {currentTab === TabArr[1].name && (
-        <InteractTab imgUrl={getImageUrl(currentTab)} />
-      )}
-      {currentTab === TabArr[2].name && <NoticeTab imgUrl={getImageUrl(currentTab)} />}
-      {currentTab === TabArr[0].name && <FreeTab imgUrl={getImageUrl(currentTab)} />}
+      {currentTab === TabArr[0].name && <FreeTab forumId={TabArr[0].id} imgUrl={getImageUrl(currentTab)} />}
+      {currentTab === TabArr[1].name && <InteractTab forumId={TabArr[1].id} imgUrl={getImageUrl(currentTab)} />}
+      {currentTab === TabArr[2].name && <NoticeTab forumId={TabArr[2].id} imgUrl={getImageUrl(currentTab)} />}
       <Style.Box>
         <Style.CreateIcon
           tab={props.tab}
