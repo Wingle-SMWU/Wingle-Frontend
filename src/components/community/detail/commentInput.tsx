@@ -20,15 +20,9 @@ export default function CommentInput(props: { forumId: number, articleId: number
   const queryClient = useQueryClient();
 
   const updateComment = useMutation(fetchComments, {
-    onMutate: async (newComment) => {
+    onMutate: async () => {
       await queryClient.cancelQueries('comments');
-      const prevComments = queryClient.getQueryData('comments');
-      if(prevComments) {
-        queryClient.setQueryData('comments', (prevData : any) => {
-          console.log(prevData);
-          return { ...prevData, data: [...prevData.data, newComment]}
-        });
-      }
+      const prevComments = queryClient.getQueryData(['comments'], { exact: false });
       return { prevComments };
     },
     onSuccess: () => {
