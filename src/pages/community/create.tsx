@@ -1,22 +1,60 @@
+import instance from "@/src/api/axiosModule";
 import Modal from "@/src/components/modal";
 import { Text } from "@/src/components/ui";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 
 export default function Create() {
   const router = useRouter();
-  const currentTab = router.query.tab;
+  const { tab: currentTab, forumId } = router.query;
   const [contents, setContents] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  
+  const queryClient = useQueryClient();
 
   const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(event.target.value);
   };
-
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
+  
+  const fetchArticle = async () => {
+    if(!forumId) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("forumId", forumId.toString());
+    formData.append("content", contents);
+    const response = await instance.post(`/community/articles`, formData, {
+      headers: {
+        "Content-Type": 'multipart/form-data',
+      },
+    });
+    return response.data;
+  }
+
+  const updateArticle = useMutation(fetchArticle, {
+    onMutate: async () => {
+      await queryClient.cancelQueries('articles');
+      const prevArticles = queryClient.getQueryData(['articles'], { exact: false });
+      return { prevArticles };
+    },
+    onSuccess: (data) => {
+      setContents("");
+      queryClient.invalidateQueries('articles');
+      router.replace({ pathname: `/community/detail`, query: { tab: currentTab, forumId: forumId, articleId: data.articleId } });
+    },
+    onError: (error, payload, context) => {
+      console.log(`게시글 작성 실패! ${error}`);
+      queryClient.setQueryData('articles', context?.prevArticles);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('articles');
+    },
+  });
 
   return (
     <Style.Wrapper>
@@ -29,7 +67,9 @@ export default function Create() {
           <Text.Title2 color="gray900">{currentTab}게시판 글 작성</Text.Title2>
         </Style.HeaderLeft>
         <Style.CreateButton>
-          <Text.Body1 color={contents ? "gray900" : "gray500"}>등록</Text.Body1>
+          <Text.Body1 color={contents ? "gray900" : "gray500"}
+            onClick={() => updateArticle.mutate()}
+          >등록</Text.Body1>
         </Style.CreateButton>
       </Style.Header>
       <Style.Body>
@@ -37,6 +77,7 @@ export default function Create() {
           placeholder="자유롭게 글을 작성해보세요!"
           onChange={onChangeContents}
           maxLength={1000}
+          value={contents}
         />
       </Style.Body>
       {modalVisible && <Modal type="create-back" onClickModal={onClickModal} />}
