@@ -13,23 +13,7 @@ export default function StudentCard() {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [signUpFormData, setSignUpFormData] = useRecoilState(signUpFormDataAtom);
-
-  // const handleFileUpload = (target: any) => {
-  //   const file = target?.files?.[0];
-  //   if (!file || file.size > 20000000) {
-  //     setError(true);
-  //     return;
-  //   }
-  //   setError(false);
-  //   const reader = new FileReader();
-  //   reader.onload = (e) => {
-  //     setSignUpFormData((prev: Omit<SignUpFormData, "idCardImage">) => ({
-  //       ...prev,
-  //       idCardImage: e.target?.result as string,
-  //     }));
-  //   };
-  //   reader.readAsDataURL(file as Blob);
-  // };
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const imageFile = event.target.files?.[0];
@@ -48,6 +32,7 @@ export default function StudentCard() {
           ...prev,
           idCardImage: reader.result as string,
         }));
+        setUploadedFileName(imageFile.name);
       };
     }
   };
@@ -59,7 +44,9 @@ export default function StudentCard() {
         <S.QuestionLogo
           src="/auth/question.svg"
           alt="question"
-          onClick={() => setIsActive((prev) => !prev)}
+          onClick={() => {
+            setIsActive((prev) => !prev);
+          }}
         ></S.QuestionLogo>
       </Text.Title1>
       <Margin direction="column" size={16} />
@@ -96,10 +83,14 @@ export default function StudentCard() {
           <Margin direction="row" size={8} />
           <Text.Caption3 color="red500">파일 업로드를 실패했습니다</Text.Caption3>
         </S.ErrorWrapper>
+      ) : uploadedFileName ? (
+        <>
+          <Text.Caption3 color="gray500">{uploadedFileName}</Text.Caption3>
+        </>
       ) : (
         <Text.Caption3 color="gray500">20MB 이하 파일을 업로드해주세요.</Text.Caption3>
       )}
-      <Margin direction="column" size={25} />
+      <Margin direction="column" size={24} />
     </S.CertifyWrapper>
   );
 }
