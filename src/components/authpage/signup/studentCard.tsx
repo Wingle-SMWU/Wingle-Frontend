@@ -147,5 +147,6 @@ const S = {
   `,
   FileName: styled(Text.Caption3)`
     cursor: pointer;
+    text-decoration: underline;
   `,
 };
