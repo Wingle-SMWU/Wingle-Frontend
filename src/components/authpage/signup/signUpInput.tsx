@@ -1,19 +1,28 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
+import Image from "next/image";
 
 interface StyledInputProps {
   small: boolean;
   error: boolean;
 }
 
+interface InputData {
+  email: string;
+  emailCertificaion: string;
+  password: string;
+  name: string;
+  nickname: string;
+}
+
 function ErrorMent({ error, errorMent, ment }: any) {
   return (
     <>
-      {error === true ? (
+      {error ? (
         <>
           <S.ErrorWrapper>
-            <img src="/auth/error.svg" alt="error" />
+            <Image src="/auth/error.svg" alt="error" />
             <Margin direction="row" size={8} />
             <Text.Caption3 color="red500">{errorMent}</Text.Caption3>
           </S.ErrorWrapper>
@@ -25,65 +34,70 @@ function ErrorMent({ error, errorMent, ment }: any) {
   );
 }
 
-export default function InputBox({ getError }: any) {
-  useEffect(() => {
-    handleError();
-    getError(error);
-  });
-  const [count, setCount] = useState(1);
+export default function InputBox({ getError }: { getError: (error: boolean) => void }) {
   const [buttonMessage, setButtonMessage] = useState("인증 전송");
   const [emailMent, setEmailMent] = useState("");
-  const [data, setData] = useState({
-    Email: "",
-    CertificationNumber: "",
-    PW: "",
-    Name: "",
-    NickName: "",
+  const [inputData, setInputData] = useState<InputData>({
+    email: "",
+    emailCertificaion: "",
+    password: "",
+    name: "",
+    nickname: "",
   });
-  const { Email, CertificationNumber, PW, Name, NickName } = data;
-  const [error, setError] = useState(true);
-  const [errorCertify, setErrorCertify] = useState(false);
-  const [errorPW, setErrorPW] = useState(false);
-  const [errorPWCheck, setErrorPWCheck] = useState(false);
-  const [errorName, setErrorName] = useState(false);
-  const [errorNickName, setErrorNickName] = useState(false);
+  const { email, emailCertificaion, password, name, nickname } = inputData;
+  const [isError, setError] = useState(true);
+  const [isErrorEmailCertify, setErrorEmailCertify] = useState(false);
+  const [isErrorPassword, setErrorPassword] = useState(false);
+  const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(false);
+  const [isErrorName, setErrorName] = useState(false);
+  const [isErrorNickName, setErrorNickName] = useState(false);
 
-  const handleData = (e: any) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+  const handleInputData = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
+  }, []);
 
-  const handleError = () => {
+  const handleInputError = useCallback(() => {
     if (
-      errorCertify === false &&
-      errorPW === false &&
-      errorPWCheck === false &&
-      errorName === false &&
-      errorNickName === false
+      !isErrorEmailCertify &&
+      !isErrorPassword &&
+      !isErrorPasswordCheck &&
+      !isErrorName &&
+      !isErrorNickName
     ) {
       setError(false);
     } else {
       setError(true);
     }
-  };
-  const handlePW = (e: any) => {
+  }, [isErrorEmailCertify, isErrorPassword, isErrorPasswordCheck, isErrorName, isErrorNickName]);
+
+  const handleEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,15}$/;
     if (!passwordRegex.test(e.target.value)) {
-      setErrorPW(true);
+      setErrorPassword(true);
     } else {
-      setErrorPW(false);
+      setErrorPassword(false);
     }
-  };
+  }, []);
 
-  const handleName = (e: any) => {
+  const handlePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,15}$/;
+    if (!passwordRegex.test(e.target.value)) {
+      setErrorPassword(true);
+    } else {
+      setErrorPassword(false);
+    }
+  }, []);
+
+  const handleName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
     if (special_pattern.test(e.target.value)) {
       setErrorName(true);
     } else {
       setErrorName(false);
     }
-  };
+  }, []);
 
-  const handleNickName = (e: any) => {
+  const handleNickName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const pattern = /[`~!@#$%^&*|\\\'\";:\/?]/;
     const pattern2 = /[0-9]/;
     if (
@@ -96,7 +110,12 @@ export default function InputBox({ getError }: any) {
     } else {
       setErrorNickName(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    handleInputError();
+    getError(isError);
+  }, [isError, handleInputError, getError]);
 
   return (
     <>
@@ -107,18 +126,20 @@ export default function InputBox({ getError }: any) {
           <S.InputField small={true} error={false}>
             <input
               name="Email"
-              value={Email}
+              value={email}
               type="email"
               placeholder="abc@naver.com"
-              onChange={handleData}
+              onChange={(e) => {
+                handleInputData(e);
+                handleEmail(e);
+              }}
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={false}>
             <S.Button
               onClick={() => {
                 setButtonMessage("재전송");
-                setCount(count + 1);
-                setEmailMent("인증메일을 전송했습니다." + "(" + count + "회)");
+                setEmailMent("인증메일을 전송했습니다.");
               }}
             >
               {buttonMessage}
@@ -132,48 +153,50 @@ export default function InputBox({ getError }: any) {
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
-          <S.InputField small={true} error={errorCertify}>
+          <S.InputField small={true} error={isErrorEmailCertify}>
             <input
-              name="CertificationNumber"
-              value={CertificationNumber}
+              name="EmailCertificaion"
+              value={emailCertificaion}
               type="string"
               placeholder="인증번호"
-              onChange={handleData}
+              onChange={handleInputData}
             />
           </S.InputField>
-          <S.ButtonWrapper small={true} error={errorCertify}>
+          <S.ButtonWrapper small={true} error={isErrorEmailCertify}>
             <S.Button
               onClick={() => {
-                data.CertificationNumber === "123" ? setErrorCertify(false) : setErrorCertify(true);
+                inputData.emailCertificaion === "123"
+                  ? setErrorEmailCertify(false)
+                  : setErrorEmailCertify(true);
               }}
             >
               인증 확인
             </S.Button>
           </S.ButtonWrapper>
         </S.Content>
-        <ErrorMent error={errorCertify} errorMent="인증정보가 일치하지 않습니다." ment=" " />
+        <ErrorMent error={isErrorEmailCertify} errorMent="인증정보가 일치하지 않습니다." ment=" " />
       </S.ContentWrapper>
 
       <Text.Body1 color="gray700">비밀번호</Text.Body1>
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
-          <S.InputField small={false} error={errorPW}>
+          <S.InputField small={false} error={isErrorPassword}>
             <input
-              name="PW"
-              value={PW}
+              name="Password"
+              value={password}
               type="string"
               placeholder="비밀번호"
               onChange={(e) => {
-                handleData(e);
-                handlePW(e);
+                handleInputData(e);
+                handlePassword(e);
               }}
             />
           </S.InputField>
           <S.ButtonWrapper small={false} error={false}></S.ButtonWrapper>
         </S.Content>
         <ErrorMent
-          error={errorPW}
+          error={isErrorPassword}
           errorMent="영문자/숫자/특수기호 포함 최소 8자, 최대 15자 "
           ment="영문자/숫자/특수기호 포함 최소 8자, 최대 15자"
         />
@@ -188,13 +211,15 @@ export default function InputBox({ getError }: any) {
               type="string"
               placeholder="비밀번호"
               onChange={(e) => {
-                e.target.value === data.PW ? setErrorPWCheck(false) : setErrorPWCheck(true);
+                e.target.value === inputData.password
+                  ? setErrorPasswordCheck(false)
+                  : setErrorPasswordCheck(true);
               }}
             />
           </S.InputField>
           <S.ButtonWrapper small={false} error={false}></S.ButtonWrapper>
         </S.Content>
-        <ErrorMent error={errorPWCheck} errorMent="정보를 정확히 입력해주세요." ment=" " />
+        <ErrorMent error={isErrorPasswordCheck} errorMent="정보를 정확히 입력해주세요." ment=" " />
       </S.ContentWrapper>
 
       <Text.Body1 color="gray700">이름</Text.Body1>
@@ -204,11 +229,11 @@ export default function InputBox({ getError }: any) {
           <S.InputField small={false} error={false}>
             <input
               name="Name"
-              value={Name}
+              value={name}
               type="string"
               placeholder="김윙글"
               onChange={(e) => {
-                handleData(e);
+                handleInputData(e);
                 handleName(e);
               }}
             />
@@ -216,7 +241,7 @@ export default function InputBox({ getError }: any) {
           <S.ButtonWrapper small={false} error={false}></S.ButtonWrapper>
         </S.Content>
         <ErrorMent
-          error={errorName}
+          error={isErrorName}
           errorMent="실명을 입력하세요 (한글, 영어 대/소문자 사용 가능) "
           ment=" 실명을 입력하세요 (한글, 영어 대/소문자 사용 가능) "
         />
@@ -229,11 +254,11 @@ export default function InputBox({ getError }: any) {
           <S.InputField small={true} error={false}>
             <input
               name="NickName"
-              value={NickName}
+              value={nickname}
               type="string"
               placeholder="희망찬윙그리"
               onChange={(e) => {
-                handleData(e);
+                handleInputData(e);
                 handleNickName(e);
               }}
             />
@@ -242,7 +267,11 @@ export default function InputBox({ getError }: any) {
             <S.Button>중복 확인</S.Button>
           </S.ButtonWrapper>
         </S.Content>
-        <ErrorMent error={errorNickName} errorMent="한글/영어 두글자 이상 10글자 이하 " ment="  " />
+        <ErrorMent
+          error={isErrorNickName}
+          errorMent="한글/영어 두글자 이상 10글자 이하 "
+          ment="  "
+        />
       </S.ContentWrapper>
     </>
   );
