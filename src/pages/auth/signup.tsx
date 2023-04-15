@@ -64,21 +64,20 @@ export default function SignUp() {
         <Margin direction="row" size={14} />
         <Text.Title2 color="gray900">회원가입</Text.Title2>
       </S.HeaderWrapper>
-      <form onSubmit={handleSignUpSubmit}>
-        <StudentCard />
-        <Text.Title1 color="gray900">학생 정보</Text.Title1>
-        <Margin direction="column" size={16} />
-        <InputBox getError={getError} />
-        <DropDown />
-        <GenderSelectBox />
-        <AgreeBox getCheck={getCheck} />
-        <S.CompleteButton
-          complete={complete}
-          onClick={() => (complete ? router.replace("complete") : console.log("disabled"))}
-        >
-          <Text.Body1 color={complete ? "white" : "gray500"}>작성완료</Text.Body1>
-        </S.CompleteButton>
-      </form>
+
+      <StudentCard />
+      <Text.Title1 color="gray900">학생 정보</Text.Title1>
+      <Margin direction="column" size={16} />
+      <InputBox getError={getError} />
+      <DropDown />
+      <GenderSelectBox />
+      <AgreeBox getCheck={getCheck} />
+      <S.CompleteButton
+        complete={complete}
+        onClick={() => (complete ? router.replace("complete") : console.log("disabled"))}
+      >
+        <Text.Body1 color={complete ? "white" : "gray500"}>작성완료</Text.Body1>
+      </S.CompleteButton>
     </S.Wrapper>
   );
 }

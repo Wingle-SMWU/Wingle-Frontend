@@ -7,8 +7,8 @@ export interface SignUpFormData {
   name: string;
   isNicknameChecked: boolean;
   nickname: string;
-  gender: boolean;
   nation: string;
+  gender: boolean;
   termsOfUse: boolean;
   termsOfPersonalInformation: boolean;
   termsOfPromotion: boolean;
@@ -23,8 +23,8 @@ export const signUpFormDataAtom = atom<SignUpFormData>({
     name: "",
     isNicknameChecked: false,
     nickname: "",
-    gender: true,
     nation: "kr",
+    gender: true,
     termsOfUse: false,
     termsOfPersonalInformation: false,
     termsOfPromotion: false,
