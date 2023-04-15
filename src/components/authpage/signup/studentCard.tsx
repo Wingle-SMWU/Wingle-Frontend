@@ -75,7 +75,7 @@ export default function StudentCard() {
           onChange={handleFileUpload}
           style={{ display: "none" }}
         />
-        <S.UploadLogo src="/auth/upload.svg" alt="upload" />
+        <S.UploadLogo src="/auth/upload.svg" alt="upload" width={24} height={24} />
         <Text.Body1 color="gray700">학생증 업로드</Text.Body1>
       </S.UploadButton>
       <Margin direction="column" size={8} />
@@ -88,9 +88,9 @@ export default function StudentCard() {
         </S.ErrorWrapper>
       ) : uploadedFileName ? (
         <>
-          <Text.Caption3 color="gray500" onClick={handleUploadButtonClick}>
+          <S.FileName color="gray500" onClick={handleUploadButtonClick}>
             {uploadedFileName}
-          </Text.Caption3>
+          </S.FileName>
         </>
       ) : (
         <Text.Caption3 color="gray500">20MB 이하 파일을 업로드해주세요.</Text.Caption3>
@@ -127,13 +127,25 @@ const S = {
   UploadButton: styled.button`
     width: 452px;
     border: 1px solid #6c6c70;
+    outline: none;
     height: 52px;
     border-radius: 8px;
     display: flex;
     justify-content: center;
     padding: 15px;
+    cursor: pointer;
+    &:focus {
+      border: 1px solid #6c6c70;
+    }
+
+    span {
+      cursor: pointer;
+    }
   `,
-  UploadLogo: styled.img`
+  UploadLogo: styled(Image)`
     padding-right: 10px;
+  `,
+  FileName: styled(Text.Caption3)`
+    cursor: pointer;
   `,
 };
