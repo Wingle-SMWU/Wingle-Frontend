@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Text, Margin } from "@/src/components/ui";
 import Image from "next/image";
@@ -14,6 +14,7 @@ export default function StudentCard() {
   const [error, setError] = useState<boolean>(false);
   const [signUpFormData, setSignUpFormData] = useRecoilState(signUpFormDataAtom);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const imageFile = event.target.files?.[0];
@@ -35,6 +36,10 @@ export default function StudentCard() {
         setUploadedFileName(imageFile.name);
       };
     }
+  };
+
+  const handleUploadButtonClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
@@ -62,18 +67,16 @@ export default function StudentCard() {
         </S.Description>
       </S.DescriptionContent>
 
-      <S.UploadButton>
-        <label htmlFor="file-input">
-          <input
-            id="file-input"
-            type="file"
-            accept=".jpeg, .jpg, .png"
-            onChange={handleFileUpload}
-            style={{ display: "none" }}
-          />
-          <S.UploadLogo src="/auth/upload.svg" alt="upload" />
-          <Text.Body1 color="gray700">학생증 업로드</Text.Body1>
-        </label>
+      <S.UploadButton onClick={handleUploadButtonClick}>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".jpeg, .jpg, .png"
+          onChange={handleFileUpload}
+          style={{ display: "none" }}
+        />
+        <S.UploadLogo src="/auth/upload.svg" alt="upload" />
+        <Text.Body1 color="gray700">학생증 업로드</Text.Body1>
       </S.UploadButton>
       <Margin direction="column" size={8} />
 
@@ -85,7 +88,9 @@ export default function StudentCard() {
         </S.ErrorWrapper>
       ) : uploadedFileName ? (
         <>
-          <Text.Caption3 color="gray500">{uploadedFileName}</Text.Caption3>
+          <Text.Caption3 color="gray500" onClick={handleUploadButtonClick}>
+            {uploadedFileName}
+          </Text.Caption3>
         </>
       ) : (
         <Text.Caption3 color="gray500">20MB 이하 파일을 업로드해주세요.</Text.Caption3>
