@@ -76,9 +76,9 @@ export default function Nickname() {
             </S.Left>
             <Text.Body1
               color={isName ? "gray900":"gray500"} // 비활성화 상태
-              // 활성화 상태에서는 color="gray900"
-              onClick={onClickComplete}
-              pointer
+              //@ts-ignore
+              onClick={isName ? onClickComplete : null}
+              pointer={isName}
             >
               완료
             </Text.Body1>

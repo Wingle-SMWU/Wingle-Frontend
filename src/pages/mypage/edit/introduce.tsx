@@ -22,7 +22,7 @@ export default function Introduce() {
       setIsIntroduce(true);
     }
   }, [introduce]);
-  
+
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
@@ -51,9 +51,9 @@ export default function Introduce() {
             </S.Left>
             <Text.Body1
               color={isIntroduce ? "gray900":"gray500"} // 비활성화 상태
-              // 활성화 상태에서는 color="gray900"
-              onClick={handleSubmit} 
-              pointer
+              //@ts-ignore
+              onClick={isIntroduce?handleSubmit:null} 
+              pointer={isIntroduce}
             >
               완료
             </Text.Body1>
