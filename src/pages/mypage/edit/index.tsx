@@ -4,6 +4,7 @@ import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import { useState } from "react";
 import styled from "styled-components";
+import instance from "@/src/api/axiosModul"
 
 export default function Edit() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -11,6 +12,14 @@ export default function Edit() {
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
+
+  const getProfile = async (): Promise<void> => {
+    const response = await  instance.get("/profile");
+    return response.data;
+  };
+
+  // console.log(getProfile())
+
   return (
     <>
       <S.Wapper>
@@ -26,7 +35,7 @@ export default function Edit() {
           </S.Header>
           <>
             <S.UserBox>
-              <Profile />
+              <Profile/>
 
               <S.EditBtn
                 src="/modify.svg"

@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Modal from "@/src/components/modal";
+import instance from "@/src/api/axiosModul";
 
 export default function Nickname() {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState<string>("");
   const [nameMessage, setNameMessage] = useState<string>("");
   const [isName, setIsName] = useState<boolean>(false);
-
+  const [image,setImage] = useState("");
+  
   const onChangeName = useCallback((e: any) => {
     const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
     const nameCurrent = e.target.value;
@@ -27,6 +29,37 @@ export default function Nickname() {
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
+  
+  // const onClickCamera = 
+  const onClickComplete  = async (): Promise<void> => {
+    try{
+      const formData = new FormData();
+      formData.append('nickname', name);
+      // formData.append('u', userId);
+      await instance.post("/profile",formData,{
+        headers:
+          {'Content-Type': 'multipart/form-data'}
+      });
+  
+    } catch {
+      console.log("변경 불가")
+    }
+    router.push(`/mypage/edit`)
+  }
+
+  useEffect(()=>{
+    async function getNickname() {
+        const response = await instance.get("/profile");
+    // 일단 response의 형태를 확인하고
+        console.log(response.data);
+        // fetch 함수 아래에 setUsers를 해주어야 한다.
+        setName(response.data.nickname);
+        setImage(response.data.image);
+    };
+    getNickname();
+
+}, [])
+
 
   return (
     <>
@@ -42,9 +75,9 @@ export default function Nickname() {
               <Text.Title1 color="gray900">프로필 수정</Text.Title1>
             </S.Left>
             <Text.Body1
-              color="gray500" // 비활성화 상태
+              color={isName ? "gray900":"gray500"} // 비활성화 상태
               // 활성화 상태에서는 color="gray900"
-              onClick={() => router.push(`/mypage/edit`)}
+              onClick={onClickComplete}
               pointer
             >
               완료
@@ -52,15 +85,15 @@ export default function Nickname() {
           </S.Header>
           <>
             <S.ImageChangeBox>
-              <S.ProfileImage src="" alt="프로필 이미지" />
-              <S.CameraIcon src="/mypage/camera.svg" alt="변경 아이콘" />
+              <S.ProfileImage src={image} alt="프로필 이미지" />
+              <S.CameraIcon src="/mypage/camera.svg" alt="변경 아이콘"  />
             </S.ImageChangeBox>
 
             <S.NicknameChangeBox>
               <Text.Body5 color="gray700">닉네임</Text.Body5>{" "}
               <Margin direction="column" size={8} />
               <S.InputNickname
-                placeholder="기존 닉네임"
+                placeholder={name}
                 type="text"
                 onChange={onChangeName}
               />
@@ -105,8 +138,7 @@ const S = {
     height: 88px;
     position: absolute;
     border-radius: 100px;
-    border: 1px solid red;
-    background-color: red;
+    border: 1px solid #EEEEF2;
     cursor: pointer;
   `,
   CameraIcon: styled.img`

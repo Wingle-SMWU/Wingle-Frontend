@@ -1,9 +1,82 @@
 import styled from "styled-components";
 import { Text } from "@/src/components/ui";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import instance from "@/src/api/axiosModul"
 
-const Style = {
+export default function Profile() {
+    const router = useRouter();
+    const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
+    const [userData,setUserData] = useState({});
+
+    const handleRegisterBtnHover = () => {
+        setIsRegisterBtnHover(true);
+    };
+    const handleRegisterBtnLeave = () => {
+        setIsRegisterBtnHover(false);
+    };
+
+
+    // async와 await를 이용한 useEffect()를 선언하기
+    useEffect(()=>{
+        async function getUserData() {
+            const response = await instance.get("/profile");
+        // 일단 response의 형태를 확인하고
+            console.log(response.data);
+            // fetch 함수 아래에 setUsers를 해주어야 한다.
+            setUserData(response.data);
+        };
+        getUserData();
+
+    }, [])
+
+
+    const getProfile = async (): Promise<void> => {
+    
+        
+        
+            // const response = await  instance.get("/profile");
+            // setUserData(response.data);
+
+    };
+    
+    // const user = getProfile();
+    // const getData = () => {
+    //     user.then((data) => {
+    //         setUserData(data);
+    //     });
+    // };
+    
+    // getData();
+    // console.log(userData)
+
+
+    
+    
+    return (
+        <>
+            <S.UserBox>
+                <S.UserImgBox>
+                    {/* @ts-ignore */}
+                    <S.UserProfileImg src={userData.image} alt="프로필" />
+                    <S.UserFlagImg src="" alt="국기" />
+                </S.UserImgBox>
+                <S.UserInfoBox>
+                    <S.UserNicknameAndSex>
+                        {/* @ts-ignore */}
+                        <Text.Body1 color="gray900">{userData.nickname}</Text.Body1>
+                        {/* @ts-ignore */}
+                        <S.UserSexImg src={userData.gender?("/mypage/female.svg"):("/mypage/male.svg")} alt="성별" />
+                    </S.UserNicknameAndSex>
+                    {/* @ts-ignore */}
+                    <Text.Body6 color="gray800">{userData.nation}</Text.Body6>
+                </S.UserInfoBox>
+            </S.UserBox>
+        </>
+    );
+}
+
+const S = {
     UserBox: styled.div`
         display: flex;
         align-items: center;
@@ -21,7 +94,7 @@ const Style = {
         height: 56px;
         position: absolute;
         border-radius: 100px;
-        border: 1px solid red;
+        border: 1px solid #EEEEF2;
     `,
     UserFlagImg: styled.img`
         width: 22px;
@@ -68,33 +141,3 @@ const Style = {
         align-items: center;
     `,
 };
-
-export default function Profile() {
-    const router = useRouter();
-    const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
-
-    const handleRegisterBtnHover = () => {
-        setIsRegisterBtnHover(true);
-    };
-    const handleRegisterBtnLeave = () => {
-        setIsRegisterBtnHover(false);
-    };
-    return (
-        <>
-            <Style.UserBox>
-                <Style.UserImgBox>
-                    <Style.UserProfileImg src="" alt="프로필" />
-                    <Style.UserFlagImg src="" alt="국기" />
-                </Style.UserImgBox>
-                <Style.UserInfoBox>
-                    <Style.UserNicknameAndSex>
-                        <Text.Body1 color="gray900">닉네임</Text.Body1>
-                        {/* {gender ? 여자 이미지 : 남자 이미지} */}
-                        <Style.UserSexImg src="" alt="성별" />
-                    </Style.UserNicknameAndSex>
-                    <Text.Body6 color="gray800">국적</Text.Body6>
-                </Style.UserInfoBox>
-            </Style.UserBox>
-        </>
-    );
-}
