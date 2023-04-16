@@ -4,13 +4,32 @@ import { Text } from "@/src/components/ui";
 import SelectInterest from "@/src/components/mypage/SelectInterest";
 import { useState } from "react";
 import Modal from "@/src/components/modal";
+import instance from "@/src/api/axiosModul";
 
 export default function Interest() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [interest,setInterest] = useState(false);
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
+
+  const parentFunction = (arr:any) => {
+    setInterest(arr);
+  };
+
+  const handleSubmit = async () => {
+    try{
+      await instance.post("/profile/interests", {
+      "interests": interest
+      });
+    } catch {
+      console.log("error")
+    }
+
+    router.push(`/mypage/edit`)
+  }
+
   return (
     <>
       <S.Wapper>
@@ -25,16 +44,15 @@ export default function Interest() {
               <Text.Title1 color="gray900">관심사</Text.Title1>
             </S.Left>
             <Text.Body1
-              color="gray500" // 비활성화 상태
-              // 활성화 상태에서는 color="gray900"
-              onClick={() => router.push(`/mypage/edit`)}
+              color="gray900" // 활성화 상태
+              // 비활성화 상태에서는 color="gray500"
+              onClick={handleSubmit}
               pointer
             >
               완료
             </Text.Body1>
           </S.Header>
-          <SelectInterest />
-          {/* SelectInterest 파일 수정 필요, props 연결 */}
+          <SelectInterest parentFunction={parentFunction}/>
         </S.Content>
         {modalVisible && (
           <Modal type="profile-back" onClickModal={onClickModal} />
