@@ -2,14 +2,40 @@ import styled from "styled-components";
 import router from "next/router";
 import { Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
-import { useState } from "react";
+import { useState,useCallback,useEffect } from "react";
+import instance from "@/src/api/axiosModul"
 
 export default function Introduce() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isIntroduce,setIsIntroduce] = useState(false);
+  const [introduce,setIntroduce] = useState('');
 
+  const onChangeIntroduce = useCallback((e: any) => {
+    const nameCurrent = e.target.value;
+    setIntroduce(nameCurrent);
+  }, []);
+
+  useEffect(() => {
+    if (introduce.length < 2 || introduce.length > 400) {
+      setIsIntroduce(false)
+    } else {
+      setIsIntroduce(true);
+    }
+  }, [introduce]);
+  
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
+
+  const handleSubmit =async () => {
+     
+    await instance.post("/profile/introduction", {
+      "introduction" : introduce
+    });
+    
+    router.push(`/mypage/edit`)
+  }
+
   return (
     <>
       <S.Wapper>
@@ -24,10 +50,9 @@ export default function Introduce() {
               <Text.Title1 color="gray900">자기소개</Text.Title1>
             </S.Left>
             <Text.Body1
-              color="gray500" // 비활성화 상태
+              color={isIntroduce ? "gray900":"gray500"} // 비활성화 상태
               // 활성화 상태에서는 color="gray900"
-              onClick={() => router.push(`/mypage/edit`)}
-              // onClick={handleSubmit} 얘도 추가해야함
+              onClick={handleSubmit} 
               pointer
             >
               완료
@@ -37,6 +62,7 @@ export default function Introduce() {
           <S.Description
             maxLength={400}
             placeholder="자기소개를 작성해주세요! (최대 400자)"
+            onChange={onChangeIntroduce}
           />
         </S.Content>
         {modalVisible && (

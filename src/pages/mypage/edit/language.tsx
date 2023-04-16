@@ -3,13 +3,26 @@ import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState } from "react";
+import instance from "@/src/api/axiosModul";
 
 export default function Language() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [language,setLanguage] = useState([]);
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
+
+  const getLanguage = async (): Promise<void> => {
+      const response = await instance.post("/profile/languages", {
+        "languages": ["kr","fr","en"]
+      });
+      setLanguage(response.data.languages);
+      console.log(language);
+    
+  };
+  
+
   return (
     <>
       <S.Wapper>
