@@ -14,6 +14,7 @@ interface InputData {
   email: string;
   emailCertificaion: string;
   password: string;
+  passwordCheck: string;
   name: string;
   nickname: string;
 }
@@ -25,22 +26,28 @@ export default function InputBox() {
     email: "",
     emailCertificaion: "",
     password: "",
+    passwordCheck: "",
     name: "",
     nickname: "",
   });
-  const { email, emailCertificaion, password, name, nickname } = inputData;
+  const { email, emailCertificaion, password, passwordCheck, name, nickname } = inputData;
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
+
   const [isErrorEmailCertify, setErrorEmailCertify] = useState(false);
   const [isErrorPassword, setErrorPassword] = useState(false);
   const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(false);
   const [isErrorName, setErrorName] = useState(false);
   const [isErrorNickName, setErrorNickName] = useState(false);
 
-  const handleInputData = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
-  }, []);
+  const handleInputData = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
+      console.log(inputData);
+    },
+    [inputData]
+  );
 
-  const handleInputError = useCallback(() => {
+  const handleInputDataToAtom = useCallback(() => {
     if (
       !isErrorEmailCertify &&
       !isErrorPassword &&
@@ -69,42 +76,45 @@ export default function InputBox() {
     nickname,
   ]);
 
-  const handleEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,15}$/;
-    if (!passwordRegex.test(e.target.value)) {
-      setErrorPassword(true);
-    } else {
-      setErrorPassword(false);
-    }
-  }, []);
+  const handleErrorPassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+      if (!passwordRegex.test(e.target.value)) {
+        setErrorPassword(true);
+      } else {
+        setErrorPassword(false);
+      }
+      if (e.target.value !== passwordCheck) {
+        setErrorPasswordCheck(true);
+      }
+    },
+    [passwordCheck]
+  );
 
-  const handlePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,15}$/;
-    if (!passwordRegex.test(e.target.value)) {
-      setErrorPassword(true);
-    } else {
-      setErrorPassword(false);
-    }
-  }, []);
+  const handleErrorPasswordCheck = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.target.value === password ? setErrorPasswordCheck(false) : setErrorPasswordCheck(true);
 
-  const handleName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
-    if (special_pattern.test(e.target.value)) {
+      if (e.target.value !== password) {
+        setErrorPasswordCheck(true);
+      }
+    },
+    [password]
+  );
+
+  const handleErrorName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const special_pattern = /^[a-zA-Z가-힣\s]+$/;
+    if (!special_pattern.test(e.target.value)) {
       setErrorName(true);
     } else {
       setErrorName(false);
     }
   }, []);
 
-  const handleNickName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const pattern = /[`~!@#$%^&*|\\\'\";:\/?]/;
-    const pattern2 = /[0-9]/;
-    if (
-      pattern.test(e.target.value) ||
-      pattern2.test(e.target.value) ||
-      e.target.value.length < 2 ||
-      e.target.value.length > 10
-    ) {
+  const handleErrorNickName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const pattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
+
+    if (!pattern.test(e.target.value) || e.target.value.length < 2 || e.target.value.length > 10) {
       setErrorNickName(true);
     } else {
       setErrorNickName(false);
@@ -119,13 +129,12 @@ export default function InputBox() {
         <S.Content>
           <S.InputField small={true} error={false}>
             <input
-              name="Email"
+              name="email"
               value={email}
               type="email"
               placeholder="abc@naver.com"
               onChange={(e) => {
                 handleInputData(e);
-                handleEmail(e);
               }}
             />
           </S.InputField>
@@ -149,21 +158,17 @@ export default function InputBox() {
         <S.Content>
           <S.InputField small={true} error={isErrorEmailCertify}>
             <input
-              name="EmailCertificaion"
+              name="emailCertificaion"
               value={emailCertificaion}
               type="string"
               placeholder="인증번호"
-              onChange={handleInputData}
+              onChange={(e) => {
+                handleInputData(e);
+              }}
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={isErrorEmailCertify}>
-            <S.Button
-              onClick={() => {
-                handleInputError;
-              }}
-            >
-              인증 확인
-            </S.Button>
+            <S.Button onClick={() => {}}>인증 확인</S.Button>
           </S.ButtonWrapper>
         </S.Content>
         <ErrorMent error={isErrorEmailCertify} errorMent="인증정보가 일치하지 않습니다." ment=" " />
@@ -175,13 +180,13 @@ export default function InputBox() {
         <S.Content>
           <S.InputField small={false} error={isErrorPassword}>
             <input
-              name="Password"
+              name="password"
               value={password}
-              type="string"
+              type="password"
               placeholder="비밀번호"
               onChange={(e) => {
                 handleInputData(e);
-                handlePassword(e);
+                handleErrorPassword(e);
               }}
             />
           </S.InputField>
@@ -200,12 +205,13 @@ export default function InputBox() {
         <S.Content>
           <S.InputField small={false} error={false}>
             <input
-              type="string"
-              placeholder="비밀번호"
+              name="passwordCheck"
+              value={passwordCheck}
+              type="password"
+              placeholder="비밀번호 확인"
               onChange={(e) => {
-                e.target.value === inputData.password
-                  ? setErrorPasswordCheck(false)
-                  : setErrorPasswordCheck(true);
+                handleInputData(e);
+                handleErrorPasswordCheck(e);
               }}
             />
           </S.InputField>
@@ -220,13 +226,13 @@ export default function InputBox() {
         <S.Content>
           <S.InputField small={false} error={false}>
             <input
-              name="Name"
+              name="name"
               value={name}
               type="string"
               placeholder="김윙글"
               onChange={(e) => {
                 handleInputData(e);
-                handleName(e);
+                handleErrorName(e);
               }}
             />
           </S.InputField>
@@ -245,18 +251,18 @@ export default function InputBox() {
         <S.Content>
           <S.InputField small={true} error={false}>
             <input
-              name="NickName"
+              name="nickname"
               value={nickname}
               type="string"
               placeholder="희망찬윙그리"
               onChange={(e) => {
                 handleInputData(e);
-                handleNickName(e);
+                handleErrorNickName(e);
               }}
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={false}>
-            <S.Button onClick={handleInputError}>중복 확인</S.Button>
+            <S.Button onClick={handleInputDataToAtom}>중복 확인</S.Button>
           </S.ButtonWrapper>
         </S.Content>
         <ErrorMent

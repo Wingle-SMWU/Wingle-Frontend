@@ -8,7 +8,7 @@ export function ErrorMent({ error, errorMent, ment }: any) {
       {error ? (
         <>
           <S.ErrorWrapper>
-            <Image src="/auth/error.svg" alt="error" />
+            <Image src="/auth/error.svg" alt="error" width={16} height={16} />
             <Margin direction="row" size={8} />
             <Text.Caption3 color="red500">{errorMent}</Text.Caption3>
           </S.ErrorWrapper>
