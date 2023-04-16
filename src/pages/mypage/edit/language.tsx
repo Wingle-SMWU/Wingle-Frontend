@@ -2,26 +2,35 @@ import styled from "styled-components";
 import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import instance from "@/src/api/axiosModul";
+import SelectLanguageBox from "@/src/components/mypage/selectLanguage";
 
 export default function Language() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [language,setLanguage] = useState([]);
+  const [language,setLanguage] = useState(Array<String>);
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
 
-  const getLanguage = async (): Promise<void> => {
+  const postLanguage = async (): Promise<void> => {
       const response = await instance.post("/profile/languages", {
-        "languages": ["kr","fr","en"]
+        "languages": language
       });
-      setLanguage(response.data.languages);
       console.log(language);
-    
+      
+      router.push(`/mypage/edit`)
   };
   
+  const getLanguage = (str:any) => {
+    setLanguage([...language,str].filter(v=>v!==''));
+    console.log(language)
+  }
+  useEffect(() => {
+    language
+    console.log(language)
+  },[language])
 
   return (
     <>
@@ -39,7 +48,7 @@ export default function Language() {
             <Text.Body1
               color="gray500" // 비활성화 상태
               // 활성화 상태에서는 color="gray900"
-              onClick={() => router.push(`/mypage/edit`)}
+              onClick={postLanguage}
               pointer
             >
               완료
@@ -48,16 +57,18 @@ export default function Language() {
           <S.SelectBox>
             <Text.Body5 color="gray700">1순위</Text.Body5>
             <Margin direction="column" size={8} />
-            <S.DropdownSelectBox />
+            <SelectLanguageBox getLanguage={getLanguage}/>
 
             <Margin direction="column" size={24} />
             <Text.Body5 color="gray700">2순위</Text.Body5>
             <Margin direction="column" size={8} />
-            <S.DropdownSelectBox />
+            <SelectLanguageBox getLanguage={getLanguage}/>
+
             <Margin direction="column" size={24} />
             <Text.Body5 color="gray700">3순위</Text.Body5>
             <Margin direction="column" size={8} />
-            <S.DropdownSelectBox />
+            <SelectLanguageBox getLanguage={getLanguage}/>
+
           </S.SelectBox>
           <Margin direction="column" size={24} />
           <S.ResetBox>

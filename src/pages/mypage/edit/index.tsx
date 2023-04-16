@@ -48,7 +48,7 @@ export default function Edit() {
           <S.EditList>
             <Margin direction="column" size={32} />
             <S.Language>
-              <Text.Body1 color="gray900">사용 가능 언어</Text.Body1>
+              <Text.Body1 color="gray900">사용언어</Text.Body1>
               <S.EditBtn
                 src="/modify.svg"
                 alt="연필"
