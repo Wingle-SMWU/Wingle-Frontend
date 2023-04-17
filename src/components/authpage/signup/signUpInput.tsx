@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
+import { ErrorMent } from "./errorMent";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
-import Image from "next/image";
+import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
+import { useSetRecoilState } from "recoil";
 
 interface StyledInputProps {
   small: boolean;
@@ -16,25 +18,7 @@ interface InputData {
   nickname: string;
 }
 
-function ErrorMent({ error, errorMent, ment }: any) {
-  return (
-    <>
-      {error ? (
-        <>
-          <S.ErrorWrapper>
-            <Image src="/auth/error.svg" alt="error" />
-            <Margin direction="row" size={8} />
-            <Text.Caption3 color="red500">{errorMent}</Text.Caption3>
-          </S.ErrorWrapper>
-        </>
-      ) : (
-        <Text.Caption3 color="gray900">{ment}</Text.Caption3>
-      )}
-    </>
-  );
-}
-
-export default function InputBox({ getError }: { getError: (error: boolean) => void }) {
+export default function InputBox() {
   const [buttonMessage, setButtonMessage] = useState("인증 전송");
   const [emailMent, setEmailMent] = useState("");
   const [inputData, setInputData] = useState<InputData>({
@@ -45,7 +29,7 @@ export default function InputBox({ getError }: { getError: (error: boolean) => v
     nickname: "",
   });
   const { email, emailCertificaion, password, name, nickname } = inputData;
-  const [isError, setError] = useState(true);
+  const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
   const [isErrorEmailCertify, setErrorEmailCertify] = useState(false);
   const [isErrorPassword, setErrorPassword] = useState(false);
   const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(false);
@@ -64,11 +48,26 @@ export default function InputBox({ getError }: { getError: (error: boolean) => v
       !isErrorName &&
       !isErrorNickName
     ) {
-      setError(false);
-    } else {
-      setError(true);
+      setSignUpFormData((prev) => ({
+        ...prev,
+        email: email,
+        password: password,
+        name: name,
+        nickname: nickname,
+      }));
     }
-  }, [isErrorEmailCertify, isErrorPassword, isErrorPasswordCheck, isErrorName, isErrorNickName]);
+  }, [
+    isErrorEmailCertify,
+    isErrorPassword,
+    isErrorPasswordCheck,
+    isErrorName,
+    isErrorNickName,
+    setSignUpFormData,
+    email,
+    password,
+    name,
+    nickname,
+  ]);
 
   const handleEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,15}$/;
@@ -111,11 +110,6 @@ export default function InputBox({ getError }: { getError: (error: boolean) => v
       setErrorNickName(false);
     }
   }, []);
-
-  useEffect(() => {
-    handleInputError();
-    getError(isError);
-  }, [isError, handleInputError, getError]);
 
   return (
     <>
@@ -165,9 +159,7 @@ export default function InputBox({ getError }: { getError: (error: boolean) => v
           <S.ButtonWrapper small={true} error={isErrorEmailCertify}>
             <S.Button
               onClick={() => {
-                inputData.emailCertificaion === "123"
-                  ? setErrorEmailCertify(false)
-                  : setErrorEmailCertify(true);
+                handleInputError;
               }}
             >
               인증 확인
@@ -264,7 +256,7 @@ export default function InputBox({ getError }: { getError: (error: boolean) => v
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={false}>
-            <S.Button>중복 확인</S.Button>
+            <S.Button onClick={handleInputError}>중복 확인</S.Button>
           </S.ButtonWrapper>
         </S.Content>
         <ErrorMent
@@ -320,8 +312,5 @@ const S = {
     border: 1px solid #959599;
     border-radius: 8px;
     margin-left: 8px;
-  `,
-  ErrorWrapper: styled.div`
-    display: flex;
   `,
 };
