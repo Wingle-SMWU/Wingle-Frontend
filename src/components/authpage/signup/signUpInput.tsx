@@ -5,7 +5,11 @@ import styled from "styled-components";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { useSetRecoilState } from "recoil";
 import { useMutation } from "react-query";
-import { sendEmailAuth, verifyEmailCertification } from "@/src/api/auth/emailAPI";
+import {
+  sendEmailAuth,
+  verifyEmailCertification,
+  checkNicknameAvailable,
+} from "@/src/api/auth/emailAPI";
 
 interface StyledInputProps {
   small: boolean;
@@ -34,13 +38,15 @@ export default function InputBox() {
   });
   const { email, emailCertification, password, passwordCheck, name, nickname } = inputData;
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
-
   const [isErrorEmailCertify, setErrorEmailCertify] = useState(true);
-  const [isVerifiedEmailCertify, setVerifiedEmailCertify] = useState(false);
-  const [isErrorPassword, setErrorPassword] = useState(false);
-  const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(false);
-  const [isErrorName, setErrorName] = useState(false);
-  const [isErrorNickName, setErrorNickName] = useState(false);
+  const [isErrorPassword, setErrorPassword] = useState(true);
+  const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(true);
+  const [isErrorName, setErrorName] = useState(true);
+  const [isErrorNickName, setErrorNickName] = useState(true);
+
+  const [isCheckedNickname, setCheckedNickname] = useState(false);
+  const [isVerifiedNickname, setVerifiedNickname] = useState(false);
+  const [isemailCertification, setVerifiedNickName] = useState(false);
 
   const handleInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -150,6 +156,19 @@ export default function InputBox() {
       setErrorNickName(false);
     }
   }, []);
+
+  const { mutate: CheckNickname } = useMutation(() => checkNicknameAvailable(nickname), {
+    onSuccess: (res) => {
+      console.log(res);
+      setCheckedNickname(true);
+      setVerifiedNickname(true);
+    },
+    onError: (error) => {
+      setCheckedNickname(true);
+      setVerifiedNickname(false);
+      throw error;
+    },
+  });
 
   return (
     <>
@@ -292,18 +311,33 @@ export default function InputBox() {
               onChange={(e) => {
                 handleInputData(e);
                 handleErrorNickName(e);
+                setVerifiedNickname(false);
+                setCheckedNickname(false);
               }}
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={false}>
-            <S.Button onClick={handleInputDataToAtom}>중복 확인</S.Button>
+            <S.Button
+              onClick={() => {
+                CheckNickname();
+              }}
+            >
+              중복 확인
+            </S.Button>
           </S.ButtonWrapper>
         </S.Content>
         <ErrorMent
           error={isErrorNickName}
-          errorMent="한글/영어 두글자 이상 10글자 이하 "
+          errorMent="한글/영어 두글자 이상 10글자 이하로 입력해주세요."
           ment="  "
         />
+        {isCheckedNickname ? (
+          <ErrorMent
+            error={!isVerifiedNickname}
+            errorMent="이미 사용중인 닉네임입니다."
+            ment="사용가능한 닉네임입니다."
+          />
+        ) : null}
       </S.ContentWrapper>
     </>
   );

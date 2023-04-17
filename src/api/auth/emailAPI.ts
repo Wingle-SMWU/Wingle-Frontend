@@ -1,4 +1,3 @@
-import axios from "axios";
 import instance from "../axiosModul";
 
 interface EmailAuthResponse {
@@ -10,8 +9,8 @@ interface EmailAuthResponse {
 }
 
 interface EmailCertificationRequest {
-  certificationKey: string;
-  certificationCode: string;
+  email: string;
+  emailCertification: string;
 }
 
 interface EmailCertificationResponse {
@@ -22,17 +21,23 @@ interface EmailCertificationResponse {
   };
 }
 
-export const sendEmailAuth = async (email: string): Promise<string> => {
-  const response = await instance.post<EmailAuthResponse>("/auth/email", { email });
-  return response.data.data.certificationKey || "";
+export const sendEmailAuth = async (email: string): Promise<EmailAuthResponse> => {
+  const response = await instance.post<EmailAuthResponse>("/auth/email", { email: email });
+  return response.data;
 };
 
-export const verifyEmailCertification = async (
-  data: EmailCertificationRequest
-): Promise<boolean> => {
-  const response = await instance.post<EmailCertificationResponse>(
-    "/auth/email/certification",
-    data
-  );
+export const verifyEmailCertification = async ({
+  email,
+  emailCertification,
+}: EmailCertificationRequest): Promise<boolean> => {
+  const response = await instance.post<EmailCertificationResponse>("/auth/email/certification", {
+    certificationKey: email,
+    certificationCode: emailCertification,
+  });
   return response.data.data.available || false;
+};
+
+export const checkNicknameAvailable = async (nickname: string): Promise<EmailAuthResponse> => {
+  const response = await instance.post<EmailAuthResponse>("/auth/nickname", { nickname: nickname });
+  return response.data;
 };
