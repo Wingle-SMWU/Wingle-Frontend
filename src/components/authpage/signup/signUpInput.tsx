@@ -4,6 +4,8 @@ import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { useSetRecoilState } from "recoil";
+import { useMutation } from "react-query";
+import { sendEmailAuth, verifyEmailCertification } from "@/src/api/auth/emailAPI";
 
 interface StyledInputProps {
   small: boolean;
@@ -12,7 +14,7 @@ interface StyledInputProps {
 
 interface InputData {
   email: string;
-  emailCertificaion: string;
+  emailCertification: string;
   password: string;
   passwordCheck: string;
   name: string;
@@ -24,16 +26,17 @@ export default function InputBox() {
   const [emailMent, setEmailMent] = useState("");
   const [inputData, setInputData] = useState<InputData>({
     email: "",
-    emailCertificaion: "",
+    emailCertification: "",
     password: "",
     passwordCheck: "",
     name: "",
     nickname: "",
   });
-  const { email, emailCertificaion, password, passwordCheck, name, nickname } = inputData;
+  const { email, emailCertification, password, passwordCheck, name, nickname } = inputData;
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
-  const [isErrorEmailCertify, setErrorEmailCertify] = useState(false);
+  const [isErrorEmailCertify, setErrorEmailCertify] = useState(true);
+  const [isVerifiedEmailCertify, setVerifiedEmailCertify] = useState(false);
   const [isErrorPassword, setErrorPassword] = useState(false);
   const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(false);
   const [isErrorName, setErrorName] = useState(false);
@@ -75,6 +78,33 @@ export default function InputBox() {
     name,
     nickname,
   ]);
+
+  const { mutate: sendEmail } = useMutation(() => sendEmailAuth(email), {
+    onSuccess: (res) => {
+      console.log(res);
+
+      setButtonMessage("재전송");
+      setEmailMent("인증메일을 전송했습니다.");
+    },
+    onError: (error) => {
+      setErrorEmailCertify(true);
+      alert(error);
+      throw error;
+    },
+  });
+
+  const { mutate: verifyEmail } = useMutation(
+    () => verifyEmailCertification({ email, emailCertification }),
+    {
+      onSuccess: () => {
+        setErrorEmailCertify(false);
+      },
+      onError: (error) => {
+        setErrorEmailCertify(true);
+        throw error;
+      },
+    }
+  );
 
   const handleErrorPassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,8 +171,7 @@ export default function InputBox() {
           <S.ButtonWrapper small={true} error={false}>
             <S.Button
               onClick={() => {
-                setButtonMessage("재전송");
-                setEmailMent("인증메일을 전송했습니다.");
+                sendEmail();
               }}
             >
               {buttonMessage}
@@ -158,8 +187,8 @@ export default function InputBox() {
         <S.Content>
           <S.InputField small={true} error={isErrorEmailCertify}>
             <input
-              name="emailCertificaion"
-              value={emailCertificaion}
+              name="emailCertification"
+              value={emailCertification}
               type="string"
               placeholder="인증번호"
               onChange={(e) => {
@@ -168,9 +197,16 @@ export default function InputBox() {
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={isErrorEmailCertify}>
-            <S.Button onClick={() => {}}>인증 확인</S.Button>
+            <S.Button
+              onClick={() => {
+                verifyEmail();
+              }}
+            >
+              인증 확인
+            </S.Button>
           </S.ButtonWrapper>
         </S.Content>
+
         <ErrorMent error={isErrorEmailCertify} errorMent="인증정보가 일치하지 않습니다." ment=" " />
       </S.ContentWrapper>
 
@@ -190,7 +226,6 @@ export default function InputBox() {
               }}
             />
           </S.InputField>
-          <S.ButtonWrapper small={false} error={false}></S.ButtonWrapper>
         </S.Content>
         <ErrorMent
           error={isErrorPassword}
@@ -203,7 +238,7 @@ export default function InputBox() {
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
-          <S.InputField small={false} error={false}>
+          <S.InputField small={false} error={isErrorPasswordCheck}>
             <input
               name="passwordCheck"
               value={passwordCheck}
@@ -224,7 +259,7 @@ export default function InputBox() {
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
-          <S.InputField small={false} error={false}>
+          <S.InputField small={false} error={isErrorName}>
             <input
               name="name"
               value={name}
@@ -236,7 +271,6 @@ export default function InputBox() {
               }}
             />
           </S.InputField>
-          <S.ButtonWrapper small={false} error={false}></S.ButtonWrapper>
         </S.Content>
         <ErrorMent
           error={isErrorName}
@@ -249,7 +283,7 @@ export default function InputBox() {
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
-          <S.InputField small={true} error={false}>
+          <S.InputField small={true} error={isErrorNickName}>
             <input
               name="nickname"
               value={nickname}
@@ -283,16 +317,14 @@ const S = {
     display: flex;
   `,
   InputField: styled.div<StyledInputProps>`
-    width: ${(props) => (props.small ? "345px" : "452px")};
     height: 50px;
     border: ${(props) => (props.error ? "1px solid #FF7070" : "1px solid #dcdce0;")};
     border-radius: 8px;
     margin-bottom: 8px;
 
     & > input {
-      width: 300px;
+      width: ${(props) => (props.small ? "312px" : "392px")};
       border: none;
-
       padding: 14px;
       border-radius: 8px;
       height: 22px;
