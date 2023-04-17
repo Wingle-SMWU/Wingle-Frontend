@@ -3,7 +3,7 @@ import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
 import { List } from "./countryList";
 import Image from "next/image";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 
 interface StyledInputProps {
@@ -13,24 +13,24 @@ interface StyledInputProps {
 export default function DropDown() {
   const [isActive, setIsActive] = useState(false);
   const [nation, setNation] = useState("Republic of Korea");
-  // const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
-  const [signUp, setSignUpFormData] = useRecoilState(signUpFormDataAtom);
+  const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const onActiveToggle = useCallback(() => {
     setIsActive((prev) => !prev);
   }, []);
 
-  const onSelectItem = useCallback(
-    (e: any) => {
-      setNation(e.target.innerText);
-      setIsActive((prev) => !prev);
+  const onSelectItem: React.MouseEventHandler<HTMLLIElement> = useCallback(
+    (e) => {
+      const target = e.target as HTMLLIElement;
+      const selectedNation = target.innerText;
+      setNation(selectedNation);
+      setIsActive(false);
       setSignUpFormData((prev) => ({
         ...prev,
         nation: nation,
       }));
-      console.log(signUp);
     },
-    [nation, setSignUpFormData, signUp]
+    [setSignUpFormData, nation]
   );
 
   return (
