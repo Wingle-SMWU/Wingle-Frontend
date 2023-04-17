@@ -47,6 +47,11 @@ instance.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    // 400 에러는 사용자의 잘못된 요청으로 인한 에러이므로 에러 메시지를 띄워주고 throw
+    if (response.status === 400) {
+      throw new Error(`${response.data.message}`);
+    }
+
     // 리프레시 토큰으로 엑세스 토큰 재발급
     const accessToken = await getAccessToken();
 
@@ -60,6 +65,7 @@ instance.interceptors.response.use(
       localStorage.clear();
       window.location.href = "/login";
     }
+
     return Promise.reject(error);
   }
 );
