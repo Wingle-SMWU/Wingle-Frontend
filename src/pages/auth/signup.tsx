@@ -10,35 +10,31 @@ import router from "next/router";
 import Image from "next/image";
 import { useMutation } from "react-query";
 import { SignUpData, postSignUp } from "@/src/api/auth/signUpApi";
+import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
+import { useRecoilValue } from "recoil";
 
 interface SdInputProps {
   complete: boolean;
 }
 
 export default function SignUp() {
-  useEffect(() => {
-    handleComplete();
-  });
-
-  const [error, setError] = useState<Boolean>(false);
-  const [check, setCheck] = useState<Boolean>(false);
   const [complete, setComplete] = useState(false);
 
-  const getError = (error: Boolean) => {
-    setError(error);
-  };
+  const formData = useRecoilValue(signUpFormDataAtom);
 
-  const getCheck = (check: Boolean) => {
-    setCheck(check);
-  };
-
-  const handleComplete = () => {
-    if (error === false && check === true) {
+  useEffect(() => {
+    if (
+      formData.idCardImage &&
+      formData.email &&
+      formData.password &&
+      formData.name &&
+      formData.nation &&
+      formData.termsOfUse &&
+      formData.termsOfPersonalInformation
+    ) {
       setComplete(true);
-    } else {
-      setComplete(false);
     }
-  };
+  }, [formData]);
 
   const { mutate: signUpMutation } = useMutation((signUpData: SignUpData) =>
     postSignUp(signUpData)
@@ -46,7 +42,7 @@ export default function SignUp() {
 
   const handleSignUpSubmit = () => {
     if (complete) {
-      signUpMutation;
+      signUpMutation(formData);
     }
   };
 
@@ -71,10 +67,7 @@ export default function SignUp() {
       <DropDown />
       <GenderSelectBox />
       <AgreeBox />
-      <S.CompleteButton
-        complete={complete}
-        onClick={() => (complete ? router.replace("complete") : console.log("disabled"))}
-      >
+      <S.CompleteButton complete={complete} onClick={handleSignUpSubmit}>
         <Text.Body1 color={complete ? "white" : "gray500"}>작성완료</Text.Body1>
       </S.CompleteButton>
     </S.Wrapper>
