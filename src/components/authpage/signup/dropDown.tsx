@@ -27,7 +27,7 @@ export default function DropDown() {
       setIsActive(false);
       setSignUpFormData((prev) => ({
         ...prev,
-        nation: nation,
+        nation,
       }));
     },
     [setSignUpFormData, nation]
