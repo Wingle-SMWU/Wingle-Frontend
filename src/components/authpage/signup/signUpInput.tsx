@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ErrorMent } from "./errorMent";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
@@ -48,15 +48,11 @@ export default function InputBox() {
   const [isCheckedNickname, setCheckedNickname] = useState(false);
   const [isVerifiedNickname, setVerifiedNickname] = useState(false);
 
-  const handleInputData = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
-      console.log(inputData);
-    },
-    [inputData]
-  );
+  const handleInputData = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
+  }, []);
 
-  const handleInputDataToAtom = useCallback(() => {
+  useEffect(() => {
     if (
       !isErrorEmailCertify &&
       !isErrorPassword &&
@@ -76,7 +72,6 @@ export default function InputBox() {
       }));
     }
   }, [
-    email,
     isCheckedNickname,
     isErrorEmailCertify,
     isErrorName,
@@ -85,6 +80,7 @@ export default function InputBox() {
     isErrorPasswordCheck,
     isVerifiedNickname,
     isemailCertification,
+    email,
     name,
     nickname,
     password,
@@ -225,7 +221,6 @@ export default function InputBox() {
             <S.Button
               onClick={() => {
                 verifyEmail();
-                handleInputDataToAtom();
               }}
             >
               인증 확인
@@ -273,7 +268,6 @@ export default function InputBox() {
               onChange={(e) => {
                 handleInputData(e);
                 handleErrorPasswordCheck(e);
-                handleInputDataToAtom();
               }}
             />
           </S.InputField>
@@ -295,7 +289,6 @@ export default function InputBox() {
               onChange={(e) => {
                 handleInputData(e);
                 handleErrorName(e);
-                handleInputDataToAtom();
               }}
             />
           </S.InputField>
@@ -329,7 +322,6 @@ export default function InputBox() {
             <S.Button
               onClick={() => {
                 CheckNickname();
-                handleInputDataToAtom();
               }}
             >
               중복 확인
