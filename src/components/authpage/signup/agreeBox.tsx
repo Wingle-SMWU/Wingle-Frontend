@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
 import { ST } from "next/dist/shared/lib/utils";
+import Image from "next/image";
 
 interface SdInputProps {
   Condition: boolean;
@@ -16,7 +17,10 @@ function WrapperComponent({ title, content, icon, must, handleCheck }: any) {
   return (
     <>
       <S.ContentWrapper>
-        <img
+        <Image
+          alt="selectedCheck"
+          width={20}
+          height={20}
           src={isAgreed === true ? "/auth/selectedCheck.svg" : "/auth/unselectedCheck.svg"}
           onClick={() => {
             setAgreed((prev) => !prev);
@@ -28,7 +32,10 @@ function WrapperComponent({ title, content, icon, must, handleCheck }: any) {
         <Text.Body2 color={icon === true ? "orange500" : "gray500"}>{must}</Text.Body2>
 
         <S.Img Condition={icon}>
-          <img
+          <Image
+            alt="selectedCheck"
+            width={20}
+            height={20}
             src="/auth/arrow_down.svg"
             onClick={() => {
               setActive((prev) => !prev);
@@ -44,10 +51,9 @@ function WrapperComponent({ title, content, icon, must, handleCheck }: any) {
   );
 }
 
-export default function AgreeBox({ getCheck }: any) {
+export default function AgreeBox() {
   useEffect(() => {
     handleCheck();
-    getCheck(check);
   });
   const [first, checkFirst] = useState(false);
   const [second, checkSecond] = useState(false);
