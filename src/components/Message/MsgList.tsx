@@ -1,19 +1,10 @@
 import styled from "styled-components";
 import useMsgAPI from "@/src/hooks/message/useMsgAPI";
 import { useRouter } from "next/router";
+import { Room } from "@/src/api/message/messageApi";
 
 // 쪽지함에서 보는 개별 메시지 리스트
 
-interface IProps {
-  roomId: number;
-  image: string;
-  nation: string;
-  nickname: string;
-  recentChat: string;
-  createdTime: string;
-  messageId: number;
-  isSender: boolean;
-}
 
 function betweenTime(value: string) {
   let today: number | Date = new Date();
@@ -44,15 +35,15 @@ function betweenTime(value: string) {
   return `${Math.floor(betweenTimeDay / 365)}년 전`;
 }
 
-const MsgList = ({ list }: { list: IProps }) => {
+const MsgList = ({ list }: { list: Room }) => {
   const { axiosCreateRoom } = useMsgAPI();
-  const { image, nickname, createdTime, recentChat, roomId, messageId, isSender } = list;
+  const { image, nickname, createdTime, recentChat, roomId } = list;
 
   const router = useRouter();
   const handleMoveChatRoom = () => {
     axiosCreateRoom().then((res) => {
-      router.push(`/messages/:roomId?page=${res}&size=${res}`);
     });
+    router.push(`/messages/${roomId}`);
   };
   return (
     <>
@@ -62,7 +53,7 @@ const MsgList = ({ list }: { list: IProps }) => {
           <LeftContent>
             <LeftDetail>
               <span>{nickname}</span>
-              <span>{betweenTime(createdTime)}</span>
+              <span>{betweenTime(String(createdTime))}</span>
             </LeftDetail>
             <p>{recentChat}</p>
           </LeftContent>
