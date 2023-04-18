@@ -91,6 +91,6 @@ const S = {
     background-color: ${(props) => (props.complete ? "#FF812E" : "#EEEEF2")};
     border-radius: 8px;
     width: 452px;
-    margin-bottom: 333px;
+    margin-bottom: 144px;
   `,
 };
