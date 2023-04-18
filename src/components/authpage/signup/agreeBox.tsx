@@ -1,19 +1,30 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
-import { ST } from "next/dist/shared/lib/utils";
 import Image from "next/image";
+import { useSetRecoilState } from "recoil";
+import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 
 interface SdInputProps {
   Condition: boolean;
 }
 
-function WrapperComponent({ title, content, icon, must, handleCheck }: any) {
+interface WrapperComponentProps {
+  title: string;
+  content: string;
+  icon: boolean;
+  must: string;
+  handleCheck: (check: boolean) => void;
+}
+
+function WrapperComponent({ title, content, icon, must, handleCheck }: WrapperComponentProps) {
   const [isAgreed, setAgreed] = useState(false);
   const [isActive, setActive] = useState(false);
+
   useEffect(() => {
     handleCheck(isAgreed);
-  });
+  }, [handleCheck, isAgreed]);
+
   return (
     <>
       <S.ContentWrapper>
@@ -21,7 +32,7 @@ function WrapperComponent({ title, content, icon, must, handleCheck }: any) {
           alt="selectedCheck"
           width={20}
           height={20}
-          src={isAgreed === true ? "/auth/selectedCheck.svg" : "/auth/unselectedCheck.svg"}
+          src={isAgreed ? "/auth/selectedCheck.svg" : "/auth/unselectedCheck.svg"}
           onClick={() => {
             setAgreed((prev) => !prev);
           }}
@@ -29,7 +40,7 @@ function WrapperComponent({ title, content, icon, must, handleCheck }: any) {
         <Margin direction="row" size={8} />
         <Text.Body2 color="gray900">{title}</Text.Body2>
         <Margin direction="row" size={3} />
-        <Text.Body2 color={icon === true ? "orange500" : "gray500"}>{must}</Text.Body2>
+        <Text.Body2 color={icon ? "orange500" : "gray500"}>{must}</Text.Body2>
 
         <S.Img Condition={icon}>
           <Image
@@ -52,31 +63,34 @@ function WrapperComponent({ title, content, icon, must, handleCheck }: any) {
 }
 
 export default function AgreeBox() {
+  const [termsOfUse, checkTermsOfUse] = useState(false);
+  const [termsOfPersonalInformation, checkTermsOfPersonalInformation] = useState(false);
+  const [termsOfPromotion, checkTermsOfPromotion] = useState(false);
+
+  const handleUseCheck = useCallback((check: boolean) => {
+    checkTermsOfUse(check);
+  }, []);
+
+  const handlePersonalInformationCheck = useCallback((check: boolean) => {
+    checkTermsOfPersonalInformation(check);
+  }, []);
+
+  const handlePromotionCheck = useCallback((check: boolean) => {
+    checkTermsOfPromotion(check);
+  }, []);
+
+  const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
+
   useEffect(() => {
-    handleCheck();
-  });
-  const [first, checkFirst] = useState(false);
-  const [second, checkSecond] = useState(false);
-  const [third, checkThird] = useState(false);
-  const [check, setCheck] = useState(false);
-  const handleFirstCheckValue = (check: any) => {
-    checkFirst(check);
-  };
-  const handleSecondCheckValue = (check: any) => {
-    checkSecond(check);
-  };
-
-  const handleThirdCheckValue = (check: any) => {
-    checkThird(check);
-  };
-
-  const handleCheck = () => {
-    if (first === true && second === true) {
-      setCheck(true);
-    } else {
-      setCheck(false);
+    if (termsOfUse && termsOfPersonalInformation) {
+      setSignUpFormData((prev) => ({
+        ...prev,
+        termsOfUse: termsOfUse,
+        termsOfPersonalInformation: termsOfPersonalInformation,
+        termsOfPromotion: termsOfPromotion,
+      }));
     }
-  };
+  }, [setSignUpFormData, termsOfPersonalInformation, termsOfPromotion, termsOfUse]);
 
   return (
     <>
@@ -86,21 +100,24 @@ export default function AgreeBox() {
           title="서비스 이용약관"
           icon={true}
           must={"(필수)"}
-          handleCheck={handleFirstCheckValue}
+          handleCheck={handleUseCheck}
+          content={""}
         />
         <Margin direction="column" size={18} />
         <WrapperComponent
           title="개인정보 수집 및 이용동의"
           icon={true}
           must={"(필수)"}
-          handleCheck={handleSecondCheckValue}
+          handleCheck={handlePersonalInformationCheck}
+          content={""}
         />
         <Margin direction="column" size={18} />
         <WrapperComponent
           title="이벤트, 프로모션알림 메일 수신"
           icon={false}
           must={"(선택)"}
-          handleCheck={handleThirdCheckValue}
+          handleCheck={handlePromotionCheck}
+          content={""}
         />
       </S.Wrapper>
     </>
