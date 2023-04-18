@@ -4,7 +4,6 @@ import styled from "styled-components";
 import InputBox from "../../components/authpage/signup/signUpInput";
 import DropDown from "../../components/authpage/signup/dropDown";
 import StudentCard from "../../components/authpage/signup/studentCard";
-import { InputInfo } from "../../components/authpage/signup/inputInformation";
 import GenderSelectBox from "../../components/authpage/signup/genderSelect";
 import AgreeBox from "@/src/components/authpage/signup/agreeBox";
 import router from "next/router";
@@ -68,10 +67,10 @@ export default function SignUp() {
       <StudentCard />
       <Text.Title1 color="gray900">학생 정보</Text.Title1>
       <Margin direction="column" size={16} />
-      <InputBox getError={getError} />
+      <InputBox />
       <DropDown />
       <GenderSelectBox />
-      <AgreeBox getCheck={getCheck} />
+      <AgreeBox />
       <S.CompleteButton
         complete={complete}
         onClick={() => (complete ? router.replace("complete") : console.log("disabled"))}
