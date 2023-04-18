@@ -11,31 +11,33 @@ export default function GenderSelectBox() {
       <Text.Body1 color="gray700">성별</Text.Body1>
       <S.Wrapper>
         <Margin direction="column" size={9} />
-        <S.GenderWrapper>
+        <S.GenderWrapper
+          onClick={() => {
+            setGender(true);
+          }}
+        >
           <Image
-            onClick={() => {
-              setGender(true);
-            }}
             alt="isSelect"
             src={gender ? "/auth/normal.svg" : "/auth/disable.svg"}
             width={20}
             height={20}
           ></Image>
           <Margin direction="row" size={8} />
-          <Text.Body3 color="gray900">여성 </Text.Body3>
+          <Text.Body3 color="gray900">여성</Text.Body3>
         </S.GenderWrapper>
-        <S.GenderWrapper>
+        <S.GenderWrapper
+          onClick={() => {
+            setGender(false);
+          }}
+        >
           <Image
             alt="isSelect"
-            onClick={() => {
-              setGender(false);
-            }}
             src={!gender ? "/auth/normal.svg" : "/auth/disable.svg"}
             width={20}
             height={20}
           ></Image>
           <Margin direction="row" size={8} />
-          <Text.Body3 color="gray900">남성 </Text.Body3>
+          <Text.Body3 color="gray900">남성</Text.Body3>
         </S.GenderWrapper>
       </S.Wrapper>
     </>
@@ -52,5 +54,6 @@ const S = {
     display: flex;
     text-align: center;
     margin-right: 24px;
+    cursor: pointer;
   `,
 };
