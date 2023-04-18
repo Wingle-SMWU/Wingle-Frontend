@@ -7,8 +7,11 @@ import SendMsg from "../components/Message/SendMsg";
 import ReceptionMsg from "../components/Message/ReceptionMsg";
 import YourInfo from "../components/Message/YourInfo";
 import MsgInput from "../components/Message/MsgInput";
-import Arrow_back from "../../public/images/message/arrow_back.svg";
+import Arrow_back from "../../../../public/images/message/arrow_back.svg";
 import { useRouter } from "next/router";
+import { useMutation, useQueryClient  } from "react-query";
+import instance from "../api/axiosModul";
+import { Message } from "../api/message/messageApi";
 
 // 쪽지 보내기 - 메시지 내용
 
@@ -20,17 +23,23 @@ interface NewMsgProps {
 
 export default function MessageSend() {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [text, setText] = useState("");
-  const { nickName, id } = useParams();
+  const { nickName, roomId } = router.query;
+  
   const { page, size } = useParams(); // 채널 구분
   const { roomList, messageList, setMessageList, myInfo, receiverInfo } = useGetMessage(
-    page!,
-    size!
+    Number(roomId) ?? 0 ,
+    Number(page) ?? 1,
+    Number(size) ?? 10,
   );
+
+  console.log("roomList",roomList)
+
+  console.log(messageList,myInfo,receiverInfo)
   const { image, nickname } = roomList;
 
-  const client: any = useRef({});
   let prevNickname = { nickName: "" };
   let prevDate = "";
   const [newMsg, setNewMsg] = useState<NewMsgProps>();
@@ -44,34 +53,49 @@ export default function MessageSend() {
   const handleSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) return;
     if (e.key === "Enter" && text) {
-      publish(text);
+      mutate(text);
+      setText("");
+    console.log('엔터 보내기')
+    console.log(`메시지 내용 ${text}`)
     }
   };
 
   // 마우스로 쪽지 보내기
   const handleClickSendMessage = () => {
     if (!text) return;
-    publish(text);
+    mutate(text);
+    setText("");
+    console.log('마우스보내기')
+    console.log(`메시지 내용 ${text}`)
   };
 
-  const publish = (text: string) => {
-    if (!client.current.connected) return;
-    client.current.publish({
-      destination: `/messages`,
-      body: JSON.stringify({
-        roomId: id,
+  const addMsg = async (text: string) => {
+    const response = await instance.post(`/messages/`,  {
+      body: {
+        roomId,
         content: text,
-      }),
+      },
     });
-    setText("");
-  };
+    return response.data;
+  }
+
+
+  const { mutate } = useMutation(addMsg, {
+    onMutate: async () => {
+      await queryClient.cancelQueries('messages');},
+    onSuccess: () => {
+      queryClient.invalidateQueries("messages");
+    },
+    onError: (err) => {
+      console.log(`실패 ${err}`);}
+  });
 
   useEffect(() => {
     const data = {
       content: newMsg?.content,
       createdTime: newMsg?.createdTime,
     };
-    if (newMsg?.roomId === myInfo?.memberId) {
+    if (newMsg?.roomId === myInfo?.messageId) {
       setMessageList([...messageList, { ...myInfo, ...data }]);
     } else {
       setMessageList([...messageList, { ...receiverInfo, ...data }]);
@@ -89,26 +113,27 @@ export default function MessageSend() {
         <TitleBox>
           <Arrow_back
             style={{ paddingTop: 5, cursor: "pointer" }}
-            onClick={() => router.push("/message")}
+            onClick={() => router.back()}
           />
           <Margin direction="row" size={13} />
           <Text.Title1 color="gray900">쪽지보내기</Text.Title1>
           <YourInfoBox>
-            <YourInfo image={image} nickName={nickName} />
+            <YourInfo image={image} nickName={nickname} />
           </YourInfoBox>
         </TitleBox>
         <MessageRoomList>
-          {messageList.length ? (
+          {messageList.length > 0 ? (
             <>
-              {messageList?.map((list: any, i: number) => {
+              {messageList?.map((list: Message) => {
+                list.nickname
                 const { createdTime, content } = list;
                 const newList = { content, createdTime };
-                const currentDate = convertDate(createdTime);
+                const currentDate = convertDate(String(createdTime));
 
                 if (currentDate !== prevDate) {
                   prevDate = currentDate;
-                  if (list?.nickName === nickname) {
-                    if (prevNickname === list.nickName) {
+                  if (list?.nickname === nickname) {
+                    if (prevNickname.nickName === list.nickname) {
                       return (
                         <React.Fragment key={currentDate}>
                           <DateBox>
@@ -116,11 +141,14 @@ export default function MessageSend() {
                               <span>{currentDate}</span>
                             </DateDisplay>
                           </DateBox>
-                          <SendMsg list={newList} />
+                          <SendMsg list={{
+                            content: list.content,
+                            createdTime: String(list.createdTime)
+                          }} />
                         </React.Fragment>
                       );
                     } else {
-                      prevNickname = list.nickName;
+                      prevNickname.nickName = list.nickname;
                       return (
                         <React.Fragment key={currentDate}>
                           <DateBox>
@@ -128,12 +156,15 @@ export default function MessageSend() {
                               <span>{currentDate}</span>
                             </DateDisplay>
                           </DateBox>
-                          <SendMsg list={list} />
+                          <SendMsg list={{
+                            content: list.content,
+                            createdTime: String(list.createdTime)
+                          }} />
                         </React.Fragment>
                       );
                     }
                   } else {
-                    if (prevNickname === list.nickName) {
+                    if (prevNickname.nickName === list.nickname) {
                       return (
                         <React.Fragment key={currentDate}>
                           <DateBox>
@@ -141,11 +172,14 @@ export default function MessageSend() {
                               <span>{currentDate}</span>
                             </DateDisplay>
                           </DateBox>
-                          <ReceptionMsg list={newList} />
+                          <ReceptionMsg list={{
+                            content: newList.content,
+                            createdTime: String(newList.createdTime)
+                          }} />
                         </React.Fragment>
                       );
                     } else {
-                      prevNickname = list.nickName;
+                      prevNickname.nickName = list.nickname;
                       return (
                         <React.Fragment key={currentDate}>
                           <DateBox>
@@ -153,25 +187,40 @@ export default function MessageSend() {
                               <span>{currentDate}</span>
                             </DateDisplay>
                           </DateBox>
-                          <ReceptionMsg list={list} />
+                          <ReceptionMsg list={{
+                            content: list.content,
+                            createdTime: String(list.createdTime)
+                          }} />
                         </React.Fragment>
                       );
                     }
                   }
                 } else {
-                  if (list?.nickName === nickname) {
-                    if (prevNickname === list.nickName) {
-                      return <SendMsg key={createdTime} list={newList} />;
+                  if (list?.nickname === nickName) {
+                    if (prevNickname.nickName === list.nickname) {
+                      return <SendMsg key={String(list.createdTime)} list={{
+                        content: newList.content,
+                        createdTime: String(newList.createdTime)
+                      }} />;
                     } else {
-                      prevNickname = list.nickName;
-                      return <SendMsg key={createdTime} list={list} />;
+                      prevNickname.nickName = list.nickname;
+                      return <SendMsg key={String(list.createdTime)} list={{
+                        content: list.content,
+                        createdTime: String(list.createdTime)
+                      }} />;
                     }
                   } else {
-                    if (prevNickname === list.nickName) {
-                      return <ReceptionMsg key={createdTime} list={newList} />;
+                    if (prevNickname.nickName === list.nickname) {
+                      return <ReceptionMsg key={String(list.createdTime)} list={{
+                        content: newList.content,
+                        createdTime: String(newList.createdTime)
+                      }} />;
                     } else {
-                      prevNickname = list.nickName;
-                      return <ReceptionMsg key={createdTime} list={list} />;
+                      prevNickname.nickName = list.nickname;
+                      return <ReceptionMsg key={String(list.createdTime)}list={{
+                        content: list.content,
+                        createdTime: String(list.createdTime)
+                      }} />;
                     }
                   }
                 }
@@ -179,7 +228,7 @@ export default function MessageSend() {
             </>
           ) : (
             <Empty>
-              <p>임시</p>
+              <p></p>
             </Empty>
           )}
         </MessageRoomList>
