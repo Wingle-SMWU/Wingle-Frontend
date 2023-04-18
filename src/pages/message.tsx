@@ -1,23 +1,19 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import styled from "styled-components";
 import useGetRoom from "../hooks/message/useGetRoom";
 import MsgList from "../components/Message/MsgList";
 import { Text } from "../components/ui";
-import Message from "../../public/images/message/message.svg";
+import Message from "../../../public/images/message/message.svg";
 import Navigation from "@/src/components/layout/Navigation";
+import { Room } from "../api/message/messageApi";
 
-interface RoomListProps {
-  roomId: number;
-  image: string;
-  nation: string;
-  nickname: string;
-  recentChat: string;
-  createdTime: string;
-  messageId: number;
-  isSender: boolean;
-}
 
-const message = () => {
-  const { getMsgRoomList } = useGetRoom();
+const message = (page: number , size: number ) => {
+  const { messageData } = useGetRoom(1, 100000);
+
+  if (messageData === undefined) {
+    return <div>로딩중</div>;
+  }
 
   return (
     <Container>
@@ -25,17 +21,19 @@ const message = () => {
         <Text.Title1 color="gray900">쪽지함</Text.Title1>
       </TopContainer>
       <MsgContainer>
-        {getMsgRoomList ? (
-          getMsgRoomList.map((list: RoomListProps) => {
+        {messageData?.length > 0 ? (
+          messageData.map((list: Room) => {
             return <MsgList list={list} key={list.roomId} />;
           })
         ) : (
+          <>
           <EmptyContainer>
             <EmptyBox>
               <Message />
               <Text.Body3 color="gray500">받은 쪽지가 없어요.</Text.Body3>
             </EmptyBox>
           </EmptyContainer>
+          </>
         )}
         <Navigation tab={""} />
       </MsgContainer>
@@ -66,6 +64,7 @@ const EmptyContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+ 
 `;
 
 const EmptyBox = styled.div`
