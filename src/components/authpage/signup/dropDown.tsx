@@ -19,7 +19,7 @@ export default function DropDown() {
     setIsActive((prev) => !prev);
   }, []);
 
-  const onSelectItem: React.MouseEventHandler<HTMLLIElement> = useCallback(
+  const handleSelectItem: React.MouseEventHandler<HTMLLIElement> = useCallback(
     (e) => {
       const target = e.target as HTMLLIElement;
       const selectedNation = target.innerText;
@@ -49,7 +49,7 @@ export default function DropDown() {
 
         <S.DropdownMenu isActive={isActive}>
           {List.map((item) => (
-            <S.DropdownItemContainer id="item" key={item} onClick={onSelectItem}>
+            <S.DropdownItemContainer id="item" key={item} onClick={handleSelectItem}>
               <S.CountryItem color="gray900">{item}</S.CountryItem>
             </S.DropdownItemContainer>
           ))}
