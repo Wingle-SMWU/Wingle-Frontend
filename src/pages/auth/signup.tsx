@@ -20,21 +20,21 @@ interface SdInputProps {
 export default function SignUp() {
   const [complete, setComplete] = useState(false);
 
-  const formData = useRecoilValue(signUpFormDataAtom);
+  const signUpFormData = useRecoilValue(signUpFormDataAtom);
 
   useEffect(() => {
     if (
-      formData.idCardImage &&
-      formData.email &&
-      formData.password &&
-      formData.name &&
-      formData.nation &&
-      formData.termsOfUse &&
-      formData.termsOfPersonalInformation
+      signUpFormData.idCardImage &&
+      signUpFormData.email &&
+      signUpFormData.password &&
+      signUpFormData.name &&
+      signUpFormData.nation &&
+      signUpFormData.termsOfUse &&
+      signUpFormData.termsOfPersonalInformation
     ) {
       setComplete(true);
     }
-  }, [formData]);
+  }, [signUpFormData]);
 
   const { mutate: signUpMutation } = useMutation((signUpData: SignUpData) =>
     postSignUp(signUpData)
@@ -42,7 +42,7 @@ export default function SignUp() {
 
   const handleSignUpSubmit = () => {
     if (complete) {
-      signUpMutation(formData);
+      signUpMutation(signUpFormData);
     }
   };
 
