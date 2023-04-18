@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styled from "styled-components";
-import useGetRoom from "../hooks/message/useGetRoom";
-import MsgList from "../components/Message/MsgList";
-import { Text } from "../components/ui";
+import useGetRoom from "../../hooks/message/useGetRoom";
+import MsgList from "../../components/Message/MsgList";
+import { Text } from "../../components/ui";
 import Message from "../../../public/images/message/message.svg";
 import Navigation from "@/src/components/layout/Navigation";
-import { Room } from "../api/message/messageApi";
+import { Room } from "../../api/message/messageApi";
 
 
 const message = (page: number , size: number ) => {

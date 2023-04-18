@@ -1,17 +1,17 @@
-import { Text, Margin } from "../components/ui";
+import { Text, Margin } from "../../../components/ui";
 import styled from "styled-components";
-import useGetMessage from "../hooks/message/useGetMessage";
+import useGetMessage from "../../../hooks/message/useGetMessage";
 import React, { KeyboardEvent, useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import SendMsg from "../components/Message/SendMsg";
-import ReceptionMsg from "../components/Message/ReceptionMsg";
-import YourInfo from "../components/Message/YourInfo";
-import MsgInput from "../components/Message/MsgInput";
+import SendMsg from "../../../components/Message/SendMsg";
+import ReceptionMsg from "../../../components/Message/ReceptionMsg";
+import YourInfo from "../../../components/Message/YourInfo";
+import MsgInput from "../../../components/Message/MsgInput";
 import Arrow_back from "../../../../public/images/message/arrow_back.svg";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient  } from "react-query";
-import instance from "../api/axiosModul";
-import { Message } from "../api/message/messageApi";
+import instance from "../../../api/axiosModul";
+import { Message } from "../../../api/message/messageApi";
 
 // 쪽지 보내기 - 메시지 내용
 
@@ -228,7 +228,7 @@ export default function MessageSend() {
             </>
           ) : (
             <Empty>
-              <p></p>
+              <p>임시</p>
             </Empty>
           )}
         </MessageRoomList>
