@@ -28,6 +28,7 @@ interface InputData {
 export default function InputBox() {
   const [buttonMessage, setButtonMessage] = useState("인증 전송");
   const [emailMent, setEmailMent] = useState("");
+
   const [inputData, setInputData] = useState<InputData>({
     email: "",
     emailCertification: "",
@@ -38,13 +39,12 @@ export default function InputBox() {
   });
   const { email, emailCertification, password, passwordCheck, name, nickname } = inputData;
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
+
   const [isErrorEmailCertify, setErrorEmailCertify] = useState(true);
   const [isErrorPassword, setErrorPassword] = useState(true);
   const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(true);
   const [isErrorName, setErrorName] = useState(true);
   const [isErrorNickName, setErrorNickName] = useState(true);
-
-  const [isemailCertification, setVerifiedNickName] = useState(false);
   const [isCheckedNickname, setCheckedNickname] = useState(false);
   const [isVerifiedNickname, setVerifiedNickname] = useState(false);
 
@@ -52,48 +52,11 @@ export default function InputBox() {
     setInputData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
   }, []);
 
-  useEffect(() => {
-    if (
-      !isErrorEmailCertify &&
-      !isErrorPassword &&
-      !isErrorPasswordCheck &&
-      !isErrorName &&
-      !isErrorNickName &&
-      isVerifiedNickname &&
-      isemailCertification &&
-      isCheckedNickname
-    ) {
-      setSignUpFormData((prev) => ({
-        ...prev,
-        email: email,
-        password: password,
-        name: name,
-        nickname: nickname,
-      }));
-    }
-  }, [
-    isCheckedNickname,
-    isErrorEmailCertify,
-    isErrorName,
-    isErrorNickName,
-    isErrorPassword,
-    isErrorPasswordCheck,
-    isVerifiedNickname,
-    isemailCertification,
-    email,
-    name,
-    nickname,
-    password,
-    setSignUpFormData,
-  ]);
-
   const { mutate: sendEmail } = useMutation(() => sendEmailAuth(email), {
     onMutate: () => {
       setButtonMessage("전송 중");
     },
-    onSuccess: (res) => {
-      console.log(res);
-
+    onSuccess: () => {
       setButtonMessage("재전송");
       setEmailMent("인증메일을 전송했습니다.");
     },
@@ -109,6 +72,10 @@ export default function InputBox() {
     {
       onSuccess: () => {
         setErrorEmailCertify(false);
+        setSignUpFormData((prev) => ({
+          ...prev,
+          email,
+        }));
       },
       onError: (error) => {
         setErrorEmailCertify(true);
@@ -116,6 +83,16 @@ export default function InputBox() {
       },
     }
   );
+
+  useEffect(() => {
+    if (!isErrorPassword && !isErrorPasswordCheck && !isErrorName) {
+      setSignUpFormData((prev) => ({
+        ...prev,
+        password: password,
+        name: name,
+      }));
+    }
+  }, [isErrorName, isErrorPassword, isErrorPasswordCheck, name, password, setSignUpFormData]);
 
   const handleErrorPassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,10 +140,13 @@ export default function InputBox() {
   }, []);
 
   const { mutate: CheckNickname } = useMutation(() => checkNicknameAvailable(nickname), {
-    onSuccess: (res) => {
-      console.log(res);
+    onSuccess: () => {
       setCheckedNickname(true);
       setVerifiedNickname(true);
+      setSignUpFormData((prev) => ({
+        ...prev,
+        nickname,
+      }));
     },
     onError: (error) => {
       setCheckedNickname(true);
