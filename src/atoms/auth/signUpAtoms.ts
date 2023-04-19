@@ -23,7 +23,7 @@ export const signUpFormDataAtom = atom<SignUpFormData>({
     name: "",
     isNicknameChecked: false,
     nickname: "",
-    nation: "kr",
+    nation: "Republic of Korea",
     gender: true,
     termsOfUse: false,
     termsOfPersonalInformation: false,
