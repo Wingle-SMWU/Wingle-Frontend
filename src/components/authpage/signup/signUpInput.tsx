@@ -88,6 +88,9 @@ export default function InputBox() {
   ]);
 
   const { mutate: sendEmail } = useMutation(() => sendEmailAuth(email), {
+    onMutate: () => {
+      setButtonMessage("전송 중");
+    },
     onSuccess: (res) => {
       console.log(res);
 
@@ -101,7 +104,7 @@ export default function InputBox() {
     },
   });
 
-  const { mutate: verifyEmail } = useMutation(
+  const { mutate: verifyEmail, isLoading: isLoadingVerifyEmail } = useMutation(
     () => verifyEmailCertification({ email, emailCertification }),
     {
       onSuccess: () => {
@@ -227,8 +230,15 @@ export default function InputBox() {
             </S.Button>
           </S.ButtonWrapper>
         </S.Content>
-
-        <ErrorMent error={isErrorEmailCertify} errorMent="인증정보가 일치하지 않습니다." ment=" " />
+        {isLoadingVerifyEmail ? (
+          <ErrorMent error={false} errorMent="" ment="인증 확인 중 입니다." />
+        ) : (
+          <ErrorMent
+            error={isErrorEmailCertify}
+            errorMent="인증정보가 일치하지 않습니다."
+            ment="인증이 완료되었습니다."
+          />
+        )}
       </S.ContentWrapper>
 
       <Text.Body1 color="gray700">비밀번호</Text.Body1>
