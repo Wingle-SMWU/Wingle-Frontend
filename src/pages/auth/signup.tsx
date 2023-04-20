@@ -14,7 +14,7 @@ import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { useRecoilValue } from "recoil";
 
 interface SdInputProps {
-  complete: boolean;
+  disabled: boolean;
 }
 
 export default function SignUp() {
@@ -34,10 +34,12 @@ export default function SignUp() {
     ) {
       setComplete(true);
     }
+    console.log(signUpFormData);
   }, [signUpFormData]);
 
-  const { mutate: signUpMutation } = useMutation((signUpData: SignUpData) =>
-    postSignUp(signUpData)
+  const { mutate: signUpMutation } = useMutation(
+    (signUpData: SignUpData) => postSignUp(signUpData),
+    { onSuccess: () => router.push("/auth/login") }
   );
 
   const handleSignUpSubmit = () => {
@@ -67,7 +69,7 @@ export default function SignUp() {
       <DropDown />
       <GenderSelectBox />
       <AgreeBox />
-      <S.CompleteButton complete={complete} onClick={handleSignUpSubmit}>
+      <S.CompleteButton disabled={complete} onClick={handleSignUpSubmit}>
         <Text.Body1 color={complete ? "white" : "gray500"}>작성완료</Text.Body1>
       </S.CompleteButton>
     </S.Wrapper>
@@ -88,9 +90,10 @@ const S = {
   `,
   CompleteButton: styled.button<SdInputProps>`
     height: 50px;
-    background-color: ${(props) => (props.complete ? "#FF812E" : "#EEEEF2")};
+    background-color: ${({ disabled }) => (disabled ? "#FF812E" : "#EEEEF2")};
     border-radius: 8px;
     width: 452px;
     margin-bottom: 144px;
+    cursor: ${({ disabled }) => (disabled ? "pointer" : "not-allowed")};
   `,
 };
