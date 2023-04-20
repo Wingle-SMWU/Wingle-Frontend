@@ -61,9 +61,11 @@ instance.interceptors.response.use(
       return axios(config);
     }
 
-    if (response.status === 404) {
+    if (response.status === 404 && response.data.message === "다시 로그인해주세요.") {
+      console.log("다시 로그인해주세요.");
+
       localStorage.clear();
-      window.location.href = "/login";
+      window.location.href = "/auth/login";
     }
 
     return Promise.reject(error);
@@ -102,7 +104,7 @@ const getAccessToken = async () => {
     }
 
     // refresh token이 만료된 경우 1개
-    if (response.status === 404) {
+    if (response.status === 404 && response.data.message === "다시 로그인해주세요.") {
       throw new Error(`${response.data.message}`);
     }
 
@@ -112,6 +114,6 @@ const getAccessToken = async () => {
     // 리프레시 토큰 만료 에러 핸들링 2개
     console.log("리프레시 토큰 오류", error);
     localStorage.clear();
-    window.location.href = "/login";
+    window.location.href = "/auth/login";
   }
 };
