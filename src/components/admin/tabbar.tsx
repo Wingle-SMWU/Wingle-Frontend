@@ -56,6 +56,7 @@ const S = {
       line-height: 150%;
       display: flex;
       align-items: center;
+      justify-content: center;
       text-align: center;
       font-family: Pretendard;
       cursor: pointer;

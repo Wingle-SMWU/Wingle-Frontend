@@ -10,7 +10,7 @@ type AdminUsersResp = {
 export default function Content({ data }: AdminUsersResp) {
   return (
     <S.Content>
-      <S.Menu>
+      <S.Menu menu={ADMIN_CONTENT_MENU}>
         {ADMIN_CONTENT_MENU.map((menu, idx) => (
           <li key={idx}><p>{menu}</p></li>
         ))}
@@ -47,17 +47,18 @@ const S = {
       text-decoration: none;
     }
   `,
-  Menu: styled.ul`
+  Menu: styled.ul<{menu: string[]}>`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     padding: 0px;
     width: 946px;
-    height: 44px;  
+    height: 44px;
     flex: none;
     order: 0;
     flex-grow: 0;
     background: #FCFCFE;
+    width: 100%;
     > li {
       display: flex;
       flex-direction: column;
@@ -66,6 +67,7 @@ const S = {
       gap: 8px;
       flex: none;
       flex-grow: 0;
+      // width: ${({menu}) => `${100 / menu.length}%` };
       > p {
         height: 20px;
         font-family: 'Pretendard';
@@ -95,10 +97,6 @@ const S = {
       > p {
         width: 48px;
       }
-    }
-    > li:nth-child(4) {
-      width: 532px;
-      height: 44px;
     }
   `,
   Item: styled.ul<{nation: string | null}>`
