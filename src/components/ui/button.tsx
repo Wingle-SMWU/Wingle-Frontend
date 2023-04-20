@@ -10,7 +10,7 @@ type ButtonProps = {
 }
 
 
-function Button({ children, disabled, size, type }: ButtonProps) {
+export default function Button({ children, disabled, size, type }: ButtonProps) {
   const sizeStyle = S.Size[size];
   const typeStyle = type ? S.Type[type] : '';
 
@@ -90,5 +90,3 @@ const S = {
     }
   `
 }
-
-export default Button;
