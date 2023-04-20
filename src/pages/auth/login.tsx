@@ -7,11 +7,17 @@ import { useMutation } from "react-query";
 import { postLogin } from "@/src/api/auth/loginApi";
 import { saveRefreshTokenToLocalStorage } from "@/src/utils/refreshTokenHandler";
 import { saveAccessTokenToLocalStorage } from "@/src/utils/accessTokenHandler";
+import { ErrorMent } from "@/src/components/authpage/signup/errorMent";
+
+interface StyledInputProps {
+  error: boolean;
+}
 
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
   const { mutate: login, isLoading } = useMutation(() => postLogin(email, password), {
     onSuccess: (res) => {
@@ -22,10 +28,8 @@ export default function Login() {
       saveAccessTokenToLocalStorage(accessToken);
       // router.push(admin ? "/admin" : "/main");
     },
-    onError: (error) => {
-      console.log(`로그인 실패! ${error}`);
-      // 로그인 실패시 에러 메시지 출력
-      alert("로그인 실패! 이메일과 비밀번호를 확인해주세요.");
+    onError: () => {
+      setError(true);
     },
   });
 
@@ -51,7 +55,7 @@ export default function Login() {
 
       <form onSubmit={handleSubmit}>
         <S.AccountWrapper>
-          <S.InputField>
+          <S.InputField error={error}>
             <input
               type="email"
               placeholder="이메일"
@@ -59,7 +63,7 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </S.InputField>
-          <S.InputField>
+          <S.InputField error={error}>
             <input
               type="password"
               placeholder="비밀번호"
@@ -67,6 +71,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </S.InputField>
+          <ErrorMent error={error} errorMent="아이디 혹은 비밀번호를 정확히 입력해 주세요." />
         </S.AccountWrapper>
 
         <S.ButtonWrapper>
@@ -93,11 +98,11 @@ const S = {
     padding-bottom: 30px;
   `,
 
-  InputField: styled.div`
+  InputField: styled.div<StyledInputProps>`
     margin: 0 auto;
     width: 452px;
     height: 50px;
-    border: 1px solid #dcdce0;
+    border: 1px solid ${(props) => (props.error ? "#FF7070" : "#dcdce0;")};
     border-radius: 8px;
     margin-bottom: 18px;
     display: flex;
