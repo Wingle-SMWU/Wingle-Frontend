@@ -52,6 +52,7 @@ export default function InputBox() {
     setInputData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
   }, []);
 
+  // 이메일 인증메일 보내기
   const { mutate: sendEmail } = useMutation(() => sendEmailAuth(email), {
     onMutate: () => {
       setButtonMessage("전송 중");
@@ -75,6 +76,7 @@ export default function InputBox() {
     sendEmail();
   }, [email, sendEmail]);
 
+  // 이메일 인증번호 확인
   const { mutate: verifyEmail, isLoading: isLoadingVerifyEmail } = useMutation(
     () => verifyEmailCertification({ email, emailCertification }),
     {
@@ -100,6 +102,7 @@ export default function InputBox() {
     verifyEmail();
   }, [email, verifyEmail]);
 
+  // useEffect로 비밀번호, 비밀번호 확인, 이름 존재 시 회원가입 폼 데이터 저장
   useEffect(() => {
     if (!isErrorPassword && !isErrorPasswordCheck && !isErrorName) {
       setSignUpFormData((prev) => ({
@@ -110,6 +113,7 @@ export default function InputBox() {
     }
   }, [isErrorName, isErrorPassword, isErrorPasswordCheck, name, password, setSignUpFormData]);
 
+  // 비밀번호 유효성 검사
   const handleErrorPassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
@@ -125,6 +129,7 @@ export default function InputBox() {
     [passwordCheck]
   );
 
+  // 비밀번호와 맞는지 확인 기능
   const handleErrorPasswordCheck = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       e.target.value === password ? setErrorPasswordCheck(false) : setErrorPasswordCheck(true);
@@ -136,6 +141,7 @@ export default function InputBox() {
     [password]
   );
 
+  // 이름 유효성 검사
   const handleErrorName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const special_pattern = /^[a-zA-Z가-힣\s]+$/;
     if (!special_pattern.test(e.target.value)) {
@@ -145,6 +151,7 @@ export default function InputBox() {
     }
   }, []);
 
+  // 닉네임 유효성 검사
   const handleErrorNickName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const pattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
     if (!pattern.test(e.target.value) || e.target.value.length < 2 || e.target.value.length > 10) {
@@ -154,6 +161,7 @@ export default function InputBox() {
     }
   }, []);
 
+  // 닉네임 중복 확인 기능
   const { mutate: CheckNickname } = useMutation(() => checkNicknameAvailable(nickname), {
     onSuccess: () => {
       setCheckedNickname(true);
