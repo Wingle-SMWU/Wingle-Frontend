@@ -67,6 +67,14 @@ export default function InputBox() {
     },
   });
 
+  const handleSendEmail = useCallback(() => {
+    if (email === "") {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+    sendEmail();
+  }, [email, sendEmail]);
+
   const { mutate: verifyEmail, isLoading: isLoadingVerifyEmail } = useMutation(
     () => verifyEmailCertification({ email, emailCertification }),
     {
@@ -83,6 +91,14 @@ export default function InputBox() {
       },
     }
   );
+
+  const handleVerifyEmail = useCallback(() => {
+    if (email === "") {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+    verifyEmail();
+  }, [email, verifyEmail]);
 
   useEffect(() => {
     if (!isErrorPassword && !isErrorPasswordCheck && !isErrorName) {
@@ -131,7 +147,6 @@ export default function InputBox() {
 
   const handleErrorNickName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const pattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
-
     if (!pattern.test(e.target.value) || e.target.value.length < 2 || e.target.value.length > 10) {
       setErrorNickName(true);
     } else {
@@ -155,6 +170,14 @@ export default function InputBox() {
     },
   });
 
+  const handleCheckNickname = useCallback(() => {
+    if (nickname === "") {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+    CheckNickname();
+  }, [CheckNickname, nickname]);
+
   return (
     <>
       <Text.Body1 color="gray700">이메일</Text.Body1>
@@ -173,13 +196,7 @@ export default function InputBox() {
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={false}>
-            <S.Button
-              onClick={() => {
-                sendEmail();
-              }}
-            >
-              {buttonMessage}
-            </S.Button>
+            <S.Button onClick={() => handleSendEmail()}>{buttonMessage}</S.Button>
           </S.ButtonWrapper>
         </S.Content>
         <ErrorMent error={false} errorMent="" ment={emailMent} />
@@ -201,13 +218,7 @@ export default function InputBox() {
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={isErrorEmailCertify}>
-            <S.Button
-              onClick={() => {
-                verifyEmail();
-              }}
-            >
-              인증 확인
-            </S.Button>
+            <S.Button onClick={() => handleVerifyEmail()}>인증 확인</S.Button>
           </S.ButtonWrapper>
         </S.Content>
         {isLoadingVerifyEmail ? (
@@ -309,13 +320,7 @@ export default function InputBox() {
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={false}>
-            <S.Button
-              onClick={() => {
-                CheckNickname();
-              }}
-            >
-              중복 확인
-            </S.Button>
+            <S.Button onClick={() => handleCheckNickname()}>중복 확인</S.Button>
           </S.ButtonWrapper>
         </S.Content>
         <ErrorMent
