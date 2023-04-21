@@ -60,8 +60,13 @@ instance.interceptors.response.use(
       config.headers.Authorization = `Bearer ${accessToken}`;
       return axios(config);
     }
+    console.log(response.config.url);
 
-    if (response.status === 404 && response.data.message === "다시 로그인해주세요.") {
+    if (
+      response.status === 404 &&
+      response.data.message === "다시 로그인해주세요." &&
+      response.config.url === "/auth/refresh"
+    ) {
       console.log("다시 로그인해주세요.");
 
       localStorage.clear();
@@ -104,16 +109,17 @@ const getAccessToken = async () => {
     }
 
     // refresh token이 만료된 경우 1개
-    if (response.status === 404 && response.data.message === "다시 로그인해주세요.") {
+    if (
+      response.status === 404 &&
+      response.data.message === "다시 로그인해주세요." &&
+      response.config.url === "/auth/refresh"
+    ) {
       throw new Error(`${response.data.message}`);
     }
 
     // 그 외의 경우에는 에러를 발생시킴
     throw new Error(`토큰 재발급에 실패했습니다. 상태 코드: ${response.status}`);
   } catch (error) {
-    // 리프레시 토큰 만료 에러 핸들링 2개
-    console.log("리프레시 토큰 오류", error);
-    localStorage.clear();
-    window.location.href = "/auth/login";
+    return Promise.reject(error);
   }
 };
