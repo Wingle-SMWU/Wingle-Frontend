@@ -60,7 +60,10 @@ export default function Login() {
               type="email"
               placeholder="이메일"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError(false);
+              }}
             />
           </S.InputField>
           <S.InputField error={error}>
@@ -68,7 +71,10 @@ export default function Login() {
               type="password"
               placeholder="비밀번호"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError(false);
+              }}
             />
           </S.InputField>
           <ErrorMent error={error} errorMent="아이디 혹은 비밀번호를 정확히 입력해 주세요." />
