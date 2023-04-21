@@ -3,11 +3,13 @@ import React from "react";
 import styled from "styled-components";
 import { Margin, Text } from "../ui";
 
+// InputField Props만 따로 정의
 interface InputFieldProps {
   width?: string; // width가 없을 경우 기본값 311px
   error?: boolean; // error가 true일 경우 border 색상 변경
 }
 
+// TextInputUI Props 정의
 interface TextInputProps extends InputFieldProps {
   name: string; // input의 name
   value: string; // input의 value
