@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TextInputUI from "../components/ui/textInputUI";
+import { Margin } from "../components/ui";
 
 export default function Test() {
   const [inputValue, setInputValue] = useState("");
@@ -9,11 +10,20 @@ export default function Test() {
   };
 
   return (
-    <TextInputUI
-      name="example-input"
-      value={inputValue}
-      onChange={handleInputChange}
-      placeholder="Type here..."
-    />
+    <>
+      <Margin size={50} direction="column" />
+      <div>
+        <TextInputUI
+          name="test"
+          value={inputValue}
+          onChange={handleInputChange}
+          onBlur={() => console.log("onBlur")}
+          placeholder="텍스트를 입력해주세요."
+          validate={(value) => value.length >= 5}
+          errorMessage="5글자 이상 입력해주세요."
+          message="5글자 이상 하셨군요!"
+        />
+      </div>
+    </>
   );
 }

@@ -1,5 +1,7 @@
+import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
+import { Margin, Text } from "../ui";
 
 interface InputFieldProps {
   error?: boolean;
@@ -13,30 +15,50 @@ interface TextInputProps extends InputFieldProps {
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   placeholder?: string;
+  validate?: (value: string) => boolean;
+  errorMessage?: string;
+  message?: string;
 }
 
 export default function TextInputUI({
   width,
+  error,
   name,
   value,
   onChange,
   onBlur,
   disabled,
   placeholder,
+  validate,
+  errorMessage,
+  message,
 }: TextInputProps) {
+  const hasError = validate && !validate(value);
+
   return (
-    <InputField width={width}>
-      <input
-        type="text"
-        id={name}
-        name={name}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        disabled={disabled}
-        placeholder={placeholder}
-      />
-    </InputField>
+    <>
+      <InputField width={width} error={error}>
+        <input
+          type="text"
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          disabled={disabled}
+          placeholder={placeholder}
+        />
+      </InputField>
+      {hasError ? (
+        <ErrorWrapper>
+          <Image src="/auth/error.svg" alt="error" width={16} height={16} />
+          <Margin direction="row" size={8} />
+          <Text.Caption3 color="red500">{errorMessage}</Text.Caption3>
+        </ErrorWrapper>
+      ) : (
+        <Text.Caption3 color="gray900">{message}</Text.Caption3>
+      )}
+    </>
   );
 }
 
@@ -61,4 +83,8 @@ const InputField = styled.div<InputFieldProps>`
       color: #959599;
     }
   }
+`;
+
+const ErrorWrapper = styled.div`
+  display: flex;
 `;
