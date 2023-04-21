@@ -4,19 +4,19 @@ import styled from "styled-components";
 import { Margin, Text } from "../ui";
 
 interface InputFieldProps {
-  width?: string;
-  error?: boolean;
+  width?: string; // width가 없을 경우 기본값 311px
+  error?: boolean; // error가 true일 경우 border 색상 변경
 }
 
 interface TextInputProps extends InputFieldProps {
-  name: string;
-  value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-  disabled?: boolean;
+  name: string; // input의 name
+  value: string; // input의 value
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void; // input의 onChange
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void; // input의 onBlur
+  disabled?: boolean; // input의 disabled, 기본값 false, true일 경우 input 비활성화
   placeholder?: string;
-  errorMessage?: string;
-  message?: string;
+  errorMessage?: string; // error가 true일 경우 보여줄 에러 메시지, error 필수
+  message?: string; // error가 false일 경우 보여줄 메시지
 }
 
 export default function TextInputUI({
@@ -84,3 +84,38 @@ const InputField = styled.div<InputFieldProps>`
 const ErrorWrapper = styled.div`
   display: flex;
 `;
+
+// EXAMPLE : 아래처럼 사용하세요!!
+// export default function Test() {
+//   const [inputValue, setInputValue] = useState("");
+
+//   const handleInputChange = (event: any) => {
+//     setInputValue(event.target.value);
+//   };
+
+//   const handleError = () => {
+//     if (inputValue.length < 5) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   };
+
+//   return (
+//     <>
+//       <Margin size={50} direction="column" />
+//       <div>
+//         <TextInputUI
+//           name="test"
+//           value={inputValue}
+//           onChange={handleInputChange}
+//           onBlur={() => console.log("onBlur")}
+//           error={handleError()}
+//           placeholder="텍스트를 입력해주세요."
+//           errorMessage="5글자 이상 입력해주세요."
+//           message="5글자 이상 하셨군요!"
+//         />
+//       </div>
+//     </>
+//   );
+// }
