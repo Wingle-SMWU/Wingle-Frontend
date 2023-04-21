@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Text, Margin } from "@/src/components/ui";
 import Image from "next/image";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom, SignUpFormData } from "@/src/atoms/auth/signUpAtoms";
 
 type SdInputProps = {
@@ -12,7 +12,7 @@ type SdInputProps = {
 export default function StudentCard() {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [signUpFormData, setSignUpFormData] = useRecoilState(signUpFormDataAtom);
+  const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -23,6 +23,10 @@ export default function StudentCard() {
       if (fileSizeInMB > 20) {
         // 20MB 이하인 경우에만 처리
         setError(true);
+        setSignUpFormData((prev: SignUpFormData) => ({
+          ...prev,
+          idCardImage: "",
+        }));
         return;
       }
       setError(false);
@@ -87,11 +91,9 @@ export default function StudentCard() {
           <Text.Caption3 color="red500">파일 업로드를 실패했습니다</Text.Caption3>
         </S.ErrorWrapper>
       ) : uploadedFileName ? (
-        <>
-          <S.FileName color="gray500" onClick={handleUploadButtonClick}>
-            {uploadedFileName}
-          </S.FileName>
-        </>
+        <S.FileName color="gray500" onClick={handleUploadButtonClick}>
+          {uploadedFileName}
+        </S.FileName>
       ) : (
         <Text.Caption3 color="gray500">20MB 이하 파일을 업로드해주세요.</Text.Caption3>
       )}
