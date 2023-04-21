@@ -9,6 +9,14 @@ export default function Test() {
     setInputValue(event.target.value);
   };
 
+  const handleError = () => {
+    if (inputValue.length < 5) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <>
       <Margin size={50} direction="column" />
@@ -18,8 +26,8 @@ export default function Test() {
           value={inputValue}
           onChange={handleInputChange}
           onBlur={() => console.log("onBlur")}
+          error={handleError()}
           placeholder="텍스트를 입력해주세요."
-          validate={(value) => value.length >= 5}
           errorMessage="5글자 이상 입력해주세요."
           message="5글자 이상 하셨군요!"
         />

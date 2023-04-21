@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { Margin, Text } from "../ui";
 
 interface InputFieldProps {
-  error?: boolean;
   width?: string;
+  error?: boolean;
 }
 
 interface TextInputProps extends InputFieldProps {
@@ -15,26 +15,22 @@ interface TextInputProps extends InputFieldProps {
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   placeholder?: string;
-  validate?: (value: string) => boolean;
   errorMessage?: string;
   message?: string;
 }
 
 export default function TextInputUI({
   width,
-  error,
   name,
   value,
   onChange,
+  error,
   onBlur,
   disabled,
   placeholder,
-  validate,
   errorMessage,
   message,
 }: TextInputProps) {
-  const hasError = validate && !validate(value);
-
   return (
     <>
       <InputField width={width} error={error}>
@@ -49,7 +45,7 @@ export default function TextInputUI({
           placeholder={placeholder}
         />
       </InputField>
-      {hasError ? (
+      {error ? (
         <ErrorWrapper>
           <Image src="/auth/error.svg" alt="error" width={16} height={16} />
           <Margin direction="row" size={8} />
