@@ -3,15 +3,16 @@ import styled from "styled-components";
 import useGetMessage from "../../../hooks/message/useGetMessage";
 import React, { KeyboardEvent, useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import SendMsg from "../../../components/Message/SendMsg";
-import ReceptionMsg from "../../../components/Message/ReceptionMsg";
-import YourInfo from "../../../components/Message/YourInfo";
-import MsgInput from "../../../components/Message/MsgInput";
+import SendMsg from "@/src/components/message/SendMsg";
+import ReceptionMsg from "@/src/components/message/ReceptionMsg";
+import YourInfo from "../../../components/message/YourInfo";
+import MsgInput from "../../../components/message/MsgInput";
 import Arrow_back from "../../../../public/images/message/arrow_back.svg";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient  } from "react-query";
 import instance from "../../../api/axiosModul";
 import { Message } from "../../../api/message/messageApi";
+import { Room } from "../../../api/message/messageApi";
 
 // 쪽지 보내기 - 메시지 내용
 
@@ -38,7 +39,7 @@ export default function MessageSend() {
   console.log("roomList",roomList)
 
   console.log(messageList,myInfo,receiverInfo)
-  const { image, nickname } = roomList;
+  
 
   let prevNickname = { nickName: "" };
   let prevDate = "";
@@ -118,11 +119,13 @@ export default function MessageSend() {
           <Margin direction="row" size={13} />
           <Text.Title1 color="gray900">쪽지보내기</Text.Title1>
           <YourInfoBox>
-            <YourInfo image={image} nickName={nickname} />
+            {messageList?.map((list: Room) => {
+              return <YourInfo list={list} key={list.roomId}/>}) 
+              }
           </YourInfoBox>
         </TitleBox>
         <MessageRoomList>
-          {messageList.length > 0 ? (
+          {messageList?.length > 0 ? (
             <>
               {messageList?.map((list: Message) => {
                 list.nickname
@@ -132,7 +135,7 @@ export default function MessageSend() {
 
                 if (currentDate !== prevDate) {
                   prevDate = currentDate;
-                  if (list?.nickname === nickname) {
+                  if (list?.nickname === nickName) {
                     if (prevNickname.nickName === list.nickname) {
                       return (
                         <React.Fragment key={currentDate}>

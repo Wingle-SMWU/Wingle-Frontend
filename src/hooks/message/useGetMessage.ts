@@ -19,14 +19,14 @@ const useGetMessage = (roomId: number , page: number , size: number ) => {
   
   const { data: refetch } = useQuery({
     enabled: roomId !== 0,
-    refetchOnWindowFocus: false,
+    // refetchOnWindowFocus: false,
     queryKey: ["message", page],
     queryFn: () => { return getMessage(roomId, page, size)},
     onSuccess: (item) => {
       console.log("Item",item)
       setRoomList(item.data);
       setMessageList(item.data);
-      item.data.map(((message:Message) => {
+      item.data?.map(((message:Message) => {
         if (message.messageId === userid) {
           setMyInfo(message);
         } else {

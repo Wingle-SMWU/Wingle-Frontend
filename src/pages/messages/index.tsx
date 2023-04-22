@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styled from "styled-components";
 import useGetRoom from "../../hooks/message/useGetRoom";
-import MsgList from "../../components/Message/MsgList";
+import MsgList from "../../components/message/MsgList";
 import { Text } from "../../components/ui";
 import Message from "../../../public/images/message/message.svg";
 import Navigation from "@/src/components/layout/Navigation";
@@ -9,7 +9,7 @@ import { Room } from "../../api/message/messageApi";
 
 
 const message = (page: number , size: number ) => {
-  const { messageData } = useGetRoom(1, 100000);
+  const { messageData } = useGetRoom(0, 10000);
 
   if (messageData === undefined) {
     return <div>로딩중</div>;

@@ -2,7 +2,8 @@ import styled from "styled-components";
 import useMsgAPI from "@/src/hooks/message/useMsgAPI";
 import { useRouter } from "next/router";
 import { Room } from "@/src/api/message/messageApi";
-
+import useGetMessage from "@/src/hooks/message/useGetMessage";
+import { useParams } from "react-router-dom";
 // 쪽지함에서 보는 개별 메시지 리스트
 
 
@@ -36,14 +37,13 @@ function betweenTime(value: string) {
 }
 
 const MsgList = ({ list }: { list: Room }) => {
-  const { axiosCreateRoom } = useMsgAPI();
+
   const { image, nickname, createdTime, recentChat, roomId } = list;
 
   const router = useRouter();
+
   const handleMoveChatRoom = () => {
-    axiosCreateRoom().then((res) => {
-    });
-    router.push(`/messages/${roomId}`);
+    router.push(`/messages/${roomId}?page=${0}&size=${1000}`);
   };
   return (
     <>
