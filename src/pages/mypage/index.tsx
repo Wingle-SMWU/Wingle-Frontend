@@ -4,8 +4,14 @@ import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
-
+import instance from "@/src/api/axiosModul";
 export default function Mypage() {
+  // const getProfile = async (): Promise<void> => {
+  //   const response = await  instance.get("/profile/detail");
+  //   console.log(response.data)
+  //   return response.data;
+  // };
+  // getProfile();
   return (
     <>
       <S.Wapper>
