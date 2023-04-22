@@ -44,6 +44,8 @@ export default function SignUp() {
 
   const handleSignUpSubmit = () => {
     if (complete) {
+      console.log("실행");
+
       signUpMutation(signUpFormData);
     }
   };
@@ -63,14 +65,13 @@ export default function SignUp() {
       </S.HeaderWrapper>
 
       <StudentCard />
-      <Text.Title1 color="gray900">학생 정보</Text.Title1>
-      <Margin direction="column" size={16} />
       <InputBox />
       <DropDown />
       <GenderSelectBox />
       <AgreeBox />
+
       <S.CompleteButton disabled={complete} onClick={handleSignUpSubmit}>
-        <Text.Body1 color={complete ? "white" : "gray500"}>작성완료</Text.Body1>
+        작성완료
       </S.CompleteButton>
     </S.Wrapper>
   );
@@ -89,11 +90,18 @@ const S = {
     cursor: pointer;
   `,
   CompleteButton: styled.button<SdInputProps>`
-    height: 50px;
     background-color: ${({ disabled }) => (disabled ? "#FF812E" : "#EEEEF2")};
+    color: ${({ disabled }) => (disabled ? "#fff" : "#959599")};
     border-radius: 8px;
     width: 452px;
+    height: 50px;
     margin-bottom: 144px;
     cursor: ${({ disabled }) => (disabled ? "pointer" : "not-allowed")};
+    border-radius: 8px;
+    margin: 0 auto;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22.4px;
+    margin-bottom: 144px;
   `,
 };
