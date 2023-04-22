@@ -188,6 +188,9 @@ export default function InputBox() {
 
   return (
     <>
+      <Text.Title1 color="gray900">학생 정보</Text.Title1>
+      <Margin direction="column" size={16} />
+
       <Text.Body1 color="gray700">이메일</Text.Body1>
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
