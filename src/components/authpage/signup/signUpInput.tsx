@@ -169,11 +169,17 @@ export default function InputBox() {
       setSignUpFormData((prev) => ({
         ...prev,
         nickname,
+        isNicknameChecked: isVerifiedNickname,
       }));
     },
     onError: (error) => {
       setCheckedNickname(true);
       setVerifiedNickname(false);
+      setSignUpFormData((prev) => ({
+        ...prev,
+        nickname: "",
+        isNicknameChecked: isVerifiedNickname,
+      }));
       throw error;
     },
   });
