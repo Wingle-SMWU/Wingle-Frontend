@@ -18,7 +18,7 @@ interface SdInputProps {
 }
 
 export default function SignUp() {
-  const [complete, setComplete] = useState(false);
+  const [isButtonDisabled, setButtonDisabled] = useState(true);
 
   const signUpFormData = useRecoilValue(signUpFormDataAtom);
 
@@ -32,7 +32,9 @@ export default function SignUp() {
       signUpFormData.termsOfUse &&
       signUpFormData.termsOfPersonalInformation
     ) {
-      setComplete(true);
+      console.log("완료");
+
+      setButtonDisabled(false);
     }
     console.log(signUpFormData);
   }, [signUpFormData]);
@@ -43,7 +45,7 @@ export default function SignUp() {
   );
 
   const handleSignUpSubmit = () => {
-    if (complete) {
+    if (!isButtonDisabled) {
       console.log("실행");
 
       signUpMutation(signUpFormData);
@@ -70,7 +72,7 @@ export default function SignUp() {
       <GenderSelectBox />
       <AgreeBox />
 
-      <S.CompleteButton disabled={complete} onClick={handleSignUpSubmit}>
+      <S.CompleteButton disabled={isButtonDisabled} onClick={handleSignUpSubmit}>
         작성완료
       </S.CompleteButton>
     </S.Wrapper>
@@ -90,13 +92,13 @@ const S = {
     cursor: pointer;
   `,
   CompleteButton: styled.button<SdInputProps>`
-    background-color: ${({ disabled }) => (disabled ? "#FF812E" : "#EEEEF2")};
-    color: ${({ disabled }) => (disabled ? "#fff" : "#959599")};
+    background-color: ${({ disabled }) => (disabled ? "#EEEEF2" : "#FF812E")};
+    color: ${({ disabled }) => (disabled ? "#959599" : "#fff")};
     border-radius: 8px;
     width: 452px;
     height: 50px;
     margin-bottom: 144px;
-    cursor: ${({ disabled }) => (disabled ? "pointer" : "not-allowed")};
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
     border-radius: 8px;
     margin: 0 auto;
     font-weight: 700;
