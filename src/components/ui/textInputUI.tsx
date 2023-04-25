@@ -18,7 +18,7 @@ interface TextInputProps extends InputFieldProps {
   disabled?: boolean; // input의 disabled, 기본값 false, true일 경우 input 비활성화
   placeholder?: string;
   errorMessage?: string; // error가 true일 경우 보여줄 에러 메시지, error 필수
-  message?: string; // error가 false일 경우 보여줄 메시지
+  message?: string; // error가 false일 경우 보여줄 메시지, description 겸용
 }
 
 export default function TextInputUI({
