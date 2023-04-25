@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
-import styled, { DefaultTheme } from "styled-components";
-import { theme } from "../../styles/theme";
+import styled from "styled-components";
+import Image from "next/image";
 
 interface StyledInputProps {
   isActive: boolean;
@@ -34,21 +34,24 @@ export default function DropDown({ label, list, selected, onSelectedChange }: Dr
     <S.Container>
       <S.Label>{label}</S.Label>
       <S.DropdownContainer>
-        <S.DropdownBody onClick={onActiveToggle}>
-          <S.Selected>{selected}</S.Selected>
-          <S.Caret />
+        <S.DropdownBody onClick={onActiveToggle} isActive={isActive}>
+          <S.DropdownSelected>{selected}</S.DropdownSelected>
+          <S.DropdownSelected>
+            <Image src="/auth/arrow_down.svg" alt="arrow" width={20} height={20} />
+          </S.DropdownSelected>
         </S.DropdownBody>
-        <S.DropdownMenu isActive={isActive}>
+
+        <S.DropdownMenuContainer isActive={isActive}>
           {list.map((item) => (
             <S.DropdownItemContainer
               key={item}
               isSelected={item === selected}
               onClick={handleSelectItem}
             >
-              <S.Item>{item}</S.Item>
+              {item}
             </S.DropdownItemContainer>
           ))}
-        </S.DropdownMenu>
+        </S.DropdownMenuContainer>
       </S.DropdownContainer>
     </S.Container>
   );
@@ -63,66 +66,53 @@ const S = {
     margin-bottom: 8px;
     font-size: 16px;
     font-weight: 600;
-    color: #1f1f33;
+    color: ${({ theme }) => theme.color.gray700};
   `,
   DropdownContainer: styled.div`
     position: relative;
-    width: 100%;
     &:hover {
       cursor: pointer;
     }
   `,
-  DropdownBody: styled.div`
+  DropdownBody: styled.div<{ isActive: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 452px;
     height: 50px;
-    padding: 12px 16px;
-    background-color: ${({ theme }: { theme: DefaultTheme }) => theme.color.white};
-    border: 1px solid ${({ theme }: { theme: DefaultTheme }) => theme.color.gray300};
+    background-color: ${({ theme }) => theme.color.white};
+    border: 1px solid
+      ${({ theme, isActive }) => (isActive ? theme.color.gray600 : theme.color.gray300)};
     border-radius: 8px;
   `,
-  Selected: styled.div`
+  DropdownSelected: styled.div`
     font-size: 16px;
-    color: ${({ theme }: { theme: DefaultTheme }) => theme.color.gray900};
+    color: ${({ theme }) => theme.color.gray900};
+    padding: 14px 16px;
   `,
-  Caret: styled.div`
-    width: 0;
-    height: 0;
-    margin-left: 8px;
-    border-top: 6px solid #1f1f33;
-    border-right: 6px solid transparent;
-    border-left: 6px solid transparent;
-  `,
-  DropdownMenu: styled.ul<StyledInputProps>`
+  DropdownMenuContainer: styled.ul<StyledInputProps>`
     position: absolute;
-    top: 100%;
+    top: calc(100% + 8px);
     left: 0;
     z-index: 1;
-    width: 100%;
-    max-height: 200px;
+    width: 452px;
+    height: 312px;
     padding: 8px 0;
-    background-color: #ffffff;
-    border: 1px solid #dcdce0;
+    background-color: ${({ theme }) => theme.color.white};
+    border: 1px solid ${({ theme }) => theme.color.gray600};
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     display: ${(props) => (props.isActive ? "block" : "none")};
-    width: 452px;
-    height: 208px;
-    border: 1px solid #dcdce0;
-    border-radius: 8px;
-    padding-top: 21px;
   `,
   DropdownItemContainer: styled.li<{ isSelected: boolean }>`
     display: flex;
     align-items: center;
-    padding-top: 0px;
-    padding-bottom: 12px;
-    padding-left: 16px;
+    padding: 16px;
+    font-size: 16px;
+    color: ${({ theme }) => theme.color.gray900};
     &:hover {
-      background-color: ${({ theme }: { theme: DefaultTheme }) => theme.color.gray200};
+      background-color: ${({ theme }) => theme.color.gray200};
       cursor: pointer;
     }
     ${({ isSelected, theme }) =>
@@ -130,9 +120,5 @@ const S = {
       `
     background-color: ${theme.color.gray200};
   `}
-  `,
-  Item: styled.div`
-    font-size: 16px;
-    color: ${({ theme }: { theme: DefaultTheme }) => theme.color.gray900};
   `,
 };
