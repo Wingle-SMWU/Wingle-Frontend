@@ -11,9 +11,16 @@ interface DropDownProps {
   list: string[];
   selected: string;
   onSelectedChange: (selected: string) => void;
+  description?: string;
 }
 
-export default function DropDown({ label, list, selected, onSelectedChange }: DropDownProps) {
+export default function DropDown({
+  label,
+  list,
+  selected,
+  onSelectedChange,
+  description,
+}: DropDownProps) {
   const [isActive, setIsActive] = useState(false);
 
   const onActiveToggle = useCallback(() => {
@@ -53,6 +60,7 @@ export default function DropDown({ label, list, selected, onSelectedChange }: Dr
           ))}
         </S.DropdownMenuContainer>
       </S.DropdownContainer>
+      {description && <S.Description>{description}</S.Description>}
     </S.Container>
   );
 }
@@ -120,5 +128,15 @@ const S = {
       `
     background-color: ${theme.color.gray200};
   `}
+  `,
+  Description: styled.div`
+    height: 17px;
+    font-size: 12px;
+    color: ${({ theme }) => theme.color.gray900};
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    flex-grow: 0;
+    margin: 8px 0px;
   `,
 };
