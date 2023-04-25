@@ -21,6 +21,7 @@ interface NewMsgProps {
   roomId: number;
   content: string;
   createdTime: string;
+  sender: boolean;
 }
 
 export default function MessageSend() {
@@ -100,7 +101,7 @@ export default function MessageSend() {
       content: newMsg?.content,
       createdTime: newMsg?.createdTime,
     };
-    if (newMsg?.roomId === myInfo?.messageId) {
+    if (newMsg?.sender === true && myInfo?.sender === true && receiverInfo?.sender === false) { 
       setMessageList([...messageList, { ...myInfo, ...data }]);
     } else {
       setMessageList([...messageList, { ...receiverInfo, ...data }]);
@@ -139,8 +140,8 @@ export default function MessageSend() {
 
                 if (currentDate !== prevDate) {
                   prevDate = currentDate;
-                  if (list?.nickname === nickName) {
-                    if (prevNickname.nickName === list.nickname) {
+                  if (list?.sender === true) {
+                    if (list?.sender === true) {
                       return (
                         <React.Fragment key={currentDate}>
                           <DateBox>
@@ -171,7 +172,7 @@ export default function MessageSend() {
                       );
                     }
                   } else {
-                    if (prevNickname.nickName === list.nickname) {
+                    if (list?.sender === false) {
                       return (
                         <React.Fragment key={currentDate}>
                           <DateBox>
@@ -203,7 +204,7 @@ export default function MessageSend() {
                     }
                   }
                 } else {
-                  if (list?.nickname === nickName) {
+                  if (list?.sender === true) {
                     if (prevNickname.nickName === list.nickname) {
                       return <SendMsg key={String(list.createdTime)} list={{
                         content: newList.content,
