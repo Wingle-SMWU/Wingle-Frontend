@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
-import styled from "styled-components";
+import styled, { DefaultTheme } from "styled-components";
+import { theme } from "../../styles/theme";
 
 interface StyledInputProps {
   isActive: boolean;
@@ -39,7 +40,11 @@ export default function DropDown({ label, list, selected, onSelectedChange }: Dr
         </S.DropdownBody>
         <S.DropdownMenu isActive={isActive}>
           {list.map((item) => (
-            <S.DropdownItemContainer key={item} onClick={handleSelectItem}>
+            <S.DropdownItemContainer
+              key={item}
+              isSelected={item === selected}
+              onClick={handleSelectItem}
+            >
               <S.Item>{item}</S.Item>
             </S.DropdownItemContainer>
           ))}
@@ -48,6 +53,7 @@ export default function DropDown({ label, list, selected, onSelectedChange }: Dr
     </S.Container>
   );
 }
+
 const S = {
   Container: styled.div`
     display: flex;
@@ -73,13 +79,13 @@ const S = {
     width: 100%;
     height: 50px;
     padding: 12px 16px;
-    background-color: #f8f8fa;
-    border: 1px solid #dcdce0;
+    background-color: ${({ theme }: { theme: DefaultTheme }) => theme.color.white};
+    border: 1px solid ${({ theme }: { theme: DefaultTheme }) => theme.color.gray300};
     border-radius: 8px;
   `,
   Selected: styled.div`
     font-size: 16px;
-    color: #1f1f33;
+    color: ${({ theme }: { theme: DefaultTheme }) => theme.color.gray900};
   `,
   Caret: styled.div`
     width: 0;
@@ -109,19 +115,19 @@ const S = {
     border-radius: 8px;
     padding-top: 21px;
   `,
-  DropdownItemContainer: styled.li`
+  DropdownItemContainer: styled.li<{ isSelected: boolean }>`
     display: flex;
     align-items: center;
     padding-top: 0px;
     padding-bottom: 12px;
     padding-left: 16px;
     &:hover {
-      background-color: #f8f8fa;
+      background-color: ${({ theme }: { theme: DefaultTheme }) => theme.color.gray200};
       cursor: pointer;
     }
   `,
   Item: styled.div`
     font-size: 16px;
-    color: #1f1f33;
+    color: ${({ theme }: { theme: DefaultTheme }) => theme.color.gray900};
   `,
 };
