@@ -16,7 +16,7 @@ interface Iprops {
 }
 
 const SendMsg = ({ list }: Iprops) => {
-  const { content, createdTime } = list || {};
+  const { content, createdTime } = list;
   return (
     <Container>
       <Box>

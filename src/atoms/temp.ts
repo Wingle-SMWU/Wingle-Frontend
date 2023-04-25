@@ -7,5 +7,5 @@ export const userIdState = atom<number>({
 
 export const nickNameState = atom<string>({
   key: 'nickNameState',
-
+  default: ''
 })

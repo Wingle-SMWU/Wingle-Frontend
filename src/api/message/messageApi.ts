@@ -30,7 +30,7 @@ export interface Room {
 }
 
 export const getMessage = async (roomId: number, page: number , size: number ) => {
-  const response = await instance.get<GetMessageResponse>(`/messages/${roomId}?page=${page}&size=${size}`);
+  const response = await instance.get<GetMessageResponse>(`/messages/${roomId}?page=${0}&size=${1000}`);
   return response.data;
 };
 

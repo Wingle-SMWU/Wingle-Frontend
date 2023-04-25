@@ -2,8 +2,7 @@ import styled from "styled-components";
 import useMsgAPI from "@/src/hooks/message/useMsgAPI";
 import { useRouter } from "next/router";
 import { Room } from "@/src/api/message/messageApi";
-import useGetMessage from "@/src/hooks/message/useGetMessage";
-import { useParams } from "react-router-dom";
+
 // 쪽지함에서 보는 개별 메시지 리스트
 
 

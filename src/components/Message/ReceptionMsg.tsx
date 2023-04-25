@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { convertDate } from "./SendMsg";
+import { convertDate } from "./sendMsg";
 
 interface Iprops {
   list: {

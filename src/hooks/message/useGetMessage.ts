@@ -19,7 +19,7 @@ const useGetMessage = (roomId: number , page: number , size: number ) => {
   
   const { data: refetch } = useQuery({
     enabled: roomId !== 0,
-    // refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false,
     queryKey: ["message", page],
     queryFn: () => { return getMessage(roomId, page, size)},
     onSuccess: (item) => {

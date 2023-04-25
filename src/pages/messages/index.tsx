@@ -1,20 +1,21 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styled from "styled-components";
 import useGetRoom from "../../hooks/message/useGetRoom";
-import MsgList from "../../components/message/MsgList";
+import MsgList from "../../components/message/msgList";
 import { Text } from "../../components/ui";
 import Message from "../../../public/images/message/message.svg";
 import Navigation from "@/src/components/layout/Navigation";
 import { Room } from "../../api/message/messageApi";
+import instance from "@/src/api/axiosModul";
 
 
 const message = (page: number , size: number ) => {
   const { messageData } = useGetRoom(0, 10000);
-
+  
   if (messageData === undefined) {
     return <div>로딩중</div>;
   }
-
+  
   return (
     <Container>
       <TopContainer>
@@ -40,6 +41,14 @@ const message = (page: number , size: number ) => {
     </Container>
   );
 };
+
+export async function getServerSideProps(context: any) {
+  const { page, size } = context.query;
+  const res = await instance.get(`/messages/rooms?page=${page}&size=${size}`);
+  const data = await res.data;
+  
+  return { props: { data }};
+}
 
 const Container = styled.div`
   width: 100%;

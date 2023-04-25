@@ -3,16 +3,17 @@ import styled from "styled-components";
 import useGetMessage from "../../../hooks/message/useGetMessage";
 import React, { KeyboardEvent, useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import SendMsg from "@/src/components/message/SendMsg";
-import ReceptionMsg from "@/src/components/message/ReceptionMsg";
-import YourInfo from "../../../components/message/YourInfo";
-import MsgInput from "../../../components/message/MsgInput";
+import SendMsg from "@/src/components/message/sendMsg";
+import ReceptionMsg from "@/src/components/message/receptionMsg";
+import YourInfo from "@/src/components/message/YourInfo";
+import MsgInput from "../../../components/message/msgInput";
 import Arrow_back from "../../../../public/images/message/arrow_back.svg";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient  } from "react-query";
 import instance from "../../../api/axiosModul";
 import { Message } from "../../../api/message/messageApi";
 import { Room } from "../../../api/message/messageApi";
+
 
 // 쪽지 보내기 - 메시지 내용
 
@@ -24,6 +25,7 @@ interface NewMsgProps {
 
 export default function MessageSend() {
   const router = useRouter();
+
   const queryClient = useQueryClient();
 
   const [text, setText] = useState("");
@@ -35,6 +37,8 @@ export default function MessageSend() {
     Number(page) ?? 1,
     Number(size) ?? 10,
   );
+
+
 
   console.log("roomList",roomList)
 
@@ -71,7 +75,7 @@ export default function MessageSend() {
   };
 
   const addMsg = async (text: string) => {
-    const response = await instance.post(`/messages/`,  {
+    const response = await instance.post(`/messages`,  {
       body: {
         roomId,
         content: text,
@@ -114,7 +118,7 @@ export default function MessageSend() {
         <TitleBox>
           <Arrow_back
             style={{ paddingTop: 5, cursor: "pointer" }}
-            onClick={() => router.back()}
+            onClick={() => router.push(`/messages/${roomId}?page=${0}&size=${1000}`, '/messages', { shallow: true })}
           />
           <Margin direction="row" size={13} />
           <Text.Title1 color="gray900">쪽지보내기</Text.Title1>
@@ -245,6 +249,15 @@ export default function MessageSend() {
     </>
   );
 }
+
+export async function getServerSideProps(context: any) {
+  const { roomId } = context.query;
+  const res = await instance.get(`/messages/${roomId}?page=${0}&size=${1000}`);
+  const data = await res.data;
+  
+  return { props: { data }};
+}
+
 
 const Container = styled.div`
   display: flex;
