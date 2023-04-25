@@ -125,6 +125,11 @@ const S = {
       background-color: ${({ theme }: { theme: DefaultTheme }) => theme.color.gray200};
       cursor: pointer;
     }
+    ${({ isSelected, theme }) =>
+      isSelected &&
+      `
+    background-color: ${theme.color.gray200};
+  `}
   `,
   Item: styled.div`
     font-size: 16px;
