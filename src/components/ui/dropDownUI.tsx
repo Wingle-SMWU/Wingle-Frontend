@@ -141,7 +141,7 @@ const S = {
   `,
 };
 
-// 사용 예시(src/pages/test.tsx)
+// EXAMPLE : 아래처럼 사용하세요!!(src/pages/test.tsx)
 // export default function Test() {
 //   const [selected, setSelected] = useState("Republic of Korea");
 //   const onSelectedChange = useCallback((selected: string) => {
