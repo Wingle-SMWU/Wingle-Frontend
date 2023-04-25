@@ -73,7 +73,7 @@ const S = {
   Label: styled.label`
     margin-bottom: 8px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     color: ${({ theme }) => theme.color.gray700};
   `,
   DropdownContainer: styled.div`
@@ -140,3 +140,45 @@ const S = {
     margin: 8px 0px;
   `,
 };
+
+// 사용 예시(src/pages/test.tsx)
+// export default function Test() {
+//   const [selected, setSelected] = useState("Republic of Korea");
+//   const onSelectedChange = useCallback((selected: string) => {
+//     setSelected(selected);
+//   }, []);
+
+//   const list = [
+//     "Republic of Korea",
+//     "United States of America",
+//     "Canada",
+//     "China",
+//     "Japan",
+//     "Russia",
+//     "France",
+//     "Germany",
+//   ];
+
+//   return (
+//     <S.Wrapper>
+//       <Margin size={50} direction="column" />
+//       <div>
+//         <Margin size={8} direction="row" />
+//         <DropDown
+//           label="안녕"
+//           list={list}
+//           selected={selected}
+//           onSelectedChange={onSelectedChange}
+//           description="테스트"
+//         />
+//       </div>
+//     </S.Wrapper>
+//   );
+// }
+
+// const S = {
+//   Wrapper: styled.div`
+//     padding-left: 24px;
+//     padding-right: 24px;
+//   `,
+// };
