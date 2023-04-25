@@ -18,7 +18,7 @@ interface TextInputProps extends InputFieldProps {
   disabled?: boolean; // input의 disabled, 기본값 false, true일 경우 input 비활성화
   placeholder?: string;
   errorMessage?: string; // error가 true일 경우 보여줄 에러 메시지, error 필수
-  message?: string; // error가 false일 경우 보여줄 메시지
+  message?: string; // error가 false일 경우 보여줄 메시지, description 겸용
 }
 
 export default function TextInputUI({
@@ -62,7 +62,7 @@ export default function TextInputUI({
 
 const InputField = styled.div<InputFieldProps>`
   height: 50px;
-  border: 1px solid ${({ error }) => (error ? "#FF7070" : "#dcdce0")};
+  border: 1px solid ${({ error, theme }) => (error ? theme.color.red400 : theme.color.gray300)};
   border-radius: 8px;
   margin-bottom: 8px;
 
@@ -75,10 +75,10 @@ const InputField = styled.div<InputFieldProps>`
     font-weight: 400;
     font-size: 16px;
     line-height: 140%;
-    color: #4f4f4f;
+    color: ${({ theme }) => theme.color.gray900};
 
     &::placeholder {
-      color: #959599;
+      color: ${({ theme }) => theme.color.gray300};
     }
   }
 `;
@@ -87,7 +87,7 @@ const ErrorWrapper = styled.div`
   display: flex;
 `;
 
-// EXAMPLE : 아래처럼 사용하세요!!
+// EXAMPLE : 아래처럼 사용하세요!!(src/pages/test.tsx)
 // export default function Test() {
 //   const [inputValue, setInputValue] = useState("");
 
