@@ -4,8 +4,8 @@ import useGetMessage from "../../../hooks/message/useGetMessage";
 import React, { KeyboardEvent, useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import SendMsg from "@/src/components/message/sendMsg";
-import ReceptionMsg from "@/src/components/message/receptionMsg";
-import YourInfo from "@/src/components/message/YourInfo";
+import ReceptionMsg from "@/src/components/message/ReceptionMsg";
+import YourInfo from "@/src/components/message/yourInfo";
 import MsgInput from "../../../components/message/msgInput";
 import Arrow_back from "../../../../public/images/message/arrow_back.svg";
 import { useRouter } from "next/router";
@@ -33,7 +33,7 @@ export default function MessageSend() {
   const { nickName, roomId } = router.query;
   
   const { page, size } = useParams(); // 채널 구분
-  const { roomList, messageList, setMessageList, myInfo, receiverInfo } = useGetMessage(
+  const { roomList, messageList, setMessageList, myInfo, receiverInfo, refetch } = useGetMessage(
     Number(roomId) ?? 0 ,
     Number(page) ?? 1,
     Number(size) ?? 10,
@@ -62,8 +62,7 @@ export default function MessageSend() {
       mutate(text);
       setText("");
     console.log('엔터 보내기')
-    console.log(`메시지 내용 ${text}`)
-    }
+    console.log(`메시지 내용 ${text}`)}
   };
 
   // 마우스로 쪽지 보내기
@@ -77,10 +76,8 @@ export default function MessageSend() {
 
   const addMsg = async (text: string) => {
     const response = await instance.post(`/messages`,  {
-      body: {
-        roomId,
-        content: text,
-      },
+      roomId: Number(roomId),
+      content: text,      
     });
     return response.data;
   }
@@ -88,9 +85,10 @@ export default function MessageSend() {
 
   const { mutate } = useMutation(addMsg, {
     onMutate: async () => {
-      await queryClient.cancelQueries('messages');},
+      await queryClient.cancelQueries('messages')},
     onSuccess: () => {
       queryClient.invalidateQueries("messages");
+			refetch();
     },
     onError: (err) => {
       console.log(`실패 ${err}`);}
