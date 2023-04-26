@@ -1,7 +1,7 @@
 import { Text, Margin } from "../../../components/ui";
 import styled from "styled-components";
 import useGetMessage from "../../../hooks/message/useGetMessage";
-import React, { KeyboardEvent, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SendMsg from "@/src/components/message/sendMsg";
 import ReceptionMsg from "@/src/components/message/ReceptionMsg";
@@ -13,9 +13,7 @@ import { useMutation, useQueryClient  } from "react-query";
 import instance from "../../../api/axiosModul";
 import { Message } from "../../../api/message/messageApi";
 import { Room } from "../../../api/message/messageApi";
-
-
-// 쪽지 보내기 - 메시지 내용
+import { convertDateYear } from "@/src/utils/convertDateYear";
 
 interface NewMsgProps {
   roomId: number;
@@ -26,53 +24,18 @@ interface NewMsgProps {
 
 export default function MessageSend() {
   const router = useRouter();
-
   const queryClient = useQueryClient();
-
   const [text, setText] = useState("");
   const { nickName, roomId } = router.query;
-  
   const { page, size } = useParams(); // 채널 구분
   const { roomList, messageList, setMessageList, myInfo, receiverInfo, refetch } = useGetMessage(
     Number(roomId) ?? 0 ,
     Number(page) ?? 1,
     Number(size) ?? 10,
   );
-
-
-
-  console.log("roomList",roomList)
-
-  console.log(messageList,myInfo,receiverInfo)
-  
-
   let prevNickname = { nickName: "" };
   let prevDate = "";
   const [newMsg, setNewMsg] = useState<NewMsgProps>();
-
-  // 쪽지 리스트 누르면 보이는 메시지 보내기에 들어갈 메시지 내용
-  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
-  };
-
-  // 엔터키로 쪽지 보내기
-  const handleSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.nativeEvent.isComposing) return;
-    if (e.key === "Enter" && text) {
-      mutate(text);
-      setText("");
-    console.log('엔터 보내기')
-    console.log(`메시지 내용 ${text}`)}
-  };
-
-  // 마우스로 쪽지 보내기
-  const handleClickSendMessage = () => {
-    if (!text) return;
-    mutate(text);
-    setText("");
-    console.log('마우스보내기')
-    console.log(`메시지 내용 ${text}`)
-  };
 
   const addMsg = async (text: string) => {
     const response = await instance.post(`/messages`,  {
@@ -81,7 +44,6 @@ export default function MessageSend() {
     });
     return response.data;
   }
-
 
   const { mutate } = useMutation(addMsg, {
     onMutate: async () => {
@@ -94,6 +56,24 @@ export default function MessageSend() {
       console.log(`실패 ${err}`);}
   });
 
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
+  const handleSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) return;
+    if (e.key === "Enter" && text) {
+      mutate(text);
+      setText("");
+    }
+  };
+
+  const handleClickSendMessage = () => {
+    if (!text) return;
+    mutate(text);
+    setText("");
+  };
+
   useEffect(() => {
     const data = {
       content: newMsg?.content,
@@ -105,11 +85,6 @@ export default function MessageSend() {
       setMessageList([...messageList, { ...receiverInfo, ...data }]);
     }
   }, [newMsg]);
-
-  const convertDate = (data: string) => {
-    const newDate = new Date(data).toLocaleString().split(".").slice(0, 3);
-    return `${newDate[0]}년 ${newDate[1]}월 ${newDate[2]}일`;
-  };
 
   return (
     <>
@@ -134,7 +109,7 @@ export default function MessageSend() {
                 list.nickname
                 const { createdTime, content } = list;
                 const newList = { content, createdTime };
-                const currentDate = convertDate(String(createdTime));
+                const currentDate = convertDateYear(String(createdTime));
 
                 if (currentDate !== prevDate) {
                   prevDate = currentDate;

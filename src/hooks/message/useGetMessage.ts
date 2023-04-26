@@ -1,14 +1,8 @@
 import { useState } from "react";
-import useMsgAPI from "./useMsgAPI";
 import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
 import { userIdState } from "../../atoms/temp";
 import { Message, getMessage } from "@/src/api/message/messageApi";
-interface User {
-  image: string;
-  nickname: string;
-  messageId: number;
-}
 
 const useGetMessage = (roomId: number , page: number , size: number ) => {
   const userid = useRecoilValue(userIdState);

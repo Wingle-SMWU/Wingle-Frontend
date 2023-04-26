@@ -1,12 +1,5 @@
 import styled from "styled-components";
-
-export const convertDate = (data: string) => {
-  const newDate = new Date(data).toLocaleTimeString().split(" ");
-  const hour = newDate[0];
-  const min = newDate[1].split(":").slice(0, 2).join(":");
-  const answer = `${hour} ${min}`;
-  return answer;
-};
+import { convertDate } from "@/src/utils/convertDate";
 
 interface Iprops {
   list: {
@@ -17,6 +10,7 @@ interface Iprops {
 
 const SendMsg = ({ list }: Iprops) => {
   const { content, createdTime } = list;
+
   return (
     <Container>
       <Box>

@@ -11,11 +11,11 @@ import instance from "@/src/api/axiosModul";
 
 const message = (page: number , size: number ) => {
   const { messageData } = useGetRoom(0, 10000);
-  
+
   if (messageData === undefined) {
     return <div>로딩중</div>;
   }
-  
+
   return (
     <Container>
       <TopContainer>

@@ -5,12 +5,8 @@ import { Room } from "@/src/api/message/messageApi";
 import Image from "next/image";
 import profiledefault from '../../../public/images/message/profiledefault.png';
 
-// 쪽지보내기 페이지 - 상단에 상대방 프로필 띄워주는 컴포넌트
-
-
 const YourInfo = ({ list }: { list: Room }) => {
   const { image, nickname } = list;
-
   const router = useRouter();
 
   const handleMoveOpponentInfo = () => {
@@ -52,15 +48,6 @@ const UserImg = styled.img`
   height: 3rem;
   border-radius: 50%;
   border: 1px solid blue;
-`;
-
-const UserImgX = styled.div`
-  border-radius: 50%;
-
-  img {
-    width: 1%;
-    height: 1%;
-  }
 `;
 
 const TitleBox = styled.div`
