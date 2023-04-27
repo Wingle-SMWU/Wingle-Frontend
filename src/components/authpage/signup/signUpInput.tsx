@@ -132,13 +132,17 @@ export default function InputBox() {
   // 비밀번호와 맞는지 확인 기능
   const handleErrorPasswordCheck = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      e.target.value === password ? setErrorPasswordCheck(false) : setErrorPasswordCheck(true);
-
-      if (e.target.value !== password) {
+      if (e.target.value === password) {
+        setErrorPasswordCheck(false);
+        setSignUpFormData((prev) => ({
+          ...prev,
+          password,
+        }));
+      } else {
         setErrorPasswordCheck(true);
       }
     },
-    [password]
+    [password, setSignUpFormData]
   );
 
   // 이름 유효성 검사
