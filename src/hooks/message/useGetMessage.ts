@@ -11,7 +11,7 @@ const useGetMessage = (roomId: number , page: number , size: number ) => {
   const [myInfo, setMyInfo] = useState<Message>();
   const [receiverInfo, setReceiverInfo] = useState<Message>();
   
-  const { refetch } = useQuery({
+  const { data: messageData, refetch } = useQuery({
     enabled: roomId !== 0,
     refetchOnWindowFocus: false,
     queryKey: ["message", page],
@@ -37,6 +37,7 @@ const useGetMessage = (roomId: number , page: number , size: number ) => {
     setMessageList,
     myInfo,
     receiverInfo,
+    messageData: messageData?.data
   };
 };
 

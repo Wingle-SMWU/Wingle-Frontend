@@ -28,7 +28,7 @@ export default function MessageSend() {
   const [text, setText] = useState("");
   const { nickName, roomId } = router.query;
   const { page, size } = useParams(); // 채널 구분
-  const { roomList, messageList, setMessageList, myInfo, receiverInfo, refetch } = useGetMessage(
+  const { messageData, roomList, messageList, setMessageList, myInfo, receiverInfo, refetch } = useGetMessage(
     Number(roomId) ?? 0 ,
     Number(page) ?? 1,
     Number(size) ?? 10,
@@ -36,6 +36,7 @@ export default function MessageSend() {
   let prevNickname = { nickName: "" };
   let prevDate = "";
   const [newMsg, setNewMsg] = useState<NewMsgProps>();
+
 
   const addMsg = async (text: string) => {
     const response = await instance.post(`/messages`,  {
@@ -85,6 +86,10 @@ export default function MessageSend() {
       setMessageList([...messageList, { ...receiverInfo, ...data }]);
     }
   }, [newMsg]);
+
+  if (messageData === undefined) {
+    return <div>로딩중</div>;
+  }
 
   return (
     <>
