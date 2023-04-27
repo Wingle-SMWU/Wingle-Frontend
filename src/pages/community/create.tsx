@@ -57,35 +57,35 @@ export default function Create() {
   });
 
   return (
-    <Style.Wrapper>
-      <Style.Header>
-        <Style.HeaderLeft>
-          <Style.BackArrow
+    <S.Wrapper>
+      <S.Header>
+        <S.HeaderLeft>
+          <S.BackArrow
             src="/community/arrow-back.svg"
             onClick={onClickModal}
           />
           <Text.Title2 color="gray900">{currentTab}게시판 글 작성</Text.Title2>
-        </Style.HeaderLeft>
-        <Style.CreateButton>
+        </S.HeaderLeft>
+        <S.CreateButton>
           <Text.Body1 color={contents ? "gray900" : "gray500"}
             onClick={() => updateArticle.mutate()}
           >등록</Text.Body1>
-        </Style.CreateButton>
-      </Style.Header>
-      <Style.Body>
-        <Style.Contents
+        </S.CreateButton>
+      </S.Header>
+      <S.Body>
+        <S.Contents
           placeholder="자유롭게 글을 작성해보세요!"
           onChange={onChangeContents}
           maxLength={1000}
           value={contents}
         />
-      </Style.Body>
+      </S.Body>
       {modalVisible && <Modal type="create-back" onClickModal={onClickModal} />}
-    </Style.Wrapper>
+    </S.Wrapper>
   );
 }
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     width: 100%;
   `,

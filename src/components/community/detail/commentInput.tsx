@@ -48,8 +48,8 @@ export default function CommentInput(props: { forumId: number, articleId: number
   }, []);
 
   return (
-    <Style.Wrapper>
-      <Style.CommentInput
+    <S.Wrapper>
+      <S.CommentInput
         placeholder="댓글을 입력해보세요."
         onChange={onChangeComment}
         maxLength={500}
@@ -59,7 +59,7 @@ export default function CommentInput(props: { forumId: number, articleId: number
         value={comment}
       />
       <Margin direction="row" size={8}></Margin>
-      <Style.PostIcon
+      <S.PostIcon
         src={
           comment
             ? "/community/detail/send.svg"
@@ -70,11 +70,11 @@ export default function CommentInput(props: { forumId: number, articleId: number
           setComment("");
         }}
       />
-    </Style.Wrapper>
+    </S.Wrapper>
   );
 }
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     padding: 12px 24px 12px 24px;
     display: flex;

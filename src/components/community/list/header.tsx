@@ -21,26 +21,26 @@ export default function Header(props: {
   
   return (
     <>
-      <Style.Header>
+      <S.Header>
         <Text.Title1 color="gray900">커뮤니티</Text.Title1>
-      </Style.Header>
-      <Style.HeaderBar>
+      </S.Header>
+      <S.HeaderBar>
         {TabArr.map((el: {name: string, id: number}) => (
-          <Style.TextUnderLine tab={el.name === props.tab} key={el.id}>
+          <S.TextUnderLine tab={el.name === props.tab} key={el.id}>
             <Text.Title3
               color={el.name === props.tab ? "gray900" : "gray500"}
               onClick={props.onClickTab}
             >
               {el.name}
             </Text.Title3>
-          </Style.TextUnderLine>
+          </S.TextUnderLine>
         ))}
-      </Style.HeaderBar>
+      </S.HeaderBar>
     </>
   );
 }
 
-const Style = {
+const S = {
   Header: styled.div`
     display: flex;
     flex-direction: row;

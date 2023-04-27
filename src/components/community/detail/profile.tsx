@@ -13,21 +13,21 @@ export default function Profile(props: { currentTab: string, userNickname: strin
 
   return (
     <>
-      <Style.Profile>
-        <Style.ProfileLeft>
-          <Style.ProfileImg src={getImageUrl(props.currentTab)} />
+      <S.Profile>
+        <S.ProfileLeft>
+          <S.ProfileImg src={getImageUrl(props.currentTab)} />
           <Margin direction="row" size={10} />
-          <Style.ProfileInfo>
+          <S.ProfileInfo>
             <Text.Body6 color="gray900">{props.userNickname}</Text.Body6>
             <Text.Caption3 color="gray500">10분 전</Text.Caption3>
             {/* 시간 처리 함수 이후 제작 */}
-          </Style.ProfileInfo>
-        </Style.ProfileLeft>
-        <Style.CancelImg
+          </S.ProfileInfo>
+        </S.ProfileLeft>
+        <S.CancelImg
           src="/community/detail/close-gray.svg"
           onClick={onClickModal}
         />
-      </Style.Profile>
+      </S.Profile>
       {modalVisible && (
         <Modal type="detail-delete-contents" deleteInform={{forumId: props.forumId, articleId: props.articleId, id: 0}} onClickModal={onClickModal} />
       )}
@@ -35,7 +35,7 @@ export default function Profile(props: { currentTab: string, userNickname: strin
   );
 }
 
-const Style = {
+const S = {
   Profile: styled.div`
     display: flex;
     flex-direction: row;

@@ -26,10 +26,10 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
   if (isError) return <div>에러</div>
   
   return (
-    <Style.Wrapper>
-      <Style.CommentCount>
+    <S.Wrapper>
+      <S.CommentCount>
         <Text.Body3 color="gray900">댓글 {comments.length}</Text.Body3>
-      </Style.CommentCount>
+      </S.CommentCount>
       {comments.map((comment, i) => {
         const {
           content,
@@ -44,17 +44,17 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
         } = comment;
         return (
           <>
-            <Style.Comment key={id}>
-              <Style.CommentTop>
-                <Style.CommentTopLeft>
-                  <Style.ProfileImg src={getImageUrl(props.currentTab)} />
-                  <Style.ProfileInfo>
+            <S.Comment key={id}>
+              <S.CommentTop>
+                <S.CommentTopLeft>
+                  <S.ProfileImg src={getImageUrl(props.currentTab)} />
+                  <S.ProfileInfo>
                     <Text.Body6 color="gray900">{userNickname}</Text.Body6>
                     <Text.Caption3 color="gray500">10분 전</Text.Caption3>
                     {/* 시간은 이후에 수정 */}
-                  </Style.ProfileInfo>
-                </Style.CommentTopLeft>
-                <Style.CancelImg
+                  </S.ProfileInfo>
+                </S.CommentTopLeft>
+                <S.CancelImg
                   src="/community/detail/close-gray.svg"
                   onClick={() => {
                     onClickModal();
@@ -66,11 +66,11 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
                     }) 
                   }}
                 />
-              </Style.CommentTop>
-              <Style.CommentBottom>
+              </S.CommentTop>
+              <S.CommentBottom>
                 <Text.Body3 color="gray900">{content}</Text.Body3>
-              </Style.CommentBottom>
-            </Style.Comment>
+              </S.CommentBottom>
+            </S.Comment>
           </>
         )
       })}
@@ -79,11 +79,11 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
         <Modal type="detail-delete-comment" deleteInform={deleteInform} onClickModal={onClickModal} />
       )}
       
-    </Style.Wrapper>
+    </S.Wrapper>
   );
 }
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     width: 100%;
     display: flex;

@@ -23,21 +23,21 @@ export default function Detail() {
   if (isError) return <div>에러</div>
 
   return (
-    <Style.Wrapper>
-      <Style.DetailTop>
+    <S.Wrapper>
+      <S.DetailTop>
         <Header currentTab={currentTab} />
         <Profile currentTab={currentTab} userNickname={article.userNickname} createdTime={article.createdTime} forumId={forumId} articleId={articleId}/>
         <Body content={article.content}/>
         <Comment currentTab={currentTab} forumId={forumId} articleId={articleId} />
-      </Style.DetailTop>
-      <Style.CommentInputFixed>
+      </S.DetailTop>
+      <S.CommentInputFixed>
         <CommentInput forumId={article.forumId} articleId={article.articleId} />
-      </Style.CommentInputFixed>
-    </Style.Wrapper>
+      </S.CommentInputFixed>
+    </S.Wrapper>
   );
 }
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     display: flex;
     flex-direction: column;

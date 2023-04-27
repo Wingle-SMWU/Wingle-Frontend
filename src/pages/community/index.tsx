@@ -45,23 +45,23 @@ export default function Community(props: { tab: string }) {
   
   
   return (
-    <Style.Wrapper>
+    <S.Wrapper>
       <Header tab={currentTab} onClickTab={onClickTab} />
       {currentTab === TabArr[0].name && <FreeTab forumId={TabArr[0].id} imgUrl={getImageUrl(currentTab)} />}
       {currentTab === TabArr[1].name && <InteractTab forumId={TabArr[1].id} imgUrl={getImageUrl(currentTab)} />}
       {currentTab === TabArr[2].name && <NoticeTab forumId={TabArr[2].id} imgUrl={getImageUrl(currentTab)} />}
-      <Style.Box>
-        <Style.CreateIcon
+      <S.Box>
+        <S.CreateIcon
           tab={props.tab}
           src="community/list/new-write.svg"
           onClick={onClickMoveToWrite}
         />
-      </Style.Box>
+      </S.Box>
       <Navigation tab={currentTab} />
-    </Style.Wrapper>
+    </S.Wrapper>
   );
 }
-const Style = {
+const S = {
   Wrapper: styled.div`
     display: flex;
     flex-direction: column;

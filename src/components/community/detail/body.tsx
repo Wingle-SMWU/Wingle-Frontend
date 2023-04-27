@@ -4,17 +4,17 @@ import { Text } from "../../ui";
 export default function Body(props: { content: string }) {
   
   return (
-    <Style.Body>
-      <Style.Contents>
+    <S.Body>
+      <S.Contents>
         <Text.Body3 color="gray900">
           {props.content}
         </Text.Body3>
-      </Style.Contents>
-    </Style.Body>
+      </S.Contents>
+    </S.Body>
   );
 }
 
-const Style = {
+const S = {
   Body: styled.div`
     width: 100%;
   `,

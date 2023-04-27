@@ -34,22 +34,22 @@ export default function ListCard(props: { imgUrl: string; isNotice: boolean, art
   };
   
   return (
-    <Style.Contents onClick={onClickMoveToDetail}>
-      <Style.ContentsHeader>
-        <Style.ContentsHeaderImg src={props.imgUrl} />
-        <Style.ContentsHeaderInfo>
+    <S.Contents onClick={onClickMoveToDetail}>
+      <S.ContentsHeader>
+        <S.ContentsHeaderImg src={props.imgUrl} />
+        <S.ContentsHeaderInfo>
           <Text.Body6 color="gray900">{userNickname}</Text.Body6>
           <Text.Caption3 color="gray500">10분 전</Text.Caption3>
-        </Style.ContentsHeaderInfo>
-      </Style.ContentsHeader>
+        </S.ContentsHeaderInfo>
+      </S.ContentsHeader>
       <Text.Body4 color="gray900">
         {content}
       </Text.Body4>
-    </Style.Contents>
+    </S.Contents>
   );
 }
 
-const Style = {
+const S = {
   Contents: styled.div`
     display: flex;
     flex-direction: column;
