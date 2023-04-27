@@ -93,21 +93,21 @@ export default function MessageSend() {
 
   return (
     <>
-      <Container>
-        <TitleBox>
+      <S.Container>
+        <S.TitleBox>
           <Arrow_back
             style={{ paddingTop: 5, cursor: "pointer" }}
             onClick={() => router.push(`/messages/${roomId}?page=${0}&size=${1000}`, '/messages', { shallow: true })}
           />
           <Margin direction="row" size={13} />
           <Text.Title1 color="gray900">쪽지보내기</Text.Title1>
-          <YourInfoBox>
+          <S.YourInfoBox>
             {messageList?.map((list: Room) => {
               return <YourInfo list={list} key={list.roomId}/>}) 
               }
-          </YourInfoBox>
-        </TitleBox>
-        <MessageRoomList>
+          </S.YourInfoBox>
+        </S.TitleBox>
+        <S.MessageRoomList>
           {messageList?.length > 0 ? (
             <>
               {messageList?.map((list: Message) => {
@@ -122,11 +122,11 @@ export default function MessageSend() {
                     if (list?.sender === true) {
                       return (
                         <React.Fragment key={currentDate}>
-                          <DateBox>
-                            <DateDisplay>
+                          <S.DateBox>
+                            <S.DateDisplay>
                               <span>{currentDate}</span>
-                            </DateDisplay>
-                          </DateBox>
+                            </S.DateDisplay>
+                          </S.DateBox>
                           <SendMsg list={{
                             content: list.content,
                             createdTime: String(list.createdTime)
@@ -137,11 +137,11 @@ export default function MessageSend() {
                       prevNickname.nickName = list.nickname;
                       return (
                         <React.Fragment key={currentDate}>
-                          <DateBox>
-                            <DateDisplay>
+                          <S.DateBox>
+                            <S.DateDisplay>
                               <span>{currentDate}</span>
-                            </DateDisplay>
-                          </DateBox>
+                            </S.DateDisplay>
+                          </S.DateBox>
                           <SendMsg list={{
                             content: list.content,
                             createdTime: String(list.createdTime)
@@ -153,11 +153,11 @@ export default function MessageSend() {
                     if (list?.sender === false) {
                       return (
                         <React.Fragment key={currentDate}>
-                          <DateBox>
-                            <DateDisplay>
+                          <S.DateBox>
+                            <S.DateDisplay>
                               <span>{currentDate}</span>
-                            </DateDisplay>
-                          </DateBox>
+                            </S.DateDisplay>
+                          </S.DateBox>
                           <ReceptionMsg list={{
                             content: newList.content,
                             createdTime: String(newList.createdTime)
@@ -168,11 +168,11 @@ export default function MessageSend() {
                       prevNickname.nickName = list.nickname;
                       return (
                         <React.Fragment key={currentDate}>
-                          <DateBox>
-                            <DateDisplay>
+                          <S.DateBox>
+                            <S.DateDisplay>
                               <span>{currentDate}</span>
-                            </DateDisplay>
-                          </DateBox>
+                            </S.DateDisplay>
+                          </S.DateBox>
                           <ReceptionMsg list={{
                             content: list.content,
                             createdTime: String(list.createdTime)
@@ -213,18 +213,18 @@ export default function MessageSend() {
               })}
             </>
           ) : (
-            <Empty>
+            <S.Empty>
               <p>임시</p>
-            </Empty>
+            </S.Empty>
           )}
-        </MessageRoomList>
+        </S.MessageRoomList>
         <MsgInput
           text={text}
           onChange={handleChangeText}
           onKeyDown={handleSendMessage}
           onCick={handleClickSendMessage}
         />
-      </Container>
+      </S.Container>
     </>
   );
 }
@@ -237,79 +237,79 @@ export async function getServerSideProps(context: any) {
   return { props: { data }};
 }
 
+const S = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  `,
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-`;
+  TitleBox: styled.div`
+    position: sticky;
+    display: flex;
+    padding: 14px 24px;
+    background: #ffffff;
+    border-bottom: 1px solid #eeeef2;
+    box-sizing: border-box;
+  `,
 
-const TitleBox = styled.div`
-  position: sticky;
-  display: flex;
-  padding: 14px 24px;
-  background: #ffffff;
-  border-bottom: 1px solid #eeeef2;
-  box-sizing: border-box;
-`;
+  YourInfoBox: styled.div`
+    padding-top: 80px;
+  `,
 
-const YourInfoBox = styled.div`
-  padding-top: 80px;
-`;
+  MessageRoomList: styled.div`
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    height: 100%;
+  `,
 
-const MessageRoomList = styled.div`
-  padding: 1rem;
-  box-sizing: border-box;
+  EmptyMessage: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  `,
 
-  overflow-y: scroll;
-  height: 100%;
-`;
+  DateBox: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -5px;
+  `,
 
-const EmptyMessage = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-`;
+  DateDisplay: styled.p`
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 1.2rem 0;
+    padding: 5px 10px;
+    text-align: center;
+    width: 110px;
+    height: 25px;
+    background: #fcfcfe;
+    border: 1px solid #dcdce0;
+    border-radius: 23px;
 
-const DateBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -5px;
-`;
+    span {
+      font-family: "Pretendard";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 140%;
+      color: #9c9c9c;
+    }
+  `,
 
-const DateDisplay = styled.p`
-  justify-content: center;
-  box-sizing: border-box;
-  margin: 1.2rem 0;
-  padding: 5px 10px;
-  text-align: center;
-  width: 110px;
-  height: 25px;
-  background: #fcfcfe;
-  border: 1px solid #dcdce0;
-  border-radius: 23px;
-
-  span {
-    font-family: "Pretendard";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 140%;
-    color: #6c6c70;
-  }
-`;
-
-const Empty = styled.div`
-  width: 100%;
-  height: 75vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  p {
-    font-weight: 600;
-    color: #a7a7a7;
-  }
-`;
+  Empty: styled.div`
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+      font-weight: 600;
+      color: #a7a7a7;
+    }
+  `,
+}

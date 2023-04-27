@@ -9,7 +9,7 @@ import { Room } from "../../api/message/messageApi";
 import instance from "@/src/api/axiosModul";
 
 
-const message = (page: number , size: number ) => {
+export default function message(page: number , size: number ) {
   const { messageData } = useGetRoom(0, 10000);
 
   if (messageData === undefined) {
@@ -17,28 +17,28 @@ const message = (page: number , size: number ) => {
   }
 
   return (
-    <Container>
-      <TopContainer>
+    <S.Container>
+      <S.TopContainer>
         <Text.Title1 color="gray900">쪽지함</Text.Title1>
-      </TopContainer>
-      <MsgContainer>
+      </S.TopContainer>
+      <S.MsgContainer>
         {messageData?.length > 0 ? (
           messageData.map((list: Room) => {
             return <MsgList list={list} key={list.roomId} />;
           })
         ) : (
           <>
-          <EmptyContainer>
-            <EmptyBox>
+          <S.EmptyContainer>
+            <S.EmptyBox>
               <Message />
               <Text.Body3 color="gray500">받은 쪽지가 없어요.</Text.Body3>
-            </EmptyBox>
-          </EmptyContainer>
+            </S.EmptyBox>
+          </S.EmptyContainer>
           </>
         )}
         <Navigation tab={""} />
-      </MsgContainer>
-    </Container>
+      </S.MsgContainer>
+    </S.Container>
   );
 };
 
@@ -50,41 +50,40 @@ export async function getServerSideProps(context: any) {
   return { props: { data }};
 }
 
-const Container = styled.div`
-  width: 100%;
-  height: 100vh;
-`;
+const S = {
+  Container: styled.div`
+    width: 100%;
+    height: 100vh;
+  `,
 
-const TopContainer = styled.div`
-  position: sticky;
-  display: flex;
-  padding: 14px 24px;
-`;
+  TopContainer: styled.div`
+    position: sticky;
+    display: flex;
+    padding: 14px 24px;
+  `,
 
-const MsgContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow-y: scroll;
-`;
+  MsgContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: scroll;
+  `,
 
-const EmptyContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
- 
-`;
+  EmptyContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  `,
 
-const EmptyBox = styled.div`
-  position: absolute;
-  top: 50%;
-  display: grid;
-  gap: 10px;
+  EmptyBox: styled.div`
+    position: absolute;
+    top: 50%;
+    display: grid;
+    gap: 10px;
 
-  span {
-    margin-left: -10px;
-  }
-`;
-
-export default message;
+    span {
+      margin-left: -10px;
+    }
+  `,
+}

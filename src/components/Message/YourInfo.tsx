@@ -15,47 +15,51 @@ const YourInfo = ({ list }: { list: Room }) => {
   };
 
   return (
-    <Container onClick={handleMoveOpponentInfo}>
-        <LeftBox>
+    <S.Container onClick={handleMoveOpponentInfo}>
+        <S.LeftBox>
         {image ? 
-          <UserImg src={image} alt="상대 이미지" /> : 
+          <S.UserImage src={image} alt="상대 이미지" /> : 
           <Image 
           src='/images/message/profiledefault.png'
           alt='기본 프로필 이미지'
           width={35} height={35} />}
-        <TitleBox>
+        <S.TitleBox>
           <Text.Body5 color="gray900">{nickname}</Text.Body5>
-        </TitleBox>
-      </LeftBox>
-    </Container>
+        </S.TitleBox>
+      </S.LeftBox>
+    </S.Container>
   );
 };
 
-const Container = styled.div``;
+const S = {
+  Container: styled.div`
+  `,
 
-const LeftBox = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: -30px;
-  cursor: pointer;
-  margin-left: -7px;
-  position: absolute;
-  left: 24px;
-`;
-
-const UserImg = styled.img`
-  width: 3em;
-  height: 3rem;
-  border-radius: 50%;
-  border: 1px solid blue;
-`;
-
-const TitleBox = styled.div`
-  margin-left: 0.9rem;
-  span {
+  LeftBox: styled.div`
+    display: flex;
+    align-items: center;
+    margin-top: -30px;
     cursor: pointer;
-    font-weight: 600;
-  }
-`;
+    margin-left: -7px;
+    position: absolute;
+    left: 24px;
+  `,
+
+  UserImage: styled.img`
+    width: 3em;
+    height: 3rem;
+    border-radius: 50%;
+    border: 1px solid blue;
+  `,
+
+  TitleBox: styled.div`
+    margin-left: 0.9rem;
+
+    span {
+      cursor: pointer;
+      font-weight: 600;
+    }
+  `,
+}
 
 export default YourInfo;
