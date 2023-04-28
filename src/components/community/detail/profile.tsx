@@ -3,23 +3,26 @@ import { useState } from "react";
 import styled from "styled-components";
 import Modal from "../../modal";
 import { Margin, Text } from "../../ui";
+import betweenTime from "@/src/utils/betweenTime";
 
-export default function Profile(props: { currentTab: string, userNickname: string, createdTime: string, forumId: string, articleId: string }) {
+export default function Profile({ currentTab, userNickname, createdTime, forumId, articleId }: { currentTab: string, userNickname: string, createdTime: string, forumId: string, articleId: string }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
 
+  const time = betweenTime(createdTime);
+  
   return (
     <>
       <S.Profile>
         <S.ProfileLeft>
-          <S.ProfileImg src={getImageUrl(props.currentTab)} />
+          <S.ProfileImg src={getImageUrl(currentTab)} />
           <Margin direction="row" size={10} />
           <S.ProfileInfo>
-            <Text.Body6 color="gray900">{props.userNickname}</Text.Body6>
-            <Text.Caption3 color="gray500">10분 전</Text.Caption3>
+            <Text.Body6 color="gray900">{userNickname}</Text.Body6>
+            <Text.Caption3 color="gray500">{time}</Text.Caption3>
             {/* 시간 처리 함수 이후 제작 */}
           </S.ProfileInfo>
         </S.ProfileLeft>
@@ -29,7 +32,7 @@ export default function Profile(props: { currentTab: string, userNickname: strin
         />
       </S.Profile>
       {modalVisible && (
-        <Modal type="detail-delete-contents" deleteInform={{forumId: props.forumId, articleId: props.articleId, id: 0}} onClickModal={onClickModal} />
+        <Modal type="detail-delete-contents" deleteInform={{forumId: forumId, articleId: articleId, id: 0}} onClickModal={onClickModal} />
       )}
     </>
   );

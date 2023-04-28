@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import styled from "styled-components";
 import { Text } from "../../ui";
+import betweenTime from "@/src/utils/betweenTime";
 
 export default function ListCard(props: { imgUrl: string; isNotice: boolean, article: Article }) {
   const router = useRouter();
@@ -32,6 +33,8 @@ export default function ListCard(props: { imgUrl: string; isNotice: boolean, art
     }
     router.push({ pathname: `/community/detail`, query: { tab: currentTab, forumId: forumId, articleId: articleId } });
   };
+
+  const time = betweenTime(createdTime);
   
   return (
     <S.Contents onClick={onClickMoveToDetail}>
@@ -39,7 +42,7 @@ export default function ListCard(props: { imgUrl: string; isNotice: boolean, art
         <S.ContentsHeaderImg src={props.imgUrl} />
         <S.ContentsHeaderInfo>
           <Text.Body6 color="gray900">{userNickname}</Text.Body6>
-          <Text.Caption3 color="gray500">10분 전</Text.Caption3>
+          <Text.Caption3 color="gray500">{time}</Text.Caption3>
         </S.ContentsHeaderInfo>
       </S.ContentsHeader>
       <Text.Body4 color="gray900">
