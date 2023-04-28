@@ -1,11 +1,11 @@
 import { Text, Margin } from "../../../components/ui";
 import styled from "styled-components";
 import useGetMessage from "../../../hooks/message/useGetMessage";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import SendMsg from "@/src/components/message/sendMsg";
-import ReceptionMsg from "@/src/components/message/ReceptionMsg";
-import YourInfo from "@/src/components/message/yourInfo";
+import ReceptionMsg from "@/src/components/message/receptionMsg";
+import YourInfo from "@/src/components/message/YourInfo";
 import MsgInput from "../../../components/message/msgInput";
 import Arrow_back from "../../../../public/images/message/arrow_back.svg";
 import { useRouter } from "next/router";
@@ -15,6 +15,7 @@ import { Message } from "../../../api/message/messageApi";
 import { Room } from "../../../api/message/messageApi";
 import { convertDateYear } from "@/src/utils/convertDateYear";
 import useGetRoom from "@/src/hooks/message/useGetRoom";
+
 
 interface NewMsgProps {
   roomId: number;
@@ -30,7 +31,6 @@ export default function MessageSend() {
   const { nickName, roomId } = router.query;
   const { page, size } = useParams(); // 채널 구분
   const { messageDataRoom } = useGetRoom(0, 10000);
-
   const { messageData, roomList, messageList, setMessageList, myInfo, receiverInfo, refetch } = useGetMessage(
     Number(roomId) ?? 0 ,
     Number(page) ?? 1,
@@ -39,6 +39,13 @@ export default function MessageSend() {
   let prevNickname = { nickName: "" };
   let prevDate = "";
   const [newMsg, setNewMsg] = useState<NewMsgProps>();
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messageList]);
 
 
   const addMsg = async (text: string) => {
@@ -94,6 +101,7 @@ export default function MessageSend() {
     return <div>로딩중</div>;
   }
 
+
   return (
     <>
       <S.Container>
@@ -110,7 +118,7 @@ export default function MessageSend() {
           })}  
           </S.YourInfoBox>
         </S.TitleBox>
-        <S.MessageRoomList>
+        <S.MessageRoomList ref={scrollRef}>
           {messageList?.length > 0 ? (
             <>
               {messageList?.map((list: Message) => {
