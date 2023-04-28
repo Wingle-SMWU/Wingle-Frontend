@@ -13,7 +13,7 @@ export default function Profile({ currentTab, userNickname, createdTime, forumId
   };
 
   const time = betweenTime(createdTime);
-  
+
   return (
     <>
       <S.Profile>
@@ -23,7 +23,6 @@ export default function Profile({ currentTab, userNickname, createdTime, forumId
           <S.ProfileInfo>
             <Text.Body6 color="gray900">{userNickname}</Text.Body6>
             <Text.Caption3 color="gray500">{time}</Text.Caption3>
-            {/* 시간 처리 함수 이후 제작 */}
           </S.ProfileInfo>
         </S.ProfileLeft>
         <S.CancelImg

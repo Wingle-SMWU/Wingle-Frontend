@@ -5,6 +5,7 @@ import Modal from "../../modal";
 import { Text } from "../../ui";
 import { useQuery } from "react-query";
 import { getComments } from "@/src/api/community/get/comments";
+import betweenTime from "@/src/utils/betweenTime";
 
 export default function Comment({ currentTab, forumId, articleId }: { currentTab: string, forumId: string, articleId: string }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -42,6 +43,7 @@ export default function Comment({ currentTab, forumId, articleId }: { currentTab
           userNation,
           userNickname,
         } = comment;
+        const time = betweenTime(createdTime);
         return (
           <>
             <S.Comment key={id}>
@@ -50,7 +52,7 @@ export default function Comment({ currentTab, forumId, articleId }: { currentTab
                   <S.ProfileImg src={getImageUrl(currentTab)} />
                   <S.ProfileInfo>
                     <Text.Body6 color="gray900">{userNickname}</Text.Body6>
-                    <Text.Caption3 color="gray500">10분 전</Text.Caption3>
+                    <Text.Caption3 color="gray500">{time}</Text.Caption3>
                   </S.ProfileInfo>
                 </S.CommentTopLeft>
                 <S.CancelImg
