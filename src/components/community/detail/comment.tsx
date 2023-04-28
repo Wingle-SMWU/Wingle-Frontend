@@ -55,7 +55,8 @@ export default function Comment({ currentTab, forumId, articleId }: { currentTab
                     <Text.Caption3 color="gray500">{time}</Text.Caption3>
                   </S.ProfileInfo>
                 </S.CommentTopLeft>
-                <S.CancelImg
+                {isMine &&
+                  <S.CancelImg
                   src="/community/detail/close-gray.svg"
                   onClick={() => {
                     onClickModal();
@@ -66,7 +67,8 @@ export default function Comment({ currentTab, forumId, articleId }: { currentTab
                       id: id,
                     }) 
                   }}
-                />
+                  />
+                }
               </S.CommentTop>
               <S.CommentBottom>
                 <Text.Body3 color="gray900">{content}</Text.Body3>

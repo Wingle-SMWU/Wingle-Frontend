@@ -5,9 +5,9 @@ import Modal from "../../modal";
 import { Margin, Text } from "../../ui";
 import betweenTime from "@/src/utils/betweenTime";
 
-export default function Profile({ currentTab, userNickname, createdTime, forumId, articleId }: { currentTab: string, userNickname: string, createdTime: string, forumId: string, articleId: string }) {
+export default function Profile({article, currentTab} : {article: Article, currentTab: string}) {
   const [modalVisible, setModalVisible] = useState(false);
-
+  const { isMine, userNickname, createdTime, forumId, articleId } = article;
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
@@ -25,13 +25,15 @@ export default function Profile({ currentTab, userNickname, createdTime, forumId
             <Text.Caption3 color="gray500">{time}</Text.Caption3>
           </S.ProfileInfo>
         </S.ProfileLeft>
-        <S.CancelImg
+        {isMine &&
+          <S.CancelImg
           src="/community/detail/close-gray.svg"
           onClick={onClickModal}
-        />
+          />
+        }
       </S.Profile>
       {modalVisible && (
-        <Modal type="detail-delete-contents" deleteInform={{forumId: forumId, articleId: articleId, id: 0}} onClickModal={onClickModal} />
+        <Modal type="detail-delete-contents" deleteInform={{forumId: String(forumId), articleId: String(articleId), id: 0}} onClickModal={onClickModal} />
       )}
     </>
   );

@@ -21,12 +21,12 @@ export default function Detail() {
 
   if (isLoading) return <div>로딩중</div>
   if (isError) return <div>에러</div>
-
+  console.log(article);
   return (
     <S.Wrapper>
       <S.DetailTop>
         <Header currentTab={currentTab} />
-        <Profile currentTab={currentTab} userNickname={article.userNickname} createdTime={article.createdTime} forumId={forumId} articleId={articleId}/>
+        <Profile article={article} currentTab={currentTab}/>
         <Body content={article.content}/>
         <Comment currentTab={currentTab} forumId={forumId} articleId={articleId} />
       </S.DetailTop>
