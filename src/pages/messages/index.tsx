@@ -10,9 +10,9 @@ import instance from "@/src/api/axiosModul";
 
 
 export default function message(page: number , size: number ) {
-  const { messageData } = useGetRoom(0, 10000);
+  const { messageDataRoom } = useGetRoom(0, 10000);
 
-  if (messageData === undefined) {
+  if (messageDataRoom === undefined) {
     return <div>로딩중</div>;
   }
 
@@ -22,8 +22,9 @@ export default function message(page: number , size: number ) {
         <Text.Title1 color="gray900">쪽지함</Text.Title1>
       </S.TopContainer>
       <S.MsgContainer>
-        {messageData?.length > 0 ? (
-          messageData.map((list: Room) => {
+        {messageDataRoom?.length > 0 ? (
+          messageDataRoom.map((list: Room) => {
+            console.log(list)
             return <MsgList list={list} key={list.roomId} />;
           })
         ) : (

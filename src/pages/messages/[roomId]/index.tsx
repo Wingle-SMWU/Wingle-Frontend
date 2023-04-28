@@ -14,6 +14,7 @@ import instance from "../../../api/axiosModul";
 import { Message } from "../../../api/message/messageApi";
 import { Room } from "../../../api/message/messageApi";
 import { convertDateYear } from "@/src/utils/convertDateYear";
+import useGetRoom from "@/src/hooks/message/useGetRoom";
 
 interface NewMsgProps {
   roomId: number;
@@ -28,6 +29,8 @@ export default function MessageSend() {
   const [text, setText] = useState("");
   const { nickName, roomId } = router.query;
   const { page, size } = useParams(); // 채널 구분
+  const { messageDataRoom } = useGetRoom(0, 10000);
+
   const { messageData, roomList, messageList, setMessageList, myInfo, receiverInfo, refetch } = useGetMessage(
     Number(roomId) ?? 0 ,
     Number(page) ?? 1,
@@ -102,9 +105,9 @@ export default function MessageSend() {
           <Margin direction="row" size={13} />
           <Text.Title1 color="gray900">쪽지보내기</Text.Title1>
           <S.YourInfoBox>
-            {messageList?.map((list: Room) => {
-              return <YourInfo list={list} key={list.roomId}/>}) 
-              }
+          {messageDataRoom?.map((list: Room) => {
+            return <YourInfo list={list} key={list.roomId} />;
+          })}  
           </S.YourInfoBox>
         </S.TitleBox>
         <S.MessageRoomList>

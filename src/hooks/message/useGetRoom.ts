@@ -2,12 +2,12 @@ import { useQuery } from "react-query";
 import { getMessageRoom } from "@/src/api/message/messageApi";
 
 const useGetRoom = (page: number, size: number) => {
-  const { data: messageData } = useQuery({
+  const { data: messageDataRoom } = useQuery({
     queryKey: ['message'],
 		queryFn: () => { return getMessageRoom(page, size) },
 	});
 
-  return { messageData:  messageData?.data };
+  return { messageDataRoom:  messageDataRoom?.data };
 };
 
 export default useGetRoom;
