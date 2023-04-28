@@ -28,8 +28,8 @@ export default function Contents({ data, userId, setIsOpen }: ContentsFactor) {
   return (
     <S.Contents id='form' onSubmit={handleSubmit}>
       <Profile data={data} />
-      <Reject setIsOpen={setIsOpen} inputs={inputs} setInputs={setInputs} userId={userId}>거절사유</Reject>
-      <Reject setIsOpen={setIsOpen} inputs={inputs} setInputs={setInputs} userId={userId}>메모</Reject>
+      <Reject setIsOpen={setIsOpen} inputs={inputs} setInputs={setInputs} userId={userId} data={data}>거절사유</Reject>
+      <Reject setIsOpen={setIsOpen} inputs={inputs} setInputs={setInputs} userId={userId} data={data}>메모</Reject>
     </S.Contents>
   )
 }

@@ -8,14 +8,14 @@ export default function usePostTemp(
   val: { reject: string, memo: string }) {
 
   let path = '';
-  let body = {};
+  let body = { userId };
   if(children === '거절사유') {
     path = 'reject';
-    body = { userId, 'reject': val.reject }
+    Object.assign(body, {'reject': val.reject})
   }
   if(children === '메모') {
     path = 'memo';
-    body = { userId, 'memo': val.memo }
+    Object.assign(body, {'memo': val.memo})
   }
 
   const { mutate, isLoading, error } = useMutation(() => adminTempAPI.post(path, body), {

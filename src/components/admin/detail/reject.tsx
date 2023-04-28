@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import usePostTemp from '@/src/hooks/admin/usePostTemp';
+import { AdminUserResp } from '@/src/types/admin.type';
 
 type RejectFactor = {
   children: ReactNode
@@ -8,9 +9,10 @@ type RejectFactor = {
   inputs: { reject: string, memo: string }
   setInputs: React.Dispatch<React.SetStateAction<{ reject: string, memo: string }>>
   setIsOpen: React.Dispatch<React.SetStateAction<string>>
+  data: AdminUserResp
 }
 
-export default function Reject({ children, userId, setIsOpen, inputs, setInputs}: RejectFactor) {
+export default function Reject({ children, userId, setIsOpen, inputs, setInputs, data }: RejectFactor) {
 
   const { mutate, isLoading, error } = usePostTemp(children, userId, inputs);
 
@@ -19,12 +21,13 @@ export default function Reject({ children, userId, setIsOpen, inputs, setInputs}
     if(e.target.name === '메모') setInputs({...inputs, memo: e.target.value });
   }
 
+  const inputValue = children === '메모' ? data?.memo : data?.reason;
 
   return (
     <S.Reject>
       <div>
         <p>{children}</p>
-        <p><textarea name={`${children}`} onChange={handleChangeReason} /></p>
+        <p><textarea name={`${children}`} defaultValue={inputValue || ''} onChange={handleChangeReason} /></p>
       </div>
       <S.Button>
         <button type='button' name={`${children}`} onClick={() => mutate()} >내용 저장</button>

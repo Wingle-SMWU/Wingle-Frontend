@@ -4,4 +4,6 @@ export interface AdminUserResp {
   name: string;
   nation: string | null;
   idCardImage?: string;
+  memo?: string | null;
+  reason?: string | null;
 }
