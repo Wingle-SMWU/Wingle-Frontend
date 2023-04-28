@@ -8,6 +8,7 @@ import { useQuery } from 'react-query'
 import { adminListAPI } from '@/src/api/admin'
 import { useSetRecoilState } from 'recoil';
 import { postOrderStateAtom } from '../../atoms/admin';
+import { theme } from '@/src/styles/theme'
 
 export default function Detail() {
   const [isOpen, setIsOpen] = useState('');
@@ -44,7 +45,7 @@ const S = {
   Main: styled.div<{modal: string}>`
     width: 100%;
     height: 1500px;
-    background: ${({ modal }) => (modal ? '#eeeef2' : 'white')};
+    background: ${({ modal }) => (modal ? theme.color.gray200 : theme.color.white)};
     position: relative;
   `,
   TabBar: styled.div`
@@ -58,7 +59,7 @@ const S = {
     height: 44px;
     left: 0px;
     top: 143px;
-    border-bottom: 1px solid #EEEEF2;
+    border-bottom: 1px solid ${theme.color.gray200};
     > p {
       padding: 8px;
       width: 63px;
@@ -71,7 +72,7 @@ const S = {
       display: flex;
       align-items: center;
       text-align: center;
-      color: #222223;
+      color: ${theme.color.gray900};
     }
   `,
   Card: styled.div<{card: string}>`
@@ -91,7 +92,7 @@ const S = {
     height: 80px;
     left: 0px;
     bottom: 0px;
-    border-top: 1px solid #EEEEF2;
+    border-top: 1px solid ${theme.color.gray200};
     > button {
       position: absolute;
       left: 992px;
@@ -99,11 +100,11 @@ const S = {
       width: 200px;
       height: 50px;
       padding: 14px 16px;
-      background: #FF812E;
+      background: ${theme.color.orange500};
       border-radius: 8px;
       font-weight: 700;
       font-size: 16px;
-      color: #FFFFFF;
+      color: ${theme.color.white};
       font-family: Pretendard;
     }
   `

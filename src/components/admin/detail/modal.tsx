@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React, { ReactNode } from 'react';
 import Image from 'next/image';
+import { theme } from '@/src/styles/theme';
 
 type ModalFactor = {
   children: ReactNode;
@@ -41,7 +42,7 @@ const S = {
     height: 197px;
     left: 564px;
     top: 771px;
-    background: #FFFFFF;
+    background: ${theme.color.white};
     border-radius: 8px;
   `,
   Image: styled.div`
@@ -64,7 +65,7 @@ const S = {
       font-style: normal;
       line-height: 140%;
       text-align: center;
-      color: #222223;
+      color: ${theme.color.gray900};
     }
     > p:nth-child(1) {
       height: 28px;
@@ -98,10 +99,10 @@ const S = {
       border-radius: 8px;
     }
     > button:nth-child(1) {
-      background: #EEEEF2;
+      background: ${theme.color.gray200};
     }
     > button:nth-child(2) {
-      background: #FF812E;
+      background: ${theme.color.orange500};
     }
   `
 }

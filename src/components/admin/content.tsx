@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { ADMIN_CONTENT_MENU, USER_NATIONALITY } from '@/src/constants/constants';
 import { AdminUserResp } from '../../types/admin.type';
 import Link from 'next/link';
+import { theme } from '@/src/styles/theme';
 
 type AdminUsersResp = {
   data: AdminUserResp[];
@@ -75,7 +76,7 @@ const S = {
         font-weight: 500;
         font-size: 14px;
         line-height: 140%;
-        color: #6C6C70;
+        color: ${theme.color.gray600};
         flex: none;
         flex-grow: 1;
       }
@@ -105,10 +106,10 @@ const S = {
   align-items: flex-start;
   padding: 0px;
   width: 946px;
-  background: #FFFFFF;
+  background: ${theme.color.white};
   flex: none;
   flex-grow: 0;
-  border-bottom: 1px solid #EEEEF2;
+  border-bottom: 1px solid ${theme.color.gray200};
   &: hover {
     cursor: pointer;
     > li:nth-child(2) {
@@ -132,7 +133,7 @@ const S = {
       font-weight: 400;
       font-size: 16px;
       line-height: 140%;
-      color: #222223;
+      color: ${theme.color.gray900};
       flex: none;
       flex-grow: 1;
     }
@@ -150,7 +151,7 @@ const S = {
     }
   }
   > li:nth-child(3) {
-    border: 1px solid #EEEEF2;
+    border: 1px solid ${theme.color.gray200};
     border-radius: 20px;
     padding: 4px 12px;
     margin: auto 0;
@@ -161,8 +162,8 @@ const S = {
       font-style: normal;
       font-weight: 700;
       font-size: 12px;
-      color: #6C6C70;
-      color: ${({nation}) => (nation === 'KR' ? '#6C6C70' : !nation ? 'red' : '#FF9856')};
+      color: ${theme.color.gray600};
+      color: ${({nation}) => (nation === 'KR' ? theme.color.gray600 : !nation ? 'red' : theme.color.orange400)};
       text-align: center;
       flex: none;
       flex-grow: 0;

@@ -1,4 +1,5 @@
 import { ADMIN_TAB_LIST } from '@/src/constants/constants';
+import { theme } from '@/src/styles/theme';
 import styled from 'styled-components';
 
 type TabbarFactor = {
@@ -33,7 +34,7 @@ const S = {
     width: 1440px;
     width: 100%;
     height: 44px;
-    border-bottom: 1px solid #eeeef2;
+    border-bottom: 1px solid ${theme.color.gray200};
     flex: none;
     order: 1;
     flex-grow: 0;
@@ -60,14 +61,14 @@ const S = {
       text-align: center;
       font-family: Pretendard;
       cursor: pointer;
-      color: #959599;
+      color: ${theme.color.gray500};
       &:hover {
-        color: #222223
+        color: ${theme.color.gray900};
       }
     }
     .selected {
-      color: #222223;
-      border-bottom: 2px solid #FF812E;
+      color: ${theme.color.gray900};
+      border-bottom: 2px solid ${theme.color.orange500};
       padding-bottom: 7px;
     }
   `,

@@ -1,3 +1,4 @@
+import { theme } from '@/src/styles/theme';
 import Pagination from 'react-js-pagination';
 import styled from 'styled-components';
 import { AdminUserResp } from '../../types/admin.type';
@@ -63,7 +64,7 @@ const S = {
         visibility: ${({page}) => (page === 1 ? 'hidden' : '')};
       }
       :nth-last-child(2) a {
-        color: #49494D;
+        color: ${theme.color.gray700}; 
       }
     }
     ul.pagination li a {
@@ -72,15 +73,15 @@ const S = {
       font-size: 14px;
       font-style: normal;
       font-weight: 500;
-      color: #959599;
+      color: ${theme.color.gray500};
     }
     ul.pagination li:hover,
     ul.pagination li.active {
-      background: #EEEEF2;
+      background: ${theme.color.gray200};
       border-radius: 8px;
       cursor: pointer;
       > a {
-        color: #222223;
+        color: ${theme.color.gray900};
       }
     }
   `
