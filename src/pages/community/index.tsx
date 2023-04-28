@@ -82,5 +82,6 @@ const S = {
     position: fixed;
     bottom: 94px;
     display: ${({ tab }) => (tab === "공지" ? "none" : "block")};
+    cursor: pointer;
   `,
 };
