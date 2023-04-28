@@ -28,7 +28,7 @@ const withFormData = (data: SignUpData) => {
 };
 
 export const postSignUp = async (signUpData: SignUpData) => {
-  const response = await instance.post("/signup", withFormData(signUpData), {
+  const response = await instance.post("/auth/signup", withFormData(signUpData), {
     headers: { "Content-Type": "multipart/form-data" },
   });
 
