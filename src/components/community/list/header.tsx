@@ -47,6 +47,7 @@ const Style = {
     border-bottom: 1px solid #eeeef2;
     padding: 8px 24px 0px 24px;
     gap: 24px;
+    z-index: 100;
   `,
 
   TextUnderLine: styled.div<Tab>`
