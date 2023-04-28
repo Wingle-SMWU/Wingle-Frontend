@@ -3,33 +3,31 @@ import { DefaultTheme } from "styled-components";
 export const theme: DefaultTheme = {
   color: {
     black: "#000000",
-    white: "#ffffff",
-    gray100: "#fcfcfc",
-    gray200: "#eeeef2",
-    gray300: "#dcdce0",
-    gray400: "#c2c2c7",
+    white: "#FFFFFF",
+    gray100: "#FCFCFE",
+    gray200: "#EEEEF2",
+    gray300: "#DCDCE0",
+    gray400: "#C2C2C7",
     gray500: "#959599",
-    gray600: "#6c6c70",
-    gray700: "#49494d",
+    gray600: "#6C6C70",
+    gray700: "#49494D",
     gray800: "#303033",
     gray900: "#222223",
-    orange100: "#fff3eb",
-    orange200: "#ffd7bd",
-    orange300: "#ffb07e",
-    orange400: "#ff9856",
-    orange500: "#ff812e",
-    red400: "#f03030",
-    red500: "#c71b1b",
+    orange100: "#FFF3EB",
+    orange200: "#FFD7BD",
+    orange300: "#FFB07E",
+    orange400: "#FF9856",
+    orange500: "#FF812E",
+    red400: "#FF7070",
+    red500: "#F03030",
   },
   boxShadow: {
-    normal: "0 3px 8px 0 rgb(0 0 0 / 10%)",
-    purple: "0 3px 8px 0 #d6c9ff",
-    blue: "0 3px 8px 0 #b3e2e6",
+    normal: "0px 4px 4px rgba(0, 0, 0, 0.1)",
+    popover: "0px 4px 8px rgba(0, 0, 0, 0.24);",
   },
 };
 
-const customMediaQuery = (maxWidth: number): string =>
-  `@media (max-width: ${maxWidth}px)`;
+const customMediaQuery = (maxWidth: number): string => `@media (max-width: ${maxWidth}px)`;
 
 export const media = {
   custom: customMediaQuery,
