@@ -4,13 +4,13 @@ import { Margin } from "../../ui";
 import instance from "@/src/api/axiosModule";
 import { useMutation, useQueryClient } from "react-query";
 
-export default function CommentInput(props: { forumId: number, articleId: number }) {
+export default function CommentInput({ forumId, articleId }: { forumId: number, articleId: number }) {
   const [comment, setComment] = useState<string>("");
 
   const fetchComments = async () => {
     const response = await instance.post(`/community/articles/comments`, {
-      forumId: props.forumId,
-      articleId: props.articleId,
+      forumId,
+      articleId,
       originCommentId: 0,
       content: comment,
     });

@@ -7,7 +7,7 @@ type Tab = {
   tab?: boolean;
 };
 
-export default function Header(props: {
+export default function Header({ tab, onClickTab }: {
   tab: string;
   onClickTab: (event: any) => void;
 }) {
@@ -26,10 +26,10 @@ export default function Header(props: {
       </S.Header>
       <S.HeaderBar>
         {TabArr.map((el: {name: string, id: number}) => (
-          <S.TextUnderLine tab={el.name === props.tab} key={el.id}>
+          <S.TextUnderLine tab={el.name === tab} key={el.id}>
             <Text.Title3
-              color={el.name === props.tab ? "gray900" : "gray500"}
-              onClick={props.onClickTab}
+              color={el.name === tab ? "gray900" : "gray500"}
+              onClick={onClickTab}
             >
               {el.name}
             </Text.Title3>

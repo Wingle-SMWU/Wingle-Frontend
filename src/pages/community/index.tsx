@@ -10,7 +10,7 @@ import Navigation from "@/src/components/layout/Navigation";
 import { getForums } from "@/src/api/community/get/forums";
 import { useQuery } from "react-query";
 
-export default function Community(props: { tab: string }) {
+export default function Community({ tab } : { tab: string }) {
 
   const router = useRouter();
   
@@ -52,7 +52,7 @@ export default function Community(props: { tab: string }) {
       {currentTab === TabArr[2].name && <NoticeTab forumId={TabArr[2].id} imgUrl={getImageUrl(currentTab)} />}
       <S.Box>
         <S.CreateIcon
-          tab={props.tab}
+          tab={tab}
           src="community/list/new-write.svg"
           onClick={onClickMoveToWrite}
         />

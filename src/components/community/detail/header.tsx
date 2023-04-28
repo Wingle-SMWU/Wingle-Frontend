@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Text } from "../../ui";
 
-export default function Header(props: { currentTab: string }) {
+export default function Header({ currentTab }: { currentTab: string }) {
   const router = useRouter();
 
   return (
@@ -12,7 +12,7 @@ export default function Header(props: { currentTab: string }) {
           src="/community/arrow-back.svg"
           onClick={() => router.back()}
         />
-        <Text.Title2 color="gray900">{props.currentTab}게시판</Text.Title2>
+        <Text.Title2 color="gray900">{currentTab}게시판</Text.Title2>
       </S.Header>
     </S.Wrapper>
   );

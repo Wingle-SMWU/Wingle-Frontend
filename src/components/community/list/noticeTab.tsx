@@ -2,10 +2,10 @@ import { useQuery } from "react-query";
 import ListCard from "./listCard";
 import { getArticles } from "@/src/api/community/get/articlesList";
 
-export default function InteractTab(props: { forumId: number, imgUrl: string }) {
+export default function InteractTab({ forumId, imgUrl }: { forumId: number, imgUrl: string }) {
   const { data: noticeArticles, isLoading, isError } = useQuery({
     queryFn: getArticles,
-    queryKey: ['articles', props.forumId, 0, 30, false],
+    queryKey: ['articles', forumId, 0, 30, false],
   });
 
   if (isLoading) return <div>로딩중</div>
@@ -15,7 +15,7 @@ export default function InteractTab(props: { forumId: number, imgUrl: string }) 
     <>
       {
         noticeArticles.map((article: Article, i: number ) => (
-          <ListCard key={i} imgUrl={props.imgUrl} isNotice={true} article={article}></ListCard>
+          <ListCard key={i} imgUrl={imgUrl} isNotice={true} article={article}></ListCard>
         ))
       }
     </>

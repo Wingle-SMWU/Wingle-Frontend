@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Text } from "../../ui";
 import betweenTime from "@/src/utils/betweenTime";
 
-export default function ListCard(props: { imgUrl: string; isNotice: boolean, article: Article }) {
+export default function ListCard({ imgUrl, isNotice, article }: { imgUrl: string; isNotice: boolean, article: Article }) {
   const router = useRouter();
   const {
     articleId,
@@ -18,7 +18,7 @@ export default function ListCard(props: { imgUrl: string; isNotice: boolean, art
     updatedTime,
     userId,
     userNickname,
-  } = props.article;
+  } = article;
 
   const currentTab: string = useMemo(() => {
     if (!router.query.tab) {
@@ -28,18 +28,18 @@ export default function ListCard(props: { imgUrl: string; isNotice: boolean, art
   }, [router.query.tab]);
 
   const onClickMoveToDetail = () => {
-    if (props.isNotice) {
+    if (isNotice) {
       return;
     }
     router.push({ pathname: `/community/detail`, query: { tab: currentTab, forumId: forumId, articleId: articleId } });
   };
 
   const time = betweenTime(createdTime);
-  
+
   return (
     <S.Contents onClick={onClickMoveToDetail}>
       <S.ContentsHeader>
-        <S.ContentsHeaderImg src={props.imgUrl} />
+        <S.ContentsHeaderImg src={imgUrl} />
         <S.ContentsHeaderInfo>
           <Text.Body6 color="gray900">{userNickname}</Text.Body6>
           <Text.Caption3 color="gray500">{time}</Text.Caption3>

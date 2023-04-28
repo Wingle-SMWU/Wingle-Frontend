@@ -6,7 +6,7 @@ import { Text } from "../../ui";
 import { useQuery } from "react-query";
 import { getComments } from "@/src/api/community/get/comments";
 
-export default function Comment(props: { currentTab: string, forumId: string, articleId: string }) {
+export default function Comment({ currentTab, forumId, articleId }: { currentTab: string, forumId: string, articleId: string }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteInform, setDeleteInform] = useState({
     forumId: "",
@@ -19,7 +19,7 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
   };
   const { data: comments, isLoading, isError, isIdle } = useQuery({
     queryFn: getComments,
-    queryKey: ['comments', props.forumId, props.articleId, 0, 10],
+    queryKey: ['comments', forumId, articleId, 0, 10],
   });
 
   if (isLoading || isIdle) return <div>로딩중</div>
@@ -47,11 +47,10 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
             <S.Comment key={id}>
               <S.CommentTop>
                 <S.CommentTopLeft>
-                  <S.ProfileImg src={getImageUrl(props.currentTab)} />
+                  <S.ProfileImg src={getImageUrl(currentTab)} />
                   <S.ProfileInfo>
                     <Text.Body6 color="gray900">{userNickname}</Text.Body6>
                     <Text.Caption3 color="gray500">10분 전</Text.Caption3>
-                    {/* 시간은 이후에 수정 */}
                   </S.ProfileInfo>
                 </S.CommentTopLeft>
                 <S.CancelImg
@@ -60,8 +59,8 @@ export default function Comment(props: { currentTab: string, forumId: string, ar
                     onClickModal();
                     setDeleteInform({
                       ...deleteInform,
-                      forumId: props.forumId,
-                      articleId: props.articleId,
+                      forumId: forumId,
+                      articleId: articleId,
                       id: id,
                     }) 
                   }}
