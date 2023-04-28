@@ -10,8 +10,8 @@ export default function usePostTemp(
   let path = '';
   let body = { userId };
   if(children === '거절사유') {
-    path = 'reject';
-    Object.assign(body, {'reject': val.reject})
+    path = 'rejection';
+    Object.assign(body, {'reason': val.reject})
   }
   if(children === '메모') {
     path = 'memo';
