@@ -16,18 +16,15 @@ export default function Detail() {
   const postOrder = Number(useRouter().asPath.split('?').at(-1));
   const setPostOrder = useSetRecoilState(postOrderStateAtom);
 
-  const { data, isLoading, error } = useQuery(['getUser', userId], () => adminListAPI.getUser({path: 'waiting', userId}), {
-    // onSuccess: (res) => console.log(res),
-    // onError: (res) => console.log(res),
-  })
+  const { data, isLoading, error } = useQuery(['getUser', userId], () => adminListAPI.getUser({path: 'waiting', userId}), { cacheTime: 0 })
 
-  useEffect(() => setPostOrder(postOrder));
+  useEffect(() => setPostOrder(postOrder), []);
 
   return (
     <S.Main modal={isOpen}>
 
       <Header />
-      <S.TabBar><p>수락대기</p></S.TabBar>
+      <S.TabBar><p>수락{data?.message.split(' ')[1]}</p></S.TabBar>
       <S.Card card={data?.data.idCardImage}/>
       <Contents userId={userId} data={data?.data} setIsOpen={setIsOpen} />
 

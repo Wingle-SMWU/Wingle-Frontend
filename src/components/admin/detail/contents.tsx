@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import usePostPermission from '@/src/hooks/admin/usePostPermission';
 import { AdminUserResp } from '@/src/types/admin.type';
 import styled from 'styled-components'
@@ -17,13 +17,17 @@ export default function Contents({ data, userId, setIsOpen }: ContentsFactor) {
     reject: '',
     memo: '',
   })
-  
+
   const { mutate, isLoading, error } = usePostPermission(userId, inputs.reject);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     mutate();
   }
+
+  useEffect(() => {
+    data && data.reason && data.memo && setInputs({reject: data.reason, memo: data.memo});
+  }, [data])
 
   return (
     <S.Contents id='form' onSubmit={handleSubmit}>
