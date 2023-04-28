@@ -16,6 +16,7 @@ export default function StudentCard() {
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // TODO: 이미지 업로드 시 MultipartFile로 변환해서 보내야 함
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const imageFile = event.target.files?.[0];
     if (imageFile) {
