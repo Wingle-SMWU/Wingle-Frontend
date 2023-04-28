@@ -17,8 +17,8 @@ export default function Detail() {
   const setPostOrder = useSetRecoilState(postOrderStateAtom);
 
   const { data, isLoading, error } = useQuery(['getUser', userId], () => adminListAPI.getUser({path: 'waiting', userId}), {
-    onSuccess: (res) => console.log(res),
-    onError: (res) => console.log(res),
+    // onSuccess: (res) => console.log(res),
+    // onError: (res) => console.log(res),
   })
 
   useEffect(() => setPostOrder(postOrder));

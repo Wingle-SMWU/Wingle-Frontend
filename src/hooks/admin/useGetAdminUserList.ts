@@ -12,8 +12,8 @@ export default function useGetAdminUserList({ path, page }: QueryFactor) {
     [path, { path, page }],
     () => adminListAPI.get({ path, page: page - 1 }),
     {
-      onSuccess: (res) => console.log(res),
-      onError: (res) => console.log(res),
+      // onSuccess: (res) => console.log(res),
+      // onError: (res) => console.log(res),
     }
   );
 

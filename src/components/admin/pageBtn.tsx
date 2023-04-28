@@ -15,8 +15,6 @@ export default function PageBtn({ data, page, setPage }: AdminUsersResp) {
     setPage(e);
   }
 
-  console.log(page)
-
   return (
     <S.Button page={page}>
       <Pagination 

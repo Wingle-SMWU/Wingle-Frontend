@@ -19,8 +19,8 @@ export default function usePostTemp(
   }
 
   const { mutate, isLoading, error } = useMutation(() => adminTempAPI.post(path, body), {
-    onSuccess: (res) => console.log(res),
-    onError: (res) => console.log(res),
+    // onSuccess: (res) => console.log(res),
+    // onError: (res) => console.log(res),
   })
 
   return { mutate, isLoading, error };
