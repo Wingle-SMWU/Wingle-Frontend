@@ -79,7 +79,7 @@ const S = {
   CreateIcon: styled.img<Tab>`
     width: 50px;
     height: 50px;
-    position: absolute;
+    position: fixed;
     bottom: 94px;
     display: ${({ tab }) => (tab === "공지" ? "none" : "block")};
   `,
