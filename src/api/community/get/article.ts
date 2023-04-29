@@ -1,8 +1,12 @@
-import { QueryFunctionContext } from "react-query";
 import instance from "../../axiosModule";
+import { QueryFunctionContext } from "react-query";
 
-export const getArticle = async ({queryKey} : QueryFunctionContext<[string, string, string]>) => {
+export const getArticle = async ({
+  queryKey,
+}: QueryFunctionContext<[string, string, string]>): Promise<Article> => {
   const [, forumId, articleId] = queryKey;
-  const response =  await instance.get(`/community/${forumId}/articles/${articleId}`)
+  const { data: response } = await instance.get(
+    `/community/${forumId}/articles/${articleId}`
+  );
   return response.data;
-}
+};

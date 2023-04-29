@@ -7,7 +7,7 @@ export const getComments = async ({
   Comment[]
 > => {
   const [, forumId, articleId, page, size] = queryKey;
-  const response = await instance.get(
+  const { data: response } = await instance.get(
     `/community/${forumId}/articles/${articleId}/comments?page=${page}&size=${size}`
   );
   return response.data;
