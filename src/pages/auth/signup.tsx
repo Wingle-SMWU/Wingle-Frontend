@@ -10,8 +10,9 @@ import router from "next/router";
 import Image from "next/image";
 import { useMutation } from "react-query";
 import { postSignUp } from "@/src/api/auth/signUpApi";
-import { SignUpFormData, signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
+import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { useRecoilValue } from "recoil";
+import { SignUpFormData } from "@/src/types/auth/signupFormData";
 
 interface SdInputProps {
   disabled: boolean;

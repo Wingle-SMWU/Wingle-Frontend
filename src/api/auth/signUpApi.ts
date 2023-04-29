@@ -1,4 +1,4 @@
-import { SignUpFormData } from "@/src/atoms/auth/signUpAtoms";
+import { SignUpFormData } from "@/src/types/auth/signupFormData";
 import instance from "../axiosModul";
 
 const withFormData = (data: SignUpFormData) => {

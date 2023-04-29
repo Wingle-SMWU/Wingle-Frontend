@@ -1,18 +1,5 @@
+import { SignUpFormData } from "@/src/types/auth/signupFormData";
 import { atom } from "recoil";
-
-export interface SignUpFormData {
-  idCardImage: FormData | null;
-  email: string;
-  password: string;
-  name: string;
-  isNicknameChecked: boolean;
-  nickname: string;
-  nation: string;
-  gender: boolean;
-  termsOfUse: boolean;
-  termsOfPersonalInformation: boolean;
-  termsOfPromotion: boolean;
-}
 
 export const signUpFormDataAtom = atom<SignUpFormData>({
   key: "signUpFormDataAtom",
