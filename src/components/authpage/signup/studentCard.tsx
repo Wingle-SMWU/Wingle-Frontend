@@ -26,20 +26,19 @@ export default function StudentCard() {
         setError(true);
         setSignUpFormData((prev: SignUpFormData) => ({
           ...prev,
-          idCardImage: "",
+          idCardImage: null, // null 로 초기화
         }));
         return;
       }
       setError(false);
-      const reader = new FileReader();
-      reader.readAsDataURL(imageFile);
-      reader.onload = () => {
-        setSignUpFormData((prev: SignUpFormData) => ({
-          ...prev,
-          idCardImage: reader.result as string,
-        }));
-        setUploadedFileName(imageFile.name);
-      };
+      const formData = new FormData();
+      formData.append("idCardImage", imageFile);
+      // MultipartFile 데이터를 formData 에 append
+      setSignUpFormData((prev: SignUpFormData) => ({
+        ...prev,
+        idCardImage: formData,
+      }));
+      setUploadedFileName(imageFile.name);
     }
   };
 
