@@ -6,10 +6,6 @@ import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 
-type SdInputProps = {
-  isActive: boolean;
-};
-
 export default function StudentCard() {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
@@ -113,7 +109,7 @@ const S = {
     padding-left: 5px;
   `,
 
-  DescriptionContent: styled.div<SdInputProps>`
+  DescriptionContent: styled.div<{ isActive: boolean }>`
     display: ${(props) => (props.isActive ? `block` : `none`)};
     position: absolute;
     width: 452px;
