@@ -46,36 +46,34 @@ export default function Comment({
         } = comment;
         const time = betweenTime(createdTime);
         return (
-          <>
-            <S.Comment key={id}>
-              <S.CommentTop>
-                <S.CommentTopLeft>
-                  <S.ProfileImg src={getImageUrl(currentTab)} />
-                  <S.ProfileInfo>
-                    <Text.Body6 color="gray900">{userNickname}</Text.Body6>
-                    <Text.Caption3 color="gray500">{time}</Text.Caption3>
-                  </S.ProfileInfo>
-                </S.CommentTopLeft>
-                {isMine && (
-                  <S.CancelImg
-                    src="/community/detail/close-gray.svg"
-                    onClick={() => {
-                      onClickModal();
-                      setDeleteInform({
-                        ...deleteInform,
-                        forumId: forumId,
-                        articleId: articleId,
-                        id: id,
-                      });
-                    }}
-                  />
-                )}
-              </S.CommentTop>
-              <S.CommentBottom>
-                <Text.Body3 color="gray900">{content}</Text.Body3>
-              </S.CommentBottom>
-            </S.Comment>
-          </>
+          <S.Comment key={id}>
+            <S.CommentTop>
+              <S.CommentTopLeft>
+                <S.ProfileImg src={getImageUrl(currentTab)} />
+                <S.ProfileInfo>
+                  <Text.Body6 color="gray900">{userNickname}</Text.Body6>
+                  <Text.Caption3 color="gray500">{time}</Text.Caption3>
+                </S.ProfileInfo>
+              </S.CommentTopLeft>
+              {isMine && (
+                <S.CancelImg
+                  src="/community/detail/close-gray.svg"
+                  onClick={() => {
+                    onClickModal();
+                    setDeleteInform({
+                      ...deleteInform,
+                      forumId: forumId,
+                      articleId: articleId,
+                      id: id,
+                    });
+                  }}
+                />
+              )}
+            </S.CommentTop>
+            <S.CommentBottom>
+              <Text.Body3 color="gray900">{content}</Text.Body3>
+            </S.CommentBottom>
+          </S.Comment>
         );
       })}
 

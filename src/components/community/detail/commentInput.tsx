@@ -1,37 +1,48 @@
-import { ChangeEvent, useCallback, useRef, useState } from "react";
-import styled from "styled-components";
 import { Margin } from "../../ui";
 import instance from "@/src/api/axiosModule";
+import { ChangeEvent, useCallback, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import styled from "styled-components";
 
-export default function CommentInput({ forumId, articleId }: { forumId: number, articleId: number }) {
+export default function CommentInput({
+  forumId,
+  articleId,
+}: {
+  forumId: number;
+  articleId: number;
+}) {
   const [comment, setComment] = useState<string>("");
 
   const fetchComments = async () => {
-    const response = await instance.post(`/community/articles/comments`, {
-      forumId,
-      articleId,
-      originCommentId: 0,
-      content: comment,
-    });
+    const { data: response } = await instance.post(
+      `/community/articles/comments`,
+      {
+        forumId,
+        articleId,
+        originCommentId: 0,
+        content: comment,
+      }
+    );
     return response.data;
-  }
+  };
 
   const queryClient = useQueryClient();
 
   const updateComment = useMutation(fetchComments, {
     onMutate: async () => {
-      await queryClient.cancelQueries('comments');
-      const prevComments = queryClient.getQueryData(['comments'], { exact: false });
+      await queryClient.cancelQueries("comments");
+      const prevComments = queryClient.getQueryData(["comments"], {
+        exact: false,
+      });
       return { prevComments };
     },
     onSuccess: () => {
-      queryClient.invalidateQueries('comments');
+      queryClient.invalidateQueries("comments");
     },
     onError: (error, payload, context) => {
       console.log(`댓글 작성 실패! ${error}`);
-      queryClient.setQueryData('comments', context?.prevComments);
-    }
+      queryClient.setQueryData("comments", context?.prevComments);
+    },
   });
 
   const onChangeComment = (event: ChangeEvent<HTMLTextAreaElement>) => {

@@ -11,7 +11,7 @@ export default function Create() {
   const { tab: currentTab, forumId } = router.query;
   const [contents, setContents] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  
+
   const queryClient = useQueryClient();
 
   const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -20,39 +20,48 @@ export default function Create() {
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
-  
+
   const fetchArticle = async () => {
-    if(!forumId) {
+    if (!forumId) {
       return;
     }
     const formData = new FormData();
     formData.append("forumId", forumId.toString());
     formData.append("content", contents);
-    const response = await instance.post(`/community/articles`, formData, {
-      headers: {
-        "Content-Type": 'multipart/form-data',
-      },
-    });
+    const { data: response } = await instance.post(
+      `/community/articles`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     return response.data;
-  }
+  };
 
   const updateArticle = useMutation(fetchArticle, {
     onMutate: async () => {
-      await queryClient.cancelQueries('articles');
-      const prevArticles = queryClient.getQueryData(['articles'], { exact: false });
+      await queryClient.cancelQueries("articles");
+      const prevArticles = queryClient.getQueryData(["articles"], {
+        exact: false,
+      });
       return { prevArticles };
     },
     onSuccess: (data) => {
       setContents("");
-      queryClient.invalidateQueries('articles');
-      router.replace({ pathname: `/community/detail`, query: { tab: currentTab, forumId: forumId, articleId: data.articleId } });
+      queryClient.invalidateQueries("articles");
+      router.replace({
+        pathname: `/community/detail`,
+        query: { tab: currentTab, forumId: forumId, articleId: data.articleId },
+      });
     },
     onError: (error, payload, context) => {
       console.log(`게시글 작성 실패! ${error}`);
-      queryClient.setQueryData('articles', context?.prevArticles);
+      queryClient.setQueryData("articles", context?.prevArticles);
     },
     onSettled: () => {
-      queryClient.invalidateQueries('articles');
+      queryClient.invalidateQueries("articles");
     },
   });
 
@@ -60,16 +69,16 @@ export default function Create() {
     <S.Wrapper>
       <S.Header>
         <S.HeaderLeft>
-          <S.BackArrow
-            src="/community/arrow-back.svg"
-            onClick={onClickModal}
-          />
+          <S.BackArrow src="/community/arrow-back.svg" onClick={onClickModal} />
           <Text.Title2 color="gray900">{currentTab}게시판 글 작성</Text.Title2>
         </S.HeaderLeft>
         <S.CreateButton>
-          <Text.Body1 color={contents ? "gray900" : "gray500"}
+          <Text.Body1
+            color={contents ? "gray900" : "gray500"}
             onClick={() => updateArticle.mutate()}
-          >등록</Text.Body1>
+          >
+            등록
+          </Text.Body1>
         </S.CreateButton>
       </S.Header>
       <S.Body>
