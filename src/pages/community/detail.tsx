@@ -21,7 +21,7 @@ export default function Detail() {
 
   if (isLoading) return <div>로딩중</div>
   if (isError) return <div>에러</div>
-  console.log(article);
+
   return (
     <S.Wrapper>
       <S.DetailTop>
