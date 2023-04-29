@@ -1,15 +1,14 @@
 import { theme } from '@/src/styles/theme';
 import Pagination from 'react-js-pagination';
 import styled from 'styled-components';
-import { AdminUserResp } from '../../types/admin.type';
 
 type AdminUsersResp = {
-  data: AdminUserResp[];
+  totalPages: number;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageBtn({ data, page, setPage }: AdminUsersResp) {
+export default function PageBtn({ totalPages, page, setPage }: AdminUsersResp) {
 
   const handleChangePage = (e: number) => {
     setPage(e);
@@ -20,7 +19,7 @@ export default function PageBtn({ data, page, setPage }: AdminUsersResp) {
       <Pagination 
         activePage={page}
         itemsCountPerPage={10}
-        totalItemsCount={400}         // 총 데이터 개수 필요함
+        totalItemsCount={totalPages * 10 | 1}
         pageRangeDisplayed={5}
         prevPageText={"<"}  
         nextPageText={">"}

@@ -1,4 +1,4 @@
-import { adminPerAPI } from '@/src/api/admin';
+import { adminPerAPI } from '@/src/api/admin/admin';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 

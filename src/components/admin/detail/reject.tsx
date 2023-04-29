@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import usePostTemp from '@/src/hooks/admin/usePostTemp';
-import { AdminUserResp } from '@/src/types/admin.type';
+import { AdminUserResp } from '@/src/types/admin/admin';
 
 type RejectFactor = {
   children: ReactNode

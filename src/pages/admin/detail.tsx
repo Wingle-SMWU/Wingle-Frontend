@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import Contents from '@/src/components/admin/detail/contents'
 import Modal from '@/src/components/admin/detail/modal'
-import Header from '@/src/components/admin/header'
+import Header from '@/src/components/admin/index/header'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
-import { adminListAPI } from '@/src/api/admin'
+import { adminListAPI } from '@/src/api/admin/admin'
 import { useSetRecoilState } from 'recoil';
-import { postOrderStateAtom } from '../../atoms/admin';
+import { postOrderStateAtom } from '../../atoms/admin/admin';
 import { theme } from '@/src/styles/theme'
 
 export default function Detail() {

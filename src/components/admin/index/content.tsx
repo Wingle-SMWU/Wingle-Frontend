@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { ADMIN_CONTENT_MENU, USER_NATIONALITY } from '@/src/constants/constants';
-import { AdminUserResp } from '../../types/admin.type';
+import { ADMIN_CONTENT_MENU, USER_NATIONALITY } from '@/src/constants/admin';
+import { AdminUserResp } from '../../../types/admin/admin';
 import Link from 'next/link';
 import { theme } from '@/src/styles/theme';
 

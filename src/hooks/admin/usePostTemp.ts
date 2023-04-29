@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query';
-import { adminTempAPI } from '../../api/admin';
+import { adminTempAPI } from '../../api/admin/admin';
 import { ReactNode } from 'react';
 
 export default function usePostTemp(children: ReactNode, userId: number, val: { reject: string, memo: string }) {

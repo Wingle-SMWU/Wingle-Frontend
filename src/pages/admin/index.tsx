@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import Content from '@/src/components/admin/content';
-import Header from '@/src/components/admin/header';
-import PageBtn from '@/src/components/admin/pageBtn';
+import Content from '@/src/components/admin/index/content';
+import Header from '@/src/components/admin/index/header';
+import PageBtn from '@/src/components/admin/index/pageBtn';
 import styled from 'styled-components';
-import Tabbar from '@/src/components/admin/tabbar';
-import { ADMIN_GET_LIST } from '@/src/constants/constants';
+import Tabbar from '@/src/components/admin/index/tabbar';
+import { ADMIN_GET_LIST } from '@/src/constants/admin';
 import useGetAdminUserList from '@/src/hooks/admin/useGetAdminUserList';
 
 
@@ -27,8 +27,8 @@ export default function Admin() {
     <S.Main>
       <Header />
       <Tabbar currIdx={currIdx} handleClickTabBar={handleClickTabBar} />
-      <Content data={data?.data} />
-      <PageBtn data={data?.data} page={page} setPage={setPage} />
+      <Content data={data?.data.list} />
+      <PageBtn totalPages={data?.data.totalPages} page={page} setPage={setPage} />
     </S.Main>
   )
 }

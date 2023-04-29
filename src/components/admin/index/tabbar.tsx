@@ -1,4 +1,4 @@
-import { ADMIN_TAB_LIST } from '@/src/constants/constants';
+import { ADMIN_TAB_LIST } from '@/src/constants/admin';
 import { theme } from '@/src/styles/theme';
 import styled from 'styled-components';
 

@@ -6,4 +6,5 @@ export interface AdminUserResp {
   idCardImage?: string;
   memo?: string | null;
   reason?: string | null;
+  totalPages: number;
 }

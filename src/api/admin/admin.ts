@@ -1,4 +1,4 @@
-import instance from './axiosModul'
+import instance from '../axiosModul'
 
 type GetList = {
   path: string;

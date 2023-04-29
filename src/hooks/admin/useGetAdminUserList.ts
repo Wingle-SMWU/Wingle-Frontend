@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { adminListAPI } from '@/src/api/admin';
+import { adminListAPI } from '@/src/api/admin/admin';
 
 type QueryFactor = {
   path: string;

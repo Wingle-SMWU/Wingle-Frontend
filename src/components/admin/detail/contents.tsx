@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import usePostPermission from '@/src/hooks/admin/usePostPermission';
-import { AdminUserResp } from '@/src/types/admin.type';
+import { AdminUserResp } from '@/src/types/admin/admin';
 import styled from 'styled-components'
 import Profile from './profile'
 import Reject from './reject'

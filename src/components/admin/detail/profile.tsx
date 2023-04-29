@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { AdminUserResp } from '../../../types/admin.type';
-import { USER_NATIONALITY } from '@/src/constants/constants';
+import { AdminUserResp } from '../../../types/admin/admin';
+import { USER_NATIONALITY } from '@/src/constants/admin';
 import { useRecoilValue } from 'recoil';
-import { postOrderStateAtom } from '../../../atoms/admin';
+import { postOrderStateAtom } from '../../../atoms/admin/admin';
 
 type ProfileFactor = {
   data: AdminUserResp;
