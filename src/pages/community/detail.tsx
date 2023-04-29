@@ -25,7 +25,7 @@ export default function Detail() {
   });
 
   if (article.isLoading || comments.isLoading) return <div>로딩중</div>;
-  if (article.isError || comments.isError || comments.isIdle)
+  if (article.isError || comments.isError || article.isIdle || comments.isIdle)
     return <div>에러</div>;
 
   return (
