@@ -25,14 +25,12 @@ export default function AgreeBox() {
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   useEffect(() => {
-    if (termsOfUse && termsOfPersonalInformation) {
-      setSignUpFormData((prev) => ({
-        ...prev,
-        termsOfUse: termsOfUse,
-        termsOfPersonalInformation: termsOfPersonalInformation,
-        termsOfPromotion: termsOfPromotion,
-      }));
-    }
+    setSignUpFormData((prev) => ({
+      ...prev,
+      termsOfUse: termsOfUse,
+      termsOfPersonalInformation: termsOfPersonalInformation,
+      termsOfPromotion: termsOfPromotion,
+    }));
   }, [setSignUpFormData, termsOfPersonalInformation, termsOfPromotion, termsOfUse]);
 
   return (
