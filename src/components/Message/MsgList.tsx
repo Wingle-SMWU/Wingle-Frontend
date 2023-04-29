@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { Room } from "@/src/api/message/messageApi";
+import { Room } from "@/src/types/message/roomType";
 import betweenTime from "@/src/utils/betweenTime";
 
 const MsgList = ({ list }: { list: Room }) => {

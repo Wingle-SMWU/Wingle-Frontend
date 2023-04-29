@@ -10,19 +10,11 @@ import MsgInput from "../../../components/message/msgInput";
 import Arrow_back from "../../../../public/images/message/arrow_back.svg";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient  } from "react-query";
-import instance from "../../../api/axiosModul";
-import { Message } from "../../../api/message/messageApi";
-import { Room } from "../../../api/message/messageApi";
+import instance from "../../../api/axiosModule";
+import { Message, NewMsgProps } from "@/src/types/message/messageType";
+import { Room } from "@/src/types/message/roomType";
 import { convertDateYear } from "@/src/utils/convertDateYear";
 import useGetRoom from "@/src/hooks/message/useGetRoom";
-
-
-interface NewMsgProps {
-  roomId: number;
-  content: string;
-  createdTime: string;
-  sender: boolean;
-}
 
 export default function MessageSend() {
   const router = useRouter();
@@ -100,7 +92,6 @@ export default function MessageSend() {
   if (messageData === undefined) {
     return <div>로딩중</div>;
   }
-
 
   return (
     <>
@@ -225,7 +216,6 @@ export default function MessageSend() {
             </>
           ) : (
             <S.Empty>
-              <p>임시</p>
             </S.Empty>
           )}
         </S.MessageRoomList>

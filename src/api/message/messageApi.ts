@@ -1,33 +1,6 @@
-import instance from "../axiosModul";
-
-export interface GetMessageResponse {
-  status:  number;
-  message: string;
-  data:    Message[];
-}
-
-export interface Message {
-  messageId:   number;
-  nickname:    string;
-  content:     string;
-  createdTime: Date;
-  sender:      boolean;
-}
-
-export interface GetRooms {
-  status:  number;
-  message: string;
-  data:    Room[];
-}
-
-export interface Room {
-  roomId:      number;
-  image:       string;
-  nation:      string;
-  nickname:    string;
-  recentChat:  string;
-  createdTime: Date;
-}
+import instance from "../axiosModule";
+import { GetMessageResponse } from "@/src/types/message/messageType";
+import { GetRooms } from "@/src/types/message/roomType";
 
 export const getMessage = async (roomId: number, page: number , size: number ) => {
   const response = await instance.get<GetMessageResponse>(`/messages/${roomId}?page=${0}&size=${1000}`);

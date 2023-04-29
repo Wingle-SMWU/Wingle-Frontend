@@ -5,9 +5,8 @@ import MsgList from "../../components/message/msgList";
 import { Text } from "../../components/ui";
 import Message from "../../../public/images/message/message.svg";
 import Navigation from "@/src/components/layout/Navigation";
-import { Room } from "../../api/message/messageApi";
-import instance from "@/src/api/axiosModul";
-
+import { Room } from "@/src/types/message/roomType";
+import instance from "@/src/api/axiosModule";
 
 export default function message(page: number , size: number ) {
   const { messageDataRoom } = useGetRoom(0, 10000);
@@ -24,7 +23,6 @@ export default function message(page: number , size: number ) {
       <S.MsgContainer>
         {messageDataRoom?.length > 0 ? (
           messageDataRoom.map((list: Room) => {
-            console.log(list)
             return <MsgList list={list} key={list.roomId} />;
           })
         ) : (

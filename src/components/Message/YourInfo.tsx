@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { Text } from "../ui";
-import { Room } from "@/src/api/message/messageApi";
+import { Room } from "@/src/types/message/roomType";
 import Image from "next/image";
 import profiledefault from '../../../public/images/message/profiledefault.png';
 

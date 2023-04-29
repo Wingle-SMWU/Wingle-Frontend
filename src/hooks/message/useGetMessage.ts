@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
 import { userIdState } from "../../atoms/temp";
-import { Message, getMessage } from "@/src/api/message/messageApi";
+import { Message } from "@/src/types/message/messageType";
+import { getMessage } from "@/src/api/message/messageApi";
 
 const useGetMessage = (roomId: number , page: number , size: number ) => {
   const userid = useRecoilValue(userIdState);
@@ -17,7 +18,6 @@ const useGetMessage = (roomId: number , page: number , size: number ) => {
     queryKey: ["message", page],
     queryFn: () => { return getMessage(roomId, page, size)},
     onSuccess: (item) => {
-      console.log("Item",item)
       setRoomList(item.data);
       setMessageList(item.data);
       item.data?.map(((message:Message) => {
