@@ -12,7 +12,7 @@ import { useMutation } from "react-query";
 import { postSignUp } from "@/src/api/auth/signUpApi";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { useRecoilValue } from "recoil";
-import { SignUpFormData } from "@/src/types/auth/signupFormData";
+import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 
 interface SdInputProps {
   disabled: boolean;

@@ -1,4 +1,4 @@
-import { SignUpFormData } from "@/src/types/auth/signupFormData";
+import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import { atom } from "recoil";
 
 export const signUpFormDataAtom = atom<SignUpFormData>({

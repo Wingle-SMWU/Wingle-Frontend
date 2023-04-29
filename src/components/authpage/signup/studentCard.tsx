@@ -4,7 +4,7 @@ import { Text, Margin } from "@/src/components/ui";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
-import { SignUpFormData } from "@/src/types/auth/signupFormData";
+import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 
 type SdInputProps = {
   isActive: boolean;
