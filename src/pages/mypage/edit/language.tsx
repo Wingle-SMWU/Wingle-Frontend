@@ -3,8 +3,9 @@ import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState,useEffect } from "react";
-import instance from "@/src/api/axiosModul";
+import instance from "@/src/api/axiosModule";
 import SelectLanguageBox from "@/src/components/mypage/selectLanguage";
+import DropDown from "@/src/components/ui/dropDownUI";
 
 export default function Language() {
   const [modalVisible, setModalVisible] = useState(false);

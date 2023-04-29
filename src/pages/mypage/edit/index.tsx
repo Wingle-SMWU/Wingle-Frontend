@@ -2,20 +2,44 @@ import Modal from "@/src/components/modal";
 import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
-import { useState } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useEffect,useState } from "react";
+import instance from "@/src/api/axiosModule";
+import { useSetRecoilState, useRecoilValue }  from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
+import SelectInterest from "@/src/components/mypage/SelectInterest";
+import Loading from "@/src/components/ui/loadingUI";
 
 export default function Edit() {
+  const [loading,setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const setProfileState = useSetRecoilState(profileStateAtom);
+
+  const getProfile = async (): Promise<void> => {
+  try {
+    const response = await instance.get("/profile/detail");
+    const data = response.data.data;
+
+    setProfileState(data);// Recoil atom 업데이트
+    setLoading(false)
+  } catch (error) {
+    console.error('Failed to get profile:', error);
+  }
+};
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   const profileData = useRecoilValue(profileStateAtom);
-  
+console.log(profileData)
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
+
   return (
     <>
+     {loading? <Loading /> : (
       <S.Wapper>
         <S.Content>
           <S.Header>
@@ -52,6 +76,7 @@ export default function Edit() {
             </S.Language>
 
             <Margin direction="column" size={32} />
+            <S.Column >
             <S.Introduce>
               <Text.Body1 color="gray900">자기소개</Text.Body1>
               <S.EditBtn
@@ -61,8 +86,11 @@ export default function Edit() {
               />
               {/* 세번째 연필 누르면 "자기소개" 페이지로 가서 자기소개 글쓰기 */}
             </S.Introduce>
-
+            <S.IntroduceContent>{(profileData) && profileData.introduce }</S.IntroduceContent>
+            </S.Column>
+          
             <Margin direction="column" size={32} />
+            <S.Column>
             <S.Interest>
               <Text.Body1 color="gray900">관심사</Text.Body1>
               <S.EditBtn
@@ -72,13 +100,30 @@ export default function Edit() {
               />
               {/* 네번째 연필 누르면 "관심사" 페이지로 가서 관심사 선택하기 */}
             </S.Interest>
+            <S.InterestBoxContainer>
+            {(profileData) && profileData.interests.map(item => {
+                return (
+                    <div key={item.id}>
+                        <S.InterestBox backgroundColor={"#FFF3EB"}>
+                            <Text.Body6 color="gray900" pointer key={item}>
+                                {item}
+                            </Text.Body6>
+                        </S.InterestBox>
+                        <Margin direction="row" size={8} />
+                    </div>
+                );
+            })}
+            </S.InterestBoxContainer>
+            </S.Column>
           </S.EditList>
         </S.Content>
         {modalVisible && (
           <Modal type="profile-back" onClickModal={onClickModal} />
         )}
       </S.Wapper>
+      )}
     </>
+     
   );
 }
 
@@ -161,10 +206,33 @@ const S = {
     justify-content: space-between;
     /* border: 1px solid blue; */
   `,
+  IntroduceContent : styled.div`
+    padding-top:16px;
+    font-size:16px;
+    line-height: 140%;
+    color:theme.color.gray900;
+  `,
+  InterestBoxContainer : styled.div`
+  display:flex;
+  flex-direction:row;
+  `,
   Interest: styled.div`
     width: 452px;
     display: flex;
     justify-content: space-between;
     /* border: 1px solid blue; */
   `,
+  InterestBox: styled.div`
+        cursor: pointer;
+        border-radius: 40px;
+        padding: 8px 15px;
+        background-color: ${(props) => props.backgroundColor};
+        margin :8px;
+    `,
+  Column : styled.div`
+  display : flex;
+  flex-Direction: column;
+ 
+  `,
+
 };

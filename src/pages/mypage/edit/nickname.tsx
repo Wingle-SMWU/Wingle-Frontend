@@ -53,8 +53,8 @@ export default function Nickname() {
     // 일단 response의 형태를 확인하고
         console.log(response.data);
         // fetch 함수 아래에 setUsers를 해주어야 한다.
-        setName(response.data.nickname);
-        setImage(response.data.image);
+        setName(response.data.data.nickname);
+        setImage(response.data.data.image);
     };
     getNickname();
 

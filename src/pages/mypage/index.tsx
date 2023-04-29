@@ -8,7 +8,7 @@ import { useEffect,useState } from "react";
 import instance from "@/src/api/axiosModule";
 import { useSetRecoilState, useRecoilValue }  from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
-
+import Loading from "@/src/components/ui/loadingUI";
 
 export default function Mypage() {
 
@@ -36,13 +36,14 @@ export default function Mypage() {
   console.log(profileState)
   return (
     <>
-    {loading ? (<div>로딩</div>) : <S.Wapper>
+      <S.Wapper>
         <S.Content>
           <S.Header>
             <Text.Title1 color="gray900">마이페이지</Text.Title1>
           </S.Header>
           <S.Profile>
-            <Profile />
+            {loading? <Loading /> : <Profile /> }
+           
             {/* 자기소개, 언어선택, 관심사 중 하나라도 등록되지 않은 사용자 ? 등록 : 수정*/}
 
             {/* <>
@@ -92,7 +93,7 @@ export default function Mypage() {
         <Footer />
         <Navigation tab={""} />
       </S.Wapper>
-      }
+      
       
     </>
   );
