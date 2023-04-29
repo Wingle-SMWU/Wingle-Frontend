@@ -1,28 +1,39 @@
 import Image from "next/image";
 import styled from "styled-components";
 
-export default function NoData({
-  type
-} : {
-  type: string
-}){
-  // type: 게시물은 article, 댓글은 comment 넘겨주기
+export default function NoData({ type }: { type: noDataType }) {
+  const data = {
+    article: {
+      type: "article",
+      src: "/noData/article.svg",
+      width: 83,
+      height: 85,
+      text: "작성한 게시글이 없어요.",
+    },
+    comment: {
+      src: "/noData/comment.svg",
+      width: 76,
+      height: 85,
+      text: "첫 댓글을 작성해 보세요!",
+    },
+    message: {
+      src: "/noData/message.svg",
+      width: 83,
+      height: 85,
+      text: "받은 쪽지가 없어요.",
+    },
+  };
   return (
-   <S.ImageWrapper type={type}>
-      {
-        type === 'article' ?
-        <>
-          <Image src="/community/list/comu-noData.svg" alt="" width={83} height={85}/>
-          <S.Text>작성한 게시글이 없어요.</S.Text>
-        </>
-        :
-        <>
-          <Image src="/community/list/comu-noComment.svg" alt="" width={76} height={80} />
-          <S.Text>첫 댓글을 작성해 보세요!</S.Text>
-        </>
-      }
+    <S.ImageWrapper type={type}>
+      <Image
+        src={data[type].src}
+        alt=""
+        width={data[type].width}
+        height={data[type].height}
+      />
+      <S.Text>{data[type].text}</S.Text>
     </S.ImageWrapper>
-  )
+  );
 }
 
 const S = {
@@ -33,17 +44,15 @@ const S = {
     flex-direction: column;
     gap: 6px;
     z-index: 0;
-    padding: ${({ type }) => (type === 'article' ? '0' : '40px 0')};
-    ${({ type }) => 
-    type === 'article' && `
+    padding: ${({ type }) => (type === "comment" ? "40px 0" : "0")};
+    ${({ type }) =>
+      (type === "article" || type === "message") &&
+      `
       position: absolute;
       width: 500px;
       max-width: 500px;
       height: 100vh;
     `}
-  `,
-  Image: styled.img<{ type: string}>`
-    src: ${({ type }) => type === 'list' ? "/community/list/comu-noData.svg" : "/community/list/comu-noComment.svg"};
   `,
   Text: styled.div`
     font-size: 16px;
@@ -54,4 +63,4 @@ const S = {
   Comment: styled.div`
     padding: 50px 0;
   `,
-}
+};
