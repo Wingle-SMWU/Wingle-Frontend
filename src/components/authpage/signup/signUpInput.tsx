@@ -10,26 +10,18 @@ import {
   verifyEmailCertification,
   checkNicknameAvailable,
 } from "@/src/api/auth/emailAPI";
+import { SignupInputData } from "@/src/types/auth/signupFormDataType";
 
 interface StyledInputProps {
   small: boolean;
   error: boolean;
 }
 
-interface InputData {
-  email: string;
-  emailCertification: string;
-  password: string;
-  passwordCheck: string;
-  name: string;
-  nickname: string;
-}
-
 export default function InputBox() {
   const [buttonMessage, setButtonMessage] = useState("인증 전송");
   const [emailMent, setEmailMent] = useState("");
 
-  const [inputData, setInputData] = useState<InputData>({
+  const [inputData, setInputData] = useState<SignupInputData>({
     email: "",
     emailCertification: "",
     password: "",

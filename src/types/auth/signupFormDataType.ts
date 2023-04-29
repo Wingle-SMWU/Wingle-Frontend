@@ -11,3 +11,12 @@ export interface SignUpFormData {
   termsOfPersonalInformation: boolean;
   termsOfPromotion: boolean;
 }
+
+export interface SignupInputData {
+  email: string;
+  emailCertification: string;
+  password: string;
+  passwordCheck: string;
+  name: string;
+  nickname: string;
+}
