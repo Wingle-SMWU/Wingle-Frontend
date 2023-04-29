@@ -3,21 +3,19 @@ import { useEffect, useState } from "react";
 import { Margin, Text } from "../../ui";
 import styled from "styled-components";
 
-interface WrapperComponentProps {
-  title: string;
-  icon: boolean;
-  must: string;
+interface AgreementComponentProps {
+  agreementTitle: string;
+  isRequired: boolean;
   handleCheck: (check: boolean) => void;
-  content: string;
+  detail: string;
 }
 
-export function WrapperComponent({
-  title,
-  icon,
-  must,
+export function AgreementComponent({
+  agreementTitle,
+  isRequired,
   handleCheck,
-  content,
-}: WrapperComponentProps) {
+  detail,
+}: AgreementComponentProps) {
   const [isAgreed, setAgreed] = useState(false);
   const [isActive, setActive] = useState(false);
 
@@ -45,12 +43,16 @@ export function WrapperComponent({
             setAgreed((prev) => !prev);
           }}
         >
-          {title}
+          {agreementTitle}
         </Text.Body2>
         <Margin direction="row" size={3} />
-        <Text.Body2 color={icon ? "orange500" : "gray500"}>{must}</Text.Body2>
+        {isRequired ? (
+          <Text.Body2 color="orange500">(필수)</Text.Body2>
+        ) : (
+          <Text.Body2 color="gray500">(선택)</Text.Body2>
+        )}
 
-        <S.PrivacyPolicyIcon Condition={icon}>
+        <S.PrivacyPolicyIcon Condition={isRequired}>
           <Image
             alt="selectedCheck"
             width={20}
@@ -63,7 +65,7 @@ export function WrapperComponent({
         </S.PrivacyPolicyIcon>
       </S.AgreementWrapper>
       <S.PrivacyPolicyContent Condition={isActive}>
-        <Text.Body6 color="gray700">{content}</Text.Body6>
+        <Text.Body6 color="gray700">{detail}</Text.Body6>
       </S.PrivacyPolicyContent>
     </>
   );

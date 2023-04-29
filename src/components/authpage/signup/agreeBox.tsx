@@ -3,7 +3,7 @@ import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
-import { WrapperComponent } from "./wrapperCompnent";
+import { AgreementComponent } from "./agreementComponent";
 
 export default function AgreeBox() {
   const [termsOfUse, checkTermsOfUse] = useState(false);
@@ -37,28 +37,25 @@ export default function AgreeBox() {
     <>
       <Text.Body1 color="gray700">이용약관 동의</Text.Body1>
       <S.Wrapper>
-        <WrapperComponent
-          title="서비스 이용약관"
-          icon={true}
-          must={"(필수)"}
+        <AgreementComponent
+          agreementTitle="서비스 이용약관"
+          isRequired={true}
           handleCheck={handleUseCheck}
-          content={""}
+          detail={""}
         />
         <Margin direction="column" size={18} />
-        <WrapperComponent
-          title="개인정보 수집 및 이용동의"
-          icon={true}
-          must={"(필수)"}
+        <AgreementComponent
+          agreementTitle="개인정보 수집 및 이용동의"
+          isRequired={true}
           handleCheck={handlePersonalInformationCheck}
-          content={""}
+          detail={""}
         />
         <Margin direction="column" size={18} />
-        <WrapperComponent
-          title="이벤트, 프로모션알림 메일 수신"
-          icon={false}
-          must={"(선택)"}
+        <AgreementComponent
+          agreementTitle="이벤트, 프로모션알림 메일 수신"
+          isRequired={false}
           handleCheck={handlePromotionCheck}
-          content={""}
+          detail={""}
         />
       </S.Wrapper>
     </>
