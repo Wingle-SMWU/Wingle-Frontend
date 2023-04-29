@@ -1,31 +1,32 @@
-import { getImageUrl } from "@/src/modules/utils";
-import { useState } from "react";
-import styled from "styled-components";
 import Modal from "../../modal";
 import { Text } from "../../ui";
-import { useQuery } from "react-query";
-import { getComments } from "@/src/api/community/get/comments";
+import { getImageUrl } from "@/src/modules/utils";
 import betweenTime from "@/src/utils/betweenTime";
+import { useState } from "react";
+import styled from "styled-components";
 
-export default function Comment({ currentTab, forumId, articleId }: { currentTab: string, forumId: string, articleId: string }) {
+export default function Comment({
+  comments,
+  currentTab,
+  forumId,
+  articleId,
+}: {
+  comments: Comment[];
+  currentTab: string;
+  forumId: string;
+  articleId: string;
+}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteInform, setDeleteInform] = useState({
     forumId: "",
     articleId: "",
     id: 0,
-  })
-  
+  });
+
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
-  const { data: comments, isLoading, isError, isIdle } = useQuery({
-    queryFn: getComments,
-    queryKey: ['comments', forumId, articleId, 0, 10],
-  });
 
-  if (isLoading || isIdle) return <div>로딩중</div>
-  if (isError) return <div>에러</div>
-  
   return (
     <S.Wrapper>
       <S.CommentCount>
@@ -55,33 +56,36 @@ export default function Comment({ currentTab, forumId, articleId }: { currentTab
                     <Text.Caption3 color="gray500">{time}</Text.Caption3>
                   </S.ProfileInfo>
                 </S.CommentTopLeft>
-                {isMine &&
+                {isMine && (
                   <S.CancelImg
-                  src="/community/detail/close-gray.svg"
-                  onClick={() => {
-                    onClickModal();
-                    setDeleteInform({
-                      ...deleteInform,
-                      forumId: forumId,
-                      articleId: articleId,
-                      id: id,
-                    }) 
-                  }}
+                    src="/community/detail/close-gray.svg"
+                    onClick={() => {
+                      onClickModal();
+                      setDeleteInform({
+                        ...deleteInform,
+                        forumId: forumId,
+                        articleId: articleId,
+                        id: id,
+                      });
+                    }}
                   />
-                }
+                )}
               </S.CommentTop>
               <S.CommentBottom>
                 <Text.Body3 color="gray900">{content}</Text.Body3>
               </S.CommentBottom>
             </S.Comment>
           </>
-        )
+        );
       })}
 
       {modalVisible && (
-        <Modal type="detail-delete-comment" deleteInform={deleteInform} onClickModal={onClickModal} />
+        <Modal
+          type="detail-delete-comment"
+          deleteInform={deleteInform}
+          onClickModal={onClickModal}
+        />
       )}
-      
     </S.Wrapper>
   );
 }

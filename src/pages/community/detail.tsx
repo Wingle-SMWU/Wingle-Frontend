@@ -1,4 +1,5 @@
 import { getArticle } from "@/src/api/community/get/article";
+import { getComments } from "@/src/api/community/get/comments";
 import Body from "@/src/components/community/detail/body";
 import Comment from "@/src/components/community/detail/comment";
 import CommentInput from "@/src/components/community/detail/commentInput";
@@ -14,24 +15,37 @@ export default function Detail() {
   const forumId = `${router.query.forumId}`;
   const articleId = `${router.query.articleId}`;
 
-  const { data: article, isLoading, isError } = useQuery({
+  const article = useQuery({
     queryFn: getArticle,
-    queryKey: ['article', forumId, articleId],
+    queryKey: ["article", forumId, articleId],
+  });
+  const comments = useQuery({
+    queryFn: getComments,
+    queryKey: ["comments", forumId, articleId, 0, 10],
   });
 
-  if (isLoading) return <div>로딩중</div>
-  if (isError) return <div>에러</div>
+  if (article.isLoading || comments.isLoading) return <div>로딩중</div>;
+  if (article.isError || comments.isError || comments.isIdle)
+    return <div>에러</div>;
 
   return (
     <S.Wrapper>
       <S.DetailTop>
         <Header currentTab={currentTab} />
-        <Profile article={article} currentTab={currentTab}/>
-        <Body content={article.content}/>
-        <Comment currentTab={currentTab} forumId={forumId} articleId={articleId} />
+        <Profile article={article.data} currentTab={currentTab} />
+        <Body content={article.data.content} />
+        <Comment
+          comments={comments.data}
+          currentTab={currentTab}
+          forumId={forumId}
+          articleId={articleId}
+        />
       </S.DetailTop>
       <S.CommentInputFixed>
-        <CommentInput forumId={article.forumId} articleId={article.articleId} />
+        <CommentInput
+          forumId={article.data.forumId}
+          articleId={article.data.articleId}
+        />
       </S.CommentInputFixed>
     </S.Wrapper>
   );
