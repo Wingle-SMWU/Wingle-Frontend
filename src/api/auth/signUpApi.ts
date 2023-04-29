@@ -1,20 +1,7 @@
+import { SignUpFormData } from "@/src/atoms/auth/signUpAtoms";
 import instance from "../axiosModul";
 
-export interface SignUpData {
-  idCardImage: string;
-  email: string;
-  password: string;
-  name: string;
-  isNicknameChecked: boolean;
-  nickname: string;
-  gender: boolean;
-  nation: string;
-  termsOfUse: boolean;
-  termsOfPersonalInformation: boolean;
-  termsOfPromotion: boolean;
-}
-
-const withFormData = (data: SignUpData) => {
+const withFormData = (data: SignUpFormData) => {
   // multipart/form-data 형식으로 데이터를 보내기 위해 FormData 객체를 생성
   const formData = new FormData();
   Object.entries(data).forEach(([key, value]) => {
@@ -27,7 +14,7 @@ const withFormData = (data: SignUpData) => {
   return formData;
 };
 
-export const postSignUp = async (signUpData: SignUpData) => {
+export const postSignUp = async (signUpData: SignUpFormData) => {
   const response = await instance.post("/auth/signup", withFormData(signUpData), {
     headers: { "Content-Type": "multipart/form-data" },
   });

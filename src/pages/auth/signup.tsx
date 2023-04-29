@@ -9,8 +9,8 @@ import AgreeBox from "@/src/components/authpage/signup/agreeBox";
 import router from "next/router";
 import Image from "next/image";
 import { useMutation } from "react-query";
-import { SignUpData, postSignUp } from "@/src/api/auth/signUpApi";
-import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
+import { postSignUp } from "@/src/api/auth/signUpApi";
+import { SignUpFormData, signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { useRecoilValue } from "recoil";
 
 interface SdInputProps {
@@ -40,7 +40,7 @@ export default function SignUp() {
   }, [signUpFormData]);
 
   const { mutate: signUpMutation } = useMutation(
-    (signUpData: SignUpData) => postSignUp(signUpData),
+    (signUpData: SignUpFormData) => postSignUp(signUpData),
     { onSuccess: () => router.push("/auth/login") }
   );
 
