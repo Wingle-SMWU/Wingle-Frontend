@@ -88,7 +88,7 @@ export const Text = {
     line-height: 150%;
     /* common */
     display: ${({ box }) => (box ? "block" : "inline")};
-    cursor: pointer;
+    cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
     color: ${({ color, theme }) =>
       color ? theme.color[color] : theme.color.white};
     height: fit-content;
