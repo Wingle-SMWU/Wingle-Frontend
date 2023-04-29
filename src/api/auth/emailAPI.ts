@@ -1,25 +1,9 @@
+import {
+  EmailAuthResponse,
+  EmailCertificationRequest,
+  EmailCertificationResponse,
+} from "@/src/types/auth/emailApiType";
 import instance from "../axiosModul";
-
-interface EmailAuthResponse {
-  status: number;
-  message: string;
-  data: {
-    certificationKey?: string;
-  };
-}
-
-interface EmailCertificationRequest {
-  email: string;
-  emailCertification: string;
-}
-
-interface EmailCertificationResponse {
-  status: number;
-  message: string;
-  data: {
-    available?: boolean;
-  };
-}
 
 export const sendEmailAuth = async (email: string): Promise<EmailAuthResponse> => {
   const response = await instance.post<EmailAuthResponse>("/auth/email", { email: email });
