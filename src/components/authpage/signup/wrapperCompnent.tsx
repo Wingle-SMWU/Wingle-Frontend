@@ -3,24 +3,20 @@ import { useEffect, useState } from "react";
 import { Margin, Text } from "../../ui";
 import styled from "styled-components";
 
-interface SdInputProps {
-  Condition: boolean;
-}
-
 interface WrapperComponentProps {
   title: string;
-  content: string;
   icon: boolean;
   must: string;
   handleCheck: (check: boolean) => void;
+  content: string;
 }
 
 export function WrapperComponent({
   title,
-  content,
   icon,
   must,
   handleCheck,
+  content,
 }: WrapperComponentProps) {
   const [isAgreed, setAgreed] = useState(false);
   const [isActive, setActive] = useState(false);
@@ -31,7 +27,7 @@ export function WrapperComponent({
 
   return (
     <>
-      <S.ContentWrapper>
+      <S.AgreementWrapper>
         <Image
           alt="selectedCheck"
           width={20}
@@ -42,11 +38,19 @@ export function WrapperComponent({
           }}
         />
         <Margin direction="row" size={8} />
-        <Text.Body2 color="gray900">{title}</Text.Body2>
+        <Text.Body2
+          color="gray900"
+          pointer={true}
+          onClick={() => {
+            setAgreed((prev) => !prev);
+          }}
+        >
+          {title}
+        </Text.Body2>
         <Margin direction="row" size={3} />
         <Text.Body2 color={icon ? "orange500" : "gray500"}>{must}</Text.Body2>
 
-        <S.Img Condition={icon}>
+        <S.PrivacyPolicyIcon Condition={icon}>
           <Image
             alt="selectedCheck"
             width={20}
@@ -56,24 +60,23 @@ export function WrapperComponent({
               setActive((prev) => !prev);
             }}
           />
-        </S.Img>
-      </S.ContentWrapper>
-
-      <S.Content Condition={isActive}>
+        </S.PrivacyPolicyIcon>
+      </S.AgreementWrapper>
+      <S.PrivacyPolicyContent Condition={isActive}>
         <Text.Body6 color="gray700">{content}</Text.Body6>
-      </S.Content>
+      </S.PrivacyPolicyContent>
     </>
   );
 }
 const S = {
-  Wrapper: styled.div`
-    margin-top: 8px;
-    margin-bottom: 48px;
-  `,
-  ContentWrapper: styled.div`
+  AgreementWrapper: styled.div`
     display: flex;
   `,
-  Content: styled.div<SdInputProps>`
+  PrivacyPolicyIcon: styled.div<{ Condition: boolean }>`
+    margin-left: auto;
+    display: ${(props) => (props.Condition ? `block` : `none`)};
+  `,
+  PrivacyPolicyContent: styled.div<{ Condition: boolean }>`
     display: ${(props) => (props.Condition ? `block` : `none`)};
     overflow: auto;
     margin-top: 8px;
@@ -82,9 +85,5 @@ const S = {
     border: 1px solid #ffb07e;
     border-radius: 8px;
     height: 140px;
-  `,
-  Img: styled.div<SdInputProps>`
-    margin-left: auto;
-    display: ${(props) => (props.Condition ? `block` : `none`)};
   `,
 };
