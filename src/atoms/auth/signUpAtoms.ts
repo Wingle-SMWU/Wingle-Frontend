@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 export interface SignUpFormData {
-  idCardImage: string;
+  idCardImage: FormData | null;
   email: string;
   password: string;
   name: string;
@@ -17,7 +17,7 @@ export interface SignUpFormData {
 export const signUpFormDataAtom = atom<SignUpFormData>({
   key: "signUpFormDataAtom",
   default: {
-    idCardImage: "",
+    idCardImage: null,
     email: "",
     password: "",
     name: "",
