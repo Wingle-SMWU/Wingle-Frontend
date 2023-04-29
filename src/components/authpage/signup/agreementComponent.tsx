@@ -2,13 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Margin, Text } from "../../ui";
 import styled from "styled-components";
-
-interface AgreementComponentProps {
-  agreementTitle: string;
-  isRequired: boolean;
-  handleCheck: (check: boolean) => void;
-  detail: string;
-}
+import { AgreementComponentProps } from "@/src/types/auth/agreementComponentType";
 
 export function AgreementComponent({
   agreementTitle,
