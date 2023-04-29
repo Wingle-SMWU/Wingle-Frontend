@@ -2,12 +2,16 @@ import styled from "styled-components";
 import { Text } from "@/src/components/ui";
 import { useRouter } from "next/router";
 import { useState,useEffect } from "react";
-import instance from "@/src/api/axiosModul"
+import instance from "@/src/api/axiosModule"
+import { useRecoilValue } from "recoil";
+import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 
 export default function Profile() {
-    const router = useRouter();
     const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
-    const [userData,setUserData] = useState({});
+    // const [profileState,setUserData] = useState({});
+    
+    const profileState = useRecoilValue(profileStateAtom);
+    // console.log(profileState)
 
     const handleRegisterBtnHover = () => {
         setIsRegisterBtnHover(true);
@@ -17,40 +21,21 @@ export default function Profile() {
     };
 
 
-    // async와 await를 이용한 useEffect()를 선언하기
-    useEffect(()=>{
-        async function getUserData() {
-            const response = await instance.get("/profile");
-        // 일단 response의 형태를 확인하고
-            console.log(response.data);
-            // fetch 함수 아래에 setUsers를 해주어야 한다.
-            setUserData(response.data);
-        };
-        getUserData();
+    // // async와 await를 이용한 useEffect()를 선언하기
+    // useEffect(()=>{
+    //     async function getUserData() {
+    //         const response = await instance.get("/profile");
+    //     // 일단 response의 형태를 확인하고
+    //         console.log(response.data);
+    //         // fetch 함수 아래에 setUsers를 해주어야 한다.
+    //         setUserData(response.data.data);
+    //     };
+    //     getUserData();
 
-    }, [])
-
-
-    const getProfile = async (): Promise<void> => {
-    
-        
-        
-            // const response = await  instance.get("/profile");
-            // setUserData(response.data);
-
-    };
-    
-    // const user = getProfile();
-    // const getData = () => {
-    //     user.then((data) => {
-    //         setUserData(data);
-    //     });
-    // };
-    
-    // getData();
-    // console.log(userData)
+    // }, [])
 
 
+  
     
     
     return (
@@ -58,18 +43,18 @@ export default function Profile() {
             <S.UserBox>
                 <S.UserImgBox>
                     {/* @ts-ignore */}
-                    <S.UserProfileImg src={userData.image} alt="프로필" />
+                    <S.UserProfileImg src={profileState.image} alt="프로필" />
                     <S.UserFlagImg src="" alt="국기" />
                 </S.UserImgBox>
                 <S.UserInfoBox>
                     <S.UserNicknameAndSex>
                         {/* @ts-ignore */}
-                        <Text.Body1 color="gray900">{userData.nickname}</Text.Body1>
+                        <Text.Body1 color="gray900">{profileState.nickname}</Text.Body1>
                         {/* @ts-ignore */}
-                        <S.UserSexImg src={userData.gender?("/mypage/female.svg"):("/mypage/male.svg")} alt="성별" />
+                        <S.UserSexImg src={profileState.gender?("/mypage/female.svg"):("/mypage/male.svg")} alt="성별" />
                     </S.UserNicknameAndSex>
                     {/* @ts-ignore */}
-                    <Text.Body6 color="gray800">{userData.nation}</Text.Body6>
+                    <Text.Body6 color="gray800">{profileState.nation}</Text.Body6>
                 </S.UserInfoBox>
             </S.UserBox>
         </>

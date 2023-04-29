@@ -4,7 +4,7 @@ import { Text } from "@/src/components/ui";
 import SelectInterest from "@/src/components/mypage/SelectInterest";
 import { useState } from "react";
 import Modal from "@/src/components/modal";
-import instance from "@/src/api/axiosModul";
+import instance from "@/src/api/axiosModule";
 
 export default function Interest() {
   const [modalVisible, setModalVisible] = useState(false);

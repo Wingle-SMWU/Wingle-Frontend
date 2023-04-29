@@ -3,7 +3,7 @@ import router from "next/router";
 import { Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState,useCallback,useEffect } from "react";
-import instance from "@/src/api/axiosModul"
+import instance from "@/src/api/axiosModule"
 
 export default function Introduce() {
   const [modalVisible, setModalVisible] = useState(false);

@@ -4,17 +4,39 @@ import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
-import instance from "@/src/api/axiosModul";
+import { useEffect,useState } from "react";
+import instance from "@/src/api/axiosModule";
+import { useSetRecoilState, useRecoilValue }  from "recoil";
+import { profileStateAtom } from "@/src/atoms/profileStateAtom";
+
+
 export default function Mypage() {
-  // const getProfile = async (): Promise<void> => {
-  //   const response = await  instance.get("/profile/detail");
-  //   console.log(response.data)
-  //   return response.data;
-  // };
-  // getProfile();
+
+  const [loading,setLoading] = useState(true); 
+
+  const setProfileState = useSetRecoilState(profileStateAtom);
+
+  const getProfile = async (): Promise<void> => {
+  try {
+    const response = await instance.get("/profile/detail");
+    const data = response.data.data;
+
+    setProfileState(data);
+    setLoading(false) // Recoil atom 업데이트
+  } catch (error) {
+    console.error('Failed to get profile:', error);
+  }
+};
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+  const profileState = useRecoilValue(profileStateAtom);
+  console.log(profileState)
   return (
     <>
-      <S.Wapper>
+    {loading ? (<div>로딩</div>) : <S.Wapper>
         <S.Content>
           <S.Header>
             <Text.Title1 color="gray900">마이페이지</Text.Title1>
@@ -70,6 +92,8 @@ export default function Mypage() {
         <Footer />
         <Navigation tab={""} />
       </S.Wapper>
+      }
+      
     </>
   );
 }

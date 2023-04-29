@@ -9,12 +9,4 @@ const instance = axios.create({
   },
 });
 
-instance.interceptors.response.use((response: AxiosResponse):Promise<AxiosResponse> => {
-  const { status, data } = response;
-  if(status !== 200) {
-    return Promise.reject(response);
-  }
-  return data;
-})
-
 export default instance;

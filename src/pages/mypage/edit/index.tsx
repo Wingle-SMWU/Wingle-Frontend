@@ -4,22 +4,16 @@ import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import { useState } from "react";
 import styled from "styled-components";
-import instance from "@/src/api/axiosModul"
+import { useRecoilValue } from "recoil";
+import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 
 export default function Edit() {
   const [modalVisible, setModalVisible] = useState(false);
-
+  const profileData = useRecoilValue(profileStateAtom);
+  
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
-
-  const getProfile = async (): Promise<void> => {
-    const response = await  instance.get("/profile");
-    return response.data;
-  };
-
-  // console.log(getProfile())
-
   return (
     <>
       <S.Wapper>
