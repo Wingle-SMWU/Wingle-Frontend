@@ -39,7 +39,7 @@ export default function SignUp() {
 
   const { mutate: signUpMutation } = useMutation(
     (signUpData: SignUpFormData) => postSignUp(signUpData),
-    { onSuccess: () => router.push("/auth/login") }
+    { onSuccess: () => router.push("/auth/complete") }
   );
 
   const handleSignUpSubmit = () => {
