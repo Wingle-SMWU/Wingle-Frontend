@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
-import { List } from "./countryList";
+import { List } from "../../../constants/countryList";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
