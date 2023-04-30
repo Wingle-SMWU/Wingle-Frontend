@@ -1,4 +1,4 @@
-import { convertDate } from "./convertDate";
+import { convertDateAndTime } from "./convertDateAndTime";
 import { convertDateYear } from "./convertDateYear";
 import { convertTime } from "./convertTime";
 
@@ -6,7 +6,9 @@ export default function betweenTime(value: string) {
   let today: number | Date = new Date();
   let timeValue: number | Date = new Date(value);
 
-  const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+  const betweenTime = Math.floor(
+    (today.getTime() - timeValue.getTime()) / 1000 / 60
+  );
 
   if (betweenTime < 1) return "방금 전";
   if (betweenTime < 60) {
@@ -21,12 +23,12 @@ export default function betweenTime(value: string) {
   // 한 달 이내
   const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
   if (betweenTimeDay < 30) {
-    return convertDate(value);
+    return convertDateAndTime(value);
   }
 
   const betweenTimeMonth = Math.floor(betweenTime / 60 / 24 / 30);
   if (0 < betweenTimeMonth && betweenTimeMonth < 12) {
-    return convertDate(value);
+    return convertDateAndTime(value);
   }
 
   return convertDateYear(value);
