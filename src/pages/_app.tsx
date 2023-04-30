@@ -8,6 +8,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import styled from "styled-components";
 
+const STALE_TIME = 10 * 60 * 1000;
+const CACHE_TIME = 10 * 60 * 1000;
 
 const S = {
   Wrapper: styled.div`
@@ -24,14 +26,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            refetchOnMount: false,
+            staleTime: STALE_TIME,
+            cacheTime: CACHE_TIME,
             refetchOnWindowFocus: false,
           },
         },
       })
   );
-
-  
 
   return (
     <>

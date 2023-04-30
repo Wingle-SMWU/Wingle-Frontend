@@ -1,8 +1,8 @@
 // 네트워크 호출 관련, axiosModul로 더욱 간편하게! 이야!
 
-import instance from "../axiosModul";
+import instance from "../axiosModule";
 // axios도 가능
-import axios from "../axiosModul";
+import axios from "../axiosModule";
 
 export const getPickers = async () => {
   const response = await axios.get("/groups");

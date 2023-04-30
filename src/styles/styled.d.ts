@@ -1,7 +1,7 @@
 import "styled-components";
 
 declare module "styled-components" {
-  export type DefaultShadowKey = "normal" | "purple" | "blue";
+  export type DefaultShadowKey = "normal" | "popover";
   export type DefaultThemeColorKey =
     | "black"
     | "white"

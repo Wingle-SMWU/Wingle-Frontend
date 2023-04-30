@@ -1,47 +1,94 @@
-import { getImageUrl } from "@/src/modules/utils";
-import { useState } from "react";
-import styled from "styled-components";
 import Modal from "../../modal";
 import { Text } from "../../ui";
+import { getImageUrl } from "@/src/modules/utils";
+import betweenTime from "@/src/utils/betweenTime";
+import { useState } from "react";
+import styled from "styled-components";
 
-export default function Comment(props: { currentTab: string }) {
+export default function Comment({
+  comments,
+  currentTab,
+  forumId,
+  articleId,
+}: {
+  comments: Comment[];
+  currentTab: string;
+  forumId: string;
+  articleId: string;
+}) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [deleteInform, setDeleteInform] = useState({
+    forumId: "",
+    articleId: "",
+    id: 0,
+  });
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
 
   return (
-    <Style.Wrapper>
-      <Style.CommentCount>
-        <Text.Body3 color="gray900">댓글 10</Text.Body3>
-      </Style.CommentCount>
-      <Style.Comment>
-        <Style.CommentTop>
-          <Style.CommentTopLeft>
-            <Style.ProfileImg src={getImageUrl(props.currentTab)} />
-            <Style.ProfileInfo>
-              <Text.Body6 color="gray900">한국윙그리</Text.Body6>
-              <Text.Caption3 color="gray500">10분 전</Text.Caption3>
-            </Style.ProfileInfo>
-          </Style.CommentTopLeft>
-          <Style.CancelImg
-            src="/community/detail/close-gray.svg"
-            onClick={onClickModal}
-          />
-        </Style.CommentTop>
-        <Style.CommentBottom>
-          <Text.Body3 color="gray900">그건좀 그렇지않나요?</Text.Body3>
-        </Style.CommentBottom>
-      </Style.Comment>
+    <S.Wrapper>
+      <S.CommentCount>
+        <Text.Body3 color="gray900">댓글 {comments.length}</Text.Body3>
+      </S.CommentCount>
+      {comments.map((comment, i) => {
+        const {
+          content,
+          createdTime,
+          updatedTime,
+          id,
+          isMine,
+          userId,
+          userImage,
+          userNation,
+          userNickname,
+        } = comment;
+        const time = betweenTime(createdTime);
+        return (
+          <S.Comment key={id}>
+            <S.CommentTop>
+              <S.CommentTopLeft>
+                <S.ProfileImg src={getImageUrl(currentTab)} />
+                <S.ProfileInfo>
+                  <Text.Body6 color="gray900">{userNickname}</Text.Body6>
+                  <Text.Caption3 color="gray500">{time}</Text.Caption3>
+                </S.ProfileInfo>
+              </S.CommentTopLeft>
+              {isMine && (
+                <S.CancelImg
+                  src="/community/detail/close-gray.svg"
+                  onClick={() => {
+                    onClickModal();
+                    setDeleteInform({
+                      ...deleteInform,
+                      forumId: forumId,
+                      articleId: articleId,
+                      id: id,
+                    });
+                  }}
+                />
+              )}
+            </S.CommentTop>
+            <S.CommentBottom>
+              <Text.Body3 color="gray900">{content}</Text.Body3>
+            </S.CommentBottom>
+          </S.Comment>
+        );
+      })}
+
       {modalVisible && (
-        <Modal type="detail-delete-comment" onClickModal={onClickModal} />
+        <Modal
+          type="detail-delete-comment"
+          deleteInform={deleteInform}
+          onClickModal={onClickModal}
+        />
       )}
-    </Style.Wrapper>
+    </S.Wrapper>
   );
 }
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     width: 100%;
     display: flex;
@@ -91,5 +138,6 @@ const Style = {
   CancelImg: styled.img`
     width: 24px;
     height: 24px;
+    cursor: pointer;
   `,
 };

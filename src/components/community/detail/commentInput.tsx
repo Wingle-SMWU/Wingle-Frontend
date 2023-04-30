@@ -1,9 +1,49 @@
-import { ChangeEvent, useCallback, useRef, useState } from "react";
-import styled from "styled-components";
 import { Margin } from "../../ui";
+import instance from "@/src/api/axiosModule";
+import { ChangeEvent, useCallback, useRef, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import styled from "styled-components";
 
-export default function CommentInput() {
-  const [comment, setComment] = useState("");
+export default function CommentInput({
+  forumId,
+  articleId,
+}: {
+  forumId: number;
+  articleId: number;
+}) {
+  const [comment, setComment] = useState<string>("");
+
+  const fetchComments = async () => {
+    const { data: response } = await instance.post(
+      `/community/articles/comments`,
+      {
+        forumId,
+        articleId,
+        originCommentId: 0,
+        content: comment,
+      }
+    );
+    return response.data;
+  };
+
+  const queryClient = useQueryClient();
+
+  const updateComment = useMutation(fetchComments, {
+    onMutate: async () => {
+      await queryClient.cancelQueries("comments");
+      const prevComments = queryClient.getQueryData(["comments"], {
+        exact: false,
+      });
+      return { prevComments };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries("comments");
+    },
+    onError: (error, payload, context) => {
+      console.log(`댓글 작성 실패! ${error}`);
+      queryClient.setQueryData("comments", context?.prevComments);
+    },
+  });
 
   const onChangeComment = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
@@ -19,28 +59,33 @@ export default function CommentInput() {
   }, []);
 
   return (
-    <Style.Wrapper>
-      <Style.CommentInput
+    <S.Wrapper>
+      <S.CommentInput
         placeholder="댓글을 입력해보세요."
         onChange={onChangeComment}
         maxLength={500}
         rows={1}
         ref={inputRef}
         onInput={handleResizeHeight}
+        value={comment}
       />
       <Margin direction="row" size={8}></Margin>
-      <Style.PostIcon
+      <S.PostIcon
         src={
           comment
             ? "/community/detail/send.svg"
             : "/community/detail/send-disable.svg"
         }
+        onClick={() => {
+          comment && updateComment.mutate();
+          setComment("");
+        }}
       />
-    </Style.Wrapper>
+    </S.Wrapper>
   );
 }
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     padding: 12px 24px 12px 24px;
     display: flex;
