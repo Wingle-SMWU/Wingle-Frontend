@@ -60,15 +60,12 @@ instance.interceptors.response.use(
       config.headers.Authorization = `Bearer ${accessToken}`;
       return axios(config);
     }
-    console.log(response.config.url);
 
     if (
       response.status === 404 &&
       response.data.message === "다시 로그인해주세요." &&
       response.config.url === "/auth/refresh"
     ) {
-      console.log("다시 로그인해주세요.");
-
       localStorage.clear();
       window.location.href = "/auth/login";
     }

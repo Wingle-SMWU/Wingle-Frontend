@@ -33,11 +33,8 @@ export default function SignUp() {
       signUpFormData.termsOfUse &&
       signUpFormData.termsOfPersonalInformation
     ) {
-      console.log("완료");
-
       setButtonDisabled(false);
     }
-    console.log(signUpFormData);
   }, [signUpFormData]);
 
   const { mutate: signUpMutation } = useMutation(
@@ -47,8 +44,6 @@ export default function SignUp() {
 
   const handleSignUpSubmit = () => {
     if (!isButtonDisabled) {
-      console.log("실행");
-
       signUpMutation(signUpFormData);
     }
   };

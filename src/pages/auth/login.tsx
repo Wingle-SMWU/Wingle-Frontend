@@ -21,7 +21,6 @@ export default function Login() {
 
   const { mutate: login, isLoading } = useMutation(() => postLogin(email, password), {
     onSuccess: (res) => {
-      console.log(`${res.message} ${res.data.refreshToken}`);
       // 액세스토큰 리프레쉬 토큰 로컬스토리지 넣기, admin에 따라 라우팅
       const { refreshToken, accessToken, admin } = res.data;
       saveRefreshTokenToLocalStorage(refreshToken);
