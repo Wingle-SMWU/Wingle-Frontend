@@ -1,31 +1,39 @@
-import styled from "styled-components";
 import { Text } from "../../ui";
-import { useQuery } from "react-query";
 import { getForums } from "@/src/api/community/get/forums";
+import { useQuery } from "react-query";
+import styled from "styled-components";
 
 type Tab = {
   tab?: boolean;
 };
 
-export default function Header({ tab, onClickTab }: {
+export default function Header({
+  tab,
+  onClickTab,
+}: {
   tab: string;
   onClickTab: (event: any) => void;
 }) {
-  const { data: TabArr, isLoading, isError } = useQuery({
+  const {
+    data: TabArr,
+    isLoading,
+    isError,
+    isIdle,
+  } = useQuery({
     queryFn: getForums,
-    queryKey: ['forums'],
+    queryKey: ["forums"],
   });
 
-  if (isLoading) return <div>로딩중</div>
-  if (isError) return <div>에러</div>
-  
+  if (isLoading) return <div>로딩중</div>;
+  if (isError || isIdle) return <div>에러</div>;
+
   return (
     <>
       <S.Header>
         <Text.Title1 color="gray900">커뮤니티</Text.Title1>
       </S.Header>
       <S.HeaderBar>
-        {TabArr.map((el: {name: string, id: number}) => (
+        {TabArr.map((el: { name: string; id: number }) => (
           <S.TextUnderLine tab={el.name === tab} key={el.id}>
             <Text.Title3
               color={el.name === tab ? "gray900" : "gray500"}
