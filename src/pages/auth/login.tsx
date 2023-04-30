@@ -19,13 +19,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
 
-  const { mutate: login, isLoading } = useMutation(() => postLogin(email, password), {
+  const { mutate: login } = useMutation(() => postLogin(email, password), {
     onSuccess: (res) => {
       // 액세스토큰 리프레쉬 토큰 로컬스토리지 넣기, admin에 따라 라우팅
       const { refreshToken, accessToken, admin } = res.data;
       saveRefreshTokenToLocalStorage(refreshToken);
       saveAccessTokenToLocalStorage(accessToken);
-      // router.push(admin ? "/admin" : "/main");
+      router.push(admin ? "/admin" : "/main");
     },
     onError: () => {
       setError(true);
