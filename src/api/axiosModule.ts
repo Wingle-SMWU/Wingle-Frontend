@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export const SERVER_URL = `https://server-prod.wingle.kr/api/v1`;
 

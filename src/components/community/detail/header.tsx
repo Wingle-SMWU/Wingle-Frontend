@@ -2,23 +2,23 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Text } from "../../ui";
 
-export default function Header(props: { currentTab: string }) {
+export default function Header({ currentTab }: { currentTab: string }) {
   const router = useRouter();
 
   return (
-    <Style.Wrapper>
-      <Style.Header>
-        <Style.BackArrow
+    <S.Wrapper>
+      <S.Header>
+        <S.BackArrow
           src="/community/arrow-back.svg"
           onClick={() => router.back()}
         />
-        <Text.Title2 color="gray900">{props.currentTab}게시판</Text.Title2>
-      </Style.Header>
-    </Style.Wrapper>
+        <Text.Title2 color="gray900">{currentTab}게시판</Text.Title2>
+      </S.Header>
+    </S.Wrapper>
   );
 }
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     width: 100%;
     max-width: 500px;

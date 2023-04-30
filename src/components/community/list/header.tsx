@@ -1,38 +1,46 @@
 import styled from "styled-components";
 import { Text } from "../../ui";
+import { useQuery } from "react-query";
+import { getForums } from "@/src/api/community/get/forums";
 
 type Tab = {
   tab?: boolean;
 };
 
-const TabArr = ["자유", "교류", "공지"];
-
-export default function Header(props: {
+export default function Header({ tab, onClickTab }: {
   tab: string;
   onClickTab: (event: any) => void;
 }) {
+  const { data: TabArr, isLoading, isError } = useQuery({
+    queryFn: getForums,
+    queryKey: ['forums'],
+  });
+
+  if (isLoading) return <div>로딩중</div>
+  if (isError) return <div>에러</div>
+  
   return (
     <>
-      <Style.Header>
+      <S.Header>
         <Text.Title1 color="gray900">커뮤니티</Text.Title1>
-      </Style.Header>
-      <Style.HeaderBar>
-        {TabArr.map((el) => (
-          <Style.TextUnderLine tab={el === props.tab} key={el}>
+      </S.Header>
+      <S.HeaderBar>
+        {TabArr.map((el: {name: string, id: number}) => (
+          <S.TextUnderLine tab={el.name === tab} key={el.id}>
             <Text.Title3
-              color={el === props.tab ? "gray900" : "gray500"}
-              onClick={props.onClickTab}
+              color={el.name === tab ? "gray900" : "gray500"}
+              onClick={onClickTab}
             >
-              {el}
+              {el.name}
             </Text.Title3>
-          </Style.TextUnderLine>
+          </S.TextUnderLine>
         ))}
-      </Style.HeaderBar>
+      </S.HeaderBar>
     </>
   );
 }
 
-const Style = {
+const S = {
   Header: styled.div`
     display: flex;
     flex-direction: row;
