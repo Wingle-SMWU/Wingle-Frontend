@@ -28,12 +28,13 @@ export default function Introduce() {
   };
 
   const handleSubmit =async () => {
-     
-    await instance.post("/profile/introduction", {
+    if (isIntroduce) {
+      await instance.post("/profile/introduction", {
       "introduction" : introduce
-    });
-    
-    router.push(`/mypage/edit`)
+      });
+      
+      router.push(`/mypage/edit`)
+    } 
   }
 
   return (
@@ -51,8 +52,7 @@ export default function Introduce() {
             </S.Left>
             <Text.Body1
               color={isIntroduce ? "gray900":"gray500"} // 비활성화 상태
-              //@ts-ignore
-              onClick={isIntroduce?handleSubmit:null} 
+              onClick={handleSubmit} 
               pointer={isIntroduce}
             >
               완료

@@ -4,6 +4,9 @@ import { Margin, Text } from "@/src/components/ui";
 import { useState, useCallback, useEffect } from "react";
 import Modal from "@/src/components/modal";
 import instance from "@/src/api/axiosModule";
+import { useSetRecoilState, useRecoilValue }  from "recoil";
+import { profileStateAtom } from "@/src/atoms/profileStateAtom";
+import Loading from "@/src/components/ui/loadingUI";
 
 export default function Nickname() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -11,7 +14,18 @@ export default function Nickname() {
   const [nameMessage, setNameMessage] = useState<string>("");
   const [isName, setIsName] = useState<boolean>(false);
   const [image,setImage] = useState("");
+  const [loading,setLoading] = useState<boolean>(true)
   
+  const profileData = useRecoilValue(profileStateAtom);
+
+  useEffect(() => {
+  if (profileData !== null && profileData !== undefined) {
+    setName(profileData.nickname);
+    setImage(profileData.image);
+    setLoading(false);
+  }
+}, [profileData]);
+
   const onChangeName = useCallback((e: any) => {
     const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
     const nameCurrent = e.target.value;
@@ -32,7 +46,8 @@ export default function Nickname() {
   
   // const onClickCamera = 
   const onClickComplete  = async (): Promise<void> => {
-    try{
+    if(isName) {
+       try{
       const formData = new FormData();
       formData.append('nickname', name);
       // formData.append('u', userId);
@@ -41,28 +56,17 @@ export default function Nickname() {
           {'Content-Type': 'multipart/form-data'}
       });
   
-    } catch {
-      console.log("변경 불가")
-    }
-    router.push(`/mypage/edit`)
+      } catch {
+        console.log("변경 불가")
+      }
+      router.push(`/mypage/edit`)
   }
-
-  useEffect(()=>{
-    async function getNickname() {
-        const response = await instance.get("/profile");
-    // 일단 response의 형태를 확인하고
-        console.log(response.data);
-        // fetch 함수 아래에 setUsers를 해주어야 한다.
-        setName(response.data.data.nickname);
-        setImage(response.data.data.image);
-    };
-    getNickname();
-
-}, [])
-
+}
+   
 
   return (
     <>
+    {loading ? <Loading /> : (
       <S.Wapper>
         <S.Content>
           <S.Header>
@@ -76,8 +80,7 @@ export default function Nickname() {
             </S.Left>
             <Text.Body1
               color={isName ? "gray900":"gray500"} // 비활성화 상태
-              //@ts-ignore
-              onClick={isName ? onClickComplete : null}
+              onClick={onClickComplete}
               pointer={isName}
             >
               완료
@@ -102,7 +105,6 @@ export default function Nickname() {
                   {nameMessage}
                 </span>
               )}
-              {/** 기존 닉네임 자리에 {nickname} */}
               <Margin direction="column" size={8} />
             </S.NicknameChangeBox>
           </>
@@ -111,7 +113,9 @@ export default function Nickname() {
           <Modal type="profile-back" onClickModal={onClickModal} />
         )}
       </S.Wapper>
+      )}
     </>
+    
   );
 }
 

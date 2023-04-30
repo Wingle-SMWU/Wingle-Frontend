@@ -4,21 +4,23 @@ import { useEffect,useState } from "react";
 type DropdownOptionProps = {
     value: string;
 };
+
+type Props = {
+  getLanguage: (arr: any) => void;
+};
+
 //API - get으로 받아올 것
 const options = ["KR 한국어","EN 영어","FR 프랑스어"]
 
-//@ts-ignore
-export default function SelectLanguageBox({getLanguage}) {
+export default function SelectLanguageBox({getLanguage}: Props) {
     const [language,setLanguage] = useState("");
 
     const handleChange= (event: any) => {
         setLanguage(event.target.value);
-        console.log(language);
       };
 
     useEffect(() => {
         getLanguage(language);
-        console.log(language);
     }, [language]);
 
     

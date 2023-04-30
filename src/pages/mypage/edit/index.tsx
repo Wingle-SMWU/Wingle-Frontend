@@ -7,13 +7,14 @@ import { useEffect,useState } from "react";
 import instance from "@/src/api/axiosModule";
 import { useSetRecoilState, useRecoilValue }  from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
-import SelectInterest from "@/src/components/mypage/SelectInterest";
 import Loading from "@/src/components/ui/loadingUI";
 
 export default function Edit() {
   const [loading,setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+
   const setProfileState = useSetRecoilState(profileStateAtom);
+ 
 
   const getProfile = async (): Promise<void> => {
   try {
@@ -27,12 +28,14 @@ export default function Edit() {
   }
 };
 
+
   useEffect(() => {
     getProfile();
   }, []);
 
+ 
   const profileData = useRecoilValue(profileStateAtom);
-console.log(profileData)
+
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
@@ -103,8 +106,8 @@ console.log(profileData)
             <S.InterestBoxContainer>
             {(profileData) && profileData.interests.map(item => {
                 return (
-                    <div key={item.id}>
-                        <S.InterestBox backgroundColor={"#FFF3EB"}>
+                    <div key={item}>
+                        <S.InterestBox backgroundColor="#FFF3EB">
                             <Text.Body6 color="gray900" pointer key={item}>
                                 {item}
                             </Text.Body6>

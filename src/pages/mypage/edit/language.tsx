@@ -19,18 +19,15 @@ export default function Language() {
       const response = await instance.post("/profile/languages", {
         "languages": language
       });
-      console.log(language);
       
       router.push(`/mypage/edit`)
   };
   
   const getLanguage = (str:any) => {
     setLanguage([...language,str].filter(v=>v!==''));
-    console.log(language)
   }
   useEffect(() => {
     language
-    console.log(language)
   },[language])
 
   return (
