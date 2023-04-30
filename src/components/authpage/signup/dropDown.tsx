@@ -1,7 +1,10 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
-import { List } from "./countryList";
+import { List } from "../../../constants/countryList";
+import Image from "next/image";
+import { useSetRecoilState } from "recoil";
+import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 
 interface StyledInputProps {
   isActive: boolean;
@@ -9,35 +12,45 @@ interface StyledInputProps {
 
 export default function DropDown() {
   const [isActive, setIsActive] = useState(false);
-  const [item, setItem] = useState("Republic of Korea");
+  const [nation, setNation] = useState("Republic of Korea");
+  const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const onActiveToggle = useCallback(() => {
     setIsActive((prev) => !prev);
   }, []);
 
-  const onSelectItem = useCallback((e: any) => {
-    setItem(e.target.innerText);
-    setIsActive((prev) => !prev);
-  }, []);
+  const handleSelectItem: React.MouseEventHandler<HTMLLIElement> = useCallback(
+    (e) => {
+      const target = e.target as HTMLLIElement;
+      const selectedNation = target.innerText;
+      setNation(selectedNation);
+      setIsActive(false);
+      setSignUpFormData((prev) => ({
+        ...prev,
+        nation,
+      }));
+    },
+    [setSignUpFormData, nation]
+  );
 
   return (
     <S.Container>
       <Text.Body1 color="gray700">국적</Text.Body1>
       <S.DropdownContainer>
         <S.DropdownBody onClick={onActiveToggle}>
-          <S.Img>
-            <Text.Body3 color="gray900">{item}</Text.Body3>
-          </S.Img>
-          <S.Img>
-            <img src="/auth/arrow_down.svg" alt="arrow"></img>
-          </S.Img>
+          <S.Selected>
+            <S.CountryItem color="gray900">{nation}</S.CountryItem>
+          </S.Selected>
+          <S.Selected>
+            <Image src="/auth/arrow_down.svg" alt="arrow" width={20} height={20} />
+          </S.Selected>
         </S.DropdownBody>
         <Margin direction="column" size={8} />
 
         <S.DropdownMenu isActive={isActive}>
           {List.map((item) => (
-            <S.DropdownItemContainer id="item" key={item} onClick={onSelectItem}>
-              <Text.Body3 color="gray900">{item}</Text.Body3>
+            <S.DropdownItemContainer id="item" key={item} onClick={handleSelectItem}>
+              <S.CountryItem color="gray900">{item}</S.CountryItem>
             </S.DropdownItemContainer>
           ))}
         </S.DropdownMenu>
@@ -63,8 +76,9 @@ const S = {
     height: 50px;
     border: 1px solid #dcdce0;
     border-radius: 8px;
+    cursor: pointer;
   `,
-  Img: styled.div`
+  Selected: styled.div`
     padding-left: 15px;
     padding-right: 15px;
   `,
@@ -85,5 +99,8 @@ const S = {
     padding-top: 0px;
     padding-bottom: 26px;
     padding-left: 16px;
+  `,
+  CountryItem: styled(Text.Body3)`
+    cursor: pointer;
   `,
 };
