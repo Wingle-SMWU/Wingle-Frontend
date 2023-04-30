@@ -3,7 +3,7 @@ import {
   EmailCertificationRequest,
   EmailCertificationResponse,
 } from "@/src/types/auth/emailApiType";
-import instance from "../axiosModul";
+import instance from "../axiosModule";
 
 export const sendEmailAuth = async (email: string): Promise<EmailAuthResponse> => {
   const response = await instance.post<EmailAuthResponse>("/auth/email", { email: email });

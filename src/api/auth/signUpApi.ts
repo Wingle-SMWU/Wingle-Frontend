@@ -1,5 +1,5 @@
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
-import instance from "../axiosModul";
+import instance from "../axiosModule";
 
 const withFormData = (data: SignUpFormData) => {
   // multipart/form-data 형식으로 데이터를 보내기 위해 FormData 객체를 생성
