@@ -25,7 +25,7 @@ export default function Login() {
       const { refreshToken, accessToken, admin } = res.data;
       saveRefreshTokenToLocalStorage(refreshToken);
       saveAccessTokenToLocalStorage(accessToken);
-      router.push(admin ? "/admin" : "/main");
+      router.push(admin ? "/admin" : "/community");
     },
     onError: () => {
       setError(true);
