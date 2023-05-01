@@ -1,22 +1,5 @@
 import { atom } from 'recoil';
-import Introduce from '../pages/mypage/edit/introduce';
-
-type languagesType = {
-  order: number;
-  interest: string;
-};
-
-type ProfileStateType = {
-  gender : boolean;
-  nickname: string;
-  age: number;
-  interests : string[];
-  introduce: string;
-  languages : languagesType[];
-  nation : string;
-  sns : any;
-  image: string;
-};
+import { ProfileStateType } from '../types/mypage/profileType';
 
 
 export const profileStateAtom = atom<ProfileStateType>({
