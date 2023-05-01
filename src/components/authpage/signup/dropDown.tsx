@@ -10,7 +10,21 @@ interface StyledInputProps {
   isActive: boolean;
 }
 
-export default function DropDown() {
+interface DropDownProps {
+  label: string; // 제목
+  list: string[]; // 드롭다운 리스트
+  selected: string; // 선택된 항목(selected state)
+  onSelectedChange: (selected: string) => void; // 선택된 항목 변경 함수(selected setState 변경 함수)
+  description?: string; // 드롭다운 설명
+}
+
+export default function DropDown({
+  label,
+  list,
+  selected,
+  onSelectedChange,
+  description,
+}: DropDownProps) {
   const [isActive, setIsActive] = useState(false);
   const [nation, setNation] = useState("Republic of Korea");
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);

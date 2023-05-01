@@ -38,4 +38,3 @@ const S = {
 }
 export default Loading;
 
-
