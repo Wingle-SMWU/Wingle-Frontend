@@ -1,22 +1,34 @@
+import { getForums } from "@/src/api/community/get/forums";
 import FreeTab from "@/src/components/community/list/freeTab";
 import Header from "@/src/components/community/list/header";
 import InteractTab from "@/src/components/community/list/interactTab";
 import NoticeTab from "@/src/components/community/list/noticeTab";
+import Navigation from "@/src/components/layout/Navigation";
 import { getImageUrl } from "@/src/modules/utils";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
-import Navigation from "@/src/components/layout/Navigation";
 
-type Tab = {
-  tab: string;
-};
-
-export default function Community(props: { tab: string }) {
+export default function Community({ tab }: { tab: string }) {
   const router = useRouter();
 
+  const {
+    data: TabArr,
+    isLoading,
+    isError,
+    isIdle,
+  } = useQuery({
+    queryFn: getForums,
+    queryKey: ["forums"],
+  });
+
   const onClickMoveToWrite = () => {
-    router.push({ pathname: `/community/create`, query: { tab: props.tab } });
+    const forumId = getForumId();
+    router.push({
+      pathname: `/community/create`,
+      query: { tab: currentTab, forumId: forumId },
+    });
   };
 
   const currentTab: string = useMemo(() => {
@@ -30,27 +42,40 @@ export default function Community(props: { tab: string }) {
     router.push({ query: { tab: event.target.textContent } });
   };
 
+  if (isLoading) return <div>로딩중</div>;
+  if (isError || isIdle) return <div>에러</div>;
+
+  const getForumId = () => {
+    const forum = TabArr.filter(
+      (forum: { id: number; name: string }) => forum.name === currentTab
+    );
+    return forum[0].id;
+  };
+
   return (
-    <Style.Wrapper>
+    <S.Wrapper>
       <Header tab={currentTab} onClickTab={onClickTab} />
-      {currentTab === "교류" && (
-        <InteractTab imgUrl={getImageUrl(currentTab)} />
+      {currentTab === TabArr[0].name && (
+        <FreeTab forumId={TabArr[0].id} imgUrl={getImageUrl(currentTab)} />
       )}
-      {currentTab === "공지" && <NoticeTab imgUrl={getImageUrl(currentTab)} />}
-      {currentTab === "자유" && <FreeTab imgUrl={getImageUrl(currentTab)} />}
-      <Style.Box>
-        <Style.CreateIcon
-          tab={props.tab}
+      {currentTab === TabArr[1].name && (
+        <InteractTab forumId={TabArr[1].id} imgUrl={getImageUrl(currentTab)} />
+      )}
+      {currentTab === TabArr[2].name && (
+        <NoticeTab forumId={TabArr[2].id} imgUrl={getImageUrl(currentTab)} />
+      )}
+      <S.Box>
+        <S.CreateIcon
+          tab={tab}
           src="community/list/new-write.svg"
           onClick={onClickMoveToWrite}
         />
-      </Style.Box>
+      </S.Box>
       <Navigation tab={currentTab} />
-    </Style.Wrapper>
+    </S.Wrapper>
   );
 }
-
-const Style = {
+const S = {
   Wrapper: styled.div`
     display: flex;
     flex-direction: column;
@@ -68,8 +93,9 @@ const Style = {
   CreateIcon: styled.img<Tab>`
     width: 50px;
     height: 50px;
-    position: absolute;
+    position: fixed;
     bottom: 94px;
     display: ${({ tab }) => (tab === "공지" ? "none" : "block")};
+    cursor: pointer;
   `,
 };

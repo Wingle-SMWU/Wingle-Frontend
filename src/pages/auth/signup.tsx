@@ -4,79 +4,48 @@ import styled from "styled-components";
 import InputBox from "../../components/authpage/signup/signUpInput";
 import DropDown from "../../components/authpage/signup/dropDown";
 import StudentCard from "../../components/authpage/signup/studentCard";
-import { InputInfo } from "../../components/authpage/signup/inputInformation";
 import GenderSelectBox from "../../components/authpage/signup/genderSelect";
 import AgreeBox from "@/src/components/authpage/signup/agreeBox";
 import router from "next/router";
 import Image from "next/image";
 import { useMutation } from "react-query";
-import axios from "axios";
-import { SERVER_URL } from "@/src/hooks";
+import { postSignUp } from "@/src/api/auth/signUpApi";
+import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
+import { useRecoilValue } from "recoil";
+import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 
 interface SdInputProps {
-  complete: boolean;
-}
-
-interface SignUpData {
-  idCardImage: string;
-  email: string;
-  password: string;
-  name: string;
-  isNicknameChecked: boolean;
-  nickname: string;
-  gender: boolean;
-  nation: string;
-  termsOfUse: boolean;
-  termsOfPersonalInformation: boolean;
-  termsOfPromotion: boolean;
+  disabled: boolean;
 }
 
 export default function SignUp() {
+  const [isButtonDisabled, setButtonDisabled] = useState(true);
+
+  const signUpFormData = useRecoilValue(signUpFormDataAtom);
+
   useEffect(() => {
-    handleComplete();
-  });
-
-  const [error, setError] = useState<Boolean>(false);
-  const [check, setCheck] = useState<Boolean>(false);
-  const [complete, setComplete] = useState(false);
-
-  const getError = (error: Boolean) => {
-    setError(error);
-  };
-
-  const getCheck = (check: Boolean) => {
-    setCheck(check);
-  };
-
-  const handleComplete = () => {
-    if (error === false && check === true) {
-      setComplete(true);
-    } else {
-      setComplete(false);
+    if (
+      signUpFormData.idCardImage &&
+      signUpFormData.email &&
+      signUpFormData.password &&
+      signUpFormData.name &&
+      signUpFormData.nation &&
+      signUpFormData.termsOfUse &&
+      signUpFormData.termsOfPersonalInformation
+    ) {
+      setButtonDisabled(false);
     }
-  };
+  }, [signUpFormData]);
 
-  const signUpMutation = useMutation((signUpData: SignUpData) =>
-    axios.post(`${SERVER_URL}/api/signup`, signUpData)
+  const { mutate: signUpMutation } = useMutation(
+    (signUpData: SignUpFormData) => postSignUp(signUpData),
+    { onSuccess: () => router.push("/auth/complete") }
   );
 
   const handleSignUpSubmit = () => {
-    // TODO: 제출
-    // if (complete) {
-    //   signUpMutation.mutate({
-    //     idCardImage: "image",
-    //     email: "wingle@gmail.com",
-    //     password: "1234!",
-    //     name: "김윙글",
-    //     isNicknameChecked: true,
-    //     nickname: "윙그리",
-    //     gender: true,
-    //     nation: "kr",
-    //     termsOfUse: true,
-    //     termsOfPersonalInformation: true,
-    //     termsOfPromotion: false,
-    //   });
-    // }
+    if (!isButtonDisabled) {
+      signUpMutation(signUpFormData);
+    }
   };
 
   return (
@@ -92,21 +61,16 @@ export default function SignUp() {
         <Margin direction="row" size={14} />
         <Text.Title2 color="gray900">회원가입</Text.Title2>
       </S.HeaderWrapper>
-      <form onSubmit={handleSignUpSubmit}>
-        <StudentCard />
-        <Text.Title1 color="gray900">학생 정보</Text.Title1>
-        <Margin direction="column" size={16} />
-        <InputBox getError={getError} />
-        <DropDown />
-        <GenderSelectBox />
-        <AgreeBox getCheck={getCheck} />
-        <S.CompleteButton
-          complete={complete}
-          onClick={() => (complete ? router.replace("complete") : console.log("disabled"))}
-        >
-          <Text.Body1 color={complete ? "white" : "gray500"}>작성완료</Text.Body1>
-        </S.CompleteButton>
-      </form>
+
+      <StudentCard />
+      <InputBox />
+      <DropDown />
+      <GenderSelectBox />
+      <AgreeBox />
+
+      <S.CompleteButton disabled={isButtonDisabled} onClick={handleSignUpSubmit}>
+        작성완료
+      </S.CompleteButton>
     </S.Wrapper>
   );
 }
@@ -124,10 +88,18 @@ const S = {
     cursor: pointer;
   `,
   CompleteButton: styled.button<SdInputProps>`
-    height: 50px;
-    background-color: ${(props) => (props.complete ? "#FF812E" : "#EEEEF2")};
+    background-color: ${({ disabled }) => (disabled ? "#EEEEF2" : "#FF812E")};
+    color: ${({ disabled }) => (disabled ? "#959599" : "#fff")};
     border-radius: 8px;
     width: 452px;
-    margin-bottom: 333px;
+    height: 50px;
+    margin-bottom: 144px;
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+    border-radius: 8px;
+    margin: 0 auto;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22.4px;
+    margin-bottom: 144px;
   `,
 };

@@ -1,5 +1,101 @@
 export const countryList = [
   {
+    "code": "KR",
+    "nation": "대한민국",
+    "add_code_nation": "KR 대한민국",
+    "country": "Republic of Korea"
+  },
+  {
+    "code": "CN",
+    "nation": "중화인민공화국",
+    "add_code_nation": "CN 중화인민공화국",
+    "country": "CHINA"
+  },  
+  {
+    "code": "VN",
+    "nation": "베트남",
+    "add_code_nation": "VN 베트남",
+    "country": "VIET NAM"
+  },
+  {
+    "code": "MN",
+    "nation": "몽골",
+    "add_code_nation": "MN 몽골",
+    "country": "MONGOLIA"
+  },
+  {
+    "code": "JP",
+    "nation": "일본",
+    "add_code_nation": "JP 일본",
+    "country": "JAPAN"
+  },
+  {
+    "code": "US",
+    "nation": "미국",
+    "add_code_nation": "US 미국",
+    "country": "UNITED STATES"
+  },
+  {
+    "code": "IN",
+    "nation": "인도",
+    "add_code_nation": "IN 인도",
+    "country": "INDIA"
+  },
+  {
+    "code": "FR",
+    "nation": "프랑스",
+    "add_code_nation": "FR 프랑스",
+    "country": "FRANCE"
+  },
+  {
+    "code": "GB",
+    "nation": "영국",
+    "add_code_nation": "GB 영국",
+    "country": "UNITED KINGDOM"
+  },
+  {
+    "code": "IT",
+    "nation": "이탈리아",
+    "add_code_nation": "IT 이탈리아",
+    "country": "ITALY"
+  },
+  {
+    "code": "BR",
+    "nation": "브라질",
+    "add_code_nation": "BR 브라질",
+    "country": "BRAZIL"
+  },
+  {
+    "code": "CA",
+    "nation": "캐나다",
+    "add_code_nation": "CA 캐나다",
+    "country": "CANADA"
+  },
+  {
+    "code": "AU",
+    "nation": "오스트레일리아",
+    "add_code_nation": "AU 오스트레일리아",
+    "country": "AUSTRALIA"
+  },
+  {
+    "code": "RU",
+    "nation": "러시아",
+    "add_code_nation": "RU 러시아",
+    "country": "RUSSIAN FEDERATION"
+  },
+  {
+    "code": "ES",
+    "nation": "스페인",
+    "add_code_nation": "ES 스페인",
+    "country": "SPAIN"
+  },
+  {
+    "code": "MX",
+    "nation": "멕시코",
+    "add_code_nation": "MX 멕시코",
+    "country": "MEXICO"
+  },
+  {
     "code": "AF",
     "nation": "아프가니스탄",
     "add_code_nation": "AF 아프가니스탄",
@@ -76,12 +172,6 @@ export const countryList = [
     "nation": "아루바",
     "add_code_nation": "AW 아루바",
     "country": "ARUBA"
-  },
-  {
-    "code": "AU",
-    "nation": "오스트레일리아",
-    "add_code_nation": "AU 오스트레일리아",
-    "country": "AUSTRALIA"
   },
   {
     "code": "AT",
@@ -180,12 +270,6 @@ export const countryList = [
     "country": "BOUVET ISLAND"
   },
   {
-    "code": "BR",
-    "nation": "브라질",
-    "add_code_nation": "BR 브라질",
-    "country": "BRAZIL"
-  },
-  {
     "code": "IO",
     "nation": "영국령 인도양 지역",
     "add_code_nation": "IO 영국령 인도양 지역",
@@ -228,12 +312,6 @@ export const countryList = [
     "country": "CAMEROON"
   },
   {
-    "code": "CA",
-    "nation": "캐나다",
-    "add_code_nation": "CA 캐나다",
-    "country": "CANADA"
-  },
-  {
     "code": "CV",
     "nation": "카보베르데",
     "add_code_nation": "CV 카보베르데",
@@ -262,12 +340,6 @@ export const countryList = [
     "nation": "칠레",
     "add_code_nation": "CL 칠레",
     "country": "CHILE"
-  },
-  {
-    "code": "CN",
-    "nation": "중화인민공화국",
-    "add_code_nation": "CN 중화인민공화국",
-    "country": "CHINA"
   },
   {
     "code": "CX",
@@ -444,12 +516,6 @@ export const countryList = [
     "country": "FINLAND"
   },
   {
-    "code": "FR",
-    "nation": "프랑스",
-    "add_code_nation": "FR 프랑스",
-    "country": "FRANCE"
-  },
-  {
     "code": "GF",
     "nation": "프랑스령 기아나",
     "add_code_nation": "GF 프랑스령 기아나",
@@ -600,12 +666,6 @@ export const countryList = [
     "country": "ICELAND"
   },
   {
-    "code": "IN",
-    "nation": "인도",
-    "add_code_nation": "IN 인도",
-    "country": "INDIA"
-  },
-  {
     "code": "ID",
     "nation": "인도네시아",
     "add_code_nation": "ID 인도네시아",
@@ -642,22 +702,10 @@ export const countryList = [
     "country": "ISRAEL"
   },
   {
-    "code": "IT",
-    "nation": "이탈리아",
-    "add_code_nation": "IT 이탈리아",
-    "country": "ITALY"
-  },
-  {
     "code": "JM",
     "nation": "자메이카",
     "add_code_nation": "JM 자메이카",
     "country": "JAMAICA"
-  },
-  {
-    "code": "JP",
-    "nation": "일본",
-    "add_code_nation": "JP 일본",
-    "country": "JAPAN"
   },
   {
     "code": "JE",
@@ -694,12 +742,6 @@ export const countryList = [
     "nation": "조선민주주의인민공화국",
     "add_code_nation": "KP 조선민주주의인민공화국",
     "country": "KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF"
-  },
-  {
-    "code": "KR",
-    "nation": "대한민국",
-    "add_code_nation": "KR 대한민국",
-    "country": "Republic of Korea"
   },
   {
     "code": "KW",
@@ -840,12 +882,6 @@ export const countryList = [
     "country": "MAYOTTE"
   },
   {
-    "code": "MX",
-    "nation": "멕시코",
-    "add_code_nation": "MX 멕시코",
-    "country": "MEXICO"
-  },
-  {
     "code": "FM",
     "nation": "미크로네시아 연방",
     "add_code_nation": "FM 미크로네시아 연방",
@@ -862,12 +898,6 @@ export const countryList = [
     "nation": "모나코",
     "add_code_nation": "MC 모나코",
     "country": "MONACO"
-  },
-  {
-    "code": "MN",
-    "nation": "몽골",
-    "add_code_nation": "MN 몽골",
-    "country": "MONGOLIA"
   },
   {
     "code": "ME",
@@ -1092,12 +1122,6 @@ export const countryList = [
     "country": "ROMANIA"
   },
   {
-    "code": "RU",
-    "nation": "러시아",
-    "add_code_nation": "RU 러시아",
-    "country": "RUSSIAN FEDERATION"
-  },
-  {
     "code": "RW",
     "nation": "르완다",
     "add_code_nation": "RW 르완다",
@@ -1210,12 +1234,6 @@ export const countryList = [
     "nation": "사우스조지아 사우스샌드위치 제도",
     "add_code_nation": "GS 사우스조지아 사우스샌드위치 제도",
     "country": "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS"
-  },
-  {
-    "code": "ES",
-    "nation": "스페인",
-    "add_code_nation": "ES 스페인",
-    "country": "SPAIN"
   },
   {
     "code": "LK",
@@ -1374,18 +1392,6 @@ export const countryList = [
     "country": "UNITED ARAB EMIRATES"
   },
   {
-    "code": "GB",
-    "nation": "영국",
-    "add_code_nation": "GB 영국",
-    "country": "UNITED KINGDOM"
-  },
-  {
-    "code": "US",
-    "nation": "미국",
-    "add_code_nation": "US 미국",
-    "country": "UNITED STATES"
-  },
-  {
     "code": "UM",
     "nation": "미국령 군소 제도",
     "add_code_nation": "UM 미국령 군소 제도",
@@ -1420,12 +1426,6 @@ export const countryList = [
     "nation": "베네수엘라",
     "add_code_nation": "VE 베네수엘라",
     "country": "VENEZUELA"
-  },
-  {
-    "code": "VN",
-    "nation": "베트남",
-    "add_code_nation": "VN 베트남",
-    "country": "VIET NAM"
   },
   {
     "code": "VG",

@@ -1,6 +1,10 @@
 import React, { useState, useCallback } from "react";
+import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
+import { List } from "../../../constants/countryList";
 import Image from "next/image";
+import { useSetRecoilState } from "recoil";
+import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 
 interface StyledInputProps {
   isActive: boolean;
@@ -22,6 +26,8 @@ export default function DropDown({
   description,
 }: DropDownProps) {
   const [isActive, setIsActive] = useState(false);
+  const [nation, setNation] = useState("Republic of Korea");
+  const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const onActiveToggle = useCallback(() => {
     setIsActive((prev) => !prev);
@@ -31,154 +37,84 @@ export default function DropDown({
     (e) => {
       const target = e.target as HTMLLIElement;
       const selectedNation = target.innerText;
-      onSelectedChange(selectedNation);
+      setNation(selectedNation);
       setIsActive(false);
+      setSignUpFormData((prev) => ({
+        ...prev,
+        nation,
+      }));
     },
-    [onSelectedChange]
+    [setSignUpFormData, nation]
   );
 
   return (
     <S.Container>
-      <S.Label>{label}</S.Label>
+      <Text.Body1 color="gray700">국적</Text.Body1>
       <S.DropdownContainer>
-        <S.DropdownBody onClick={onActiveToggle} isActive={isActive}>
-          <S.DropdownSelected>{selected}</S.DropdownSelected>
-          <S.DropdownSelected>
+        <S.DropdownBody onClick={onActiveToggle}>
+          <S.Selected>
+            <S.CountryItem color="gray900">{nation}</S.CountryItem>
+          </S.Selected>
+          <S.Selected>
             <Image src="/auth/arrow_down.svg" alt="arrow" width={20} height={20} />
-          </S.DropdownSelected>
+          </S.Selected>
         </S.DropdownBody>
+        <Margin direction="column" size={8} />
 
-        <S.DropdownMenuContainer isActive={isActive}>
-          {list.map((item) => (
-            <S.DropdownItemContainer
-              key={item}
-              isSelected={item === selected}
-              onClick={handleSelectItem}
-            >
-              {item}
+        <S.DropdownMenu isActive={isActive}>
+          {List.map((item) => (
+            <S.DropdownItemContainer id="item" key={item} onClick={handleSelectItem}>
+              <S.CountryItem color="gray900">{item}</S.CountryItem>
             </S.DropdownItemContainer>
           ))}
-        </S.DropdownMenuContainer>
+        </S.DropdownMenu>
+        <Margin direction="column" size={16} />
       </S.DropdownContainer>
-      {description && <S.Description>{description}</S.Description>}
     </S.Container>
   );
 }
 
 const S = {
-  Container: styled.div`
-    display: flex;
-    flex-direction: column;
-  `,
-  Label: styled.label`
-    margin-bottom: 8px;
-    font-size: 16px;
-    font-weight: 700;
-    color: ${({ theme }) => theme.color.gray700};
-  `,
+  Container: styled.div``,
   DropdownContainer: styled.div`
-    position: relative;
+    margin-top: 8px;
     &:hover {
       cursor: pointer;
     }
   `,
-  DropdownBody: styled.div<{ isActive: boolean }>`
+  DropdownBody: styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 452px;
     height: 50px;
-    background-color: ${({ theme }) => theme.color.white};
-    border: 1px solid
-      ${({ theme, isActive }) => (isActive ? theme.color.gray600 : theme.color.gray300)};
+    border: 1px solid #dcdce0;
     border-radius: 8px;
+    cursor: pointer;
   `,
-  DropdownSelected: styled.div`
-    font-size: 16px;
-    color: ${({ theme }) => theme.color.gray900};
-    padding: 14px 16px;
+  Selected: styled.div`
+    padding-left: 15px;
+    padding-right: 15px;
   `,
-  DropdownMenuContainer: styled.ul<StyledInputProps>`
+  DropdownMenu: styled.ul<StyledInputProps>`
+    overflow: auto;
     position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    z-index: 1;
+    background-color: white;
+    display: ${(props) => (props.isActive ? `block` : `none`)};
     width: 452px;
-    height: 312px;
-    padding: 8px 0;
-    background-color: ${({ theme }) => theme.color.white};
-    border: 1px solid ${({ theme }) => theme.color.gray600};
+    height: 208px;
+    border: 1px solid #dcdce0;
     border-radius: 8px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    display: ${(props) => (props.isActive ? "block" : "none")};
+    padding-top: 21px;
   `,
-  DropdownItemContainer: styled.li<{ isSelected: boolean }>`
+  DropdownItemContainer: styled.li`
     display: flex;
     align-items: center;
-    padding: 16px;
-    font-size: 16px;
-    color: ${({ theme }) => theme.color.gray900};
-    &:hover {
-      background-color: ${({ theme }) => theme.color.gray200};
-      cursor: pointer;
-    }
-    ${({ isSelected, theme }) =>
-      isSelected &&
-      `
-    background-color: ${theme.color.gray200};
-  `}
+    padding-top: 0px;
+    padding-bottom: 26px;
+    padding-left: 16px;
   `,
-  Description: styled.div`
-    height: 17px;
-    font-size: 12px;
-    color: ${({ theme }) => theme.color.gray900};
-    flex: none;
-    order: 2;
-    align-self: stretch;
-    flex-grow: 0;
-    margin: 8px 0px;
+  CountryItem: styled(Text.Body3)`
+    cursor: pointer;
   `,
 };
-
-// EXAMPLE : 아래처럼 사용하세요!!(src/pages/test.tsx)
-// export default function Test() {
-//   const [selected, setSelected] = useState("Republic of Korea");
-//   const onSelectedChange = useCallback((selected: string) => {
-//     setSelected(selected);
-//   }, []);
-
-//   const list = [
-//     "Republic of Korea",
-//     "United States of America",
-//     "Canada",
-//     "China",
-//     "Japan",
-//     "Russia",
-//     "France",
-//     "Germany",
-//   ];
-
-//   return (
-//     <S.Wrapper>
-//       <Margin size={50} direction="column" />
-//       <div>
-//         <Margin size={8} direction="row" />
-//         <DropDown
-//           label="안녕"
-//           list={list}
-//           selected={selected}
-//           onSelectedChange={onSelectedChange}
-//           description="테스트"
-//         />
-//       </div>
-//     </S.Wrapper>
-//   );
-// }
-
-// const S = {
-//   Wrapper: styled.div`
-//     padding-left: 24px;
-//     padding-right: 24px;
-//   `,
-// };
