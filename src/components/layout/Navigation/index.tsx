@@ -20,7 +20,7 @@ const NavigationMenuArr = [
   },
   {
     name: "쪽지",
-    page: "/message",
+    page: "/messages",
     normalImg: "/community/list/message-normal.svg",
     disableImg: "/community/list/message-disable.svg",
   },
