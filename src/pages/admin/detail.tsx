@@ -16,7 +16,7 @@ export default function Detail() {
   const postOrder = Number(useRouter().asPath.split('?').at(-1));
   const setPostOrder = useSetRecoilState(postOrderStateAtom);
 
-  const { data, isLoading, error } = useQuery(['getUser', userId], () => adminListAPI.getUser({path: 'waiting', userId}), { cacheTime: 0 })
+  const { data } = useQuery(['getUser', userId], () => adminListAPI.getUser({path: 'waiting', userId}), { cacheTime: 0 })
 
   useEffect(() => setPostOrder(postOrder), []);
 
@@ -24,9 +24,11 @@ export default function Detail() {
     <S.Main modal={isOpen}>
 
       <Header />
-      <S.TabBar><p>수락{data?.message.split(' ')[1]}</p></S.TabBar>
-      <S.Card card={data?.data.idCardImage}/>
-      <Contents userId={userId} data={data?.data} setIsOpen={setIsOpen} />
+      {data && <>
+        <S.TabBar><p>수락{data.message.split(' ')[1]}</p></S.TabBar>
+        <S.Card card={data.data.idCardImage}/>
+        <Contents userId={userId} data={data.data} setIsOpen={setIsOpen} />
+      </> }
 
       {isOpen && <Modal setIsOpen={setIsOpen}>{isOpen}</Modal>}
 
@@ -72,7 +74,7 @@ const S = {
       color: ${theme.color.gray900};
     }
   `,
-  Card: styled.div<{card: string}>`
+  Card: styled.div<{card: string | undefined}>`
     position: absolute;
     width: 700px;
     height: 600px;

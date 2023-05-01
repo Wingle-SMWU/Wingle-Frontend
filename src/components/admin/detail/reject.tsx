@@ -14,7 +14,7 @@ type RejectFactor = {
 
 export default function Reject({ children, userId, setIsOpen, inputs, setInputs, data }: RejectFactor) {
 
-  const { mutate, isLoading, error } = usePostTemp(children, userId, inputs);
+  const { mutate } = usePostTemp(children, userId, inputs);
 
   const handleChangeReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if(e.target.name === '거절사유') setInputs({...inputs, reject: e.target.value});

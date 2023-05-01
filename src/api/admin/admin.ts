@@ -1,3 +1,4 @@
+import { AdminUserResp, DataResp, ReturnResp } from '@/src/types/admin/admin';
 import instance from '../axiosModul'
 
 type GetList = {
@@ -20,12 +21,12 @@ type PostTempStore = {
 export const adminListAPI = {
   url: '/admin',
 
-  get: async ({ path, page }: GetList) => {
+  get: async ({ path, page }: GetList): Promise<ReturnResp<DataResp>> => {
     const res = await instance.get(`${adminListAPI.url}/list/${path}/${page}`);
     return res.data;
   },
 
-  getUser: async ({ path, userId }: GetList) => {
+  getUser: async ({ path, userId }: GetList): Promise<ReturnResp<AdminUserResp>> => {
     const res = await instance.get(`${adminListAPI.url}/${path}/${userId}`);
     return res.data;
   } 

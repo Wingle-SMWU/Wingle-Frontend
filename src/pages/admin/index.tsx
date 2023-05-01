@@ -14,7 +14,7 @@ export default function Admin() {
   const [page, setPage] = useState(1);
   const path = ADMIN_GET_LIST[currIdx];
 
-  const { data, isLoading, error } = useGetAdminUserList({path, page});
+  const { data } = useGetAdminUserList({path, page});
 
   const handleClickTabBar = useCallback((idx: number) => {
     setCurrIdx(idx);
@@ -27,8 +27,12 @@ export default function Admin() {
     <S.Main>
       <Header />
       <Tabbar currIdx={currIdx} handleClickTabBar={handleClickTabBar} />
-      <Content data={data?.data.list} />
-      <PageBtn totalPages={data?.data.totalPages} page={page} setPage={setPage} />
+      {data && 
+      <>
+        <Content data={data.data.list} />
+        <PageBtn totalPages={data.data.totalPages} page={page} setPage={setPage} />
+      </>
+      }
     </S.Main>
   )
 }

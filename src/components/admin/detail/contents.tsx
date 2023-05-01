@@ -18,7 +18,7 @@ export default function Contents({ data, userId, setIsOpen }: ContentsFactor) {
     memo: '',
   })
 
-  const { mutate, isLoading, error } = usePostPermission(userId, inputs.reject);
+  const { mutate } = usePostPermission(userId, inputs.reject);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
