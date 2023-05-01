@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { ThemeProvider } from "styled-components";
+import { css, ThemeProvider } from "styled-components";
 import { GlobalStyle } from "../styles/global-style";
 import { theme } from "../styles/theme";
 import { RecoilRoot } from "recoil";
@@ -8,8 +8,10 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import styled from "styled-components";
 import { useRouter } from 'next/router';
+import useAppVersion from '../hooks/useAppVersion';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const version = useAppVersion();
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -21,9 +23,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         },
       })
   );
-
-  const router = useRouter();
-  const page = router.pathname.split('/')[1];
 
   return (
     <>
@@ -39,7 +38,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           </Head>
           <GlobalStyle />
           <ThemeProvider theme={theme}>
-            <S.Wrapper page={page}>
+            <S.Wrapper version={version}>
               <Component {...pageProps} />
             </S.Wrapper>
           </ThemeProvider>
@@ -50,10 +49,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 }
 
 const S = {
-  Wrapper: styled.div<{page: string}>`
-    width: ${({page}) => (page !== 'admin' ? '500px' : '')};
-    max-width: ${({page}) => (page !== 'admin' ? '500px' : '')};
-    height: ${({page}) => (page !== 'admin' ? '100vh' : '')};
-    background-color: ${({page}) => (page !== 'admin' ? 'white' : '')};
-  `,
+  Wrapper: styled.div<{version: string}>`
+    ${props => props.version === 'mobile' && 
+      css`
+        width: 500px;
+        max-width: 500px;
+        min-height: 100vh;
+        background-color: white;
+        `
+      }
+  `
+
 };
