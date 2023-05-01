@@ -16,9 +16,17 @@ export default function Detail() {
   const postOrder = Number(useRouter().asPath.split('?').at(-1));
   const setPostOrder = useSetRecoilState(postOrderStateAtom);
 
-  const { data } = useQuery(['getUser', userId], () => adminListAPI.getUser({path: 'waiting', userId}), { cacheTime: 0 })
+  const { data, isError } = useQuery(['getUser', userId], () => adminListAPI.getUser({path: 'waiting', userId}), { cacheTime: 0, retry: 0 })
 
   useEffect(() => setPostOrder(postOrder), []);
+
+  if(isError) {
+    return (
+      <S.Main modal={isOpen}>
+        404
+      </S.Main>
+    )
+  }
 
   return (
     <S.Main modal={isOpen}>

@@ -19,7 +19,7 @@ export default function PageBtn({ totalPages, page, setPage }: AdminUsersResp) {
       <Pagination 
         activePage={page}
         itemsCountPerPage={10}
-        totalItemsCount={totalPages * 10 | 1}
+        totalItemsCount={totalPages * 10 || 1}
         pageRangeDisplayed={5}
         prevPageText={"<"}  
         nextPageText={">"}

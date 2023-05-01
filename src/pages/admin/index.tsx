@@ -14,7 +14,8 @@ export default function Admin() {
   const [page, setPage] = useState(1);
   const path = ADMIN_GET_LIST[currIdx];
 
-  const { data } = useGetAdminUserList({path, page});
+  const { data, isError } = useGetAdminUserList({path, page});
+
 
   const handleClickTabBar = useCallback((idx: number) => {
     setCurrIdx(idx);
@@ -23,6 +24,15 @@ export default function Admin() {
 
   useEffect(() => setPage(1), [currIdx])
 
+  if(isError) {
+    return (
+      <S.Main>
+        404
+      </S.Main>
+    )
+  }
+
+  console.log(data);
   return (
     <S.Main>
       <Header />

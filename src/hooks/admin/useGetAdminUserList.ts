@@ -6,12 +6,15 @@ type QueryFactor = {
   page: number;
 }
 
+
 export default function useGetAdminUserList({ path, page }: QueryFactor) {
   
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     [path, { path, page }],
     () => adminListAPI.get({ path, page: page - 1 }),
+    { retry: 0 },
+    
   );
 
-  return { data, isLoading, error };
+  return { data, isLoading, isError };
 }
