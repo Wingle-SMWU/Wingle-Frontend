@@ -1,32 +1,101 @@
+import instance from "../api/axiosModule";
+import { getComments } from "../api/community/get/comments";
+import { Margin, Text } from "./ui";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import styled from "styled-components";
-import { Margin, Text } from "./ui";
 
-export default function Modal(props: {
+export default function Modal({
+  type,
+  deleteInform = { forumId: "", articleId: "", id: 0 },
+  onClickModal,
+}: {
   type: string;
+  deleteInform?: Id;
   onClickModal: () => void;
 }) {
+  const { forumId, articleId, id } = deleteInform;
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const onClickOk = () => {
-    router.back();
+    if (type === "create-back" || type === "profile-back") {
+      router.back();
+    } else if (type === "detail-delete-contents") {
+      deleteComments.mutate();
+      deleteArticle.mutate();
+      onClickModal();
+      router.back();
+    } else if (type === "detail-delete-comment") {
+      deleteComment.mutate();
+      onClickModal();
+    }
   };
 
+  // detail-delete-contents
+  // 1. 댓글 데이터 삭제
+  const { data: comments } = useQuery({
+    queryFn: getComments,
+    queryKey: ["comments", String(forumId), String(articleId), 0, 10],
+    enabled: forumId !== "" || articleId !== "",
+  });
+
+  const fetchComments = async () => {
+    for (const comment of comments ?? []) {
+      instance.delete(
+        `/community/${forumId}/articles/${articleId}/comments/${comment.id}`
+      );
+    }
+  };
+
+  // 2. 게시물 삭제
+  const fetchArticle = async () => {
+    const { data: response } = await instance.delete(
+      `/community/${forumId}/articles/${articleId}`
+    );
+    return response.data;
+  };
+
+  // detail-delete-comment
+  const fetchCommment = async () => {
+    const { data: response } = await instance.delete(
+      `/community/${forumId}/articles/${articleId}/comments/${id}`
+    );
+    return response.data;
+  };
+
+  const deleteComment = useMutation(fetchCommment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("comments");
+    },
+  });
+
+  const deleteArticle = useMutation(fetchArticle, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("articles");
+    },
+  });
+
+  const deleteComments = useMutation(fetchComments, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("comments");
+    },
+  });
+
   const modalTitle = useMemo(() => {
-    if (props.type === "create-back" || "profile-back") {
+    if (type === "create-back" || type === "profile-back") {
       return "정말 나가시겠어요?";
-    }
-    if (props.type === "detail-delete-contents") {
+    } else if (type === "detail-delete-contents") {
       return "게시글을 삭제 하시겠어요?";
-    }
-    if (props.type === "detail-delete-comment") {
+    } else if (type === "detail-delete-comment") {
       return "댓글을 삭제 하시겠어요?";
     }
     return "";
-  }, [props.type]);
+  }, [type]);
 
   const modalContents = useMemo(() => {
-    if (props.type === "create-back") {
+    if (type === "create-back") {
       return (
         <>
           글 작성을 완료하지 않고 페이지를 벗어나면
@@ -35,7 +104,7 @@ export default function Modal(props: {
         </>
       );
     }
-    if (props.type === "detail-delete-contents") {
+    if (type === "detail-delete-contents") {
       return (
         <>
           삭제된 게시글은 복구할 수 없으니
@@ -44,7 +113,7 @@ export default function Modal(props: {
         </>
       );
     }
-    if (props.type === "detail-delete-comment") {
+    if (type === "detail-delete-comment") {
       return (
         <>
           삭제된 댓글은 복구할 수 없으니
@@ -53,7 +122,7 @@ export default function Modal(props: {
         </>
       );
     }
-    if (props.type === "profile-back") {
+    if (type === "profile-back") {
       return (
         <>
           지금 나가시면 변경 내용이
@@ -63,7 +132,7 @@ export default function Modal(props: {
       );
     }
     return "";
-  }, [props.type]);
+  }, [type]);
 
   return (
     <Style.Wrapper>
@@ -71,7 +140,7 @@ export default function Modal(props: {
         <Style.AbsolutePoint>
           <Style.CloseIcon
             src="/community/modal/close-black.svg"
-            onClick={props.onClickModal}
+            onClick={onClickModal}
           />
         </Style.AbsolutePoint>
         <Style.Main>
@@ -80,7 +149,7 @@ export default function Modal(props: {
           <Text.Body7 color="gray900">{modalContents}</Text.Body7>
           <Margin direction="column" size={32} />
           <Style.ButtonBox>
-            <Style.CancelButton onClick={props.onClickModal}>
+            <Style.CancelButton onClick={onClickModal}>
               <Text.Caption1 color="gray600">취소</Text.Caption1>
             </Style.CancelButton>
             <Style.OkButton onClick={onClickOk}>

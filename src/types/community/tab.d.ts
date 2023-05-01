@@ -1,0 +1,3 @@
+type Tab = {
+  tab: string;
+};
