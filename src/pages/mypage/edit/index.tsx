@@ -4,7 +4,7 @@ import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
 import { useEffect,useState } from "react";
-import instance from "@/src/api/axiosModule";
+import { getProfile } from "@/src/api/mypage/profileData";
 import { useSetRecoilState, useRecoilValue }  from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
@@ -14,19 +14,21 @@ export default function Edit() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const setProfileState = useSetRecoilState(profileStateAtom);
- 
+  
+  useEffect(() => {
+  const fetchProfile = async () => {
+    try {
+      const data = await getProfile();
+      console.log(data)
+      setProfileState(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Failed to get profile:', error);
+    }
+  };
 
-  const getProfile = async (): Promise<void> => {
-  try {
-    const response = await instance.get("/profile/detail");
-    const data = response.data.data;
-
-    setProfileState(data);// Recoil atom 업데이트
-    setLoading(false)
-  } catch (error) {
-    console.error('Failed to get profile:', error);
-  }
-};
+  fetchProfile();
+}, []);
 
 
   useEffect(() => {

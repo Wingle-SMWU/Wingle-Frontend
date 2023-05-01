@@ -5,7 +5,7 @@ import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
 import { useEffect,useState } from "react";
-import instance from "@/src/api/axiosModule";
+import { getProfile } from "@/src/api/mypage/profileData";
 import { useSetRecoilState, useRecoilValue }  from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
@@ -16,21 +16,20 @@ export default function Mypage() {
 
   const setProfileState = useSetRecoilState(profileStateAtom);
 
-  const getProfile = async (): Promise<void> => {
-  try {
-    const response = await instance.get("/profile/detail");
-    const data = response.data.data;
-
-    setProfileState(data);
-    setLoading(false) // Recoil atom 업데이트
-  } catch (error) {
-    console.error('Failed to get profile:', error);
-  }
-};
-
   useEffect(() => {
-    getProfile();
-  }, []);
+    const fetchProfile = async () => {
+    try {
+      const data = await getProfile();
+      console.log(data)
+      setProfileState(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Failed to get profile:', error);
+    }
+  };
+
+  fetchProfile();
+}, []);
 
   const profileState = useRecoilValue(profileStateAtom);
   console.log(profileState)
