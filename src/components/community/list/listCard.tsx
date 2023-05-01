@@ -1,10 +1,18 @@
+import { Text } from "../../ui";
+import betweenTime from "@/src/utils/betweenTime";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import styled from "styled-components";
-import { Text } from "../../ui";
-import betweenTime from "@/src/utils/betweenTime";
 
-export default function ListCard({ imgUrl, isNotice, article }: { imgUrl: string; isNotice: boolean, article: Article }) {
+export default function ListCard({
+  imgUrl,
+  isNotice,
+  article,
+}: {
+  imgUrl: string;
+  isNotice: boolean;
+  article: Article;
+}) {
   const router = useRouter();
   const {
     articleId,
@@ -31,7 +39,10 @@ export default function ListCard({ imgUrl, isNotice, article }: { imgUrl: string
     if (isNotice) {
       return;
     }
-    router.push({ pathname: `/community/detail`, query: { tab: currentTab, forumId: forumId, articleId: articleId } });
+    router.push({
+      pathname: `/community/detail`,
+      query: { tab: currentTab, forumId: forumId, articleId: articleId },
+    });
   };
 
   const time = betweenTime(createdTime);
@@ -41,11 +52,13 @@ export default function ListCard({ imgUrl, isNotice, article }: { imgUrl: string
       <S.ContentsHeader>
         <S.ContentsHeaderImg src={imgUrl} />
         <S.ContentsHeaderInfo>
-          <Text.Body6 color="gray900">{userNickname}</Text.Body6>
+          <Text.Body6 color="gray900" pointer={true}>
+            {userNickname}
+          </Text.Body6>
           <Text.Caption3 color="gray500">{time}</Text.Caption3>
         </S.ContentsHeaderInfo>
       </S.ContentsHeader>
-      <Text.Body4 color="gray900">
+      <Text.Body4 color="gray900" pointer={true}>
         {content}
       </Text.Body4>
     </S.Contents>
@@ -61,6 +74,7 @@ const S = {
     gap: 2px;
     padding: 12px 24px;
     background-color: #fff;
+    cursor: pointer;
   `,
 
   ContentsHeader: styled.div`
