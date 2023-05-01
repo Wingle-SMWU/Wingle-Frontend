@@ -7,17 +7,20 @@ import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import styled from "styled-components";
-import { useRouter } from 'next/router';
 import useAppVersion from '../hooks/useAppVersion';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const version = useAppVersion();
+  const STALE_TIME = 10 * 60 * 1000;
+  const CACHE_TIME = 10 * 60 * 1000;
+
   const [queryClient] = useState(
     () =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            refetchOnMount: false,
+            staleTime: STALE_TIME,
+            cacheTime: CACHE_TIME,
             refetchOnWindowFocus: false,
           },
         },

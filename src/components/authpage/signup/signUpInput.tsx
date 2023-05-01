@@ -1,128 +1,207 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { ErrorMent } from "./errorMent";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
+import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
+import { useSetRecoilState } from "recoil";
+import { useMutation } from "react-query";
+import {
+  sendEmailAuth,
+  verifyEmailCertification,
+  checkNicknameAvailable,
+} from "@/src/api/auth/emailAPI";
+import { SignupInputData } from "@/src/types/auth/signupFormDataType";
 
 interface StyledInputProps {
   small: boolean;
   error: boolean;
 }
 
-function ErrorMent({ error, errorMent, ment }: any) {
-  return (
-    <>
-      {error === true ? (
-        <>
-          <S.ErrorWrapper>
-            <img src="/auth/error.svg" alt="error" />
-            <Margin direction="row" size={8} />
-            <Text.Caption3 color="red500">{errorMent}</Text.Caption3>
-          </S.ErrorWrapper>
-        </>
-      ) : (
-        <Text.Caption3 color="gray900">{ment}</Text.Caption3>
-      )}
-    </>
-  );
-}
-
-export default function InputBox({ getError }: any) {
-  useEffect(() => {
-    handleError();
-    getError(error);
-  });
-  const [count, setCount] = useState(1);
+export default function InputBox() {
   const [buttonMessage, setButtonMessage] = useState("인증 전송");
   const [emailMent, setEmailMent] = useState("");
-  const [data, setData] = useState({
-    Email: "",
-    CertificationNumber: "",
-    PW: "",
-    Name: "",
-    NickName: "",
+
+  const [inputData, setInputData] = useState<SignupInputData>({
+    email: "",
+    emailCertification: "",
+    password: "",
+    passwordCheck: "",
+    name: "",
+    nickname: "",
   });
-  const { Email, CertificationNumber, PW, Name, NickName } = data;
-  const [error, setError] = useState(true);
-  const [errorCertify, setErrorCertify] = useState(false);
-  const [errorPW, setErrorPW] = useState(false);
-  const [errorPWCheck, setErrorPWCheck] = useState(false);
-  const [errorName, setErrorName] = useState(false);
-  const [errorNickName, setErrorNickName] = useState(false);
+  const { email, emailCertification, password, passwordCheck, name, nickname } = inputData;
+  const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
-  const handleData = (e: any) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+  const [isErrorEmailCertify, setErrorEmailCertify] = useState(true);
+  const [isErrorPassword, setErrorPassword] = useState(true);
+  const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(true);
+  const [isErrorName, setErrorName] = useState(true);
+  const [isErrorNickName, setErrorNickName] = useState(true);
+  const [isCheckedNickname, setCheckedNickname] = useState(false);
+  const [isVerifiedNickname, setVerifiedNickname] = useState(false);
 
-  const handleError = () => {
-    if (
-      errorCertify === false &&
-      errorPW === false &&
-      errorPWCheck === false &&
-      errorName === false &&
-      errorNickName === false
-    ) {
-      setError(false);
-    } else {
-      setError(true);
+  const handleInputData = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
+  }, []);
+
+  // 이메일 인증메일 보내기
+  const { mutate: sendEmail } = useMutation(() => sendEmailAuth(email), {
+    onMutate: () => {
+      setButtonMessage("전송 중");
+    },
+    onSuccess: () => {
+      setButtonMessage("재전송");
+      setEmailMent("인증메일을 전송했습니다.");
+    },
+    onError: (error) => {
+      setErrorEmailCertify(true);
+      alert(error);
+      throw error;
+    },
+  });
+
+  const handleSendEmail = useCallback(() => {
+    if (email === "") {
+      alert("이메일을 입력해주세요.");
+      return;
     }
-  };
-  const handlePW = (e: any) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,15}$/;
-    if (!passwordRegex.test(e.target.value)) {
-      setErrorPW(true);
-    } else {
-      setErrorPW(false);
-    }
-  };
+    sendEmail();
+  }, [email, sendEmail]);
 
-  const handleName = (e: any) => {
-    const special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
-    if (special_pattern.test(e.target.value)) {
+  // 이메일 인증번호 확인
+  const { mutate: verifyEmail, isLoading: isLoadingVerifyEmail } = useMutation(
+    () => verifyEmailCertification({ email, emailCertification }),
+    {
+      onSuccess: () => {
+        setErrorEmailCertify(false);
+        setSignUpFormData((prev) => ({
+          ...prev,
+          email,
+        }));
+      },
+      onError: (error) => {
+        setErrorEmailCertify(true);
+        throw error;
+      },
+    }
+  );
+
+  const handleVerifyEmail = useCallback(() => {
+    if (email === "") {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+    verifyEmail();
+  }, [email, verifyEmail]);
+
+  // useEffect로 비밀번호, 비밀번호 확인, 이름 존재 시 회원가입 폼 데이터 저장
+  useEffect(() => {
+    if (!isErrorPassword && !isErrorPasswordCheck && !isErrorName) {
+      setSignUpFormData((prev) => ({
+        ...prev,
+        password: password,
+        name: name,
+      }));
+    }
+  }, [isErrorName, isErrorPassword, isErrorPasswordCheck, name, password, setSignUpFormData]);
+
+  // 비밀번호 유효성 검사
+  const handleErrorPassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+      if (!passwordRegex.test(e.target.value)) {
+        setErrorPassword(true);
+      } else {
+        setErrorPassword(false);
+      }
+      if (e.target.value !== passwordCheck) {
+        setErrorPasswordCheck(true);
+      }
+    },
+    [passwordCheck]
+  );
+
+  // 비밀번호와 맞는지 확인 기능
+  const handleErrorPasswordCheck = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.target.value === password ? setErrorPasswordCheck(false) : setErrorPasswordCheck(true);
+    },
+    [password]
+  );
+
+  // 이름 유효성 검사
+  const handleErrorName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const special_pattern = /^[a-zA-Z가-힣\s]+$/;
+    if (!special_pattern.test(e.target.value)) {
       setErrorName(true);
     } else {
       setErrorName(false);
     }
-  };
+  }, []);
 
-  const handleNickName = (e: any) => {
-    const pattern = /[`~!@#$%^&*|\\\'\";:\/?]/;
-    const pattern2 = /[0-9]/;
-    if (
-      pattern.test(e.target.value) ||
-      pattern2.test(e.target.value) ||
-      e.target.value.length < 2 ||
-      e.target.value.length > 10
-    ) {
+  // 닉네임 유효성 검사
+  const handleErrorNickName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const pattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
+    if (!pattern.test(e.target.value) || e.target.value.length < 2 || e.target.value.length > 10) {
       setErrorNickName(true);
     } else {
       setErrorNickName(false);
     }
-  };
+  }, []);
+
+  // 닉네임 중복 확인 기능
+  const { mutate: CheckNickname } = useMutation(() => checkNicknameAvailable(nickname), {
+    onSuccess: () => {
+      setCheckedNickname(true);
+      setVerifiedNickname(true);
+      setSignUpFormData((prev) => ({
+        ...prev,
+        nickname,
+        isNicknameChecked: true,
+      }));
+    },
+    onError: (error) => {
+      setCheckedNickname(true);
+      setVerifiedNickname(false);
+      setSignUpFormData((prev) => ({
+        ...prev,
+        nickname: "",
+        isNicknameChecked: false,
+      }));
+      throw error;
+    },
+  });
+
+  const handleCheckNickname = useCallback(() => {
+    if (nickname === "") {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+    CheckNickname();
+  }, [CheckNickname, nickname]);
 
   return (
     <>
+      <Text.Title1 color="gray900">학생 정보</Text.Title1>
+      <Margin direction="column" size={16} />
+
       <Text.Body1 color="gray700">이메일</Text.Body1>
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
           <S.InputField small={true} error={false}>
             <input
-              name="Email"
-              value={Email}
+              name="email"
+              value={email}
               type="email"
               placeholder="abc@naver.com"
-              onChange={handleData}
+              onChange={(e) => {
+                handleInputData(e);
+              }}
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={false}>
-            <S.Button
-              onClick={() => {
-                setButtonMessage("재전송");
-                setCount(count + 1);
-                setEmailMent("인증메일을 전송했습니다." + "(" + count + "회)");
-              }}
-            >
-              {buttonMessage}
-            </S.Button>
+            <S.Button onClick={() => handleSendEmail()}>{buttonMessage}</S.Button>
           </S.ButtonWrapper>
         </S.Content>
         <ErrorMent error={false} errorMent="" ment={emailMent} />
@@ -132,48 +211,51 @@ export default function InputBox({ getError }: any) {
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
-          <S.InputField small={true} error={errorCertify}>
+          <S.InputField small={true} error={isErrorEmailCertify}>
             <input
-              name="CertificationNumber"
-              value={CertificationNumber}
+              name="emailCertification"
+              value={emailCertification}
               type="string"
               placeholder="인증번호"
-              onChange={handleData}
+              onChange={(e) => {
+                handleInputData(e);
+              }}
             />
           </S.InputField>
-          <S.ButtonWrapper small={true} error={errorCertify}>
-            <S.Button
-              onClick={() => {
-                data.CertificationNumber === "123" ? setErrorCertify(false) : setErrorCertify(true);
-              }}
-            >
-              인증 확인
-            </S.Button>
+          <S.ButtonWrapper small={true} error={isErrorEmailCertify}>
+            <S.Button onClick={() => handleVerifyEmail()}>인증 확인</S.Button>
           </S.ButtonWrapper>
         </S.Content>
-        <ErrorMent error={errorCertify} errorMent="인증정보가 일치하지 않습니다." ment=" " />
+        {isLoadingVerifyEmail ? (
+          <ErrorMent error={false} errorMent="" ment="인증 확인 중 입니다." />
+        ) : (
+          <ErrorMent
+            error={isErrorEmailCertify}
+            errorMent="인증정보가 일치하지 않습니다."
+            ment="인증이 완료되었습니다."
+          />
+        )}
       </S.ContentWrapper>
 
       <Text.Body1 color="gray700">비밀번호</Text.Body1>
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
-          <S.InputField small={false} error={errorPW}>
+          <S.InputField small={false} error={isErrorPassword}>
             <input
-              name="PW"
-              value={PW}
-              type="string"
+              name="password"
+              value={password}
+              type="password"
               placeholder="비밀번호"
               onChange={(e) => {
-                handleData(e);
-                handlePW(e);
+                handleInputData(e);
+                handleErrorPassword(e);
               }}
             />
           </S.InputField>
-          <S.ButtonWrapper small={false} error={false}></S.ButtonWrapper>
         </S.Content>
         <ErrorMent
-          error={errorPW}
+          error={isErrorPassword}
           errorMent="영문자/숫자/특수기호 포함 최소 8자, 최대 15자 "
           ment="영문자/숫자/특수기호 포함 최소 8자, 최대 15자"
         />
@@ -183,40 +265,42 @@ export default function InputBox({ getError }: any) {
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
-          <S.InputField small={false} error={false}>
+          <S.InputField small={false} error={isErrorPasswordCheck}>
             <input
-              type="string"
-              placeholder="비밀번호"
+              name="passwordCheck"
+              value={passwordCheck}
+              type="password"
+              placeholder="비밀번호 확인"
               onChange={(e) => {
-                e.target.value === data.PW ? setErrorPWCheck(false) : setErrorPWCheck(true);
+                handleInputData(e);
+                handleErrorPasswordCheck(e);
               }}
             />
           </S.InputField>
           <S.ButtonWrapper small={false} error={false}></S.ButtonWrapper>
         </S.Content>
-        <ErrorMent error={errorPWCheck} errorMent="정보를 정확히 입력해주세요." ment=" " />
+        <ErrorMent error={isErrorPasswordCheck} errorMent="정보를 정확히 입력해주세요." ment=" " />
       </S.ContentWrapper>
 
       <Text.Body1 color="gray700">이름</Text.Body1>
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
-          <S.InputField small={false} error={false}>
+          <S.InputField small={false} error={isErrorName}>
             <input
-              name="Name"
-              value={Name}
+              name="name"
+              value={name}
               type="string"
               placeholder="김윙글"
               onChange={(e) => {
-                handleData(e);
-                handleName(e);
+                handleInputData(e);
+                handleErrorName(e);
               }}
             />
           </S.InputField>
-          <S.ButtonWrapper small={false} error={false}></S.ButtonWrapper>
         </S.Content>
         <ErrorMent
-          error={errorName}
+          error={isErrorName}
           errorMent="실명을 입력하세요 (한글, 영어 대/소문자 사용 가능) "
           ment=" 실명을 입력하세요 (한글, 영어 대/소문자 사용 가능) "
         />
@@ -226,23 +310,36 @@ export default function InputBox({ getError }: any) {
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
         <S.Content>
-          <S.InputField small={true} error={false}>
+          <S.InputField small={true} error={isErrorNickName}>
             <input
-              name="NickName"
-              value={NickName}
+              name="nickname"
+              value={nickname}
               type="string"
               placeholder="희망찬윙그리"
               onChange={(e) => {
-                handleData(e);
-                handleNickName(e);
+                handleInputData(e);
+                handleErrorNickName(e);
+                setVerifiedNickname(false);
+                setCheckedNickname(false);
               }}
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={false}>
-            <S.Button>중복 확인</S.Button>
+            <S.Button onClick={() => handleCheckNickname()}>중복 확인</S.Button>
           </S.ButtonWrapper>
         </S.Content>
-        <ErrorMent error={errorNickName} errorMent="한글/영어 두글자 이상 10글자 이하 " ment="  " />
+        <ErrorMent
+          error={isErrorNickName}
+          errorMent="한글/영어 두글자 이상 10글자 이하로 입력해주세요."
+          ment="  "
+        />
+        {isCheckedNickname ? (
+          <ErrorMent
+            error={!isVerifiedNickname}
+            errorMent="이미 사용중인 닉네임입니다."
+            ment="사용가능한 닉네임입니다."
+          />
+        ) : null}
       </S.ContentWrapper>
     </>
   );
@@ -256,16 +353,14 @@ const S = {
     display: flex;
   `,
   InputField: styled.div<StyledInputProps>`
-    width: ${(props) => (props.small ? "345px" : "452px")};
     height: 50px;
     border: ${(props) => (props.error ? "1px solid #FF7070" : "1px solid #dcdce0;")};
     border-radius: 8px;
     margin-bottom: 8px;
 
     & > input {
-      width: 300px;
+      width: ${(props) => (props.small ? "312px" : "392px")};
       border: none;
-
       padding: 14px;
       border-radius: 8px;
       height: 22px;
@@ -291,8 +386,5 @@ const S = {
     border: 1px solid #959599;
     border-radius: 8px;
     margin-left: 8px;
-  `,
-  ErrorWrapper: styled.div`
-    display: flex;
   `,
 };
