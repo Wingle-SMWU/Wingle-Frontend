@@ -15,9 +15,9 @@ export default function Profile({ data }: ProfileFactor) {
   return (
     <S.Profile>
       <div><p>No</p><p>{postOrder}</p></div>
-      <div><p>이름</p><p>{data?.name}</p></div>
-      <div><p>구분</p><p>{data?.nation === 'KR' ? USER_NATIONALITY[0] : USER_NATIONALITY[1]}</p></div>
-      <div><p>가입신청일</p><p>{data?.createdTime.split('T')[0]}</p></div>
+      <div><p>이름</p><p>{data.name}</p></div>
+      <div><p>구분</p><p>{data.nation === 'KR' ? USER_NATIONALITY[0] : USER_NATIONALITY[1]}</p></div>
+      <div><p>가입신청일</p><p>{data.createdTime.split('T')[0]}</p></div>
     </S.Profile>
   )
 }

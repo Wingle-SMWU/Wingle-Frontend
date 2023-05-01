@@ -21,7 +21,7 @@ export default function Reject({ children, userId, setIsOpen, inputs, setInputs,
     if(e.target.name === '메모') setInputs({...inputs, memo: e.target.value });
   }
 
-  const inputValue = children === '메모' ? data?.memo : data?.reason;
+  const inputValue = children === '메모' ? data.memo : data.reason;
 
   return (
     <S.Reject>
