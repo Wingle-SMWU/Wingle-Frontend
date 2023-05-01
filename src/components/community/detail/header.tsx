@@ -1,6 +1,6 @@
+import { Text } from "../../ui";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Text } from "../../ui";
 
 export default function Header({ currentTab }: { currentTab: string }) {
   const router = useRouter();
@@ -35,5 +35,6 @@ const S = {
 
   BackArrow: styled.img`
     margin-right: 14.5px;
+    cursor: pointer;
   `,
 };

@@ -1,9 +1,40 @@
 import styled from "styled-components";
 import { Text } from "@/src/components/ui";
-import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 
-const Style = {
+export default function Profile() {
+    const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
+    const profileState = useRecoilValue(profileStateAtom);
+
+    const handleRegisterBtnHover = () => {
+        setIsRegisterBtnHover(true);
+    };
+    const handleRegisterBtnLeave = () => {
+        setIsRegisterBtnHover(false);
+    };
+
+    return (
+        <>
+            <S.UserBox>
+                <S.UserImgBox>
+                    <S.UserProfileImg src={profileState.image} alt="프로필" />
+                    <S.UserFlagImg src="" alt="국기" />
+                </S.UserImgBox>
+                <S.UserInfoBox>
+                    <S.UserNicknameAndSex>
+                        <Text.Body1 color="gray900">{profileState.nickname}</Text.Body1>
+                        <S.UserSexImg src={profileState.gender?("/mypage/female.svg"):("/mypage/male.svg")} alt="성별" />
+                    </S.UserNicknameAndSex>
+                    <Text.Body6 color="gray800">{profileState.nation}</Text.Body6>
+                </S.UserInfoBox>
+            </S.UserBox>
+        </>
+    );
+}
+
+const S = {
     UserBox: styled.div`
         display: flex;
         align-items: center;
@@ -21,7 +52,7 @@ const Style = {
         height: 56px;
         position: absolute;
         border-radius: 100px;
-        border: 1px solid red;
+        border: 1px solid #EEEEF2;
     `,
     UserFlagImg: styled.img`
         width: 22px;
@@ -68,33 +99,3 @@ const Style = {
         align-items: center;
     `,
 };
-
-export default function Profile() {
-    const router = useRouter();
-    const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
-
-    const handleRegisterBtnHover = () => {
-        setIsRegisterBtnHover(true);
-    };
-    const handleRegisterBtnLeave = () => {
-        setIsRegisterBtnHover(false);
-    };
-    return (
-        <>
-            <Style.UserBox>
-                <Style.UserImgBox>
-                    <Style.UserProfileImg src="" alt="프로필" />
-                    <Style.UserFlagImg src="" alt="국기" />
-                </Style.UserImgBox>
-                <Style.UserInfoBox>
-                    <Style.UserNicknameAndSex>
-                        <Text.Body1 color="gray900">닉네임</Text.Body1>
-                        {/* {gender ? 여자 이미지 : 남자 이미지} */}
-                        <Style.UserSexImg src="" alt="성별" />
-                    </Style.UserNicknameAndSex>
-                    <Text.Body6 color="gray800">국적</Text.Body6>
-                </Style.UserInfoBox>
-            </Style.UserBox>
-        </>
-    );
-}

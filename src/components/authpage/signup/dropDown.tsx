@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
-import { List } from "../../../constants/countryList";
+import { countryList } from "../../../constants/countryList";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
@@ -10,7 +10,21 @@ interface StyledInputProps {
   isActive: boolean;
 }
 
-export default function DropDown() {
+interface DropDownProps {
+  label: string; // 제목
+  list: string[]; // 드롭다운 리스트
+  selected: string; // 선택된 항목(selected state)
+  onSelectedChange: (selected: string) => void; // 선택된 항목 변경 함수(selected setState 변경 함수)
+  description?: string; // 드롭다운 설명
+}
+
+export default function DropDown({
+  label,
+  list,
+  selected,
+  onSelectedChange,
+  description,
+}: DropDownProps) {
   const [isActive, setIsActive] = useState(false);
   const [nation, setNation] = useState("Republic of Korea");
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
@@ -42,15 +56,24 @@ export default function DropDown() {
             <S.CountryItem color="gray900">{nation}</S.CountryItem>
           </S.Selected>
           <S.Selected>
-            <Image src="/auth/arrow_down.svg" alt="arrow" width={20} height={20} />
+            <Image
+              src="/auth/arrow_down.svg"
+              alt="arrow"
+              width={20}
+              height={20}
+            />
           </S.Selected>
         </S.DropdownBody>
         <Margin direction="column" size={8} />
 
         <S.DropdownMenu isActive={isActive}>
-          {List.map((item) => (
-            <S.DropdownItemContainer id="item" key={item} onClick={handleSelectItem}>
-              <S.CountryItem color="gray900">{item}</S.CountryItem>
+          {countryList.map((item) => (
+            <S.DropdownItemContainer
+              id="item"
+              key={item.code}
+              onClick={handleSelectItem}
+            >
+              <S.CountryItem color="gray900">{item.country}</S.CountryItem>
             </S.DropdownItemContainer>
           ))}
         </S.DropdownMenu>
