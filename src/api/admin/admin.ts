@@ -1,5 +1,5 @@
 import { AdminUserResp, DataResp, ReturnResp } from '@/src/types/admin/admin';
-import instance from '../axiosModul'
+import instance from '../axiosModule'
 
 type GetList = {
   path: string;
