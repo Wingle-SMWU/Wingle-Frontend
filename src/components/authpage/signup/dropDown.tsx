@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
-import { List } from "../../../constants/countryList";
+import { countryList } from "../../../constants/countryList";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
@@ -56,15 +56,24 @@ export default function DropDown({
             <S.CountryItem color="gray900">{nation}</S.CountryItem>
           </S.Selected>
           <S.Selected>
-            <Image src="/auth/arrow_down.svg" alt="arrow" width={20} height={20} />
+            <Image
+              src="/auth/arrow_down.svg"
+              alt="arrow"
+              width={20}
+              height={20}
+            />
           </S.Selected>
         </S.DropdownBody>
         <Margin direction="column" size={8} />
 
         <S.DropdownMenu isActive={isActive}>
-          {List.map((item) => (
-            <S.DropdownItemContainer id="item" key={item} onClick={handleSelectItem}>
-              <S.CountryItem color="gray900">{item}</S.CountryItem>
+          {countryList.map((item) => (
+            <S.DropdownItemContainer
+              id="item"
+              key={item.code}
+              onClick={handleSelectItem}
+            >
+              <S.CountryItem color="gray900">{item.country}</S.CountryItem>
             </S.DropdownItemContainer>
           ))}
         </S.DropdownMenu>
