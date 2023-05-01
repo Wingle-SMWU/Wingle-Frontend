@@ -13,7 +13,7 @@ export const SERVER_URL = `https://server-prod.wingle.kr/api/v1`;
 const instance = axios.create({
   baseURL: SERVER_URL,
   headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYWJAYWEuY29tIiwiQVVUSCI6IlJPTEVfVVNFUiIsImV4cCI6MjAwMzM4OTE0MH0.mD1FqQkgMTKZB-Pkwd1qWIWMK4tl_hGInEDG1aP7rB7ZZOJIlj6AmlCxJvwJSXTtui7vl3bpyMLf__v_gJyTnA`,
+    Authorization: `Bearer ${getAccessTokenFromLocalStorage()}}`,
   },
 });
 
@@ -21,12 +21,7 @@ export default instance;
 
 instance.interceptors.request.use(
   async (config) => {
-    const accessToken = getAccessTokenFromLocalStorage();
-
-    // 만료되지 않은 access token이 있는 경우에는 해당 토큰을 사용
-    if (accessToken !== null) {
-      config.headers.Authorization = accessToken;
-    }
+    console.log(config, getAccessTokenFromLocalStorage());
 
     return config;
   },
@@ -115,7 +110,9 @@ const getAccessToken = async () => {
     }
 
     // 그 외의 경우에는 에러를 발생시킴
-    throw new Error(`토큰 재발급에 실패했습니다. 상태 코드: ${response.status}`);
+    throw new Error(
+      `토큰 재발급에 실패했습니다. 상태 코드: ${response.status}`
+    );
   } catch (error) {
     return Promise.reject(error);
   }
