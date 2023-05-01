@@ -71,6 +71,7 @@ export default function CommentInput({
       />
       <Margin direction="row" size={8}></Margin>
       <S.PostIcon
+        comment={comment}
         src={
           comment
             ? "/community/detail/send.svg"
@@ -111,8 +112,9 @@ const S = {
     background-color: inherit;
   `,
 
-  PostIcon: styled.img`
+  PostIcon: styled.img<{ comment: string }>`
     width: 32px;
     height: 32px;
+    cursor: ${({ comment }) => (comment ? "pointer" : "auto")};
   `,
 };

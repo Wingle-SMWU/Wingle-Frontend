@@ -38,6 +38,7 @@ export default function Header({
             <Text.Title3
               color={el.name === tab ? "gray900" : "gray500"}
               onClick={onClickTab}
+              pointer={true}
             >
               {el.name}
             </Text.Title3>
