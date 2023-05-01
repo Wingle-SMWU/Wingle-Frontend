@@ -15,15 +15,15 @@ const useGetMessage = (roomId: number , page: number , size: number ) => {
     queryKey: ["message", page],
     queryFn: () => { return getMessage(roomId, page, size)},
     onSuccess: (item) => {
-      setRoomList(item.data);
-      setMessageList(item.data);
-      item.data?.map(((message:Message) => {
+      setRoomList(item);
+      setMessageList(item);
+      item?.map((message) => {
         if (message.sender === true) {
           setMyInfo(message);
         } else {
           setReceiverInfo(message);
         }
-      }))
+      })
     },
   });
 
@@ -34,7 +34,7 @@ const useGetMessage = (roomId: number , page: number , size: number ) => {
     setMessageList,
     myInfo,
     receiverInfo,
-    messageData: messageData?.data
+    messageData: messageData
   };
 };
 

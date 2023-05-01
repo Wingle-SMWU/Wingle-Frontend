@@ -7,8 +7,7 @@ const useGetRoom = (page: number, size: number) => {
 		queryFn: () => { return getMessageRoom(page, size) },
 	});
 
-  return { messageDataRoom:  messageDataRoom?.data };
+  return { messageDataRoom: messageDataRoom };
 };
 
 export default useGetRoom;
-
