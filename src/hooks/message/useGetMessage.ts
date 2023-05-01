@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { useRecoilValue } from "recoil";
-import { userIdState } from "../../atoms/temp";
 import { Message } from "@/src/types/message/messageType";
 import { getMessage } from "@/src/api/message/messageApi";
 
 const useGetMessage = (roomId: number , page: number , size: number ) => {
-  const userid = useRecoilValue(userIdState);
   const [roomList, setRoomList] = useState<any>([]); // 화면
   const [messageList, setMessageList] = useState<any>([]);
   const [myInfo, setMyInfo] = useState<Message>();
@@ -21,7 +18,7 @@ const useGetMessage = (roomId: number , page: number , size: number ) => {
       setRoomList(item.data);
       setMessageList(item.data);
       item.data?.map(((message:Message) => {
-        if (message.messageId === userid) {
+        if (message.sender === true) {
           setMyInfo(message);
         } else {
           setReceiverInfo(message);
