@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import { getImageUrl } from "@/src/modules/utils";
+import { countryImg } from "./countryImg";
 
 export default function Profile() {
   const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
@@ -29,7 +30,7 @@ export default function Profile() {
             src={userImage ? userImage : getImageUrl("기본")}
             alt="프로필"
           />
-          <S.UserFlagImg src="" alt="국기" />
+          <S.UserFlagImg src={countryImg(nation)} alt="국기" />
         </S.UserImgBox>
         <S.UserInfoBox>
           <S.UserNicknameAndSex>
