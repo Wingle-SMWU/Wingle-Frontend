@@ -1,4 +1,4 @@
-type Comment = {
+interface Comment {
   content: string;
   createdTime: string;
   updatedTime: string;
@@ -8,4 +8,4 @@ type Comment = {
   userImage: string;
   userNation: string;
   userNickname: string;
-};
+}
