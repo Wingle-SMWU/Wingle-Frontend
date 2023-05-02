@@ -26,6 +26,7 @@ export default function Login() {
       saveRefreshTokenToLocalStorage(refreshToken);
       saveAccessTokenToLocalStorage(accessToken);
       router.push(admin ? "/admin" : "/community");
+      window.location.href = admin ? "/admin" : "/community";
     },
     onError: () => {
       setError(true);
@@ -42,12 +43,21 @@ export default function Login() {
   };
 
   const isButtonDisabled =
-    email.length < 8 || !email.includes("@") || !email.includes(".") || !password;
+    email.length < 8 ||
+    !email.includes("@") ||
+    !email.includes(".") ||
+    !password;
 
   return (
     <>
       <S.Header>
-        <Image src="/auth/loginLogo.svg" alt="logo" priority width={200} height={200} />
+        <Image
+          src="/auth/loginLogo.svg"
+          alt="logo"
+          priority
+          width={200}
+          height={200}
+        />
         <Margin direction="column" size={8} />
         <Text.Body6 color="gray700">다함께 즐기는 국제교류 커뮤니티</Text.Body6>
       </S.Header>
@@ -76,7 +86,10 @@ export default function Login() {
               }}
             />
           </S.InputField>
-          <ErrorMent error={error} errorMent="아이디 혹은 비밀번호를 정확히 입력해 주세요." />
+          <ErrorMent
+            error={error}
+            errorMent="아이디 혹은 비밀번호를 정확히 입력해 주세요."
+          />
         </S.AccountWrapper>
 
         <S.ButtonWrapper>
