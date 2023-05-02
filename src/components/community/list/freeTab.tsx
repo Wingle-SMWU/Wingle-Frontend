@@ -1,6 +1,8 @@
 import ListCard from "./listCard";
 import { getArticles } from "@/src/api/community/get/articlesList";
 import { useQuery, useQueryClient } from "react-query";
+import Loading from "../../ui/loadingUI";
+import NoData from "../../ui/NoDataUI";
 
 export default function FreeTab({
   forumId,
@@ -19,19 +21,18 @@ export default function FreeTab({
     queryKey: ["articles", forumId, 0, 30, false],
   });
 
-  if (isLoading) return <div>로딩중</div>;
+  if (isLoading) return <Loading />;
   if (isError || isIdle) return <div>에러</div>;
 
   return (
     <>
-      {freeArticles.map((article: Article, i: number) => (
-        <ListCard
-          key={i}
-          imgUrl={imgUrl}
-          isNotice={false}
-          article={article}
-        ></ListCard>
-      ))}
+      {freeArticles.length ? (
+        freeArticles.map((article: Article, i: number) => (
+          <ListCard key={i} imgUrl={imgUrl} isNotice={false} article={article} />
+        ))
+      ) : (
+      <NoData type="article" />
+      )}
     </>
   );
 }

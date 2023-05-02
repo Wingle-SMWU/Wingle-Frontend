@@ -4,6 +4,7 @@ import Header from "@/src/components/community/list/header";
 import InteractTab from "@/src/components/community/list/interactTab";
 import NoticeTab from "@/src/components/community/list/noticeTab";
 import Navigation from "@/src/components/layout/Navigation";
+import Loading from "@/src/components/ui/loadingUI";
 import { getImageUrl } from "@/src/modules/utils";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
@@ -42,7 +43,7 @@ export default function Community({ tab }: { tab: string }) {
     router.push({ query: { tab: event.target.textContent } });
   };
 
-  if (isLoading) return <div>로딩중</div>;
+  if (isLoading) return <Loading />;
   if (isError || isIdle) return <div>에러</div>;
 
   const getForumId = () => {

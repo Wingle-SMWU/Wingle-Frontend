@@ -5,6 +5,7 @@ import Comment from "@/src/components/community/detail/comment";
 import CommentInput from "@/src/components/community/detail/commentInput";
 import Header from "@/src/components/community/detail/header";
 import Profile from "@/src/components/community/detail/profile";
+import Loading from "@/src/components/ui/loadingUI";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import styled from "styled-components";
@@ -24,7 +25,7 @@ export default function Detail() {
     queryKey: ["comments", forumId, articleId, 0, 10],
   });
 
-  if (article.isLoading || comments.isLoading) return <div>로딩중</div>;
+  if (article.isLoading || comments.isLoading) return <Loading />;
   if (article.isError || comments.isError || article.isIdle || comments.isIdle)
     return <div>에러</div>;
 
