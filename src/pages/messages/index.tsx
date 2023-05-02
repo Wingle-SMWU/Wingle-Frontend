@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styled from "styled-components";
 import useGetRoom from "../../hooks/message/useGetRoom";
-import MsgList from "../../components/message/msgList";
+import MsgList from "../../components/messageComp/msgList";
 import { Text } from "../../components/ui";
 import Message from "../../../public/images/message/message.svg";
 import Navigation from "@/src/components/layout/Navigation";
 import { Room } from "@/src/types/message/roomType";
 import instance from "@/src/api/axiosModule";
 
-export default function message(page: number , size: number ) {
+export default function message(page: number, size: number) {
   const { messageDataRoom } = useGetRoom(0, 10000);
 
   if (messageDataRoom === undefined) {
@@ -27,26 +27,26 @@ export default function message(page: number , size: number ) {
           })
         ) : (
           <>
-          <S.EmptyContainer>
-            <S.EmptyBox>
-              <Message />
-              <Text.Body3 color="gray500">받은 쪽지가 없어요.</Text.Body3>
-            </S.EmptyBox>
-          </S.EmptyContainer>
+            <S.EmptyContainer>
+              <S.EmptyBox>
+                <Message />
+                <Text.Body3 color="gray500">받은 쪽지가 없어요.</Text.Body3>
+              </S.EmptyBox>
+            </S.EmptyContainer>
           </>
         )}
         <Navigation tab={""} />
       </S.MsgContainer>
     </S.Container>
   );
-};
+}
 
 export async function getServerSideProps(context: any) {
   const { page, size } = context.query;
   const res = await instance.get(`/messages/rooms?page=${page}&size=${size}`);
   const data = await res.data;
-  
-  return { props: { data }};
+
+  return { props: { data } };
 }
 
 const S = {
@@ -85,4 +85,4 @@ const S = {
       margin-left: -10px;
     }
   `,
-}
+};
