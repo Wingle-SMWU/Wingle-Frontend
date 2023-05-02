@@ -74,6 +74,7 @@ export default function Create() {
         </S.HeaderLeft>
         <S.CreateButton>
           <Text.Body1
+            pointer={contents ? true : false}
             color={contents ? "gray900" : "gray500"}
             onClick={() => updateArticle.mutate()}
           >
@@ -115,6 +116,7 @@ const S = {
 
   BackArrow: styled.img`
     margin-right: 14.5px;
+    cursor: pointer;
   `,
 
   CreateButton: styled.button`
