@@ -3,13 +3,16 @@ import { getArticles } from "@/src/api/community/get/articlesList";
 import { useQuery } from "react-query";
 import Loading from "../../ui/loadingUI";
 import { reverseArray } from "@/src/utils/reverseArray";
+import NoData from "../../ui/NoDataUI";
 
 export default function InteractTab({
   forumId,
   imgUrl,
+  my,
 }: {
   forumId: number;
   imgUrl: string;
+  my: boolean;
 }) {
   const {
     data: interactArticles,
@@ -18,7 +21,7 @@ export default function InteractTab({
     isIdle,
   } = useQuery({
     queryFn: getArticles,
-    queryKey: ["articles", forumId, 0, 30, false],
+    queryKey: ["articles", forumId, 0, 30, my],
   });
 
   if (isLoading) return <Loading />;
@@ -36,7 +39,7 @@ export default function InteractTab({
           />
         ))
       ) : (
-        <Loading />
+        <NoData type="article" />
       )}
     </>
   );

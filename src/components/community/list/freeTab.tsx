@@ -8,9 +8,11 @@ import { reverseArray } from "@/src/utils/reverseArray";
 export default function FreeTab({
   forumId,
   imgUrl,
+  my,
 }: {
   forumId: number;
   imgUrl: string;
+  my: boolean;
 }) {
   const {
     data: freeArticles,
@@ -19,12 +21,12 @@ export default function FreeTab({
     isIdle,
   } = useQuery({
     queryFn: getArticles,
-    queryKey: ["articles", forumId, 0, 30, false],
+    queryKey: ["articles", forumId, 0, 30, my],
   });
 
   if (isLoading) return <Loading />;
   if (isError || isIdle) return <div>에러</div>;
-  const reversedArticles = [...freeArticles]
+
   return (
     <>
       {freeArticles.length ? (
