@@ -1,4 +1,4 @@
-interface Forum {
+type Forum = {
   id: number;
   name: string;
-}
+};
