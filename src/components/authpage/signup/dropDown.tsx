@@ -18,13 +18,7 @@ interface DropDownProps {
   description?: string; // 드롭다운 설명
 }
 
-export default function DropDown({
-  label,
-  list,
-  selected,
-  onSelectedChange,
-  description,
-}: DropDownProps) {
+export default function DropDown() {
   const [isActive, setIsActive] = useState(false);
   const [nation, setNation] = useState("Republic of Korea");
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
