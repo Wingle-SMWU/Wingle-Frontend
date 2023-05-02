@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Modal from "@/src/components/modal";
 import instance from "@/src/api/axiosModule";
 import { useSetRecoilState, useRecoilValue }  from "recoil";
@@ -13,15 +13,18 @@ export default function Nickname() {
   const [name, setName] = useState<string>("");
   const [nameMessage, setNameMessage] = useState<string>("");
   const [isName, setIsName] = useState<boolean>(false);
-  const [image,setImage] = useState("");
+  const [image,setImage] = useState<string>('');
+  const [newImage,setNewImage] = useState<File>();
   const [loading,setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<boolean>(false);
+   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const profileData = useRecoilValue(profileStateAtom);
 
   useEffect(() => {
   if (profileData !== null && profileData !== undefined) {
     setName(profileData.nickname);
-    setImage(profileData.image);
+    setImage(profileData.image)
     setLoading(false);
   }
 }, [profileData]);
@@ -50,7 +53,8 @@ export default function Nickname() {
        try{
       const formData = new FormData();
       formData.append('nickname', name);
-      // formData.append('u', userId);
+      if (newImage) formData.append('image',newImage);
+      else {formData.append('image',image)}
       await instance.post("/profile",formData,{
         headers:
           {'Content-Type': 'multipart/form-data'}
@@ -63,6 +67,24 @@ export default function Nickname() {
   }
 }
    
+const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const imageFile = event.target.files?.[0];
+    if (imageFile) {
+      const fileSizeInMB = imageFile.size / (1024 * 1024);
+      if (fileSizeInMB > 20) {
+        // 20MB 이하인 경우에만 처리
+        setError(true);        
+        return;
+      }
+      setError(false);
+      setNewImage(imageFile);
+    }
+  };
+
+  const handleUploadButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
 
   return (
     <>
@@ -87,9 +109,17 @@ export default function Nickname() {
             </Text.Body1>
           </S.Header>
           <>
-            <S.ImageChangeBox>
+            <S.ImageChangeBox onClick={handleUploadButtonClick}>
+              <S.InputImage
+          ref={fileInputRef}
+          type="file"
+          accept=".jpeg, .jpg, .png"
+          onChange={handleFileUpload}
+          style={{ display: "none" }}
+        />
               <S.ProfileImage src={image} alt="프로필 이미지" />
               <S.CameraIcon src="/mypage/camera.svg" alt="변경 아이콘"  />
+              
             </S.ImageChangeBox>
 
             <S.NicknameChangeBox>
@@ -182,6 +212,10 @@ const S = {
     :focus {
       border: 1px solid #dcdce0;
     }
+  `,
+  InputImage : styled.input`
+  display : none;
+
   `,
   Header: styled.div`
     width: 100%;
