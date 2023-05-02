@@ -1,26 +1,19 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { ThemeProvider } from "styled-components";
+import { css, ThemeProvider } from "styled-components";
 import { GlobalStyle } from "../styles/global-style";
 import { theme } from "../styles/theme";
 import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import styled from "styled-components";
+import useAppVersion from '../hooks/useAppVersion';
 
-const STALE_TIME = 10 * 60 * 1000;
-const CACHE_TIME = 10 * 60 * 1000;
+export default function MyApp({ Component, pageProps }: AppProps) {
+  const version = useAppVersion();
+  const STALE_TIME = 10 * 60 * 1000;
+  const CACHE_TIME = 10 * 60 * 1000;
 
-const S = {
-  Wrapper: styled.div`
-    width: 500px;
-    max-width: 500px;
-    height: 100vh;
-    background-color: white;
-  `,
-};
-
-function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -48,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </Head>
           <GlobalStyle />
           <ThemeProvider theme={theme}>
-            <S.Wrapper>
+            <S.Wrapper version={version}>
               <Component {...pageProps} />
             </S.Wrapper>
           </ThemeProvider>
@@ -58,4 +51,16 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+const S = {
+  Wrapper: styled.div<{version: string}>`
+    ${props => props.version === 'mobile' && 
+      css`
+        width: 500px;
+        max-width: 500px;
+        min-height: 100vh;
+        background-color: white;
+        `
+      }
+  `
+
+};
