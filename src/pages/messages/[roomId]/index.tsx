@@ -15,6 +15,7 @@ import { Message, NewMsgProps } from "@/src/types/message/messageType";
 import { Room } from "@/src/types/message/roomType";
 import { convertDateYear } from "@/src/utils/convertDateYear";
 import useGetRoom from "@/src/hooks/message/useGetRoom";
+import Loading from "@/src/components/ui/loadingUI";
 
 export default function MessageSend() {
   const router = useRouter();
@@ -99,7 +100,7 @@ export default function MessageSend() {
   }, [newMsg]);
 
   if (messageData === undefined) {
-    return <div>로딩중</div>;
+    return <Loading />;
   }
 
   return (
