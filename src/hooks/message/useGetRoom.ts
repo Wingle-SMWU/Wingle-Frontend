@@ -1,18 +1,13 @@
-import useMsgAPI from "./useMsgAPI";
+import { useQuery } from "react-query";
+import { getMessageRoom } from "@/src/api/message/messageApi";
 
-const useGetRoom = () => {
-  const { getAllRoomLists } = useMsgAPI();
+const useGetRoom = (page: number, size: number) => {
+  const { data: messageDataRoom } = useQuery({
+    queryKey: ['message'],
+		queryFn: () => { return getMessageRoom(page, size) },
+	});
 
-  const msgRoomList = async (page: number, size: number) => {
-    try {
-      await getAllRoomLists(page, size);
-    } catch (data) {
-      console.log(data);
-      console.log("쪽지 불러오기 실패");
-    }
-  };
-
-  return { msgRoomList };
+  return { messageDataRoom: messageDataRoom };
 };
 
 export default useGetRoom;
