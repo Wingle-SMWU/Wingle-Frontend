@@ -13,7 +13,7 @@ import Loading from "@/src/components/ui/loadingUI";
 export default function Mypage() {
 
   const [loading,setLoading] = useState(true); 
-
+  const [editText,setEditText] = useState(true);
   const setProfileState = useSetRecoilState(profileStateAtom);
 
   useEffect(() => {
@@ -22,6 +22,9 @@ export default function Mypage() {
       const data = await getProfile();
       console.log(data)
       setProfileState(data);
+      if (data.interests || data.introduce || data.languages) {
+        setEditText(false);
+      }
       setLoading(false);
     } catch (error) {
       console.error('Failed to get profile:', error);
@@ -32,6 +35,8 @@ export default function Mypage() {
 }, []);
 
   const profileState = useRecoilValue(profileStateAtom);
+  
+      console.log("d")
   console.log(profileState)
   return (
     <>
@@ -43,36 +48,21 @@ export default function Mypage() {
           <S.Profile>
             {loading? <Loading /> : <Profile /> }
            
-            {/* 자기소개, 언어선택, 관심사 중 하나라도 등록되지 않은 사용자 ? 등록 : 수정*/}
-
-            {/* <>
-
-        <S.RegisterBtn
-          onMouseOver={() => setIsRegisterBtnHover(true)}
-          onMouseLeave={() => setIsRegisterBtnHover(false)}
-        >
-          <Text.Caption1
-            color="white"
-            pointer
-            onClick={() => router.push(`/mypage/profileEdit`)}
-          >
-            등록
-          </Text.Caption1>
-        </S.RegisterBtn>
-        {isRegisterBtnHover && (
-          <>
-            <S.DropBubbleHigh />
-            <S.DropBubbleLow>
-              <Text.Body6>프로필을 등록해주세요!</Text.Body6>
-            </S.DropBubbleLow>
-          </>
-        )}
-        </> */}
+          
+            {editText?
+            <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
+              <Text.Caption1 color="orange500" pointer>
+                등록
+              </Text.Caption1>
+            </S.EditBtn> : 
             <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
               <Text.Caption1 color="gray700" pointer>
                 수정
               </Text.Caption1>
             </S.EditBtn>
+            }
+            
+
           </S.Profile>
           <>
             <Margin direction="column" size={34} />
