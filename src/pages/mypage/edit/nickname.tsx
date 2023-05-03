@@ -3,7 +3,7 @@ import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
 import { useState, useEffect, useRef } from "react";
 import Modal from "@/src/components/modal";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import {
   profileStateAtom,
   profileUpdateStateAtom,
@@ -27,7 +27,6 @@ export default function Nickname() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<any>("");
   const profileData = useRecoilValue(profileStateAtom);
-  const setProfileUpdateData = useSetRecoilState(profileUpdateStateAtom);
   const profileUpdateData = useRecoilValue(profileUpdateStateAtom);
   const [imageDelete, setImageDelete] = useState(false);
   const [imageFile, setImageFile] = useState<any>();
@@ -110,7 +109,7 @@ export default function Nickname() {
     fileInputRef.current?.click();
   };
 
-  const onClickComplete = () => {
+  const onClickComplete = async () => {
     if (!isName) return;
     if (name === "") {
       setName(profileData.nickname);
@@ -119,14 +118,11 @@ export default function Nickname() {
     const formData = new FormData();
     formData.append("image", image);
 
-    setProfileUpdateData((prev: ProfileUpdateType) => ({
-      ...prev,
+    updateMutation({
       image: imageFile,
       nickname: name,
       imageDelete: imageDelete,
-    }));
-    console.log(profileUpdateData);
-    updateMutation(profileUpdateData);
+    });
   };
 
   return (
