@@ -10,4 +10,5 @@ type Article = {
   updatedTime: string,
   userId: number,
   userNickname: string,
+  userImage: string,
 }

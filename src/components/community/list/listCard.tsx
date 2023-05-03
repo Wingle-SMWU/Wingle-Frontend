@@ -26,6 +26,7 @@ export default function ListCard({
     updatedTime,
     userId,
     userNickname,
+    userImage,
   } = article;
 
   const currentTab: string = useMemo(() => {
@@ -50,7 +51,9 @@ export default function ListCard({
   return (
     <S.Contents onClick={onClickMoveToDetail}>
       <S.ContentsHeader>
-        <S.ContentsHeaderImg src={imgUrl} />
+        <S.ContentsHeaderImg src={
+          currentTab === "교류" && userImage ? userImage :
+          imgUrl} />
         <S.ContentsHeaderInfo>
           <Text.Body6 color="gray900" pointer={true}>
             {userNickname}
