@@ -4,46 +4,72 @@ import { Margin, Text } from "@/src/components/ui";
 import { useState, useEffect, useRef } from "react";
 import Modal from "@/src/components/modal";
 import { useRecoilValue } from "recoil";
-import {
-  profileStateAtom,
-  profileUpdateStateAtom,
-} from "@/src/atoms/profileStateAtom";
+import { profileUpdateStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
 import { getImageUrl } from "@/src/modules/utils";
+import { ProfileUpdateType } from "@/src/types/mypage/profileType";
 import {
-  ProfileStateType,
-  ProfileUpdateType,
-} from "@/src/types/mypage/profileType";
-import { useMutation } from "react-query";
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import { postUpdateProfile } from "@/src/api/mypage/updateProfile";
+import { getProfile } from "@/src/api/mypage/profileData";
 
 export default function Nickname() {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState<string>("");
   const [nameMessage, setNameMessage] = useState<string>("");
   const [isName, setIsName] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [image, setImage] = useState<any>("");
-  const profileData = useRecoilValue(profileStateAtom);
-  const profileUpdateData = useRecoilValue(profileUpdateStateAtom);
+  const [image, setImage] = useState<any>(null);
   const [imageDelete, setImageDelete] = useState(false);
-  const [imageFile, setImageFile] = useState<any>();
+  const [imageFile, setImageFile] = useState<any>(null);
 
-  const { mutate: updateMutation } = useMutation(
+  const queryClient = useQueryClient();
+
+  const { mutate: updateMutation, isLoading: updateLoading } = useMutation(
     (updateData: ProfileUpdateType) => postUpdateProfile(updateData),
-    { onSuccess: () => router.push("/mypage/edit") }
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries("profileData");
+        const prevProfileData = queryClient.getQueryData([
+          "profileData",
+          {
+            exact: false,
+          },
+        ]);
+        return { prevProfileData };
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries("profileData");
+        router.push("/mypage/edit");
+      },
+    }
   );
+
+  const {
+    data: profileData,
+    isLoading,
+    isError,
+    isIdle,
+  } = useQuery({
+    queryFn: getProfile,
+    queryKey: ["profileData"],
+  });
 
   useEffect(() => {
     if (profileData) {
       setName(profileData.nickname);
-      console.log(profileData);
-      setImage(profileData.image);
       setIsName(true);
+      setImage(profileData.image);
     }
-  }, []);
+  }, [profileData]);
+
+  if (isLoading || updateLoading) return <Loading />;
+  if (isError || isIdle) return <>에러</>;
 
   if (profileData === null && profileData === undefined) return <Loading />;
 
@@ -51,7 +77,7 @@ export default function Nickname() {
     const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
     const nameCurrent = e.target.value;
     if (nameCurrent === "") {
-      setName(profileUpdateData.nickname);
+      setName(profileData.nickname);
       setIsName(true);
       setNameMessage("");
     } else if (!nameRegex.test(nameCurrent)) {
@@ -117,7 +143,6 @@ export default function Nickname() {
     }
     const formData = new FormData();
     formData.append("image", image);
-
     updateMutation({
       image: imageFile,
       nickname: name,
