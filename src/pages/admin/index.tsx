@@ -32,7 +32,6 @@ export default function Admin() {
     )
   }
 
-  console.log(data);
   return (
     <S.Main>
       <Header />
