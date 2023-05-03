@@ -1,72 +1,136 @@
 import styled from "styled-components";
 import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Modal from "@/src/components/modal";
-import instance from "@/src/api/axiosModule";
-import { useSetRecoilState, useRecoilValue }  from "recoil";
-import { profileStateAtom } from "@/src/atoms/profileStateAtom";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import {
+  profileStateAtom,
+  profileUpdateStateAtom,
+} from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
+import { getImageUrl } from "@/src/modules/utils";
+import {
+  ProfileStateType,
+  ProfileUpdateType,
+} from "@/src/types/mypage/profileType";
+import { useMutation } from "react-query";
+import { postUpdateProfile } from "@/src/api/mypage/updateProfile";
 
 export default function Nickname() {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState<string>("");
   const [nameMessage, setNameMessage] = useState<string>("");
   const [isName, setIsName] = useState<boolean>(false);
-  const [image,setImage] = useState("");
-  const [loading,setLoading] = useState<boolean>(true)
-  
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState<any>("");
   const profileData = useRecoilValue(profileStateAtom);
+  const setProfileUpdateData = useSetRecoilState(profileUpdateStateAtom);
+  const profileUpdateData = useRecoilValue(profileUpdateStateAtom);
+  const [imageDelete, setImageDelete] = useState(false);
+  const [imageFile, setImageFile] = useState<any>();
+
+  const { mutate: updateMutation } = useMutation(
+    (updateData: ProfileUpdateType) => postUpdateProfile(updateData),
+    { onSuccess: () => router.push("/mypage/edit") }
+  );
 
   useEffect(() => {
-  if (profileData !== null && profileData !== undefined) {
-    setName(profileData.nickname);
-    setImage(profileData.image);
-    setLoading(false);
-  }
-}, [profileData]);
-
-  const onChangeName = useCallback((e: any) => {
-    const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
-    const nameCurrent = e.target.value;
-    setName(nameCurrent);
-
-    if (!nameRegex.test(nameCurrent)) {
-      setNameMessage("한글/영어 2글자 이상 10글자 이하");
-      setIsName(false);
-    } else {
-      setNameMessage("사용 가능한 형식입니다.");
+    if (profileData) {
+      setName(profileData.nickname);
+      console.log(profileData);
+      setImage(profileData.image);
       setIsName(true);
     }
   }, []);
 
+  if (profileData === null && profileData === undefined) return <Loading />;
+
+  const onChangeName = (e: any) => {
+    const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
+    const nameCurrent = e.target.value;
+    if (nameCurrent === "") {
+      setName(profileUpdateData.nickname);
+      setIsName(true);
+      setNameMessage("");
+    } else if (!nameRegex.test(nameCurrent)) {
+      setNameMessage("한글/영어 2글자 이상 10글자 이하");
+      setIsName(false);
+    } else if (nameRegex) {
+      setNameMessage("사용 가능한 형식입니다.");
+      setName(nameCurrent);
+      setIsName(true);
+    }
+  };
+
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
-  
-  // const onClickCamera = 
-  const onClickComplete  = async (): Promise<void> => {
-    if(isName) {
-       try{
-      const formData = new FormData();
-      formData.append('nickname', name);
-      // formData.append('u', userId);
-      await instance.post("/profile",formData,{
-        headers:
-          {'Content-Type': 'multipart/form-data'}
-      });
-  
-      } catch {
-        console.log("변경 불가")
+
+  const onLoadFile = (e: any) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e);
+    return new Promise<void>((resolve) => {
+      reader.onload = () => {
+        setImage(reader.result);
+        resolve();
+      };
+    });
+  };
+
+  const deleteFileImage = () => {
+    URL.revokeObjectURL(image);
+    setImage(null);
+    setImageDelete(profileData.image !== null);
+    setImageFile(null);
+  };
+
+  const handleFileUpload = (event: any) => {
+    const imageFile = event.target.files?.[0];
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    setImageFile(formData);
+    if (imageFile) {
+      const fileSizeInMB = imageFile.size / (1024 * 1024);
+      if (fileSizeInMB > 20) {
+        // 20MB 이하인 경우에만 처리
+        setError(true);
+        return;
       }
-      router.push(`/mypage/edit`)
-  }
-}
-   
+      setError(false);
+      setImage(imageFile);
+      setImageDelete(false);
+      onLoadFile(imageFile);
+    }
+  };
+
+  const handleUploadButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const onClickComplete = () => {
+    if (!isName) return;
+    if (name === "") {
+      setName(profileData.nickname);
+      console.log("??", name);
+    }
+    const formData = new FormData();
+    formData.append("image", image);
+
+    setProfileUpdateData((prev: ProfileUpdateType) => ({
+      ...prev,
+      image: imageFile,
+      nickname: name,
+      imageDelete: imageDelete,
+    }));
+    console.log(profileUpdateData);
+    updateMutation(profileUpdateData);
+  };
 
   return (
     <>
-    {loading ? <Loading /> : (
       <S.Wapper>
         <S.Content>
           <S.Header>
@@ -79,28 +143,50 @@ export default function Nickname() {
               <Text.Title1 color="gray900">프로필 수정</Text.Title1>
             </S.Left>
             <Text.Body1
-              color={isName ? "gray900":"gray500"} // 비활성화 상태
+              color={isName ? "gray900" : "gray500"} // 비활성화 상태
               onClick={onClickComplete}
               pointer={isName}
             >
               완료
             </Text.Body1>
           </S.Header>
+
           <>
-            <S.ImageChangeBox>
-              <S.ProfileImage src={image} alt="프로필 이미지" />
-              <S.CameraIcon src="/mypage/camera.svg" alt="변경 아이콘"  />
+            <S.ImageChangeBox onClick={handleUploadButtonClick}>
+              <S.InputImage
+                ref={fileInputRef}
+                type="file"
+                accept=".jpeg, .jpg, .png"
+                onChange={(e) => {
+                  handleFileUpload(e);
+                }}
+                style={{ display: "none" }}
+              />
+              <S.ProfileImage
+                src={image ? image : getImageUrl("기본")}
+                alt="프로필 이미지"
+              />
+              <S.CameraIcon src="/mypage/camera.svg" alt="변경 아이콘" />
+              <S.CloseIcon
+                cancel={image}
+                src="/mypage/cancel.png"
+                alt="변경 아이콘"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteFileImage();
+                }}
+              />
             </S.ImageChangeBox>
 
             <S.NicknameChangeBox>
               <Text.Body5 color="gray700">닉네임</Text.Body5>{" "}
               <Margin direction="column" size={8} />
               <S.InputNickname
-                placeholder={name}
+                placeholder={profileData.nickname}
                 type="text"
                 onChange={onChangeName}
               />
-              {name.length > 0 && (
+              {nameMessage && (
                 <span className={`message ${isName ? "success" : "error"}`}>
                   {nameMessage}
                 </span>
@@ -113,12 +199,9 @@ export default function Nickname() {
           <Modal type="profile-back" onClickModal={onClickModal} />
         )}
       </S.Wapper>
-      )}
     </>
-    
   );
 }
-
 const S = {
   Wapper: styled.div`
     width: 500px;
@@ -142,7 +225,7 @@ const S = {
     height: 88px;
     position: absolute;
     border-radius: 100px;
-    border: 1px solid #EEEEF2;
+    border: 1px solid #eeeef2;
     cursor: pointer;
   `,
   CameraIcon: styled.img`
@@ -154,6 +237,18 @@ const S = {
     bottom: 0%;
     z-index: 0;
     cursor: pointer;
+  `,
+  CloseIcon: styled.img<{ cancel: boolean }>`
+    display: ${({ cancel }) => (cancel ? "auto" : "none")};
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    position: absolute;
+    right: 0%;
+    top: 0%;
+    z-index: 0;
+    cursor: pointer;
+    background-color: #eeeef2;
   `,
   NicknameChangeBox: styled.div`
     .message {
@@ -182,6 +277,9 @@ const S = {
     :focus {
       border: 1px solid #dcdce0;
     }
+  `,
+  InputImage: styled.input`
+    display: none;
   `,
   Header: styled.div`
     width: 100%;
