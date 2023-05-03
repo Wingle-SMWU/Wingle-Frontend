@@ -57,10 +57,18 @@ export default function Community({ tab }: { tab: string }) {
     <S.Wrapper>
       <Header tab={currentTab} onClickTab={onClickTab} />
       {currentTab === TabArr[0].name && (
-        <FreeTab forumId={TabArr[0].id} imgUrl={getImageUrl(currentTab)} />
+        <FreeTab
+          forumId={TabArr[0].id}
+          imgUrl={getImageUrl(currentTab)}
+          my={false}
+        />
       )}
       {currentTab === TabArr[1].name && (
-        <InteractTab forumId={TabArr[1].id} imgUrl={getImageUrl(currentTab)} />
+        <InteractTab
+          forumId={TabArr[1].id}
+          imgUrl={getImageUrl(currentTab)}
+          my={false}
+        />
       )}
       {currentTab === TabArr[2].name && (
         <NoticeTab forumId={TabArr[2].id} imgUrl={getImageUrl(currentTab)} />
