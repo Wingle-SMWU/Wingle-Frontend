@@ -4,9 +4,10 @@ import { Margin, Text } from "@/src/components/ui";
 import { useState, useCallback, useEffect, useRef } from "react";
 import Modal from "@/src/components/modal";
 import instance from "@/src/api/axiosModule";
-import { useSetRecoilState, useRecoilValue }  from "recoil";
+import { useRecoilValue }  from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
+import { countryImg } from "@/src/components/mypage/countryImg";
 
 export default function Nickname() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,7 +18,7 @@ export default function Nickname() {
   const [newImage,setNewImage] = useState<File>();
   const [loading,setLoading] = useState<boolean>(true)
   const [error, setError] = useState<boolean>(false);
-   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const profileData = useRecoilValue(profileStateAtom);
 
@@ -88,6 +89,7 @@ const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 
   return (
     <>
+    <img src={countryImg("KR")}/>
     {loading ? <Loading /> : (
       <S.Wapper>
         <S.Content>

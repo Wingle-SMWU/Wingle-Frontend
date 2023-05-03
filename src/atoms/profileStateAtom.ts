@@ -10,8 +10,8 @@ export const profileStateAtom = atom<ProfileStateType>({
     age: 24,
     interests : ["🎤 KPOP"],
     introduce: "자기소개",
-    languages : [{order: 1, interest: 'KR 한국어'}],
-    nation : "kor",
+    languages : [{order: 1, code : "KR", country: 'Republic of Korea'},{order: 2, code : "KR", country: 'Republic of Korea'},{order: 3, code : "KR", country: 'Republic of Korea'}],
+    nation : "ac",
     sns : null,
     image : 'https://wingle-bucket.s3.ap-northeast-2.amazonaws.com/idCardImage/202303071306001975874871491172.png'
     }

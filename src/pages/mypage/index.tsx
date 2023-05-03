@@ -50,11 +50,11 @@ export default function Mypage() {
            
           
             {editText?
-            <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
-              <Text.Caption1 color="orange500" pointer>
+            <S.EditBtn Color="#FF812E" onClick={() => router.push(`/mypage/edit`)}>
+              <Text.Caption1 color="white" pointer>
                 등록
               </Text.Caption1>
-            </S.EditBtn> : 
+            </S.EditBtn> :
             <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
               <Text.Caption1 color="gray700" pointer>
                 수정
@@ -88,6 +88,11 @@ export default function Mypage() {
   );
 }
 
+interface EditBtnProps {
+  Color?: string;
+}
+
+
 const S = {
   Wapper: styled.div`
     width: 100%;
@@ -120,13 +125,14 @@ const S = {
     background-color: #ff812e;
     border-radius: 8px;
   `,
-  EditBtn: styled.button`
+  EditBtn: styled.button<EditBtnProps>`
     width: 45px;
     height: 33px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #6c6c70;
+    border: 1px solid ${(props) => props.Color || '#6c6c70'};
+    background-color : ${(props) => props.Color || '#6c6c70'};
     border-radius: 8px;
   `,
 };
