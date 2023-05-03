@@ -4,35 +4,32 @@ import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { getProfile } from "@/src/api/mypage/profileData";
-import { useSetRecoilState, useRecoilValue }  from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
 
 export default function Mypage() {
-
-  const [loading,setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   const setProfileState = useSetRecoilState(profileStateAtom);
 
   useEffect(() => {
     const fetchProfile = async () => {
-    try {
-      const data = await getProfile();
-      console.log(data)
-      setProfileState(data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Failed to get profile:', error);
-    }
-  };
+      try {
+        const data = await getProfile();
+        setProfileState(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to get profile:", error);
+      }
+    };
 
-  fetchProfile();
-}, []);
+    fetchProfile();
+  }, []);
 
-  const profileState = useRecoilValue(profileStateAtom);
-  console.log(profileState)
+  if (loading) return <Loading />;
   return (
     <>
       <S.Wapper>
@@ -41,8 +38,8 @@ export default function Mypage() {
             <Text.Title1 color="gray900">마이페이지</Text.Title1>
           </S.Header>
           <S.Profile>
-            {loading? <Loading /> : <Profile /> }
-           
+            <Profile />
+
             {/* 자기소개, 언어선택, 관심사 중 하나라도 등록되지 않은 사용자 ? 등록 : 수정*/}
 
             {/* <>
@@ -92,8 +89,6 @@ export default function Mypage() {
         <Footer />
         <Navigation tab={""} />
       </S.Wapper>
-      
-      
     </>
   );
 }
