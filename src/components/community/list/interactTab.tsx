@@ -2,6 +2,7 @@ import ListCard from "./listCard";
 import { getArticles } from "@/src/api/community/get/articlesList";
 import { useQuery } from "react-query";
 import Loading from "../../ui/loadingUI";
+import { reverseArray } from "@/src/utils/reverseArray";
 
 export default function InteractTab({
   forumId,
@@ -26,7 +27,7 @@ export default function InteractTab({
   return (
     <>
       {interactArticles.length ? (
-        interactArticles.map((article: Article, i: number) => (
+        reverseArray(interactArticles).map((article: Article, i: number) => (
           <ListCard
             key={i}
             imgUrl={imgUrl}

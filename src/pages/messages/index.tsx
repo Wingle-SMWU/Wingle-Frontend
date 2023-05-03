@@ -7,12 +7,13 @@ import Message from "../../../public/images/message/message.svg";
 import Navigation from "@/src/components/layout/Navigation";
 import { Room } from "@/src/types/message/roomType";
 import instance from "@/src/api/axiosModule";
+import Loading from "@/src/components/ui/loadingUI";
 
 export default function message(page: number, size: number) {
   const { messageDataRoom } = useGetRoom(0, 10000);
 
   if (messageDataRoom === undefined) {
-    return <div>로딩중</div>;
+    return <Loading />;
   }
 
   return (

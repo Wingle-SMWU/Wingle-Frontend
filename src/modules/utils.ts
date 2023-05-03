@@ -1,9 +1,6 @@
 export const getImageUrl = (currentTab: string) => {
-  if (currentTab === "자유") {
+  if (currentTab === "자유" || currentTab === "교류" || currentTab === "기본") {
     return "/community/list/wingle-default.svg";
-  }
-  if (currentTab === "교류") {
-    return "/community/list/list-profile-flag.png";
   }
   if (currentTab === "공지") {
     return "/community/list/wingle-manager.svg";

@@ -3,6 +3,7 @@ import { getArticles } from "@/src/api/community/get/articlesList";
 import { useQuery } from "react-query";
 import Loading from "../../ui/loadingUI";
 import NoData from "../../ui/NoDataUI";
+import { reverseArray } from "@/src/utils/reverseArray";
 
 export default function InteractTab({
   forumId,
@@ -27,7 +28,7 @@ export default function InteractTab({
   return (
     <>
       {noticeArticles.length ? (
-        noticeArticles.map((article: Article, i: number) => (
+        reverseArray(noticeArticles).map((article: Article, i: number) => (
           <ListCard key={i} imgUrl={imgUrl} isNotice={true} article={article} />
         ))
       ) : (
