@@ -3,8 +3,7 @@ import { useRouter } from "next/router";
 import { Room } from "@/src/types/message/roomType";
 import betweenTime from "@/src/utils/betweenTime";
 import Image from "next/image";
-
-import profiledefault from '../../../public/images/message/profiledefault.png';
+import profiledefault from "../../../public/images/profiledefault.png";
 
 const MsgList = ({ list }: { list: Room }) => {
   const { image, nickname, createdTime, recentChat, roomId } = list;
@@ -17,12 +16,16 @@ const MsgList = ({ list }: { list: Room }) => {
     <>
       <S.Container onClick={handleMoveChatRoom}>
         <S.LeftBox>
-        {image ? 
-          <S.UserImage src={image} alt="상대 이미지" /> : 
-          <Image 
-          src='/images/message/profiledefault.png'
-          alt='기본 프로필 이미지'
-          width={35} height={35} />}
+          {image ? (
+            <S.UserImage src={image} alt="상대 이미지" />
+          ) : (
+            <Image
+              src="/images/message/profiledefault.png"
+              alt="기본 프로필 이미지"
+              width={35}
+              height={35}
+            />
+          )}
           <S.LeftContent>
             <S.LeftDetail>
               <span>{nickname}</span>
@@ -81,7 +84,7 @@ const S = {
     flex-direction: column;
     margin-bottom: 1rem;
     margin-left: 1rem;
-    
+
     span {
       font-family: "Pretendard";
       font-style: normal;
@@ -95,7 +98,7 @@ const S = {
         color: #222223;
       }
     }
-    `,
-}
+  `,
+};
 
 export default MsgList;
