@@ -9,7 +9,7 @@ export const profileStateAtom = atom<ProfileStateType>({
   default: {
     gender: true,
     nickname: "",
-    age: 24,
+    age: 0,
     interests: [],
     introduce: "",
     languages: [],
