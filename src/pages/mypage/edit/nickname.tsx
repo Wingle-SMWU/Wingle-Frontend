@@ -3,17 +3,10 @@ import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
 import { useState, useEffect, useRef } from "react";
 import Modal from "@/src/components/modal";
-import { useRecoilValue } from "recoil";
-import { profileUpdateStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
 import { getImageUrl } from "@/src/modules/utils";
 import { ProfileUpdateType } from "@/src/types/mypage/profileType";
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { postUpdateProfile } from "@/src/api/mypage/updateProfile";
 import { getProfile } from "@/src/api/mypage/profileData";
 
@@ -22,7 +15,7 @@ export default function Nickname() {
   const [name, setName] = useState<string>("");
   const [nameMessage, setNameMessage] = useState<string>("");
   const [isName, setIsName] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [fileError, setFileError] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<any>(null);
   const [imageDelete, setImageDelete] = useState(false);
@@ -70,7 +63,7 @@ export default function Nickname() {
 
   if (isLoading || updateLoading) return <Loading />;
   if (isError || isIdle) return <>에러</>;
-
+  if (fileError) alert("업로드 가능한 이미지 크기 제한을 초과했습니다.");
   if (profileData === null && profileData === undefined) return <Loading />;
 
   const onChangeName = (e: any) => {
@@ -121,10 +114,10 @@ export default function Nickname() {
       const fileSizeInMB = imageFile.size / (1024 * 1024);
       if (fileSizeInMB > 20) {
         // 20MB 이하인 경우에만 처리
-        setError(true);
+        setFileError(true);
         return;
       }
-      setError(false);
+      setFileError(false);
       setImage(imageFile);
       setImageDelete(false);
       onLoadFile(imageFile);
@@ -139,7 +132,6 @@ export default function Nickname() {
     if (!isName) return;
     if (name === "") {
       setName(profileData.nickname);
-      console.log("??", name);
     }
     const formData = new FormData();
     formData.append("image", image);
