@@ -68,7 +68,7 @@ export default function Language() {
             <SelectLanguageBox getLanguage={getLanguage}/>
 
           </S.SelectBox>
-          <Margin direction="column" size={24} />
+
           <S.ResetBox>
             <S.ResetBtn>
               <Text.Caption3 color="gray700" pointer>
@@ -124,6 +124,7 @@ const S = {
   ResetBox: styled.div`
     display: flex;
     justify-content: flex-end;
+    margin-top : 50px;
   `,
   ResetBtn: styled.button`
     width: 79px;

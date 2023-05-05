@@ -1,7 +1,6 @@
-export type languagesType = {
+export type LanguagesType = {
   order: number;
-  code : string;
-  country: string;
+  interest : string;
 };
 
 export type ProfileStateType = {
@@ -10,8 +9,14 @@ export type ProfileStateType = {
   age: number;
   interests : string[];
   introduce: string;
-  languages : languagesType[];
+  languages : LanguagesType[];
   nation : string;
   sns : any;
   image: string;
+};
+
+export type ProfileUpdateType = {
+  image: FormData | any;
+  imageDelete: boolean;
+  nickname: string;
 };
