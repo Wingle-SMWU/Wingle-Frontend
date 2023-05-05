@@ -71,8 +71,8 @@ const S = {
     width: 22px;
     height: 22px;
     position: absolute;
-    border: 1px solid black;
-    background-color: black;
+    border: 1px solid white;
+    background-color: white;
     border-radius: 100px;
     right: 0%;
     bottom: 0%;
@@ -88,7 +88,13 @@ const S = {
   UserNicknameAndSex: styled.div`
     display: flex;
   `,
-  UserSexImg: styled.img``,
+  UserSexImg: styled.img`
+  width : 16px;
+  height : 16px;
+  padding-left : 4px;
+  margin : 3px 0px;
+  `,
+
 
   DropBubbleHigh: styled.div`
     position: absolute;

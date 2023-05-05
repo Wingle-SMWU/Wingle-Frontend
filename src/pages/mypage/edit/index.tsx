@@ -16,8 +16,7 @@ export default function Edit() {
 
   const setProfileState = useSetRecoilState(profileStateAtom);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
+  const fetchProfile = async () => {
       try {
         const data = await getProfile();
         setProfileState(data);
@@ -27,8 +26,10 @@ export default function Edit() {
       }
     };
 
+  useEffect(() => {
     fetchProfile();
   }, []);
+
   useEffect(() => {
     getProfile();
   }, []);
@@ -40,6 +41,7 @@ export default function Edit() {
   };
 
   if (loading) return <Loading />;
+
   return (
     <>
       <S.Wapper>
@@ -145,6 +147,7 @@ export default function Edit() {
 interface IntesestBoxProps {
   backgroundColor : string;
 }
+
 const S = {
   Wapper: styled.div`
     width: 100%;
@@ -251,7 +254,7 @@ const S = {
     justify-content: space-between;
     /* border: 1px solid blue; */
   `,
-  InterestBox: styled.div`
+  InterestBox: styled.div<IntesestBoxProps>`
     cursor: pointer;
     border-radius: 40px;
     padding: 8px 15px;

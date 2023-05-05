@@ -12,8 +12,6 @@ import Loading from "@/src/components/ui/loadingUI";
 
 export default function Mypage() {
   const [loading, setLoading] = useState(true);
-
-  const [loading,setLoading] = useState(true); 
   const [editText,setEditText] = useState(true);
   const setProfileState = useSetRecoilState(profileStateAtom);
 
@@ -39,6 +37,8 @@ export default function Mypage() {
   
       console.log("d")
   console.log(profileState)
+  if (loading) return <Loading />
+  
   return (
     <>
       <S.Wapper>
@@ -47,9 +47,7 @@ export default function Mypage() {
             <Text.Title1 color="gray900">마이페이지</Text.Title1>
           </S.Header>
           <S.Profile>
-            {loading? <Loading /> : <Profile /> }
-           
-          
+            <Profile /> 
             {editText?
             <S.EditBtn Color="#FF812E" onClick={() => router.push(`/mypage/edit`)}>
               <Text.Caption1 color="white" pointer>
