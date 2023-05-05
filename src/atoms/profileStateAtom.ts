@@ -1,8 +1,5 @@
 import { atom } from "recoil";
-import {
-  ProfileStateType,
-  ProfileUpdateType,
-} from "../types/mypage/profileType";
+import { ProfileStateType } from "../types/mypage/profileType";
 
 export const profileStateAtom = atom<ProfileStateType>({
   key: "profileState",
@@ -16,14 +13,5 @@ export const profileStateAtom = atom<ProfileStateType>({
     nation: "",
     sns: null,
     image: "",
-  },
-});
-
-export const profileUpdateStateAtom = atom<ProfileUpdateType>({
-  key: "profileUpdateState",
-  default: {
-    image: null,
-    imageDelete: false,
-    nickname: "",
   },
 });
