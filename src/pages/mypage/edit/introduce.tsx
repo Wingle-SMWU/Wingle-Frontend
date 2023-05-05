@@ -4,7 +4,7 @@ import { Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState,useCallback,useEffect } from "react";
 import instance from "@/src/api/axiosModule"
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 
 export default function Introduce() {

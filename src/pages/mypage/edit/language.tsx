@@ -5,7 +5,8 @@ import Modal from "@/src/components/modal";
 import { useState,useEffect } from "react";
 import instance from "@/src/api/axiosModule";
 import SelectLanguageBox from "@/src/components/mypage/selectLanguage";
-import DropDown from "@/src/components/ui/dropDownUI";
+import { useRecoilValue } from "recoil";
+import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 
 export default function Language() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,6 +30,8 @@ export default function Language() {
   useEffect(() => {
     language
   },[language])
+
+  const profileData = useRecoilValue(profileStateAtom);
 
   return (
     <>

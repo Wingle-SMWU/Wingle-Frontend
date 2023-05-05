@@ -1,6 +1,8 @@
 import { Margin, Text } from "../ui";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 
 type InterestItem = {
   id: number;
@@ -22,6 +24,11 @@ type Props = {
 
 export default function SelectInterest({ parentFunction }: Props) {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const profileData = useRecoilValue(profileStateAtom);
+
+  useEffect(() => {
+    parentFunction(selectedItems);
+  }, [selectedItems, parentFunction]);
 
   const handleClick = (item: InterestItem) => {
     if (selectedItems.includes(item.title)) {
@@ -31,14 +38,17 @@ export default function SelectInterest({ parentFunction }: Props) {
     }
   };
 
-  useEffect(() => {
-    parentFunction(selectedItems);
-  }, [selectedItems, parentFunction]);
-
   const isSelected = (item: InterestItem) => {
     if (selectedItems.includes(item.title)) return true;
     else false;
   };
+
+  useEffect(() => {
+    const initialSelectedItems = interestItems
+      .filter((item) => profileData.interests.includes(item.title))
+      .map((item) => item.title);
+    setSelectedItems(initialSelectedItems);
+  }, [profileData]);
 
   return (
     <S.ShowInterest>
