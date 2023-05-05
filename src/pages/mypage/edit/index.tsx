@@ -3,52 +3,45 @@ import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { getProfile } from "@/src/api/mypage/profileData";
-import { useSetRecoilState, useRecoilValue }  from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
 import { languagesType } from "@/src/types/mypage/profileType";
 
 export default function Edit() {
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
   const setProfileState = useSetRecoilState(profileStateAtom);
-  
-  const fetchProfile = async () => {
-    try {
-      const data = await getProfile();
-      console.log(data)
-      setProfileState(data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Failed to get profile:', error);
-    }
-  };
 
   useEffect(() => {
- 
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfile();
+        setProfileState(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to get profile:", error);
+      }
+    };
 
-  fetchProfile();
-}, []);
-
-
+    fetchProfile();
+  }, []);
   useEffect(() => {
     getProfile();
   }, []);
 
- 
   const profileData = useRecoilValue(profileStateAtom);
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
 
+  if (loading) return <Loading />;
   return (
     <>
-    
-     {loading? <Loading /> : (
       <S.Wapper>
         <S.Content>
           <S.Header>
@@ -62,7 +55,7 @@ export default function Edit() {
           </S.Header>
           <>
             <S.UserBox>
-              <Profile/>
+              <Profile />
 
               <S.EditBtn
                 src="/modify.svg"
@@ -97,44 +90,47 @@ export default function Edit() {
             </S.Column>
 
             <Margin direction="column" size={32} />
-            <S.Column >
-            <S.Introduce>
-              <Text.Body1 color="gray900">자기소개</Text.Body1>
-              <S.EditBtn
-                src="/modify.svg"
-                alt="연필"
-                onClick={() => router.push(`/mypage/edit/introduce`)}
-              />
-              {/* 세번째 연필 누르면 "자기소개" 페이지로 가서 자기소개 글쓰기 */}
-            </S.Introduce>
-            <S.IntroduceContent>{(profileData) && profileData.introduce }</S.IntroduceContent>
+            <S.Column>
+              <S.Introduce>
+                <Text.Body1 color="gray900">자기소개</Text.Body1>
+                <S.EditBtn
+                  src="/modify.svg"
+                  alt="연필"
+                  onClick={() => router.push(`/mypage/edit/introduce`)}
+                />
+                {/* 세번째 연필 누르면 "자기소개" 페이지로 가서 자기소개 글쓰기 */}
+              </S.Introduce>
+              <S.IntroduceContent>
+                {profileData && profileData.introduce}
+              </S.IntroduceContent>
             </S.Column>
-          
+
             <Margin direction="column" size={32} />
             <S.Column>
-            <S.Interest>
-              <Text.Body1 color="gray900">관심사</Text.Body1>
-              <S.EditBtn
-                src="/modify.svg"
-                alt="연필"
-                onClick={() => router.push(`/mypage/edit/interest`)}
-              />
-              {/* 네번째 연필 누르면 "관심사" 페이지로 가서 관심사 선택하기 */}
-            </S.Interest>
-            <S.InterestBoxContainer>
-            {(profileData) && profileData.interests.map(item => {
-                return (
-                    <div key={item}>
+              <S.Interest>
+                <Text.Body1 color="gray900">관심사</Text.Body1>
+                <S.EditBtn
+                  src="/modify.svg"
+                  alt="연필"
+                  onClick={() => router.push(`/mypage/edit/interest`)}
+                />
+                {/* 네번째 연필 누르면 "관심사" 페이지로 가서 관심사 선택하기 */}
+              </S.Interest>
+              <S.InterestBoxContainer>
+                {profileData &&
+                  profileData.interests.map((item) => {
+                    return (
+                      <div key={item}>
                         <S.InterestBox backgroundColor="#FFF3EB">
-                            <Text.Body6 color="gray900" pointer key={item}>
-                                {item}
-                            </Text.Body6>
+                          <Text.Body6 color="gray900" pointer key={item}>
+                            {item}
+                          </Text.Body6>
                         </S.InterestBox>
                         <Margin direction="row" size={8} />
-                    </div>
-                );
-            })}
-            </S.InterestBoxContainer>
+                      </div>
+                    );
+                  })}
+              </S.InterestBoxContainer>
             </S.Column>
           </S.EditList>
         </S.Content>
@@ -142,9 +138,7 @@ export default function Edit() {
           <Modal type="profile-back" onClickModal={onClickModal} />
         )}
       </S.Wapper>
-      )}
     </>
-     
   );
 }
 
@@ -241,15 +235,15 @@ const S = {
     display: flex;
     justify-content: space-between;
   `,
-  IntroduceContent : styled.div`
-    padding-top:16px;
-    font-size:16px;
+  IntroduceContent: styled.div`
+    padding-top: 16px;
+    font-size: 16px;
     line-height: 140%;
-    color:theme.color.gray900;
+    color: theme.color.gray900;
   `,
-  InterestBoxContainer : styled.div`
-  display:flex;
-  flex-direction:row;
+  InterestBoxContainer: styled.div`
+    display: flex;
+    flex-direction: row;
   `,
   Interest: styled.div`
     width: 452px;
@@ -257,17 +251,15 @@ const S = {
     justify-content: space-between;
     /* border: 1px solid blue; */
   `,
-  InterestBox: styled.div<IntesestBoxProps>`
-        cursor: pointer;
-        border-radius: 40px;
-        padding: 8px 15px;
-        background-color: ${(props) => props.backgroundColor};
-        margin :8px;
-    `,
-  Column : styled.div`
-  display : flex;
-  flex-Direction: column;
- 
+  InterestBox: styled.div`
+    cursor: pointer;
+    border-radius: 40px;
+    padding: 8px 15px;
+    background-color: ${(props) => props.backgroundColor};
+    margin: 8px;
   `,
-
+  Column: styled.div`
+    display: flex;
+    flex-direction: column;
+  `,
 };

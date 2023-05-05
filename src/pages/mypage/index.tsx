@@ -4,13 +4,14 @@ import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { getProfile } from "@/src/api/mypage/profileData";
-import { useSetRecoilState, useRecoilValue }  from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
 
 export default function Mypage() {
+  const [loading, setLoading] = useState(true);
 
   const [loading,setLoading] = useState(true); 
   const [editText,setEditText] = useState(true);
@@ -31,8 +32,8 @@ export default function Mypage() {
     }
   };
 
-  fetchProfile();
-}, []);
+    fetchProfile();
+  }, []);
 
   const profileState = useRecoilValue(profileStateAtom);
   
@@ -82,8 +83,6 @@ export default function Mypage() {
         <Footer />
         <Navigation tab={""} />
       </S.Wapper>
-      
-      
     </>
   );
 }

@@ -1,84 +1,126 @@
 import styled from "styled-components";
 import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Modal from "@/src/components/modal";
-import instance from "@/src/api/axiosModule";
-import { useRecoilValue }  from "recoil";
-import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
-import { countryImg } from "@/src/components/mypage/countryImg";
+import { getImageUrl } from "@/src/modules/utils";
+import { ProfileUpdateType } from "@/src/types/mypage/profileType";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { postUpdateProfile } from "@/src/api/mypage/updateProfile";
+import { getProfile } from "@/src/api/mypage/profileData";
 
 export default function Nickname() {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState<string>("");
   const [nameMessage, setNameMessage] = useState<string>("");
   const [isName, setIsName] = useState<boolean>(false);
-  const [image,setImage] = useState<string>('');
-  const [newImage,setNewImage] = useState<File>();
-  const [loading,setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<boolean>(false);
+  const [fileError, setFileError] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
-  const profileData = useRecoilValue(profileStateAtom);
+  const [image, setImage] = useState<any>(null);
+  const [imageDelete, setImageDelete] = useState(false);
+  const [imageFile, setImageFile] = useState<any>(null);
+
+  const queryClient = useQueryClient();
+
+  const { mutate: updateMutation, isLoading: updateLoading } = useMutation(
+    (updateData: ProfileUpdateType) => postUpdateProfile(updateData),
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries("profileData");
+        const prevProfileData = queryClient.getQueryData([
+          "profileData",
+          {
+            exact: false,
+          },
+        ]);
+        return { prevProfileData };
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries("profileData");
+        router.push("/mypage/edit");
+      },
+    }
+  );
+
+  const {
+    data: profileData,
+    isLoading,
+    isError,
+    isIdle,
+  } = useQuery({
+    queryFn: getProfile,
+    queryKey: ["profileData"],
+  });
 
   useEffect(() => {
-  if (profileData !== null && profileData !== undefined) {
-    setName(profileData.nickname);
-    setImage(profileData.image)
-    setLoading(false);
-  }
-}, [profileData]);
+    if (profileData) {
+      setName(profileData.nickname);
+      setIsName(true);
+      setImage(profileData.image);
+    }
+  }, [profileData]);
 
-  const onChangeName = useCallback((e: any) => {
+  if (isLoading || updateLoading) return <Loading />;
+  if (isError || isIdle) return <>에러</>;
+  if (fileError) alert("업로드 가능한 이미지 크기 제한을 초과했습니다.");
+  if (profileData === null && profileData === undefined) return <Loading />;
+
+  const onChangeName = (e: any) => {
     const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
     const nameCurrent = e.target.value;
-    setName(nameCurrent);
-
-    if (!nameRegex.test(nameCurrent)) {
+    if (nameCurrent === "") {
+      setName(profileData.nickname);
+      setIsName(true);
+      setNameMessage("");
+    } else if (!nameRegex.test(nameCurrent)) {
       setNameMessage("한글/영어 2글자 이상 10글자 이하");
       setIsName(false);
-    } else {
+    } else if (nameRegex) {
       setNameMessage("사용 가능한 형식입니다.");
+      setName(nameCurrent);
       setIsName(true);
     }
-  }, []);
+  };
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
-  
-  // const onClickCamera = 
-  const onClickComplete  = async (): Promise<void> => {
-    if(isName) {
-       try{
-      const formData = new FormData();
-      formData.append('nickname', name);
-      if (newImage) formData.append('image',newImage);
-      else {formData.append('image',image)}
-      await instance.post("/profile",formData,{
-        headers:
-          {'Content-Type': 'multipart/form-data'}
-      });
-  
-      } catch {
-        console.log("변경 불가")
-      }
-      router.push(`/mypage/edit`)
-  }
-}
-   
-const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const onLoadFile = (e: any) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e);
+    return new Promise<void>((resolve) => {
+      reader.onload = () => {
+        setImage(reader.result);
+        resolve();
+      };
+    });
+  };
+
+  const deleteFileImage = () => {
+    URL.revokeObjectURL(image);
+    setImage(null);
+    setImageDelete(profileData.image !== null);
+    setImageFile(null);
+  };
+
+  const handleFileUpload = (event: any) => {
     const imageFile = event.target.files?.[0];
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    setImageFile(formData);
     if (imageFile) {
       const fileSizeInMB = imageFile.size / (1024 * 1024);
       if (fileSizeInMB > 20) {
         // 20MB 이하인 경우에만 처리
-        setError(true);        
+        setFileError(true);
         return;
       }
-      setError(false);
-      setNewImage(imageFile);
+      setFileError(false);
+      setImage(imageFile);
+      setImageDelete(false);
+      onLoadFile(imageFile);
     }
   };
 
@@ -86,11 +128,22 @@ const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     fileInputRef.current?.click();
   };
 
+  const onClickComplete = async () => {
+    if (!isName) return;
+    if (name === "") {
+      setName(profileData.nickname);
+    }
+    const formData = new FormData();
+    formData.append("image", image);
+    updateMutation({
+      image: imageFile,
+      nickname: name,
+      imageDelete: imageDelete,
+    });
+  };
 
   return (
     <>
-    <img src={countryImg("KR")}/>
-    {loading ? <Loading /> : (
       <S.Wapper>
         <S.Content>
           <S.Header>
@@ -103,36 +156,50 @@ const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
               <Text.Title1 color="gray900">프로필 수정</Text.Title1>
             </S.Left>
             <Text.Body1
-              color={isName ? "gray900":"gray500"} // 비활성화 상태
+              color={isName ? "gray900" : "gray500"} // 비활성화 상태
               onClick={onClickComplete}
               pointer={isName}
             >
               완료
             </Text.Body1>
           </S.Header>
+
           <>
             <S.ImageChangeBox onClick={handleUploadButtonClick}>
               <S.InputImage
-          ref={fileInputRef}
-          type="file"
-          accept=".jpeg, .jpg, .png"
-          onChange={handleFileUpload}
-          style={{ display: "none" }}
-        />
-              <S.ProfileImage src={image} alt="프로필 이미지" />
-              <S.CameraIcon src="/mypage/camera.svg" alt="변경 아이콘"  />
-              
+                ref={fileInputRef}
+                type="file"
+                accept=".jpeg, .jpg, .png"
+                onChange={(e) => {
+                  handleFileUpload(e);
+                }}
+                style={{ display: "none" }}
+              />
+              <S.ProfileImage
+                src={image ? image : getImageUrl("기본")}
+                alt="프로필 이미지"
+              />
+              <S.CameraIcon src="/mypage/camera.svg" alt="변경 아이콘" />
+              <S.CloseIcon
+                cancel={image}
+                src="/mypage/cancel.png"
+                alt="변경 아이콘"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteFileImage();
+                }}
+              />
             </S.ImageChangeBox>
 
             <S.NicknameChangeBox>
               <Text.Body5 color="gray700">닉네임</Text.Body5>{" "}
               <Margin direction="column" size={8} />
               <S.InputNickname
-                placeholder={name}
+                placeholder={profileData.nickname}
                 type="text"
                 onChange={onChangeName}
               />
-              {name.length > 0 && (
+              {nameMessage && (
                 <span className={`message ${isName ? "success" : "error"}`}>
                   {nameMessage}
                 </span>
@@ -145,12 +212,9 @@ const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
           <Modal type="profile-back" onClickModal={onClickModal} />
         )}
       </S.Wapper>
-      )}
     </>
-    
   );
 }
-
 const S = {
   Wapper: styled.div`
     width: 500px;
@@ -174,7 +238,7 @@ const S = {
     height: 88px;
     position: absolute;
     border-radius: 100px;
-    border: 1px solid #EEEEF2;
+    border: 1px solid #eeeef2;
     cursor: pointer;
   `,
   CameraIcon: styled.img`
@@ -186,6 +250,18 @@ const S = {
     bottom: 0%;
     z-index: 0;
     cursor: pointer;
+  `,
+  CloseIcon: styled.img<{ cancel: boolean }>`
+    display: ${({ cancel }) => (cancel ? "auto" : "none")};
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    position: absolute;
+    right: 0%;
+    top: 0%;
+    z-index: 0;
+    cursor: pointer;
+    background-color: #eeeef2;
   `,
   NicknameChangeBox: styled.div`
     .message {
@@ -215,9 +291,8 @@ const S = {
       border: 1px solid #dcdce0;
     }
   `,
-  InputImage : styled.input`
-  display : none;
-
+  InputImage: styled.input`
+    display: none;
   `,
   Header: styled.div`
     width: 100%;

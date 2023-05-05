@@ -5,13 +5,19 @@ type languagesType = {
 };
 
 export type ProfileStateType = {
-  gender : boolean;
+  gender: boolean;
   nickname: string;
   age: number;
-  interests : string[];
+  interests: string[];
   introduce: string;
-  languages : languagesType[];
-  nation : string;
-  sns : any;
+  languages: languagesType[];
+  nation: string;
+  sns: any;
   image: string;
+};
+
+export type ProfileUpdateType = {
+  image: FormData | any;
+  imageDelete: boolean;
+  nickname: string;
 };

@@ -1,9 +1,11 @@
-import { atom } from 'recoil';
-import { ProfileStateType } from '../types/mypage/profileType';
-
+import { atom } from "recoil";
+import {
+  ProfileStateType,
+  ProfileUpdateType,
+} from "../types/mypage/profileType";
 
 export const profileStateAtom = atom<ProfileStateType>({
-  key: 'profileState',
+  key: "profileState",
   default: {
     gender : true,
     nickname: 'test',
@@ -15,4 +17,13 @@ export const profileStateAtom = atom<ProfileStateType>({
     sns : null,
     image : 'https://wingle-bucket.s3.ap-northeast-2.amazonaws.com/idCardImage/202303071306001975874871491172.png'
     }
+});
+
+export const profileUpdateStateAtom = atom<ProfileUpdateType>({
+  key: "profileUpdateState",
+  default: {
+    image: null,
+    imageDelete: false,
+    nickname: "",
+  },
 });
