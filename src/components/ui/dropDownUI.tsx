@@ -27,6 +27,9 @@ export default function DropDown({
     setIsActive((prev) => !prev);
   }, []);
 
+  // TODO: 여기 리팩토링 필요함. 이게 원래 innerText를 그대로 넣는 건데, country 객체 데이터가 변경됨에 따라 확장성이 더 필요해졌음
+  // 그래서 이제는 country 객체 데이터를 받아서, country 객체 데이터의 code을 innerText로 찾아서 넣는 방식으로 변경됨에 따라
+  // onSelectedChange를 Props로 받는 게 아닌 내장된 handleSelectItem을 없애고 Props로 받는 것이 맞는 거 같다..
   const handleSelectItem: React.MouseEventHandler<HTMLLIElement> = useCallback(
     (e) => {
       const target = e.target as HTMLLIElement;
@@ -44,7 +47,12 @@ export default function DropDown({
         <S.DropdownBody onClick={onActiveToggle} isActive={isActive}>
           <S.DropdownSelected>{selected}</S.DropdownSelected>
           <S.DropdownSelected>
-            <Image src="/auth/arrow_down.svg" alt="arrow" width={20} height={20} />
+            <Image
+              src="/auth/arrow_down.svg"
+              alt="arrow"
+              width={20}
+              height={20}
+            />
           </S.DropdownSelected>
         </S.DropdownBody>
 
@@ -90,7 +98,8 @@ const S = {
     height: 50px;
     background-color: ${({ theme }) => theme.color.white};
     border: 1px solid
-      ${({ theme, isActive }) => (isActive ? theme.color.gray600 : theme.color.gray300)};
+      ${({ theme, isActive }) =>
+        isActive ? theme.color.gray600 : theme.color.gray300};
     border-radius: 8px;
   `,
   DropdownSelected: styled.div`
