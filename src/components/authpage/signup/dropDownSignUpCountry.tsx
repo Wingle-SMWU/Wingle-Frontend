@@ -10,7 +10,7 @@ interface StyledInputProps {
   isActive: boolean;
 }
 
-export default function DropDown() {
+export default function DropDownSignUpCountry() {
   const [isActive, setIsActive] = useState(false);
   const [nation, setNation] = useState("REPUBLIC OF KOREA");
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
