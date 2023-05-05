@@ -8,7 +8,6 @@ import { getProfile } from "@/src/api/mypage/profileData";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
-import { languagesType } from "@/src/types/mypage/profileType";
 
 export default function Edit() {
   const [loading, setLoading] = useState(true);
@@ -20,6 +19,7 @@ export default function Edit() {
       try {
         const data = await getProfile();
         setProfileState(data);
+        console.log(data)
         setLoading(false);
       } catch (error) {
         console.error("Failed to get profile:", error);
@@ -84,8 +84,8 @@ export default function Edit() {
               {(profileData.languages).map((v) => (
                   <S.LanguageChartContent key={v.order}>
                     <S.LanguageChart src={`/mypage/language${v.order}.svg`} />
-                    <Text.Body6 color = "gray700">{v.code}  </Text.Body6>
-                    <Text.Body7 color ="gray700">{v.country}</Text.Body7>
+                    <S.LanguageText fontWeight={550} width ={28}>{v.interest.substring(0,2)}  </S.LanguageText>
+                    <S.LanguageText fontWeight={400} width = {262} color ="orange500">{v.interest.substring(2)}</S.LanguageText>
               </S.LanguageChartContent>
               ))}
             </S.LanguageContent>
@@ -148,6 +148,10 @@ interface IntesestBoxProps {
   backgroundColor : string;
 }
 
+interface LanguageText {
+  fontWeight : number;
+  width : number;
+}
 const S = {
   Wapper: styled.div`
     width: 100%;
@@ -183,7 +187,6 @@ const S = {
   UserProfileImg: styled.img`
     border: 1px solid #eeeef2;
   `,
-  UserFlagImg: styled.img``,
   UserInfoBox: styled.div`
     width: 340px;
     height: 86px;
@@ -191,10 +194,6 @@ const S = {
     flex-direction: column;
     justify-content: center;
   `,
-  UserNicknameAndSex: styled.div`
-    display: flex;
-  `,
-  UserSexImg: styled.img``,
   RegisterBtn: styled.button`
     width: 45px;
     height: 33px;
@@ -232,6 +231,13 @@ const S = {
     width: 18px;
     height: 18px;
     padding-right: 6px;
+  `,
+  LanguageText : styled.div<LanguageText>`
+    width : ${(props) => props.width}px;
+    color : #49494D;
+    font-size : 14px;
+    font-family: 'Pretendard';
+    font-weight: ${(props) => props.fontWeight};
   `,
   Introduce: styled.div`
     width: 452px;

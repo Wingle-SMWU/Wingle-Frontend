@@ -129,7 +129,7 @@ const S = {
     justify-content: center;
     align-items: center;
     border: 1px solid ${(props) => props.Color || '#6c6c70'};
-    background-color : ${(props) => props.Color || '#6c6c70'};
+    background-color : ${(props) => props.Color || 'white'};
     border-radius: 8px;
   `,
 };
