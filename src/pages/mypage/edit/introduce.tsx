@@ -4,6 +4,8 @@ import { Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState,useCallback,useEffect } from "react";
 import instance from "@/src/api/axiosModule"
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 
 export default function Introduce() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -14,6 +16,8 @@ export default function Introduce() {
     const nameCurrent = e.target.value;
     setIntroduce(nameCurrent);
   }, []);
+
+  const profileData = useRecoilValue(profileStateAtom);
 
   useEffect(() => {
     if (introduce.length < 2 || introduce.length > 400) {
@@ -63,6 +67,7 @@ export default function Introduce() {
             maxLength={400}
             placeholder="자기소개를 작성해주세요! (최대 400자)"
             onChange={onChangeIntroduce}
+            defaultValue={profileData.introduce}
           />
         </S.Content>
         {modalVisible && (
