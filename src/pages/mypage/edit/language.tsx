@@ -13,15 +13,12 @@ import Loading from "@/src/components/ui/loadingUI";
 export default function Language() {
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const [btnActive, setBtnActive] = useState(false);
   const [language,setLanguage] = useState(Array<String>);
   const [initialLanguage, setInitialLanguage] = useState<LanguagesType[]>([]);
   const [initialLanguageValue1,setInitialLanguageValue1] = useState('');
   const [initialLanguageValue2,setInitialLanguageValue2] = useState('');
   const [initialLanguageValue3,setInitialLanguageValue3] = useState('');
-  
-  // initialLanguage[0]?.interest || "";
-  // const initialLanguageValue2= initialLanguage[1]?.interest || "";
-  // const initialLanguageValue3 = initialLanguage[2]?.interest || "";
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
@@ -35,12 +32,20 @@ export default function Language() {
       router.push(`/mypage/edit`)
   };
   
-  const getLanguage = (str:any) => {
-    setLanguage([...language,str].filter(v=>v!==''));
-  }
+  const getLanguageAtIndex = (str: string, index: number) => {
+    setLanguage((prevLanguage) => {
+      const updatedLanguage = [...prevLanguage];
+      updatedLanguage[index] = str;
+      return updatedLanguage;
+    });
+};
+
   useEffect(() => {
     language
+    console.log(language)
+   if (language.length>0) setBtnActive(true)
   },[language])
+
 
   
   const profileData = useRecoilValue(profileStateAtom);
@@ -79,9 +84,8 @@ if (loading) return <Loading />
               <Text.Title1 color="gray900">사용 가능 언어</Text.Title1>
             </S.Left>
             <Text.Body1
-              color="gray500" // 비활성화 상태
-              // 활성화 상태에서는 color="gray900"
-              onClick={postLanguage}
+              color={btnActive ? "gray900" : "gray500"}
+              onClick={btnActive ? postLanguage : () => console.log("언어를 선택해주세요")}
               pointer
             >
               완료
@@ -90,18 +94,17 @@ if (loading) return <Loading />
           <S.SelectBox>
             <Text.Body5 color="gray700">1순위</Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox getLanguage={getLanguage} initialLanguage={initialLanguageValue1}/>
+            <SelectLanguageBox getLanguageAtIndex={(str) => getLanguageAtIndex(str, 0)} initialLanguage={initialLanguageValue1} idx={0}/>
 
             <Margin direction="column" size={24} />
             <Text.Body5 color="gray700">2순위</Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox getLanguage={getLanguage} initialLanguage={initialLanguageValue2}/>
+            <SelectLanguageBox getLanguageAtIndex={(str) => getLanguageAtIndex(str, 1)} initialLanguage={initialLanguageValue2} idx={1}/>
 
             <Margin direction="column" size={24} />
             <Text.Body5 color="gray700">3순위</Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox getLanguage={getLanguage} initialLanguage={initialLanguageValue3}/>
-
+            <SelectLanguageBox getLanguageAtIndex={(str) => getLanguageAtIndex(str, 2)} initialLanguage={initialLanguageValue3} idx={2} />
           </S.SelectBox>
 
           <S.ResetBox>

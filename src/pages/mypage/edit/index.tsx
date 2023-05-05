@@ -78,7 +78,6 @@ export default function Edit() {
                 alt="연필"
                 onClick={() => router.push(`/mypage/edit/language`)}
               />
-              {/* 두번째 연필 누르면 "사용 가능 언어" 페이지로 가서 1순위, 2순위, 3순위 언어선택 */}
             </S.Language>
             <S.LanguageContent>
               {(profileData.languages).map((v) => (
@@ -100,7 +99,6 @@ export default function Edit() {
                   alt="연필"
                   onClick={() => router.push(`/mypage/edit/introduce`)}
                 />
-                {/* 세번째 연필 누르면 "자기소개" 페이지로 가서 자기소개 글쓰기 */}
               </S.Introduce>
               <S.IntroduceContent>
                 {profileData && profileData.introduce}
@@ -116,7 +114,6 @@ export default function Edit() {
                   alt="연필"
                   onClick={() => router.push(`/mypage/edit/interest`)}
                 />
-                {/* 네번째 연필 누르면 "관심사" 페이지로 가서 관심사 선택하기 */}
               </S.Interest>
               <S.InterestBoxContainer>
                 {profileData &&
@@ -226,6 +223,7 @@ const S = {
   LanguageChartContent : styled.div`
     display: flex;
     flex-direction: row;
+    padding-bottom : 6px;
   `,
   LanguageChart : styled.img`
     width: 18px;
