@@ -101,6 +101,7 @@ const S = {
     width: 100%;
     max-height: 56px;
     border: none;
+    font-family: "Pretendard";
     font-weight: 400;
     font-size: 16px;
     line-height: 22px;
