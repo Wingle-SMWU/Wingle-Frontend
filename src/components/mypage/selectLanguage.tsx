@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { countryList } from "@/src/constants/countryList";
 import DropDown from "../ui/dropDownUI";
 
-export default function SelectLanguageBox({ getLanguage }: Props) {
-  const [language, setLanguage] = useState("");
+export default function SelectLanguageBox({ getLanguage,initialLanguage }: Props) {
+  const [language, setLanguage] = useState(initialLanguage);
 
   const handleChange = (selectedLanguage: string) => {
     setLanguage(selectedLanguage);
@@ -13,6 +13,10 @@ export default function SelectLanguageBox({ getLanguage }: Props) {
   useEffect(() => {
     getLanguage(language);
   }, [language]);
+
+  useEffect(() => {
+  setLanguage(initialLanguage);
+}, [initialLanguage]);
 
   return (
     <S.SelectBox>
@@ -28,6 +32,7 @@ export default function SelectLanguageBox({ getLanguage }: Props) {
 
 type Props = {
   getLanguage: (arr: any) => void;
+  initialLanguage : string;
 };
 
 const S = {

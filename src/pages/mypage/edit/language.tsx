@@ -7,10 +7,21 @@ import instance from "@/src/api/axiosModule";
 import SelectLanguageBox from "@/src/components/mypage/selectLanguage";
 import { useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
+import { LanguagesType } from "@/src/types/mypage/profileType";
+import Loading from "@/src/components/ui/loadingUI";
 
 export default function Language() {
+  const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [language,setLanguage] = useState(Array<String>);
+  const [initialLanguage, setInitialLanguage] = useState<LanguagesType[]>([]);
+  const [initialLanguageValue1,setInitialLanguageValue1] = useState('');
+  const [initialLanguageValue2,setInitialLanguageValue2] = useState('');
+  const [initialLanguageValue3,setInitialLanguageValue3] = useState('');
+  
+  // initialLanguage[0]?.interest || "";
+  // const initialLanguageValue2= initialLanguage[1]?.interest || "";
+  // const initialLanguageValue3 = initialLanguage[2]?.interest || "";
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
@@ -31,7 +42,28 @@ export default function Language() {
     language
   },[language])
 
+  
   const profileData = useRecoilValue(profileStateAtom);
+
+  useEffect(() => {
+    setInitialLanguage(profileData.languages);
+  }, []);
+
+
+useEffect(() => {
+  for (let i = 0; i < 3; i++) {
+    if (initialLanguage[i]) {
+      const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
+      setInitialLanguageValue(initialLanguage[i].interest);
+    } else {
+      const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
+      setInitialLanguageValue('');
+    }
+  }
+  setLoading(false)
+}, [initialLanguage]);
+
+if (loading) return <Loading />
 
   return (
     <>
@@ -58,17 +90,17 @@ export default function Language() {
           <S.SelectBox>
             <Text.Body5 color="gray700">1순위</Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox getLanguage={getLanguage}/>
+            <SelectLanguageBox getLanguage={getLanguage} initialLanguage={initialLanguageValue1}/>
 
             <Margin direction="column" size={24} />
             <Text.Body5 color="gray700">2순위</Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox getLanguage={getLanguage}/>
+            <SelectLanguageBox getLanguage={getLanguage} initialLanguage={initialLanguageValue2}/>
 
             <Margin direction="column" size={24} />
             <Text.Body5 color="gray700">3순위</Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox getLanguage={getLanguage}/>
+            <SelectLanguageBox getLanguage={getLanguage} initialLanguage={initialLanguageValue3}/>
 
           </S.SelectBox>
 
