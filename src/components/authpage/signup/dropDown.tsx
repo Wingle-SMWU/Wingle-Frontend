@@ -20,7 +20,7 @@ interface DropDownProps {
 
 export default function DropDown() {
   const [isActive, setIsActive] = useState(false);
-  const [nation, setNation] = useState("Republic of Korea");
+  const [nation, setNation] = useState("REPUBLIC OF KOREA");
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const onActiveToggle = useCallback(() => {
@@ -30,6 +30,8 @@ export default function DropDown() {
   const handleSelectItem: React.MouseEventHandler<HTMLLIElement> = useCallback(
     (e) => {
       const target = e.target as HTMLLIElement;
+      console.log(target);
+
       const selectedNation = target.innerText;
       setNation(selectedNation);
       setIsActive(false);
