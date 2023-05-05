@@ -14,7 +14,6 @@ const instance = axios.create({
   baseURL: SERVER_URL,
   headers: {
     Authorization: `Bearer ${getAccessTokenFromLocalStorage()}}`,
-    // Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsaXphQGFhLmNvbSIsIkFVVEgiOiJST0xFX0FETUlOIiwiZXhwIjoyMDA1NzUwMjQ2fQ.Ya6V_66n0CwgOXyl8-AwE90lCIf5CSV3-mxaJart_o4g6JOYcfp1yAT-K9qhl9zBI7MfoPhrrxsCzOoejeF6kw`
   },
 });
 
