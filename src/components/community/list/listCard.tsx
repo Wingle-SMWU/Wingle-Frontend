@@ -3,6 +3,7 @@ import betweenTime from "@/src/utils/betweenTime";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import styled from "styled-components";
+import { countryImg } from "../../mypage/countryImg";
 
 export default function ListCard({
   imgUrl,
@@ -27,7 +28,9 @@ export default function ListCard({
     userId,
     userNickname,
     userImage,
+    userNation,
   } = article;
+  console.log(article);
 
   const currentTab: string = useMemo(() => {
     if (!router.query.tab) {
@@ -54,7 +57,7 @@ export default function ListCard({
         {currentTab === "교류" ? (
           <S.ImageBox>
             <S.ContentsHeaderImg src={userImage ? userImage : imgUrl} />
-            <S.NationIcon src="/mypage/camera.svg" />
+            <S.NationIcon src={countryImg(userNation)} />
           </S.ImageBox>
         ) : (
           <S.ContentsHeaderImg src={imgUrl} />
