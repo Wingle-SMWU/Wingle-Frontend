@@ -28,6 +28,7 @@ export default function Nickname() {
     {
       onMutate: async () => {
         await queryClient.cancelQueries("profileData");
+        await queryClient.cancelQueries("articles");
         const prevProfileData = queryClient.getQueryData([
           "profileData",
           {
@@ -38,6 +39,7 @@ export default function Nickname() {
       },
       onSuccess: () => {
         queryClient.invalidateQueries("profileData");
+        queryClient.invalidateQueries("articles");
         router.push("/mypage/edit");
       },
     }
