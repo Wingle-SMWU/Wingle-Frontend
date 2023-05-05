@@ -10,14 +10,6 @@ interface StyledInputProps {
   isActive: boolean;
 }
 
-interface DropDownProps {
-  label: string; // 제목
-  list: string[]; // 드롭다운 리스트
-  selected: string; // 선택된 항목(selected state)
-  onSelectedChange: (selected: string) => void; // 선택된 항목 변경 함수(selected setState 변경 함수)
-  description?: string; // 드롭다운 설명
-}
-
 export default function DropDown() {
   const [isActive, setIsActive] = useState(false);
   const [nation, setNation] = useState("REPUBLIC OF KOREA");
@@ -30,17 +22,23 @@ export default function DropDown() {
   const handleSelectItem: React.MouseEventHandler<HTMLLIElement> = useCallback(
     (e) => {
       const target = e.target as HTMLLIElement;
-      console.log(target);
-
       const selectedNation = target.innerText;
-      setNation(selectedNation);
-      setIsActive(false);
-      setSignUpFormData((prev) => ({
-        ...prev,
-        nation,
-      }));
+
+      const selectedCountry = countryList.find(
+        (item) => item.country === selectedNation
+      );
+
+      if (selectedCountry) {
+        const selectedCode = selectedCountry.code;
+        setNation(selectedNation);
+        setIsActive(false);
+        setSignUpFormData((prev) => ({
+          ...prev,
+          nation: selectedCode,
+        }));
+      }
     },
-    [setSignUpFormData, nation]
+    [setSignUpFormData]
   );
 
   return (
