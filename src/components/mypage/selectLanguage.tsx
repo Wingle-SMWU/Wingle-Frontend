@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { countryList } from "@/src/constants/countryList";
-import DropDown from "../ui/dropDownUI";
+import DropDown from "@/src/components/mypage/countryDropDown";
 
-export default function SelectLanguageBox({ getLanguageAtIndex,initialLanguage,idx}: Props) {
+export default function SelectLanguageBox({ getLanguageAtIndex, initialLanguage, idx }: Props) {
   const [language, setLanguage] = useState(initialLanguage);
 
   const handleChange = (selectedLanguage: string) => {
@@ -11,17 +11,16 @@ export default function SelectLanguageBox({ getLanguageAtIndex,initialLanguage,i
   };
 
   useEffect(() => {
-    getLanguageAtIndex(language,idx);
-  }, [language]);
+    setLanguage(initialLanguage);
+  }, [initialLanguage]);
 
   useEffect(() => {
-  setLanguage(initialLanguage);
-}, [initialLanguage]);
+    getLanguageAtIndex(language, idx);
+  }, [language, idx]);
 
   return (
     <S.SelectBox>
       <DropDown
-        label=""
         list={countryList.map((country) => country.add_code_nation)}
         selected={language}
         onSelectedChange={handleChange}
@@ -29,6 +28,7 @@ export default function SelectLanguageBox({ getLanguageAtIndex,initialLanguage,i
     </S.SelectBox>
   );
 }
+
 
 type Props = {
   getLanguageAtIndex: (str: string, idx : number) => void;

@@ -26,7 +26,7 @@ export default function Language() {
 
   const postLanguage = async (): Promise<void> => {
       const response = await instance.post("/profile/languages", {
-        "languages": language
+        "languages": language.filter(v=>v!=='')
       });
       
       router.push(`/mypage/edit`)
@@ -97,16 +97,15 @@ if (loading) return <Loading />
             <SelectLanguageBox getLanguageAtIndex={(str) => getLanguageAtIndex(str, 0)} initialLanguage={initialLanguageValue1} idx={0}/>
 
             <Margin direction="column" size={24} />
-            <Text.Body5 color="gray700">2순위</Text.Body5>
+            <Text.Body5 color= { language[0]!==''? "gray700" : "gray500"}>2순위</Text.Body5>
             <Margin direction="column" size={8} />
             <SelectLanguageBox getLanguageAtIndex={(str) => getLanguageAtIndex(str, 1)} initialLanguage={initialLanguageValue2} idx={1}/>
 
             <Margin direction="column" size={24} />
-            <Text.Body5 color="gray700">3순위</Text.Body5>
+            <Text.Body5 color={ language[1]!==''? "gray700" : "gray500"}>3순위</Text.Body5>
             <Margin direction="column" size={8} />
             <SelectLanguageBox getLanguageAtIndex={(str) => getLanguageAtIndex(str, 2)} initialLanguage={initialLanguageValue3} idx={2} />
           </S.SelectBox>
-
           <S.ResetBox>
             <S.ResetBtn>
               <Text.Caption3 color="gray700" pointer>
