@@ -30,8 +30,6 @@ export default function ListCard({
     userImage,
     userNation,
   } = article;
-  console.log(article);
-
   const currentTab: string = useMemo(() => {
     if (!router.query.tab) {
       return "자유";
