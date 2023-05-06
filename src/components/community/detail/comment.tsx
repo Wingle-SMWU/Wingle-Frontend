@@ -4,6 +4,7 @@ import { getImageUrl } from "@/src/modules/utils";
 import betweenTime from "@/src/utils/betweenTime";
 import { useState } from "react";
 import styled from "styled-components";
+import { countryImg } from "../../mypage/countryImg";
 
 export default function Comment({
   comments,
@@ -49,7 +50,16 @@ export default function Comment({
           <S.Comment key={id}>
             <S.CommentTop>
               <S.CommentTopLeft>
-                <S.ProfileImg src={getImageUrl(currentTab)} />
+                {currentTab === "교류" ? (
+                  <S.ImageBox>
+                    <S.ProfileImg
+                      src={userImage ? userImage : getImageUrl(currentTab)}
+                    />
+                    <S.NationIcon src={countryImg(userNation)} />
+                  </S.ImageBox>
+                ) : (
+                  <S.ProfileImg src={getImageUrl(currentTab)} />
+                )}
                 <S.ProfileInfo>
                   <Text.Body6 color="gray900">{userNickname}</Text.Body6>
                   <Text.Caption3 color="gray500">{time}</Text.Caption3>
@@ -122,7 +132,21 @@ const S = {
     display: flex;
     flex-direction: row;
   `,
-
+  ImageBox: styled.div`
+    position: relative;
+    width: 36px;
+    height: 36px;
+  `,
+  NationIcon: styled.img`
+    width: 16px;
+    height: 16px;
+    border-radius: 100px;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    z-index: 0;
+    cursor: pointer;
+  `,
   ProfileImg: styled.img`
     width: 36px;
     height: 36px;
