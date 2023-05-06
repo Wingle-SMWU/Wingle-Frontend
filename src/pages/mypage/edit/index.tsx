@@ -19,7 +19,6 @@ export default function Edit() {
       try {
         const data = await getProfile();
         setProfileState(data);
-        console.log(data)
         setLoading(false);
       } catch (error) {
         console.error("Failed to get profile:", error);

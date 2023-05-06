@@ -31,7 +31,7 @@ export default function Introduce() {
     setModalVisible((prev) => !prev);
   };
 
-  const handleSubmit =async () => {
+  const handleSubmit = async () => {
     if (isIntroduce) {
       await instance.post("/profile/introduction", {
       "introduction" : introduce
