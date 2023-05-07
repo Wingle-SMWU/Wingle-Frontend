@@ -103,7 +103,7 @@ if (loading) return <Loading />
             </S.Left>
             <Text.Body1
               color={btnActive ? "gray900" : "gray500"}
-              onClick={btnActive ? handleSubmit : () => console.log("언어를 선택해주세요")}
+              onClick={btnActive ? handleSubmit : () => alert("언어를 선택해주세요")}
               pointer
             >
               완료

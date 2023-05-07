@@ -16,7 +16,7 @@ export default function SelectLanguageBox({ getLanguageAtIndex, initialLanguage,
 
   useEffect(() => {
     getLanguageAtIndex(language, idx);
-  }, [language, idx]);
+  }, [language]);
 
   return (
     <S.SelectBox>

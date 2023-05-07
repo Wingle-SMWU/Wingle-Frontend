@@ -12,13 +12,13 @@ export default function Edit() {
 
   const { profileData, isLoading, isError } = useGetProfile();
 
-  console.log(profileData)
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
 
   if (isLoading) return <Loading />;
-
+  if (isError) return <>에러</> 
+  
   return (
     <>
       <S.Wapper>

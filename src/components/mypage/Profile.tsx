@@ -9,16 +9,16 @@ import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 
 export default function Profile() {
-  const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
+  // const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
   
   const { profileData } = useGetProfile();
 
-  const handleRegisterBtnHover = () => {
-    setIsRegisterBtnHover(true);
-  };
-  const handleRegisterBtnLeave = () => {
-    setIsRegisterBtnHover(false);
-  };
+  // const handleRegisterBtnHover = () => {
+  //   setIsRegisterBtnHover(true);
+  // };
+  // const handleRegisterBtnLeave = () => {
+  //   setIsRegisterBtnHover(false);
+  // };
 
   return (
     <>

@@ -23,14 +23,13 @@ export default function Nickname() {
 
   const { profileData, isLoading, isError, isIdle } = useGetProfile();
 
-  console.log(profileData)
   const queryClient = useQueryClient();
 
   const { mutate: updateMutation, isLoading: updateLoading } = useMutation(
     (updateData: ProfileUpdateType) => postUpdateProfile(updateData),
     {
       onMutate: async () => {
-        await queryClient.cancelQueries("profileData");
+        await queryClient.cancelQueries("profile");
         const prevProfileData = queryClient.getQueryData([
           "profileData",
           {
@@ -40,7 +39,7 @@ export default function Nickname() {
         return { prevProfileData };
       },
       onSuccess: () => {
-        queryClient.invalidateQueries("profileData");
+        queryClient.invalidateQueries("profile");
         router.push("/mypage/edit");
       },
     }
