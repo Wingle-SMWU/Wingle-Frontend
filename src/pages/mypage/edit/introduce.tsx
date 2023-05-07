@@ -3,8 +3,7 @@ import router from "next/router";
 import { Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState,useCallback,useEffect } from "react";
-import instance from "@/src/api/axiosModule"
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation,useQueryClient } from "react-query";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { postIntroduce } from "@/src/api/mypage/profileData";
 

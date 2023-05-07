@@ -23,6 +23,7 @@ export default function Nickname() {
 
   const { profileData, isLoading, isError, isIdle } = useGetProfile();
 
+  console.log(profileData)
   const queryClient = useQueryClient();
 
   const { mutate: updateMutation, isLoading: updateLoading } = useMutation(
@@ -50,6 +51,7 @@ export default function Nickname() {
     if (profileData) {
       setName(profileData.nickname);
       setIsName(true);
+      console.log(profileData.image)
       setImage(profileData.image);
     }
   }, [profileData]);

@@ -8,30 +8,36 @@ import SelectLanguageBox from "@/src/components/mypage/selectLanguage";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { LanguagesType } from "@/src/types/mypage/profileType";
 import Loading from "@/src/components/ui/loadingUI";
+import { postLanguage } from "@/src/api/mypage/profileData";
+import { useMutation,useQueryClient } from "react-query";
 
 export default function Language() {
   const [loading, setLoading ] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [btnActive, setBtnActive] = useState(false);
-  const [language,setLanguage] = useState(Array<String>);
+  const [language,setLanguage] = useState<String[]>([]);
   const [initialLanguage, setInitialLanguage] = useState<LanguagesType[]>([]);
   const [initialLanguageValue1,setInitialLanguageValue1] = useState('');
   const [initialLanguageValue2,setInitialLanguageValue2] = useState('');
   const [initialLanguageValue3,setInitialLanguageValue3] = useState('');
 
+  const queryClient = useQueryClient();
   const { profileData } = useGetProfile();
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
 
-  const postLanguage = async (): Promise<void> => {
-      const response = await instance.post("/profile/languages", {
-        "languages": language.filter(v=>v!=='')
-      });
-      
+  const handleSubmit = () => {
+      fetchLanguage.mutate(language);
       router.push(`/mypage/edit`)
   };
+
+  const fetchLanguage = useMutation(postLanguage, {
+     onSuccess: () => {
+      queryClient.invalidateQueries("profile");
+    },
+  })
   
   const getLanguageAtIndex = (str: string, index: number) => {
     setLanguage((prevLanguage) => {
@@ -97,7 +103,7 @@ if (loading) return <Loading />
             </S.Left>
             <Text.Body1
               color={btnActive ? "gray900" : "gray500"}
-              onClick={btnActive ? postLanguage : () => console.log("언어를 선택해주세요")}
+              onClick={btnActive ? handleSubmit : () => console.log("언어를 선택해주세요")}
               pointer
             >
               완료

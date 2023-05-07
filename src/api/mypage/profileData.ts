@@ -15,3 +15,11 @@ export const postIntroduce =async (introduce:string) => {
 
   return response.data;
 }
+
+export const postLanguage = async (language: String[]): Promise<void> => {
+  const response = await instance.post("/profile/languages", {
+    "languages": language.filter(v=>v!=='')
+  });
+
+  return response.data;
+};
