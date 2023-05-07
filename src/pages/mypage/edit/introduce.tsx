@@ -4,12 +4,16 @@ import { Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState,useCallback,useEffect } from "react";
 import instance from "@/src/api/axiosModule"
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+import { postIntroduce } from "@/src/api/mypage/profileData";
 
 export default function Introduce() {
   const [modalVisible, setModalVisible] = useState(false);
   const [isIntroduce,setIsIntroduce] = useState(false);
   const [introduce,setIntroduce] = useState('');
+
+  const queryClient = useQueryClient();
 
   const onChangeIntroduce = useCallback((e: any) => {
     const nameCurrent = e.target.value;
@@ -30,16 +34,18 @@ export default function Introduce() {
     setModalVisible((prev) => !prev);
   };
 
-  const handleSubmit = async () => {
-    if (isIntroduce) {
-      await instance.post("/profile/introduction", {
-      "introduction" : introduce
-      });
-      
-      router.push(`/mypage/edit`)
-    } 
-  }
 
+  const fetchIntroduce = useMutation(postIntroduce,{
+    onSuccess: () => {
+      queryClient.invalidateQueries("profile");
+    },
+  })
+
+  const handleSubmit= () => {
+    fetchIntroduce.mutate(introduce);
+    router.push(`/mypage/edit`)
+  }
+  
   return (
     <>
       <S.Wapper>

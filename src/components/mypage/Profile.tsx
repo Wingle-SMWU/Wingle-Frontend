@@ -5,15 +5,13 @@ import { useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import { getImageUrl } from "@/src/modules/utils";
 import { countryImg } from "./countryImg";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+
 
 export default function Profile() {
   const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
-  const {
-    nickname,
-    image: userImage,
-    nation,
-    gender,
-  } = useRecoilValue(profileStateAtom);
+  
+  const { profileData } = useGetProfile();
 
   const handleRegisterBtnHover = () => {
     setIsRegisterBtnHover(true);
@@ -27,20 +25,20 @@ export default function Profile() {
       <S.UserBox>
         <S.UserImgBox>
           <S.UserProfileImg
-            src={userImage ? userImage : getImageUrl("기본")}
+            src={profileData && (profileData.image ? profileData.image : getImageUrl("기본"))}
             alt="프로필"
           />
-          <S.UserFlagImg src={countryImg(nation)} alt="국기" />
+          <S.UserFlagImg src={profileData && countryImg(profileData.nation)} alt="국기" />
         </S.UserImgBox>
         <S.UserInfoBox>
           <S.UserNicknameAndSex>
-            <Text.Body1 color="gray900">{nickname}</Text.Body1>
+            <Text.Body1 color="gray900">{profileData && profileData.nickname}</Text.Body1>
             <S.UserSexImg
-              src={gender ? "/mypage/female.svg" : "/mypage/male.svg"}
+              src={profileData && profileData.gender ? "/mypage/female.svg" : "/mypage/male.svg"}
               alt="성별"
             />
           </S.UserNicknameAndSex>
-          <Text.Body6 color="gray800">{nation}</Text.Body6>
+          <Text.Body6 color="gray800">{profileData && profileData.nation}</Text.Body6>
         </S.UserInfoBox>
       </S.UserBox>
     </>

@@ -7,3 +7,11 @@ export const getProfile = async (): Promise<ProfileStateType> => {
 
   return data;
 };
+
+export const postIntroduce =async (introduce:string) => {
+  const response =  await instance.post("/profile/introduction", {
+        "introduction" : introduce
+  });
+
+  return response.data;
+}
