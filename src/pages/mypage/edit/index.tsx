@@ -12,6 +12,7 @@ export default function Edit() {
 
   const { profileData, isLoading, isError } = useGetProfile();
 
+  console.log(profileData)
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
