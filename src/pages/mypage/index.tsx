@@ -18,9 +18,15 @@ export default function Mypage() {
         setEditText(false);
       }
   },[profileData])
+
+  const handleLogout = () => {
+    localStorage.clear();
+    router.push('/auth/login')
+  }
   
   if (isLoading) return <Loading />
-  
+  if (isError) return <>에러</>
+
   return (
     <>
       <S.Wapper>
@@ -55,7 +61,7 @@ export default function Mypage() {
               내가 쓴 게시글
             </Text.Body1>
             <Margin direction="column" size={34} />
-            <Text.Body1 color="gray900" pointer>
+            <Text.Body1 color="gray900" pointer onClick={handleLogout}>
               로그아웃
             </Text.Body1>
           </>
