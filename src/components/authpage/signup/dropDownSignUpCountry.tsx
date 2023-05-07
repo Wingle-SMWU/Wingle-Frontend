@@ -5,6 +5,7 @@ import { countryList } from "../../../constants/countryList";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
+import { CountryListType } from "@/src/types/countryList";
 
 interface StyledInputProps {
   isActive: boolean;
@@ -19,23 +20,12 @@ export default function DropDownSignUpCountry() {
     setIsActive((prev) => !prev);
   }, []);
 
-  const handleSelectItem: React.MouseEventHandler<HTMLLIElement> = useCallback(
-    (e) => {
-      const target = e.target as HTMLLIElement;
-      const selectedNation = target.innerText;
-
-      const selectedCountry = countryList.find(
-        (item) => item.country === selectedNation
-      );
-
-      if (selectedCountry) {
-        const selectedCode = selectedCountry.code;
-        setNation(selectedNation);
+  const handleSelectItem = useCallback(
+    (selected: CountryListType) => {
+      if (selected) {
+        setNation(selected.country);
         setIsActive(false);
-        setSignUpFormData((prev) => ({
-          ...prev,
-          nation: selectedCode,
-        }));
+        setSignUpFormData((prev) => ({ ...prev, nation: selected.code }));
       }
     },
     [setSignUpFormData]
@@ -65,7 +55,7 @@ export default function DropDownSignUpCountry() {
             <S.DropdownItemContainer
               id="item"
               key={item.code}
-              onClick={handleSelectItem}
+              onClick={() => handleSelectItem(item)}
             >
               <S.CountryItem color="gray900">{item.country}</S.CountryItem>
             </S.DropdownItemContainer>
