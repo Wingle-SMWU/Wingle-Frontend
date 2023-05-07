@@ -5,13 +5,12 @@ import Modal from "@/src/components/modal";
 import { useState,useEffect } from "react";
 import instance from "@/src/api/axiosModule";
 import SelectLanguageBox from "@/src/components/mypage/selectLanguage";
-import { useRecoilValue } from "recoil";
-import { profileStateAtom } from "@/src/atoms/profileStateAtom";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { LanguagesType } from "@/src/types/mypage/profileType";
 import Loading from "@/src/components/ui/loadingUI";
 
 export default function Language() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading ] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [btnActive, setBtnActive] = useState(false);
   const [language,setLanguage] = useState(Array<String>);
@@ -19,6 +18,8 @@ export default function Language() {
   const [initialLanguageValue1,setInitialLanguageValue1] = useState('');
   const [initialLanguageValue2,setInitialLanguageValue2] = useState('');
   const [initialLanguageValue3,setInitialLanguageValue3] = useState('');
+
+  const { profileData } = useGetProfile();
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
@@ -45,7 +46,7 @@ export default function Language() {
     setBtnActive(false)
     for (let i = 0; i < 3; i++) {
       const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
-      if (profileData.languages[i]) {
+      if (profileData && profileData.languages[i]) {
         setInitialLanguageValue("");
       } else {
         break;
@@ -57,30 +58,26 @@ export default function Language() {
   useEffect(() => {
    if (language[0]) {
     setBtnActive(true)
-    console.log(language[0]!=='')
    }
   },[language,btnActive])
 
-
-  
-  const profileData = useRecoilValue(profileStateAtom);
-
   useEffect(() => {
-    setInitialLanguage(profileData.languages);
-  }, []);
+    if (profileData) {
+        setInitialLanguage(profileData.languages);
+    }
+  }, [profileData]);
 
 
 useEffect(() => {
   for (let i = 0; i < 3; i++) {
+    const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
     if (initialLanguage[i]) {
-      const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
       setInitialLanguageValue(initialLanguage[i].interest);
     } else {
-      const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
       setInitialLanguageValue('');
     }
   }
-  setLoading(false)
+  setLoading(false);
 }, [initialLanguage]);
 
 if (loading) return <Loading />

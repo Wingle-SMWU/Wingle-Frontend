@@ -3,43 +3,20 @@ import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { getProfile } from "@/src/api/mypage/profileData";
-import { useSetRecoilState, useRecoilValue } from "recoil";
-import { profileStateAtom } from "@/src/atoms/profileStateAtom";
+import { useState } from "react";
 import Loading from "@/src/components/ui/loadingUI";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 export default function Edit() {
-  const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const setProfileState = useSetRecoilState(profileStateAtom);
-
-  const fetchProfile = async () => {
-      try {
-        const data = await getProfile();
-        setProfileState(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to get profile:", error);
-      }
-    };
-
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  const profileData = useRecoilValue(profileStateAtom);
+  const { profileData, isLoading, isError } = useGetProfile();
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
 
-  if (loading) return <Loading />;
+  if (isLoading) return <Loading />;
 
   return (
     <>
@@ -79,7 +56,7 @@ export default function Edit() {
               />
             </S.Language>
             <S.LanguageContent>
-              {(profileData.languages).map((v) => (
+              {profileData && (profileData.languages).map((v) => (
                   <S.LanguageChartContent key={v.order}>
                     <S.LanguageChart src={`/mypage/language${v.order}.svg`} />
                     <S.LanguageText fontWeight={550} width ={28}>{v.interest.substring(0,2)}  </S.LanguageText>

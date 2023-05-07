@@ -5,39 +5,21 @@ import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { getProfile } from "@/src/api/mypage/profileData";
-import { useSetRecoilState, useRecoilValue } from "recoil";
-import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 export default function Mypage() {
-  const [loading, setLoading] = useState(true);
   const [editText,setEditText] = useState(true);
-  const setProfileState = useSetRecoilState(profileStateAtom);
+
+  const { profileData, isLoading, isError } = useGetProfile();
 
   useEffect(() => {
-    const fetchProfile = async () => {
-    try {
-      const data = await getProfile();
-      console.log(data)
-      setProfileState(data);
-      if (data.interests || data.introduce || data.languages) {
+    if (profileData && (profileData.interests || profileData.introduce || profileData.languages)) {
         setEditText(false);
       }
-      setLoading(false);
-    } catch (error) {
-      console.error('Failed to get profile:', error);
-    }
-  };
-
-    fetchProfile();
-  }, []);
-
-  const profileState = useRecoilValue(profileStateAtom);
+  },[profileData])
   
-      console.log("d")
-  console.log(profileState)
-  if (loading) return <Loading />
+  if (isLoading) return <Loading />
   
   return (
     <>

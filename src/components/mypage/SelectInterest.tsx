@@ -1,8 +1,7 @@
 import { Margin, Text } from "../ui";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { profileStateAtom } from "@/src/atoms/profileStateAtom";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 type InterestItem = {
   id: number;
@@ -24,7 +23,8 @@ type Props = {
 
 export default function SelectInterest({ parentFunction }: Props) {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const profileData = useRecoilValue(profileStateAtom);
+
+  const { profileData } = useGetProfile();
 
   useEffect(() => {
     parentFunction(selectedItems);
@@ -44,10 +44,12 @@ export default function SelectInterest({ parentFunction }: Props) {
   };
 
   useEffect(() => {
+    if (profileData) {
     const initialSelectedItems = interestItems
       .filter((item) => profileData.interests.includes(item.title))
       .map((item) => item.title);
     setSelectedItems(initialSelectedItems);
+    }
   }, [profileData]);
 
   return (
