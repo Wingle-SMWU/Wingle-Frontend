@@ -40,11 +40,26 @@ export default function Language() {
     });
 };
 
+  const resetBtn = () => {
+    setLanguage([])
+    setBtnActive(false)
+    for (let i = 0; i < 3; i++) {
+      const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
+      if (profileData.languages[i]) {
+        setInitialLanguageValue("");
+      } else {
+        break;
+      }
+    }
+  };
+ 
+
   useEffect(() => {
-    language
-    console.log(language)
-   if (language.length>0) setBtnActive(true)
-  },[language])
+   if (language[0]) {
+    setBtnActive(true)
+    console.log(language[0]!=='')
+   }
+  },[language,btnActive])
 
 
   
@@ -108,7 +123,7 @@ if (loading) return <Loading />
           </S.SelectBox>
           <S.ResetBox>
             <S.ResetBtn>
-              <Text.Caption3 color="gray700" pointer>
+              <Text.Caption3 color="gray700" pointer onClick={resetBtn}>
                 선택 초기화
               </Text.Caption3>
             </S.ResetBtn>
