@@ -10,42 +10,40 @@ interface DropDownProps {
   label?: string; // 제목
   list: string[]; // 드롭다운 리스트
   selected: string; // 선택된 항목(selected state)
-  onSelectedChange: (selected: string) => void; // 선택된 항목 변경 함수(selected setState 변경 함수)
+  handleSelectedChange: (selected: string) => void; // 선택된 항목 변경 함수(selected setState 변경 함수)
   description?: string; // 드롭다운 설명
 }
 
-export default function DropDown({
+export default function DropDownCommon({
   label,
   list,
   selected,
-  onSelectedChange,
+  handleSelectedChange,
   description,
 }: DropDownProps) {
   const [isActive, setIsActive] = useState(false);
 
-  const onActiveToggle = useCallback(() => {
-    setIsActive((prev) => !prev);
-  }, []);
+  const toggleDropdown = () => {
+    setIsActive(!isActive);
+  };
+
+  const handleSelect = (item: string) => {
+    handleSelectedChange(item);
+    setIsActive(false);
+  };
 
   // TODO: 여기 리팩토링 필요함. 이게 원래 innerText를 그대로 넣는 건데, country 객체 데이터가 변경됨에 따라 확장성이 더 필요해졌음
   // 그래서 이제는 country 객체 데이터를 받아서, country 객체 데이터의 code을 innerText로 찾아서 넣는 방식으로 변경됨에 따라
-  // onSelectedChange를 Props로 받는 게 아닌 내장된 handleSelectItem을 없애고 Props로 받는 것이 맞는 거 같다..
-  const handleSelectItem: React.MouseEventHandler<HTMLLIElement> = useCallback(
-    (e) => {
-      const target = e.target as HTMLLIElement;
-      const selectedNation = target.innerText;
-      onSelectedChange(selectedNation);
-      setIsActive(false);
-    },
-    [onSelectedChange]
-  );
+  // onSelectedChange를 Props로 받는 게 아닌 내장된 handleSelectItem을 없애고 handleSelectItem을 Props로 받는 것이 맞는 거 같다..
 
   return (
     <S.Container>
-      <S.Label>{label}</S.Label>
+      {label && <S.DropDownLabel>{label}</S.DropDownLabel>}
       <S.DropdownContainer>
-        <S.DropdownBody onClick={onActiveToggle} isActive={isActive}>
-          <S.DropdownSelected>{selected}</S.DropdownSelected>
+        <S.DropdownBody onClick={toggleDropdown} isActive={isActive}>
+          <S.DropdownSelected>
+            {selected || "Select an item"}
+          </S.DropdownSelected>
           <S.DropdownSelected>
             <Image
               src="/auth/arrow_down.svg"
@@ -61,7 +59,9 @@ export default function DropDown({
             <S.DropdownItemContainer
               key={item}
               isSelected={item === selected}
-              onClick={handleSelectItem}
+              onClick={() => {
+                handleSelect(selected);
+              }}
             >
               {item}
             </S.DropdownItemContainer>
@@ -78,7 +78,7 @@ const S = {
     display: flex;
     flex-direction: column;
   `,
-  Label: styled.label`
+  DropDownLabel: styled.label`
     margin-bottom: 8px;
     font-size: 16px;
     font-weight: 700;
