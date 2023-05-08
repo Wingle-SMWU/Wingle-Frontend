@@ -13,7 +13,7 @@ export const SERVER_URL = `https://server-prod.wingle.kr/api/v1`;
 const instance = axios.create({
   baseURL: SERVER_URL,
   headers: {
-    Authorization: `Bearer ${getAccessTokenFromLocalStorage()}}`,\
+    Authorization: `Bearer ${getAccessTokenFromLocalStorage()}}`,
   },
 });
 
