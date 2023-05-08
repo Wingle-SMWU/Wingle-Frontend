@@ -10,6 +10,7 @@ interface DropDownProps {
   label?: string; // 제목
   list: string[]; // 드롭다운 리스트
   selected: string; // 선택된 항목(selected state)
+  dropDownPlaceHolder?: string; // 드롭다운 플레이스홀더
   handleSelectedChange: (selected: string) => void; // 선택된 항목 변경 함수(selected setState 변경 함수)
   description?: string; // 드롭다운 설명
 }
@@ -18,6 +19,7 @@ export default function DropDownCommon({
   label,
   list,
   selected,
+  dropDownPlaceHolder,
   handleSelectedChange,
   description,
 }: DropDownProps) {
@@ -42,7 +44,7 @@ export default function DropDownCommon({
       <S.DropdownContainer>
         <S.DropdownBody onClick={toggleDropdown} isActive={isActive}>
           <S.DropdownSelected>
-            {selected || "Select an item"}
+            {selected || dropDownPlaceHolder || "Select an item"}
           </S.DropdownSelected>
           <S.DropdownSelected>
             <Image
