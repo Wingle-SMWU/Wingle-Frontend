@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Text } from "../ui";
 import { Room } from "@/src/types/message/roomType";
 import Image from "next/image";
-import profiledefault from '../../../public/images/message/profiledefault.png';
+import profiledefault from "../../../public/images/profiledefault.png";
 
 const YourInfo = ({ list }: { list: Room }) => {
   const { image, nickname } = list;
@@ -16,13 +16,17 @@ const YourInfo = ({ list }: { list: Room }) => {
 
   return (
     <S.Container onClick={handleMoveOpponentInfo}>
-        <S.LeftBox>
-        {image ? 
-          <S.UserImage src={image} alt="상대 이미지" /> : 
-          <Image 
-          src='/images/message/profiledefault.png'
-          alt='기본 프로필 이미지'
-          width={35} height={35} />}
+      <S.LeftBox>
+        {image ? (
+          <S.UserImage src={image} alt="상대 이미지" />
+        ) : (
+          <Image
+            src="/images/message/profiledefault.png"
+            alt="기본 프로필 이미지"
+            width={35}
+            height={35}
+          />
+        )}
         <S.TitleBox>
           <Text.Body5 color="gray900">{nickname}</Text.Body5>
         </S.TitleBox>
@@ -32,8 +36,7 @@ const YourInfo = ({ list }: { list: Room }) => {
 };
 
 const S = {
-  Container: styled.div`
-  `,
+  Container: styled.div``,
 
   LeftBox: styled.div`
     display: flex;
@@ -60,6 +63,6 @@ const S = {
       font-weight: 600;
     }
   `,
-}
+};
 
 export default YourInfo;

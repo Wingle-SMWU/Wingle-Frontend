@@ -1,24 +1,25 @@
-import { useEffect, useState } from 'react'
 import Contents from '@/src/components/admin/detail/contents'
 import Modal from '@/src/components/admin/detail/modal'
 import Header from '@/src/components/admin/index/header'
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
-import { useQuery } from 'react-query'
-import { adminListAPI } from '@/src/api/admin/admin'
-import { useSetRecoilState } from 'recoil';
-import { postOrderStateAtom } from '../../atoms/admin/admin';
 import { theme } from '@/src/styles/theme'
+import Loading from '@/src/components/ui/loadingUI'
+import useDetailDispatch from '@/src/hooks/admin/useDetailDispatch'
 
 export default function Detail() {
-  const [isOpen, setIsOpen] = useState('');
-  const userId = Number(useRouter().asPath.split('?').at(-2));
-  const postOrder = Number(useRouter().asPath.split('?').at(-1));
-  const setPostOrder = useSetRecoilState(postOrderStateAtom);
 
-  const { data, isError } = useQuery(['getUser', userId], () => adminListAPI.getUser({path: 'waiting', userId}), { cacheTime: 0, retry: 0 })
+  const {
+    isOpen,
+    setIsOpen,
+    userId,
+    inputs,
+    setInputs,
+    data,
+    isError,
+    isLoading,
+    handleSubmit
+  } = useDetailDispatch()
 
-  useEffect(() => setPostOrder(postOrder), []);
 
   if(isError) {
     return (
@@ -30,15 +31,20 @@ export default function Detail() {
 
   return (
     <S.Main modal={isOpen}>
-
       <Header />
       {data && <>
         <S.TabBar><p>수락{data.message.split(' ')[1]}</p></S.TabBar>
         <S.Card card={data.data.idCardImage}/>
-        <Contents userId={userId} data={data.data} setIsOpen={setIsOpen} />
+        <Contents userId={userId} data={data.data} setIsOpen={setIsOpen} inputs={inputs} setInputs={setInputs} handleSubmit={handleSubmit}/>
       </> }
 
-      {isOpen && <Modal setIsOpen={setIsOpen}>{isOpen}</Modal>}
+      {isOpen && <Modal setIsOpen={setIsOpen} isLoading={false}>{isOpen}</Modal>}
+      {isLoading && 
+      <>
+        <Modal setIsOpen={setIsOpen} isLoading={true}>{isOpen}</Modal>
+        <S.Load><Loading /></S.Load>
+      </>
+      }
 
       <S.Button onClick={() => setIsOpen('수락')}>
         <button type='button'>가입수락</button>
@@ -54,6 +60,13 @@ const S = {
     height: 1500px;
     background: ${({ modal }) => (modal ? theme.color.gray200 : theme.color.white)};
     position: relative;
+  `,
+  Load: styled.div`
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 500px;
+    top: 920px;
   `,
   TabBar: styled.div`
     box-sizing: border-box;

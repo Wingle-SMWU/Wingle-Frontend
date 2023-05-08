@@ -3,6 +3,7 @@ import betweenTime from "@/src/utils/betweenTime";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import styled from "styled-components";
+import { countryImg } from "../../mypage/countryImg";
 
 export default function ListCard({
   imgUrl,
@@ -27,6 +28,7 @@ export default function ListCard({
     userId,
     userNickname,
     userImage,
+    userNation,
   } = article;
 
   const currentTab: string = useMemo(() => {
@@ -51,9 +53,14 @@ export default function ListCard({
   return (
     <S.Contents onClick={onClickMoveToDetail}>
       <S.ContentsHeader>
-        <S.ContentsHeaderImg src={
-          currentTab === "교류" && userImage ? userImage :
-          imgUrl} />
+        {currentTab === "교류" ? (
+          <S.ImageBox>
+            <S.ContentsHeaderImg src={userImage ? userImage : imgUrl} />
+            <S.NationIcon src={countryImg(userNation)} />
+          </S.ImageBox>
+        ) : (
+          <S.ContentsHeaderImg src={imgUrl} />
+        )}
         <S.ContentsHeaderInfo>
           <Text.Body6 color="gray900" pointer={true}>
             {userNickname}
@@ -86,10 +93,26 @@ const S = {
     align-items: center;
   `,
 
-  ContentsHeaderImg: styled.img`
-    border-radius: 50%;
+  ImageBox: styled.div`
+    position: relative;
     width: 36px;
     height: 36px;
+  `,
+
+  ContentsHeaderImg: styled.img`
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  `,
+  NationIcon: styled.img`
+    width: 16px;
+    height: 16px;
+    border-radius: 100px;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    z-index: 0;
+    cursor: pointer;
   `,
 
   ContentsHeaderInfo: styled.div`

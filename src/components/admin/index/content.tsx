@@ -23,7 +23,7 @@ export default function Content({ data }: AdminUsersResp) {
               <S.Item nation={user.nation}>
               <li><p>{data.length - idx}</p></li>
               <li><p>{user.name}</p></li>
-              <li><p>{user.nation === 'KR' ? USER_NATIONALITY[0] : !user.nation ? '입력필요' : USER_NATIONALITY[1] }</p></li>
+              <li><p>{user.nation === 'Republic of Korea' ? USER_NATIONALITY[0] : !user.nation ? '입력필요' : USER_NATIONALITY[1] }</p></li>
             </S.Item>
             </Link>
           )}
@@ -163,7 +163,7 @@ const S = {
       font-weight: 700;
       font-size: 12px;
       color: ${theme.color.gray600};
-      color: ${({nation}) => (nation === 'KR' ? theme.color.gray600 : !nation ? 'red' : theme.color.orange400)};
+      color: ${({nation}) => (nation === 'Republic of Korea' ? theme.color.gray600 : !nation ? 'red' : theme.color.orange400)};
       text-align: center;
       flex: none;
       flex-grow: 0;

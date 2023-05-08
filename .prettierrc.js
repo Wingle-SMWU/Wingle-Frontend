@@ -10,17 +10,18 @@ const tsOption = {
   trailingComma: "all",
   printWidth: 100,
   endOfLine: "auto",
-  importOrder: [
-    "^react$",
-    "<THIRD_PARTY_MODULES>",
-    "^@(?:redux|actions|reducer)",
-    "^@(?:components|pages)(.)$",
-    "^@(?:apis|config|constants|hoc|hooks|recoil|utility|/)(.)$",
-    "^[./]",
-  ],
-  plugins: [require.resolve("@trivago/prettier-plugin-sort-imports")],
-  importOrderSeparation: true,
-  importOrderSortSpecifiers: true,
+  // 뭐 설치해야됨 ㅇㅈ?
+  // importOrder: [
+  //   "^react$",
+  //   "<THIRD_PARTY_MODULES>",
+  //   "^@(?:redux|actions|reducer)",
+  //   "^@(?:components|pages)(.)$",
+  //   "^@(?:apis|config|constants|hoc|hooks|recoil|utility|/)(.)$",
+  //   "^[./]",
+  // ],
+  // plugins: [plugin],
+  // importOrderSeparation: true,
+  // importOrderSortSpecifiers: true,
 };
 
 module.exports = {

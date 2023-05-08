@@ -5,40 +5,30 @@ import { countryList } from "../../../constants/countryList";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
+import { CountryListType } from "@/src/types/countryList";
 
 interface StyledInputProps {
   isActive: boolean;
 }
 
-interface DropDownProps {
-  label: string; // 제목
-  list: string[]; // 드롭다운 리스트
-  selected: string; // 선택된 항목(selected state)
-  onSelectedChange: (selected: string) => void; // 선택된 항목 변경 함수(selected setState 변경 함수)
-  description?: string; // 드롭다운 설명
-}
-
-export default function DropDown() {
+export default function DropDownSignUpCountry() {
   const [isActive, setIsActive] = useState(false);
-  const [nation, setNation] = useState("Republic of Korea");
+  const [nation, setNation] = useState("REPUBLIC OF KOREA");
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const onActiveToggle = useCallback(() => {
     setIsActive((prev) => !prev);
   }, []);
 
-  const handleSelectItem: React.MouseEventHandler<HTMLLIElement> = useCallback(
-    (e) => {
-      const target = e.target as HTMLLIElement;
-      const selectedNation = target.innerText;
-      setNation(selectedNation);
-      setIsActive(false);
-      setSignUpFormData((prev) => ({
-        ...prev,
-        nation,
-      }));
+  const handleSelectItem = useCallback(
+    (selected: CountryListType) => {
+      if (selected) {
+        setNation(selected.country);
+        setIsActive(false);
+        setSignUpFormData((prev) => ({ ...prev, nation: selected.code }));
+      }
     },
-    [setSignUpFormData, nation]
+    [setSignUpFormData]
   );
 
   return (
@@ -65,7 +55,7 @@ export default function DropDown() {
             <S.DropdownItemContainer
               id="item"
               key={item.code}
-              onClick={handleSelectItem}
+              onClick={() => handleSelectItem(item)}
             >
               <S.CountryItem color="gray900">{item.country}</S.CountryItem>
             </S.DropdownItemContainer>

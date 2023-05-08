@@ -8,12 +8,12 @@ export const profileStateAtom = atom<ProfileStateType>({
   key: "profileState",
   default: {
     gender: true,
-    nickname: "test",
-    age: 24,
-    interests: ["🎤 KPOP"],
-    introduce: "자기소개",
+    nickname: "",
+    age: 0,
+    interests: [],
+    introduce: "",
     languages: [],
-    nation: "AC",
+    nation: "",
     sns: null,
     image:
       "https://wingle-bucket.s3.ap-northeast-2.amazonaws.com/idCardImage/202303071306001975874871491172.png",
@@ -25,6 +25,12 @@ export const profileUpdateStateAtom = atom<ProfileUpdateType>({
   default: {
     image: null,
     imageDelete: false,
-    nickname: "",
+    age: 0,
+    interests: [],
+    introduce: "",
+    languages: [],
+    nation: "",
+    sns: null,
+    image: "",
   },
 });

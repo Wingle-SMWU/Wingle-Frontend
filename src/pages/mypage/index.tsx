@@ -42,6 +42,7 @@ export default function Mypage() {
                 등록
               </Text.Caption1>
             </S.EditBtn> :
+            
             <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
               <Text.Caption1 color="gray700" pointer>
                 수정

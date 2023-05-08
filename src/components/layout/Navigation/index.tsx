@@ -46,7 +46,7 @@ export default function Navigation(props: { tab: string }) {
               src={menu.includes(el.page) ? el.normalImg : el.disableImg}
             />
             <Text.Caption2
-              color={menu.includes(el.page) ? "gray900" : "gray500"}
+              color={menu.includes(el.page) ? "orange500" : "gray500"}
             >
               {el.name}
             </Text.Caption2>
@@ -82,6 +82,7 @@ const Style = {
     width: 104px;
     display: flex;
     flex-direction: column;
+    gap: 2px;
     align-items: center;
     padding: 12.5px 24px;
     text-decoration: none;

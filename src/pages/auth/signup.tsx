@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
 import InputBox from "../../components/authpage/signup/signUpInput";
-import DropDown from "../../components/authpage/signup/dropDown";
+import DropDown from "../../components/authpage/signup/dropDownSignUpCountry";
 import StudentCard from "../../components/authpage/signup/studentCard";
 import GenderSelectBox from "../../components/authpage/signup/genderSelect";
 import AgreeBox from "@/src/components/authpage/signup/agreeBox";
@@ -68,7 +68,10 @@ export default function SignUp() {
       <GenderSelectBox />
       <AgreeBox />
 
-      <S.CompleteButton disabled={isButtonDisabled} onClick={handleSignUpSubmit}>
+      <S.CompleteButton
+        disabled={isButtonDisabled}
+        onClick={handleSignUpSubmit}
+      >
         작성완료
       </S.CompleteButton>
     </S.Wrapper>

@@ -6,9 +6,10 @@ import { theme } from '@/src/styles/theme';
 type ModalFactor = {
   children: ReactNode;
   setIsOpen: React.Dispatch<React.SetStateAction<string>>;
+  isLoading: boolean;
 }
 
-export default function Modal({ children, setIsOpen }: ModalFactor) {
+export default function Modal({ children, setIsOpen, isLoading }: ModalFactor) {
 
   const handleCloseModal = () => setIsOpen('');
 
@@ -18,12 +19,15 @@ export default function Modal({ children, setIsOpen }: ModalFactor) {
         <Image src='/admin/modal_close.svg' alt='close' width={18} height={18} />
       </S.Image>
       <S.Container>
-        {children && <p>{`정말 ${children}하시겠습니까?`}</p>}
+        {children && !isLoading && <p>{`정말 ${children}하시겠습니까?`}</p>}
+        {isLoading && <p>{`[${children}] 잠시만 기다려주세요.`}</p>}
         {children === '거절' && <p>확인을 누르면 거절메시지가 전송됩니다.</p>}
+        {!isLoading &&
         <S.Button>
           <button type='button' onClick={handleCloseModal}>취소</button>
           <button type='submit' form='form'>확인</button>
         </S.Button>
+        }
       </S.Container>
     </S.Modal>
   )

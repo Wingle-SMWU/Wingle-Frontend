@@ -21,6 +21,40 @@ export default function Nickname() {
   const [imageDelete, setImageDelete] = useState(false);
   const [imageFile, setImageFile] = useState<any>(null);
 
+  const queryClient = useQueryClient();
+
+  const { mutate: updateMutation, isLoading: updateLoading } = useMutation(
+    (updateData: ProfileUpdateType) => postUpdateProfile(updateData),
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries("profileData");
+        await queryClient.cancelQueries("articles");
+        const prevProfileData = queryClient.getQueryData([
+          "profileData",
+          {
+            exact: false,
+          },
+        ]);
+        return { prevProfileData };
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries("profileData");
+        queryClient.invalidateQueries("articles");
+        router.push("/mypage/edit");
+      },
+    }
+  );
+
+  const {
+    data: profileData,
+    isLoading,
+    isError,
+    isIdle,
+  } = useQuery({
+    queryFn: getProfile,
+    queryKey: ["profileData"],
+  });
+
   const { profileData, isLoading, isError, isIdle } = useGetProfile();
 
   const queryClient = useQueryClient();
@@ -50,7 +84,6 @@ export default function Nickname() {
     if (profileData) {
       setName(profileData.nickname);
       setIsName(true);
-      console.log(profileData.image)
       setImage(profileData.image);
     }
   }, [profileData]);
@@ -189,7 +222,7 @@ export default function Nickname() {
               <Text.Body5 color="gray700">닉네임</Text.Body5>{" "}
               <Margin direction="column" size={8} />
               <S.InputNickname
-                placeholder={name}
+                placeholder={profileData.nickname}
                 type="text"
                 onChange={onChangeName}
               />
