@@ -153,21 +153,36 @@ const S = {
 };
 
 // EXAMPLE : 아래처럼 사용하세요!!(src/pages/test.tsx)
-// export default function Test() {
-//   const [selected, setSelected] = useState("Republic of Korea");
-//   const onSelectedChange = useCallback((selected: string) => {
-//     setSelected(selected);
-//   }, []);
+// import { useState } from "react";
+// import { Margin } from "../components/ui";
+// import DropDown from "../components/ui/dropDownUI";
+// import styled from "styled-components";
 
-//   const list = [
-//     "Republic of Korea",
-//     "United States of America",
-//     "Canada",
-//     "China",
-//     "Japan",
-//     "Russia",
-//     "France",
-//     "Germany",
+// export default function Test() {
+//   const [selected, setSelected] = useState<string>("REPUBLIC OF KOREA");
+//   const handleSelectedChange = (selected: string) => {
+//     setSelected(selected);
+//   };
+
+//   const countryList = [
+//     {
+//       code: "KR",
+//       nation: "대한민국",
+//       add_code_nation: "KR 대한민국",
+//       country: "REPUBLIC OF KOREA",
+//     },
+//     {
+//       code: "CN",
+//       nation: "중화인민공화국",
+//       add_code_nation: "CN 중화인민공화국",
+//       country: "CHINA",
+//     },
+//     {
+//       code: "VN",
+//       nation: "베트남",
+//       add_code_nation: "VN 베트남",
+//       country: "VIET NAM",
+//     },
 //   ];
 
 //   return (
@@ -177,9 +192,9 @@ const S = {
 //         <Margin size={8} direction="row" />
 //         <DropDown
 //           label="안녕"
-//           list={list}
+//           list={countryList.map((item) => item.country)}
 //           selected={selected}
-//           onSelectedChange={onSelectedChange}
+//           handleSelectedChange={handleSelectedChange}
 //           description="테스트"
 //         />
 //       </div>
