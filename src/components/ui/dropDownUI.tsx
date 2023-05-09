@@ -36,7 +36,7 @@ export default function DropDownCommon({
 
   return (
     <S.Container>
-      {label && <S.DropDownLabel>{label}</S.DropDownLabel>}
+      {label && <S.DropDownLabel disabled={disabled}>{label}</S.DropDownLabel>}
       <S.DropdownContainer>
         <S.DropdownBody
           onClick={toggleDropdown}
@@ -80,11 +80,12 @@ const S = {
     display: flex;
     flex-direction: column;
   `,
-  DropDownLabel: styled.label`
+  DropDownLabel: styled.label<{ disabled: boolean }>`
     margin-bottom: 8px;
     font-size: 16px;
     font-weight: 700;
-    color: ${({ theme }) => theme.color.gray700};
+    color: ${({ theme, disabled }) =>
+      disabled ? theme.color.gray500 : theme.color.gray700};
   `,
   DropdownContainer: styled.div`
     position: relative;
