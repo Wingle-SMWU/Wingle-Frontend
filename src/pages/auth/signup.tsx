@@ -30,6 +30,8 @@ export default function SignUp() {
       signUpFormData.termsOfPersonalInformation
     ) {
       setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
     }
   }, [signUpFormData]);
 
