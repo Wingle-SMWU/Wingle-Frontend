@@ -27,7 +27,7 @@ export default function Nickname() {
     (updateData: ProfileUpdateType) => postUpdateProfile(updateData),
     {
       onMutate: async () => {
-        await queryClient.cancelQueries("profileData");
+        await queryClient.cancelQueries("profile");
         await queryClient.cancelQueries("articles");
         const prevProfileData = queryClient.getQueryData([
           "profileData",
@@ -38,7 +38,7 @@ export default function Nickname() {
         return { prevProfileData };
       },
       onSuccess: () => {
-        queryClient.invalidateQueries("profileData");
+        queryClient.invalidateQueries("profile");
         queryClient.invalidateQueries("articles");
         router.push("/mypage/edit");
       },
@@ -52,7 +52,7 @@ export default function Nickname() {
     isIdle,
   } = useQuery({
     queryFn: getProfile,
-    queryKey: ["profileData"],
+    queryKey: ["profile"],
   });
 
   useEffect(() => {
@@ -66,7 +66,6 @@ export default function Nickname() {
   if (isLoading || updateLoading) return <Loading />;
   if (isError || isIdle) return <>에러</>;
   if (fileError) alert("업로드 가능한 이미지 크기 제한을 초과했습니다.");
-  if (profileData === null && profileData === undefined) return <Loading />;
 
   const onChangeName = (e: any) => {
     const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
