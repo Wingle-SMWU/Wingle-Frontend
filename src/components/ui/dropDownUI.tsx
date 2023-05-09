@@ -167,7 +167,8 @@ const S = {
 // import styled from "styled-components";
 
 // export default function Test() {
-//   const [selected, setSelected] = useState<string>("REPUBLIC OF KOREA");
+//   const [selected, setSelected] = useState<string>("");
+//   // const [isButtonDisabled, setButtonDisabled] = useState<boolean>(true);
 //   const handleSelectedChange = (selected: string) => {
 //     setSelected(selected);
 //   };
@@ -202,6 +203,8 @@ const S = {
 //           label="안녕"
 //           list={countryList.map((item) => item.country)}
 //           selected={selected}
+//           dropDownPlaceHolder="선택하세요"
+//           // disabled={isButtonDisabled}
 //           handleSelectedChange={handleSelectedChange}
 //           description="테스트"
 //         />
