@@ -2,14 +2,10 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 
-interface StyledInputProps {
-  isActive: boolean;
-}
-
 interface DropDownProps {
   label?: string; // 제목
   list: string[]; // 드롭다운 리스트
-  selected?: string; // 선택된 항목(selected state)
+  selected: string; // 선택된 항목(selected state)
   dropDownPlaceHolder?: string; // 드롭다운 플레이스홀더
   handleSelectedChange: (selected: string) => void; // 선택된 항목 변경 함수(selected setState 변경 함수)
   description?: string; // 드롭다운 설명
@@ -33,8 +29,8 @@ export default function DropDownCommon({
     }
   };
 
-  const handleSelect = (selected: string) => {
-    handleSelectedChange(selected);
+  const handleSelect = (item: string) => {
+    handleSelectedChange(item);
     setIsActive(false);
   };
 
@@ -47,10 +43,10 @@ export default function DropDownCommon({
           isActive={isActive}
           disabled={disabled}
         >
-          <S.DropdownSelected disabled={disabled}>
+          <S.DropdownSelected disabled={disabled} selected={selected}>
             {selected || dropDownPlaceHolder || "Select an item"}
           </S.DropdownSelected>
-          <S.DropdownSelected disabled={false}>
+          <S.DropdownSelected disabled={false} selected={selected}>
             <Image
               src="/auth/arrow_down.svg"
               alt="arrow"
@@ -110,13 +106,17 @@ const S = {
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
     border-radius: 8px;
   `,
-  DropdownSelected: styled.div<{ disabled: boolean }>`
+  DropdownSelected: styled.div<{ disabled: boolean; selected: string }>`
     font-size: 16px;
-    color: ${({ theme, disabled }) =>
-      disabled ? theme.color.gray600 : theme.color.gray900};
+    color: ${({ theme, disabled, selected }) =>
+      disabled
+        ? theme.color.gray500
+        : selected
+        ? theme.color.gray900
+        : theme.color.gray500};
     padding: 14px 16px;
   `,
-  DropdownMenuContainer: styled.ul<StyledInputProps>`
+  DropdownMenuContainer: styled.ul<{ isActive: boolean }>`
     position: absolute;
     top: calc(100% + 8px);
     left: 0;
