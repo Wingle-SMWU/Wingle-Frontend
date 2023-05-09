@@ -7,3 +7,27 @@ export const getProfile = async (): Promise<ProfileStateType> => {
 
   return data;
 };
+
+export const postIntroduce =async (introduce:string) => {
+  const response =  await instance.post("/profile/introduction", {
+     "introduction" : introduce
+  });
+
+  return response.data;
+}
+
+export const postLanguage = async (language: String[]): Promise<void> => {
+  const response = await instance.post("/profile/languages", {
+    "languages": language.filter(v=>v!=='')
+  });
+
+  return response.data;
+};
+
+export const postInterest = async (interest : String[] ): Promise<void> => {
+  const response =  await instance.post("/profile/interests", {
+    "interests": interest
+  })
+
+  return response.data;
+};

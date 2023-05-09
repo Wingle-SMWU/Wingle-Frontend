@@ -5,31 +5,28 @@ import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { getProfile } from "@/src/api/mypage/profileData";
-import { useSetRecoilState, useRecoilValue } from "recoil";
-import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import Loading from "@/src/components/ui/loadingUI";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 export default function Mypage() {
-  const [loading, setLoading] = useState(true);
+  const [editText,setEditText] = useState(true);
 
-  const setProfileState = useSetRecoilState(profileStateAtom);
+  const { profileData, isLoading, isError } = useGetProfile();
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const data = await getProfile();
-        setProfileState(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to get profile:", error);
+    if (profileData && (profileData.interests || profileData.introduce || profileData.languages)) {
+        setEditText(false);
       }
-    };
+  },[profileData])
 
-    fetchProfile();
-  }, []);
+  const handleLogout = () => {
+    localStorage.clear();
+    router.push('/auth/login')
+  }
+  
+  if (isLoading) return <Loading />
+  if (isError) return <>에러</>
 
-  if (loading) return <Loading />;
   return (
     <>
       <S.Wapper>
@@ -38,38 +35,22 @@ export default function Mypage() {
             <Text.Title1 color="gray900">마이페이지</Text.Title1>
           </S.Header>
           <S.Profile>
-            <Profile />
-
-            {/* 자기소개, 언어선택, 관심사 중 하나라도 등록되지 않은 사용자 ? 등록 : 수정*/}
-
-            {/* <>
-
-        <S.RegisterBtn
-          onMouseOver={() => setIsRegisterBtnHover(true)}
-          onMouseLeave={() => setIsRegisterBtnHover(false)}
-        >
-          <Text.Caption1
-            color="white"
-            pointer
-            onClick={() => router.push(`/mypage/profileEdit`)}
-          >
-            등록
-          </Text.Caption1>
-        </S.RegisterBtn>
-        {isRegisterBtnHover && (
-          <>
-            <S.DropBubbleHigh />
-            <S.DropBubbleLow>
-              <Text.Body6>프로필을 등록해주세요!</Text.Body6>
-            </S.DropBubbleLow>
-          </>
-        )}
-        </> */}
+            <Profile /> 
+            {editText?
+            <S.EditBtn Color="#FF812E" onClick={() => router.push(`/mypage/edit`)}>
+              <Text.Caption1 color="white" pointer>
+                등록
+              </Text.Caption1>
+            </S.EditBtn> :
+            
             <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
               <Text.Caption1 color="gray700" pointer>
                 수정
               </Text.Caption1>
             </S.EditBtn>
+            }
+            
+
           </S.Profile>
           <>
             <Margin direction="column" size={34} />
@@ -81,7 +62,7 @@ export default function Mypage() {
               내가 쓴 게시글
             </Text.Body1>
             <Margin direction="column" size={34} />
-            <Text.Body1 color="gray900" pointer>
+            <Text.Body1 color="gray900" pointer onClick={handleLogout}>
               로그아웃
             </Text.Body1>
           </>
@@ -92,6 +73,11 @@ export default function Mypage() {
     </>
   );
 }
+
+interface EditBtnProps {
+  Color?: string;
+}
+
 
 const S = {
   Wapper: styled.div`
@@ -125,13 +111,14 @@ const S = {
     background-color: #ff812e;
     border-radius: 8px;
   `,
-  EditBtn: styled.button`
+  EditBtn: styled.button<EditBtnProps>`
     width: 45px;
     height: 33px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #6c6c70;
+    border: 1px solid ${(props) => props.Color || '#6c6c70'};
+    background-color : ${(props) => props.Color || 'white'};
     border-radius: 8px;
   `,
 };

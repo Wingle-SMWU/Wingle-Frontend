@@ -4,42 +4,41 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import { getImageUrl } from "@/src/modules/utils";
+import { countryImg } from "./countryImg";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+
 
 export default function Profile() {
-  const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
-  const {
-    nickname,
-    image: userImage,
-    nation,
-    gender,
-  } = useRecoilValue(profileStateAtom);
+  // const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
+  
+  const { profileData } = useGetProfile();
 
-  const handleRegisterBtnHover = () => {
-    setIsRegisterBtnHover(true);
-  };
-  const handleRegisterBtnLeave = () => {
-    setIsRegisterBtnHover(false);
-  };
+  // const handleRegisterBtnHover = () => {
+  //   setIsRegisterBtnHover(true);
+  // };
+  // const handleRegisterBtnLeave = () => {
+  //   setIsRegisterBtnHover(false);
+  // };
 
   return (
     <>
       <S.UserBox>
         <S.UserImgBox>
           <S.UserProfileImg
-            src={userImage ? userImage : getImageUrl("기본")}
+            src={profileData && (profileData.image ? profileData.image : getImageUrl("기본"))}
             alt="프로필"
           />
-          <S.UserFlagImg src="" alt="국기" />
+          <S.UserFlagImg src={profileData && countryImg(profileData.nation)} alt="국기" />
         </S.UserImgBox>
         <S.UserInfoBox>
           <S.UserNicknameAndSex>
-            <Text.Body1 color="gray900">{nickname}</Text.Body1>
+            <Text.Body1 color="gray900">{profileData && profileData.nickname}</Text.Body1>
             <S.UserSexImg
-              src={gender ? "/mypage/female.svg" : "/mypage/male.svg"}
+              src={profileData && profileData.gender ? "/mypage/female.svg" : "/mypage/male.svg"}
               alt="성별"
             />
           </S.UserNicknameAndSex>
-          <Text.Body6 color="gray800">{nation}</Text.Body6>
+          <Text.Body6 color="gray800">{profileData && profileData.nation}</Text.Body6>
         </S.UserInfoBox>
       </S.UserBox>
     </>
@@ -70,8 +69,8 @@ const S = {
     width: 22px;
     height: 22px;
     position: absolute;
-    border: 1px solid black;
-    background-color: black;
+    border: 1px solid white;
+    background-color: white;
     border-radius: 100px;
     right: 0%;
     bottom: 0%;
@@ -87,7 +86,13 @@ const S = {
   UserNicknameAndSex: styled.div`
     display: flex;
   `,
-  UserSexImg: styled.img``,
+  UserSexImg: styled.img`
+  width : 16px;
+  height : 16px;
+  padding-left : 4px;
+  margin : 3px 0px;
+  `,
+
 
   DropBubbleHigh: styled.div`
     position: absolute;

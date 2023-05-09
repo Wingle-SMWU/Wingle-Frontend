@@ -8,7 +8,7 @@ import { getImageUrl } from "@/src/modules/utils";
 import { ProfileUpdateType } from "@/src/types/mypage/profileType";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { postUpdateProfile } from "@/src/api/mypage/updateProfile";
-import { getProfile } from "@/src/api/mypage/profileData";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 export default function Nickname() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -55,6 +55,31 @@ export default function Nickname() {
     queryKey: ["profileData"],
   });
 
+  const { profileData, isLoading, isError, isIdle } = useGetProfile();
+
+  const queryClient = useQueryClient();
+
+  const { mutate: updateMutation, isLoading: updateLoading } = useMutation(
+    (updateData: ProfileUpdateType) => postUpdateProfile(updateData),
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries("profile");
+        const prevProfileData = queryClient.getQueryData([
+          "profileData",
+          {
+            exact: false,
+          },
+        ]);
+        return { prevProfileData };
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries("profile");
+        router.push("/mypage/edit");
+      },
+    }
+  );
+
+ 
   useEffect(() => {
     if (profileData) {
       setName(profileData.nickname);
@@ -71,7 +96,7 @@ export default function Nickname() {
   const onChangeName = (e: any) => {
     const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
     const nameCurrent = e.target.value;
-    if (nameCurrent === "") {
+    if (nameCurrent === "" && profileData) {
       setName(profileData.nickname);
       setIsName(true);
       setNameMessage("");
@@ -103,7 +128,7 @@ export default function Nickname() {
   const deleteFileImage = () => {
     URL.revokeObjectURL(image);
     setImage(null);
-    setImageDelete(profileData.image !== null);
+    if (profileData) setImageDelete(profileData.image !== null);
     setImageFile(null);
   };
 
@@ -132,7 +157,7 @@ export default function Nickname() {
 
   const onClickComplete = async () => {
     if (!isName) return;
-    if (name === "") {
+    if (name === "" && profileData ) {
       setName(profileData.nickname);
     }
     const formData = new FormData();

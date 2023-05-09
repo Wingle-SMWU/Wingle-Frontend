@@ -3,42 +3,22 @@ import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
 import router from "next/router";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { getProfile } from "@/src/api/mypage/profileData";
-import { useSetRecoilState, useRecoilValue } from "recoil";
-import { profileStateAtom } from "@/src/atoms/profileStateAtom";
+import { useState } from "react";
 import Loading from "@/src/components/ui/loadingUI";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 export default function Edit() {
-  const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const setProfileState = useSetRecoilState(profileStateAtom);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const data = await getProfile();
-        setProfileState(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to get profile:", error);
-      }
-    };
-
-    fetchProfile();
-  }, []);
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  const profileData = useRecoilValue(profileStateAtom);
+  const { profileData, isLoading, isError } = useGetProfile();
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
 
-  if (loading) return <Loading />;
+  if (isLoading) return <Loading />;
+  if (isError) return <>에러</> 
+  
   return (
     <>
       <S.Wapper>
@@ -66,6 +46,8 @@ export default function Edit() {
 
           <S.EditList>
             <Margin direction="column" size={32} />
+
+            <S.Column >
             <S.Language>
               <Text.Body1 color="gray900">사용언어</Text.Body1>
               <S.EditBtn
@@ -73,8 +55,17 @@ export default function Edit() {
                 alt="연필"
                 onClick={() => router.push(`/mypage/edit/language`)}
               />
-              {/* 두번째 연필 누르면 "사용 가능 언어" 페이지로 가서 1순위, 2순위, 3순위 언어선택 */}
             </S.Language>
+            <S.LanguageContent>
+              {profileData && (profileData.languages).map((v) => (
+                  <S.LanguageChartContent key={v.order}>
+                    <S.LanguageChart src={`/mypage/language${v.order}.svg`} />
+                    <S.LanguageText fontWeight={550} width ={28}>{v.interest.substring(0,2)}  </S.LanguageText>
+                    <S.LanguageText fontWeight={400} width = {262} color ="orange500">{v.interest.substring(2)}</S.LanguageText>
+              </S.LanguageChartContent>
+              ))}
+            </S.LanguageContent>
+            </S.Column>
 
             <Margin direction="column" size={32} />
             <S.Column>
@@ -85,7 +76,6 @@ export default function Edit() {
                   alt="연필"
                   onClick={() => router.push(`/mypage/edit/introduce`)}
                 />
-                {/* 세번째 연필 누르면 "자기소개" 페이지로 가서 자기소개 글쓰기 */}
               </S.Introduce>
               <S.IntroduceContent>
                 {profileData && profileData.introduce}
@@ -101,7 +91,6 @@ export default function Edit() {
                   alt="연필"
                   onClick={() => router.push(`/mypage/edit/interest`)}
                 />
-                {/* 네번째 연필 누르면 "관심사" 페이지로 가서 관심사 선택하기 */}
               </S.Interest>
               <S.InterestBoxContainer>
                 {profileData &&
@@ -129,6 +118,14 @@ export default function Edit() {
   );
 }
 
+interface IntesestBoxProps {
+  backgroundColor : string;
+}
+
+interface LanguageText {
+  fontWeight : number;
+  width : number;
+}
 const S = {
   Wapper: styled.div`
     width: 100%;
@@ -164,7 +161,6 @@ const S = {
   UserProfileImg: styled.img`
     border: 1px solid #eeeef2;
   `,
-  UserFlagImg: styled.img``,
   UserInfoBox: styled.div`
     width: 340px;
     height: 86px;
@@ -172,10 +168,6 @@ const S = {
     flex-direction: column;
     justify-content: center;
   `,
-  UserNicknameAndSex: styled.div`
-    display: flex;
-  `,
-  UserSexImg: styled.img``,
   RegisterBtn: styled.button`
     width: 45px;
     height: 33px;
@@ -200,13 +192,32 @@ const S = {
     width: 452px;
     display: flex;
     justify-content: space-between;
-    /* border: 1px solid blue; */
+  `,
+  LanguageContent: styled.div`
+    margin-top: 16px;
+    padding: 16px, 24px, 24px, 24px;
+  `,
+  LanguageChartContent : styled.div`
+    display: flex;
+    flex-direction: row;
+    padding-bottom : 6px;
+  `,
+  LanguageChart : styled.img`
+    width: 18px;
+    height: 18px;
+    padding-right: 6px;
+  `,
+  LanguageText : styled.div<LanguageText>`
+    width : ${(props) => props.width}px;
+    color : #49494D;
+    font-size : 14px;
+    font-family: 'Pretendard';
+    font-weight: ${(props) => props.fontWeight};
   `,
   Introduce: styled.div`
     width: 452px;
     display: flex;
     justify-content: space-between;
-    /* border: 1px solid blue; */
   `,
   IntroduceContent: styled.div`
     padding-top: 16px;
@@ -224,7 +235,7 @@ const S = {
     justify-content: space-between;
     /* border: 1px solid blue; */
   `,
-  InterestBox: styled.div`
+  InterestBox: styled.div<IntesestBoxProps>`
     cursor: pointer;
     border-radius: 40px;
     padding: 8px 15px;

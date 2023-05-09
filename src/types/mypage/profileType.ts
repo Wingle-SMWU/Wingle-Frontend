@@ -1,6 +1,6 @@
-type languagesType = {
+export type LanguagesType = {
   order: number;
-  interest: string;
+  interest : string;
 };
 
 export type ProfileStateType = {

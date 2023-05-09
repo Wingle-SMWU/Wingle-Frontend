@@ -5,10 +5,14 @@ import SelectInterest from "@/src/components/mypage/SelectInterest";
 import { useState } from "react";
 import Modal from "@/src/components/modal";
 import instance from "@/src/api/axiosModule";
+import { useMutation,useQueryClient } from "react-query";
+import { postInterest } from "@/src/api/mypage/profileData";
 
 export default function Interest() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [interest,setInterest] = useState(false);
+  const [interest,setInterest] = useState<String[]>([]);
+
+  const queryClient = useQueryClient();
 
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
@@ -18,15 +22,15 @@ export default function Interest() {
     setInterest(arr);
   };
 
-  const handleSubmit = async () => {
-    try{
-      await instance.post("/profile/interests", {
-      "interests": interest
-      });
-    } catch {
-      console.log("error")
-    }
+   const fetchInterest = useMutation(postInterest,{
+    onSuccess: () => {
+      queryClient.invalidateQueries("profile");
+    },
+  })
 
+
+  const handleSubmit = async () => {
+    fetchInterest.mutate(interest)
     router.push(`/mypage/edit`)
   }
 

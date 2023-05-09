@@ -11,7 +11,6 @@ const withFormData = (data: ProfileUpdateType) => {
         formData.append(key, "null");
         formData.delete("image");
       } else {
-        console.log("image");
         formData.append(key, value.get("image"));
       }
     } else if (typeof value === "string") {

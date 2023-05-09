@@ -3,17 +3,23 @@ import router from "next/router";
 import { Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState,useCallback,useEffect } from "react";
-import instance from "@/src/api/axiosModule"
+import { useMutation,useQueryClient } from "react-query";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+import { postIntroduce } from "@/src/api/mypage/profileData";
 
 export default function Introduce() {
   const [modalVisible, setModalVisible] = useState(false);
   const [isIntroduce,setIsIntroduce] = useState(false);
   const [introduce,setIntroduce] = useState('');
 
+  const queryClient = useQueryClient();
+
   const onChangeIntroduce = useCallback((e: any) => {
     const nameCurrent = e.target.value;
     setIntroduce(nameCurrent);
   }, []);
+
+   const { profileData } = useGetProfile();
 
   useEffect(() => {
     if (introduce.length < 2 || introduce.length > 400) {
@@ -27,16 +33,18 @@ export default function Introduce() {
     setModalVisible((prev) => !prev);
   };
 
-  const handleSubmit =async () => {
-    if (isIntroduce) {
-      await instance.post("/profile/introduction", {
-      "introduction" : introduce
-      });
-      
-      router.push(`/mypage/edit`)
-    } 
-  }
 
+  const fetchIntroduce = useMutation(postIntroduce,{
+    onSuccess: () => {
+      queryClient.invalidateQueries("profile");
+    },
+  })
+
+  const handleSubmit= () => {
+    fetchIntroduce.mutate(introduce);
+    router.push(`/mypage/edit`)
+  }
+  
   return (
     <>
       <S.Wapper>
@@ -63,6 +71,7 @@ export default function Introduce() {
             maxLength={400}
             placeholder="자기소개를 작성해주세요! (최대 400자)"
             onChange={onChangeIntroduce}
+            defaultValue={profileData && profileData.introduce}
           />
         </S.Content>
         {modalVisible && (

@@ -1,4 +1,6 @@
-export const countryList = [
+import { CountryListType } from "../types/countryList"
+
+export const countryList: CountryListType[] = [
   {
     code: "KR",
     nation: "대한민국",
