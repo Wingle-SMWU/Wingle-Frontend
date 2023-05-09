@@ -9,7 +9,7 @@ interface StyledInputProps {
 interface DropDownProps {
   label?: string; // 제목
   list: string[]; // 드롭다운 리스트
-  selected: string; // 선택된 항목(selected state)
+  selected?: string; // 선택된 항목(selected state)
   dropDownPlaceHolder?: string; // 드롭다운 플레이스홀더
   handleSelectedChange: (selected: string) => void; // 선택된 항목 변경 함수(selected setState 변경 함수)
   description?: string; // 드롭다운 설명
@@ -29,8 +29,8 @@ export default function DropDownCommon({
     setIsActive(!isActive);
   };
 
-  const handleSelect = (item: string) => {
-    handleSelectedChange(item);
+  const handleSelect = (selected: string) => {
+    handleSelectedChange(selected);
     setIsActive(false);
   };
 
@@ -62,7 +62,7 @@ export default function DropDownCommon({
               key={item}
               isSelected={item === selected}
               onClick={() => {
-                handleSelect(selected);
+                handleSelect(item);
               }}
             >
               {item}
