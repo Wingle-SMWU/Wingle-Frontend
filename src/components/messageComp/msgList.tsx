@@ -4,9 +4,10 @@ import { Room } from "@/src/types/message/roomType";
 import betweenTime from "@/src/utils/betweenTime";
 import Image from "next/image";
 import profiledefault from "../../../public/images/profiledefault.png";
+import { countryImg } from "../mypage/countryImg";
 
 const MsgList = ({ list }: { list: Room }) => {
-  const { image, nickname, createdTime, recentChat, roomId } = list;
+  const { image, nickname, createdTime, recentChat, roomId, nation } = list;
   const router = useRouter();
 
   const handleMoveChatRoom = () => {
@@ -16,16 +17,20 @@ const MsgList = ({ list }: { list: Room }) => {
     <>
       <S.Container onClick={handleMoveChatRoom}>
         <S.LeftBox>
-          {image ? (
-            <S.UserImage src={image} alt="상대 이미지" />
-          ) : (
-            <Image
-              src="/images/message/profiledefault.png"
-              alt="기본 프로필 이미지"
-              width={35}
-              height={35}
-            />
-          )}
+          <S.ImageBox>
+            {image ? (
+              <S.UserImage src={image} alt="상대 이미지" />
+            ) : (
+              <Image
+                src="/images/message/profiledefault.png"
+                alt="기본 프로필 이미지"
+                width={35}
+                height={35}
+              />
+            )}
+            <S.NationIcon src={countryImg(nation)} />
+          </S.ImageBox>
+
           <S.LeftContent>
             <S.LeftDetail>
               <span>{nickname}</span>
@@ -52,10 +57,30 @@ const S = {
   LeftBox: styled.div`
     display: flex;
     width: 100%;
+    margin-left: 10px;
+  `,
+
+  ImageBox: styled.div`
+    position: relative;
+    width: 36px;
+    height: 36px;
+  `,
+
+  NationIcon: styled.img`
+    width: 16px;
+    height: 16px;
+    border-radius: 100px;
+    position: absolute;
+    right: 0%;
+    left: 60%;
+    bottom: 0%;
+    z-index: 0;
+    cursor: pointer;
+    border: 1px solid #ffffff;
   `,
 
   UserImage: styled.img`
-    width: 40px;
+    width: 36px;
     height: 36px;
     border-radius: 50%;
   `,
@@ -75,7 +100,7 @@ const S = {
       white-space: nowrap;
       overflow: hidden;
       max-width: 450px;
-      margin-left: -40px;
+      margin-left: -34px;
     }
   `,
 

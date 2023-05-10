@@ -4,9 +4,10 @@ import { Text } from "../ui";
 import { Room } from "@/src/types/message/roomType";
 import Image from "next/image";
 import profiledefault from "../../../public/images/profiledefault.png";
+import { countryImg } from "../mypage/countryImg";
 
 const YourInfo = ({ list }: { list: Room }) => {
-  const { image, nickname } = list;
+  const { image, nickname, nation } = list;
   const router = useRouter();
 
   const handleMoveOpponentInfo = () => {
@@ -17,16 +18,19 @@ const YourInfo = ({ list }: { list: Room }) => {
   return (
     <S.Container onClick={handleMoveOpponentInfo}>
       <S.LeftBox>
-        {image ? (
-          <S.UserImage src={image} alt="상대 이미지" />
-        ) : (
-          <Image
-            src="/images/message/profiledefault.png"
-            alt="기본 프로필 이미지"
-            width={35}
-            height={35}
-          />
-        )}
+        <S.ImageBox>
+          {image ? (
+            <S.UserImage src={image} alt="상대 이미지" />
+          ) : (
+            <Image
+              src="/images/message/profiledefault.png"
+              alt="기본 프로필 이미지"
+              width={35}
+              height={35}
+            />
+          )}
+          <S.NationIcon src={countryImg(nation)} />
+        </S.ImageBox>
         <S.TitleBox>
           <Text.Body5 color="gray900">{nickname}</Text.Body5>
         </S.TitleBox>
@@ -43,16 +47,32 @@ const S = {
     align-items: center;
     margin-top: -30px;
     cursor: pointer;
-    margin-left: -7px;
     position: absolute;
-    left: 24px;
+    left: 22px;
+  `,
+
+  ImageBox: styled.div`
+    position: relative;
+    width: 36px;
+    height: 36px;
+  `,
+
+  NationIcon: styled.img`
+    width: 16px;
+    height: 16px;
+    border-radius: 100px;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    z-index: 0;
+    cursor: pointer;
+    border: 1px solid #ffffff;
   `,
 
   UserImage: styled.img`
-    width: 3em;
-    height: 3rem;
+    width: 3.2em;
+    height: 3.2rem;
     border-radius: 50%;
-    border: 1px solid blue;
   `,
 
   TitleBox: styled.div`
