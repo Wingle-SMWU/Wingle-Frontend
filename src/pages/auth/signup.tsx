@@ -14,10 +14,6 @@ import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { useRecoilValue } from "recoil";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 
-interface SdInputProps {
-  disabled: boolean;
-}
-
 export default function SignUp() {
   const [isButtonDisabled, setButtonDisabled] = useState(true);
 
@@ -34,6 +30,8 @@ export default function SignUp() {
       signUpFormData.termsOfPersonalInformation
     ) {
       setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
     }
   }, [signUpFormData]);
 
@@ -90,7 +88,7 @@ const S = {
   BackButton: styled(Image)`
     cursor: pointer;
   `,
-  CompleteButton: styled.button<SdInputProps>`
+  CompleteButton: styled.button<{ disabled: boolean }>`
     background-color: ${({ disabled }) => (disabled ? "#EEEEF2" : "#FF812E")};
     color: ${({ disabled }) => (disabled ? "#959599" : "#fff")};
     border-radius: 8px;
