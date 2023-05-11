@@ -57,7 +57,7 @@ export default function TextInputUI({
           <Text.Caption3 color="red500">{errorMessage}</Text.Caption3>
         </S.ErrorWrapper>
       ) : (
-        <Text.Caption3 color="gray900">{message}</Text.Caption3>
+        message && <Text.Caption3 color="gray900">{message}</Text.Caption3>
       )}
     </S.Container>
   );
