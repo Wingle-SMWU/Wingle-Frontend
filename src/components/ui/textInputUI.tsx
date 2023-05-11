@@ -11,6 +11,7 @@ interface InputFieldProps {
 
 // TextInputUI Props 정의
 interface TextInputProps extends InputFieldProps {
+  label?: string; // 제목
   name: string; // input의 name
   value: string; // input의 value
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void; // input의 onChange
@@ -22,6 +23,7 @@ interface TextInputProps extends InputFieldProps {
 }
 
 export default function TextInputUI({
+  label,
   width,
   name,
   value,
@@ -35,6 +37,7 @@ export default function TextInputUI({
 }: TextInputProps) {
   return (
     <>
+      {label && <S.DropDownLabel disabled={disabled}>{label}</S.DropDownLabel>}
       <InputField width={width} error={error}>
         <input
           type="text"
@@ -62,7 +65,8 @@ export default function TextInputUI({
 
 const InputField = styled.div<InputFieldProps>`
   height: 50px;
-  border: 1px solid ${({ error, theme }) => (error ? theme.color.red400 : theme.color.gray300)};
+  border: 1px solid
+    ${({ error, theme }) => (error ? theme.color.red400 : theme.color.gray300)};
   border-radius: 8px;
   margin-bottom: 8px;
 
