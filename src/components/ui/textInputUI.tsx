@@ -36,7 +36,7 @@ export default function TextInputUI({
   message,
 }: TextInputProps) {
   return (
-    <>
+    <S.Container>
       {label && <S.DropDownLabel disabled={disabled}>{label}</S.DropDownLabel>}
       <S.InputField width={width} error={error}>
         <input
@@ -59,11 +59,15 @@ export default function TextInputUI({
       ) : (
         <Text.Caption3 color="gray900">{message}</Text.Caption3>
       )}
-    </>
+    </S.Container>
   );
 }
 
 const S = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+  `,
   DropDownLabel: styled.label<{ disabled: boolean }>`
     margin-bottom: 8px;
     font-size: 16px;
