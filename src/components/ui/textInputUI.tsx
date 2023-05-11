@@ -19,7 +19,7 @@ interface TextInputProps extends InputFieldProps {
   disabled?: boolean; // input의 disabled, 기본값 false, true일 경우 input 비활성화
   placeholder?: string;
   errorMessage?: string; // error가 true일 경우 보여줄 에러 메시지, error 필수
-  message?: string; // error가 false일 경우 보여줄 메시지, description 겸용
+  description?: string; // error가 false일 경우 보여줄 메시지, description 겸용
 }
 
 export default function TextInputUI({
@@ -33,7 +33,7 @@ export default function TextInputUI({
   disabled = false,
   placeholder,
   errorMessage,
-  message,
+  description,
 }: TextInputProps) {
   return (
     <S.Container>
@@ -57,7 +57,9 @@ export default function TextInputUI({
           <Text.Caption3 color="red500">{errorMessage}</Text.Caption3>
         </S.ErrorWrapper>
       ) : (
-        message && <Text.Caption3 color="gray900">{message}</Text.Caption3>
+        description && (
+          <Text.Caption3 color="gray900">{description}</Text.Caption3>
+        )
       )}
     </S.Container>
   );
@@ -132,7 +134,7 @@ const S = {
 //           error={handleError()}
 //           placeholder="텍스트를 입력해주세요."
 //           errorMessage="5글자 이상 입력해주세요."
-//           message="5글자 이상 하셨군요!"
+//           description="5글자 이상 하셨군요!"
 //         />
 //       </div>
 //     </>
