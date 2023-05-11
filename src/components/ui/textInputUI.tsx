@@ -86,9 +86,9 @@ const S = {
     margin-bottom: 8px;
 
     & > input {
-      width: ${({ width }) => (width ? { width } : "311px")};
+      width: ${({ width }) => (width ? { width } : "312px")};
       border: none;
-      padding: 14px;
+      padding: 14px 16px;
       border-radius: 8px;
       height: 22px;
       font-weight: 400;
