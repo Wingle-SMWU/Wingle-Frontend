@@ -30,7 +30,7 @@ export default function TextInputUI({
   onChange,
   error,
   onBlur,
-  disabled,
+  disabled = false,
   placeholder,
   errorMessage,
   message,
@@ -38,7 +38,7 @@ export default function TextInputUI({
   return (
     <>
       {label && <S.DropDownLabel disabled={disabled}>{label}</S.DropDownLabel>}
-      <InputField width={width} error={error}>
+      <S.InputField width={width} error={error}>
         <input
           type="text"
           id={name}
@@ -49,13 +49,13 @@ export default function TextInputUI({
           disabled={disabled}
           placeholder={placeholder}
         />
-      </InputField>
+      </S.InputField>
       {error ? (
-        <ErrorWrapper>
+        <S.ErrorWrapper>
           <Image src="/auth/error.svg" alt="error" width={16} height={16} />
           <Margin direction="row" size={8} />
           <Text.Caption3 color="red500">{errorMessage}</Text.Caption3>
-        </ErrorWrapper>
+        </S.ErrorWrapper>
       ) : (
         <Text.Caption3 color="gray900">{message}</Text.Caption3>
       )}
@@ -63,33 +63,42 @@ export default function TextInputUI({
   );
 }
 
-const InputField = styled.div<InputFieldProps>`
-  height: 50px;
-  border: 1px solid
-    ${({ error, theme }) => (error ? theme.color.red400 : theme.color.gray300)};
-  border-radius: 8px;
-  margin-bottom: 8px;
-
-  & > input {
-    width: ${({ width }) => (width ? { width } : "311px")};
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    height: 22px;
-    font-weight: 400;
+const S = {
+  DropDownLabel: styled.label<{ disabled: boolean }>`
+    margin-bottom: 8px;
     font-size: 16px;
-    line-height: 140%;
-    color: ${({ theme }) => theme.color.gray900};
+    font-weight: 700;
+    color: ${({ theme, disabled }) =>
+      disabled ? theme.color.gray500 : theme.color.gray700};
+  `,
+  InputField: styled.div<InputFieldProps>`
+    height: 50px;
+    border: 1px solid
+      ${({ error, theme }) =>
+        error ? theme.color.red400 : theme.color.gray300};
+    border-radius: 8px;
+    margin-bottom: 8px;
 
-    &::placeholder {
-      color: ${({ theme }) => theme.color.gray300};
+    & > input {
+      width: ${({ width }) => (width ? { width } : "311px")};
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      height: 22px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 140%;
+      color: ${({ theme }) => theme.color.gray900};
+
+      &::placeholder {
+        color: ${({ theme }) => theme.color.gray300};
+      }
     }
-  }
-`;
-
-const ErrorWrapper = styled.div`
-  display: flex;
-`;
+  `,
+  ErrorWrapper: styled.div`
+    display: flex;
+  `,
+};
 
 // EXAMPLE : 아래처럼 사용하세요!!(src/pages/test.tsx)
 // export default function Test() {
