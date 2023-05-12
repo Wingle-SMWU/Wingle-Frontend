@@ -17,6 +17,20 @@ import { convertDateYear } from "@/src/utils/convertDateYear";
 import useGetRoom from "@/src/hooks/message/useGetRoom";
 import Loading from "@/src/components/ui/loadingUI";
 
+export async function getServerSideProps(context: any) {
+  const { roomId } = context.query;
+
+  try {
+    const res = await instance.get(
+      `/messages/${roomId}?page=${0}&size=${1000}`
+    );
+    const data = await res.data;
+    return { props: { data } };
+  } catch (err) {
+    return { props: { data: null } };
+  }
+}
+
 export default function MessageSend() {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -39,7 +53,7 @@ export default function MessageSend() {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (scrollRef.current) {
+    if (scrollRef.current && messageList.length > 0) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messageList]);
@@ -271,14 +285,6 @@ export default function MessageSend() {
       </S.Container>
     </>
   );
-}
-
-export async function getServerSideProps(context: any) {
-  const { roomId } = context.query;
-  const res = await instance.get(`/messages/${roomId}?page=${0}&size=${1000}`);
-  const data = await res.data;
-
-  return { props: { data } };
 }
 
 const S = {
