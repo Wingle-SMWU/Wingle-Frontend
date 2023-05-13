@@ -8,7 +8,7 @@ import {
   saveAccessTokenToLocalStorage,
 } from "../utils/accessTokenHandler";
 
-export const SERVER_URL = `https://server-prod.wingle.kr/api/v1`;
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 const instance = axios.create({
   baseURL: SERVER_URL,
