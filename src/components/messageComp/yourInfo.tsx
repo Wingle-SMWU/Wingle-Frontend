@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Text } from "../ui";
 import { Room } from "@/src/types/message/roomType";
 import Image from "next/image";
-import profiledefault from "../../../public/images/profiledefault.png";
+import { getImageUrl } from "@/src/modules/utils";
 import { countryImg } from "../mypage/countryImg";
 
 const YourInfo = ({ list }: { list: Room }) => {
@@ -19,16 +19,12 @@ const YourInfo = ({ list }: { list: Room }) => {
     <S.Container onClick={handleMoveOpponentInfo}>
       <S.LeftBox>
         <S.ImageBox>
-          {image ? (
-            <S.UserImage src={image} alt="상대 이미지" />
-          ) : (
-            <Image
-              src="/images/message/profiledefault.png"
-              alt="기본 프로필 이미지"
-              width={35}
-              height={35}
-            />
-          )}
+          <S.UserImage
+            src={image ? image : getImageUrl("기본")}
+            alt="프로필 이미지"
+            width={35}
+            height={35}
+          />
           <S.NationIcon src={countryImg(nation)} />
         </S.ImageBox>
         <S.TitleBox>
