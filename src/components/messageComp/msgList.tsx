@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { Room } from "@/src/types/message/roomType";
 import betweenTime from "@/src/utils/betweenTime";
-import Image from "next/image";
-import profiledefault from "../../../public/images/profiledefault.png";
+import { getImageUrl } from "@/src/modules/utils";
 import { countryImg } from "../mypage/countryImg";
 
 const MsgList = ({ list }: { list: Room }) => {
@@ -18,16 +17,13 @@ const MsgList = ({ list }: { list: Room }) => {
       <S.Container onClick={handleMoveChatRoom}>
         <S.LeftBox>
           <S.ImageBox>
-            {image ? (
-              <S.UserImage src={image} alt="상대 이미지" />
-            ) : (
-              <Image
-                src="/images/message/profiledefault.png"
-                alt="기본 프로필 이미지"
-                width={35}
-                height={35}
-              />
-            )}
+            <S.UserImage
+              src={image ? image : getImageUrl("기본")}
+              alt="프로필 이미지"
+              width={35}
+              height={35}
+            />
+
             <S.NationIcon src={countryImg(nation)} />
           </S.ImageBox>
 
