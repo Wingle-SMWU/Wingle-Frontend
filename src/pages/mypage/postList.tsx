@@ -61,6 +61,5 @@ const S = {
     display: flex;
     flex-direction: column;
     background-color: white;
-    padding-bottom: 72px;
   `,
 };
