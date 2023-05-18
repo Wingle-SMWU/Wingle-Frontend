@@ -16,6 +16,7 @@ import { Room } from "@/src/types/message/roomType";
 import { convertDateYear } from "@/src/utils/convertDateYear";
 import useGetRoom from "@/src/hooks/message/useGetRoom";
 import Loading from "@/src/components/ui/loadingUI";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
 
 export async function getServerSideProps(context: any) {
   const { roomId } = context.query;
@@ -96,6 +97,28 @@ export default function MessageSend() {
     mutate(text);
     setText("");
   };
+
+  useEffect(() => {
+    const handlePopstate = () => {
+      const cookies = parseCookies();
+      const isReloaded = cookies.reload;
+
+      if (!isReloaded) {
+        setCookie(null, "reload", "true", {
+          maxAge: 1, // 쿠키 유효 시간 설정 (1초로 설정)
+        });
+        location.reload(); // 페이지 새로고침
+      } else {
+        destroyCookie(null, "reload");
+      }
+    };
+
+    window.onpopstate = handlePopstate;
+
+    return () => {
+      window.onpopstate = null;
+    };
+  }, []);
 
   useEffect(() => {
     const data = {

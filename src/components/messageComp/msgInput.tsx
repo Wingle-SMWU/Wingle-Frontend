@@ -65,7 +65,7 @@ const S = {
     padding-right: 15px;
     padding-left: 8px;
     fill: ${(props) => (props.text ? "#49494D" : "#DCDCE0")};
-    cursor: pointer;
+    cursor: ${({ text }) => (text ? "pointer" : "auto")};
   `,
 };
 
