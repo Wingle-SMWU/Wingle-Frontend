@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Room } from "@/src/types/message/roomType";
 import betweenTime from "@/src/utils/betweenTime";
 import { getImageUrl } from "@/src/modules/utils";
-import { countryImg } from "../mypage/countryImg";
+import { countryImg } from "@/src/modules/utils";
 
 const MsgList = ({ list }: { list: Room }) => {
   const { image, nickname, createdTime, recentChat, roomId, nation } = list;

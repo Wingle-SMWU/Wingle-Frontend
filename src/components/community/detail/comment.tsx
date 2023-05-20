@@ -4,7 +4,7 @@ import { getImageUrl } from "@/src/modules/utils";
 import betweenTime from "@/src/utils/betweenTime";
 import { useState } from "react";
 import styled from "styled-components";
-import { countryImg } from "../../mypage/countryImg";
+import { countryImg } from "@/src/modules/utils";
 
 export default function Comment({
   comments,
