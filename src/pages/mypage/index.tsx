@@ -10,7 +10,7 @@ import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 export default function Mypage() {
   const [editText, setEditText] = useState(true);
-  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+  const [isRegisterDropVisible, setIsRegisterDropVisible] = useState(false);
 
   const { profileData, isLoading, isError } = useGetProfile();
 
@@ -48,17 +48,17 @@ export default function Mypage() {
                 <Text.Caption1
                   color="white"
                   pointer
-                  onMouseEnter={() => setIsTooltipVisible(true)}
-                  onMouseLeave={() => setIsTooltipVisible(false)}
+                  onMouseEnter={() => setIsRegisterDropVisible(true)}
+                  onMouseLeave={() => setIsRegisterDropVisible(false)}
                 >
                   등록
                 </Text.Caption1>
-                {isTooltipVisible && (
-                  <S.Tooltip>
+                {isRegisterDropVisible && (
+                  <S.RegisterDrop>
                     <Text.Body2 color="black">
                       프로필을 등록해주세요!
                     </Text.Body2>
-                  </S.Tooltip>
+                  </S.RegisterDrop>
                 )}
               </S.EditBtn>
             ) : (
@@ -137,7 +137,7 @@ const S = {
     background-color: ${(props) => props.Color || "white"};
     border-radius: 8px;
   `,
-  Tooltip: styled.div`
+  RegisterDrop: styled.div`
     position: absolute;
     background-color: black;
     color: white;
