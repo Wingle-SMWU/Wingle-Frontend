@@ -9,23 +9,27 @@ import Loading from "@/src/components/ui/loadingUI";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 export default function Mypage() {
-  const [editText,setEditText] = useState(true);
+  const [editText, setEditText] = useState(true);
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
   const { profileData, isLoading, isError } = useGetProfile();
 
   useEffect(() => {
-    if (profileData && (profileData.interests || profileData.introduce || profileData.languages)) {
-        setEditText(false);
-      }
-  },[profileData])
+    if (
+      profileData &&
+      (profileData.interests || profileData.introduce || profileData.languages)
+    ) {
+      setEditText(false);
+    }
+  }, [profileData]);
 
   const handleLogout = () => {
     localStorage.clear();
-    router.push('/auth/login')
-  }
-  
-  if (isLoading) return <Loading />
-  if (isError) return <>에러</>
+    router.push("/auth/login");
+  };
+
+  if (isLoading) return <Loading />;
+  if (isError) return <>에러</>;
 
   return (
     <>
@@ -35,22 +39,35 @@ export default function Mypage() {
             <Text.Title1 color="gray900">마이페이지</Text.Title1>
           </S.Header>
           <S.Profile>
-            <Profile /> 
-            {editText?
-            <S.EditBtn Color="#FF812E" onClick={() => router.push(`/mypage/edit`)}>
-              <Text.Caption1 color="white" pointer>
-                등록
-              </Text.Caption1>
-            </S.EditBtn> :
-            
-            <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
-              <Text.Caption1 color="gray700" pointer>
-                수정
-              </Text.Caption1>
-            </S.EditBtn>
-            }
-            
-
+            <Profile />
+            {editText ? (
+              <S.EditBtn
+                Color="#FF812E"
+                onClick={() => router.push(`/mypage/edit`)}
+              >
+                <Text.Caption1
+                  color="white"
+                  pointer
+                  onMouseEnter={() => setIsTooltipVisible(true)}
+                  onMouseLeave={() => setIsTooltipVisible(false)}
+                >
+                  등록
+                </Text.Caption1>
+                {isTooltipVisible && (
+                  <S.Tooltip>
+                    <Text.Body2 color="black">
+                      프로필을 등록해주세요!
+                    </Text.Body2>
+                  </S.Tooltip>
+                )}
+              </S.EditBtn>
+            ) : (
+              <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
+                <Text.Caption1 color="gray700" pointer>
+                  수정
+                </Text.Caption1>
+              </S.EditBtn>
+            )}
           </S.Profile>
           <>
             <Margin direction="column" size={34} />
@@ -77,7 +94,6 @@ export default function Mypage() {
 interface EditBtnProps {
   Color?: string;
 }
-
 
 const S = {
   Wapper: styled.div`
@@ -117,8 +133,32 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid ${(props) => props.Color || '#6c6c70'};
-    background-color : ${(props) => props.Color || 'white'};
+    border: 1px solid ${(props) => props.Color || "#6c6c70"};
+    background-color: ${(props) => props.Color || "white"};
     border-radius: 8px;
+  `,
+  Tooltip: styled.div`
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    top: 55%;
+    left: 57%;
+    font-size: 14px;
+    white-space: nowrap;
+    font-size: 12px;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: -8px;
+      right: 10px;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 8px solid black;
+    }
   `,
 };
