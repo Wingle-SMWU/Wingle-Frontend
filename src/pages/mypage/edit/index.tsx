@@ -17,8 +17,8 @@ export default function Edit() {
   };
 
   if (isLoading) return <Loading />;
-  if (isError) return <>에러</> 
-  
+  if (isError) return <>에러</>;
+
   return (
     <>
       <S.Wapper>
@@ -47,24 +47,33 @@ export default function Edit() {
           <S.EditList>
             <Margin direction="column" size={32} />
 
-            <S.Column >
-            <S.Language>
-              <Text.Body1 color="gray900">사용언어</Text.Body1>
-              <S.EditBtn
-                src="/modify.svg"
-                alt="연필"
-                onClick={() => router.push(`/mypage/edit/language`)}
-              />
-            </S.Language>
-            <S.LanguageContent>
-              {profileData && (profileData.languages).map((v) => (
-                  <S.LanguageChartContent key={v.order}>
-                    <S.LanguageChart src={`/mypage/language${v.order}.svg`} />
-                    <S.LanguageText fontWeight={550} width ={28}>{v.interest.substring(0,2)}  </S.LanguageText>
-                    <S.LanguageText fontWeight={400} width = {262} color ="orange500">{v.interest.substring(2)}</S.LanguageText>
-              </S.LanguageChartContent>
-              ))}
-            </S.LanguageContent>
+            <S.Column>
+              <S.Language>
+                <Text.Body1 color="gray900">사용언어</Text.Body1>
+                <S.EditBtn
+                  src="/modify.svg"
+                  alt="연필"
+                  onClick={() => router.push(`/mypage/edit/language`)}
+                />
+              </S.Language>
+              <S.LanguageContent>
+                {profileData &&
+                  profileData.languages.map((v) => (
+                    <S.LanguageChartContent key={v.order}>
+                      <S.LanguageChart src={`/mypage/language${v.order}.svg`} />
+                      <S.LanguageText fontWeight={550} width={28}>
+                        {v.interest.substring(0, 2)}{" "}
+                      </S.LanguageText>
+                      <S.LanguageText
+                        fontWeight={400}
+                        width={262}
+                        color="orange500"
+                      >
+                        {v.interest.substring(2)}
+                      </S.LanguageText>
+                    </S.LanguageChartContent>
+                  ))}
+              </S.LanguageContent>
             </S.Column>
 
             <Margin direction="column" size={32} />
@@ -94,16 +103,20 @@ export default function Edit() {
               </S.Interest>
               <S.InterestBoxContainer>
                 {profileData &&
-                  profileData.interests.map((item) => {
+                  profileData.interests.map((item, index) => {
+                    const isLastItemInRow = (index + 1) % 3 === 0;
+
                     return (
-                      <div key={item}>
+                      <S.ShowInterest key={item}>
                         <S.InterestBox backgroundColor="#FFF3EB">
-                          <Text.Body6 color="gray900" pointer key={item}>
+                          <Text.Body6 color="gray900" pointer>
                             {item}
                           </Text.Body6>
                         </S.InterestBox>
-                        <Margin direction="row" size={8} />
-                      </div>
+                        {isLastItemInRow && (
+                          <Margin direction="column" size={0} />
+                        )}
+                      </S.ShowInterest>
                     );
                   })}
               </S.InterestBoxContainer>
@@ -119,12 +132,12 @@ export default function Edit() {
 }
 
 interface IntesestBoxProps {
-  backgroundColor : string;
+  backgroundColor: string;
 }
 
 interface LanguageText {
-  fontWeight : number;
-  width : number;
+  fontWeight: number;
+  width: number;
 }
 const S = {
   Wapper: styled.div`
@@ -197,21 +210,21 @@ const S = {
     margin-top: 16px;
     padding: 16px, 24px, 24px, 24px;
   `,
-  LanguageChartContent : styled.div`
+  LanguageChartContent: styled.div`
     display: flex;
     flex-direction: row;
-    padding-bottom : 6px;
+    padding-bottom: 6px;
   `,
-  LanguageChart : styled.img`
+  LanguageChart: styled.img`
     width: 18px;
     height: 18px;
     padding-right: 6px;
   `,
-  LanguageText : styled.div<LanguageText>`
-    width : ${(props) => props.width}px;
-    color : #49494D;
-    font-size : 14px;
-    font-family: 'Pretendard';
+  LanguageText: styled.div<LanguageText>`
+    width: ${(props) => props.width}px;
+    color: #49494d;
+    font-size: 14px;
+    font-family: "Pretendard";
     font-weight: ${(props) => props.fontWeight};
   `,
   Introduce: styled.div`
@@ -226,22 +239,26 @@ const S = {
     color: theme.color.gray900;
   `,
   InterestBoxContainer: styled.div`
-    display: flex;
-    flex-direction: row;
+    width: 80%;
   `,
   Interest: styled.div`
     width: 452px;
     display: flex;
     justify-content: space-between;
-    /* border: 1px solid blue; */
+  `,
+  ShowInterest: styled.div`
+    display: inline-flex;
+    flex-direction: column;
   `,
   InterestBox: styled.div<IntesestBoxProps>`
     cursor: pointer;
     border-radius: 40px;
     padding: 8px 15px;
+    display: inline-flex;
     background-color: ${(props) => props.backgroundColor};
     margin: 8px;
   `,
+
   Column: styled.div`
     display: flex;
     flex-direction: column;
