@@ -1,22 +1,11 @@
 import styled from "styled-components";
 import { Text } from "@/src/components/ui";
-import { useState } from "react";
-import { useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import { getImageUrl, countryImg } from "@/src/modules/utils";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 export default function Profile() {
-  // const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
-
   const { profileData } = useGetProfile();
-
-  // const handleRegisterBtnHover = () => {
-  //   setIsRegisterBtnHover(true);
-  // };
-  // const handleRegisterBtnLeave = () => {
-  //   setIsRegisterBtnHover(false);
-  // };
 
   return (
     <>
