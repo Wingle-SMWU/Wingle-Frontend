@@ -22,6 +22,8 @@ export default function FreeTab({
   } = useQuery({
     queryFn: getArticles,
     queryKey: ["articles", forumId, 0, 30, my],
+    cacheTime: 5 * 60 * 1000,
+    staleTime: 0,
   });
 
   if (isLoading) return <Loading />;
@@ -31,10 +33,15 @@ export default function FreeTab({
     <>
       {freeArticles.length ? (
         reverseArray(freeArticles).map((article: Article, i: number) => (
-          <ListCard key={i} imgUrl={imgUrl} isNotice={false} article={article} />
+          <ListCard
+            key={i}
+            imgUrl={imgUrl}
+            isNotice={false}
+            article={article}
+          />
         ))
       ) : (
-      <NoData type="article" />
+        <NoData type="article" />
       )}
     </>
   );

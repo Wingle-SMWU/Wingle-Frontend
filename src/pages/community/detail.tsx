@@ -19,10 +19,14 @@ export default function Detail() {
   const article = useQuery({
     queryFn: getArticle,
     queryKey: ["article", forumId, articleId],
+    cacheTime: 5 * 60 * 1000,
+    staleTime: 0,
   });
   const comments = useQuery({
     queryFn: getComments,
     queryKey: ["comments", forumId, articleId, 0, 10],
+    cacheTime: 5 * 60 * 1000,
+    staleTime: 0,
   });
 
   if (article.isLoading || comments.isLoading) return <Loading />;

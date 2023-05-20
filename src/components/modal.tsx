@@ -39,6 +39,8 @@ export default function Modal({
     queryFn: getComments,
     queryKey: ["comments", String(forumId), String(articleId), 0, 10],
     enabled: forumId !== "" || articleId !== "",
+    cacheTime: 5 * 60 * 1000,
+    staleTime: 0,
   });
 
   const fetchComments = async () => {

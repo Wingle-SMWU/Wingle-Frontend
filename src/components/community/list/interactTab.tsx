@@ -22,6 +22,8 @@ export default function InteractTab({
   } = useQuery({
     queryFn: getArticles,
     queryKey: ["articles", forumId, 0, 30, my],
+    cacheTime: 5 * 60 * 1000,
+    staleTime: 0,
   });
 
   if (isLoading) return <Loading />;
