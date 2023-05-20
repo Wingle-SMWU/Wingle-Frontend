@@ -55,38 +55,18 @@ export default function Mypage() {
                 </Text.Caption1>
                 {isRegisterDropVisible && (
                   <S.RegisterDrop>
-                    <Text.Body2 color="black">
-                      프로필을 등록해주세요!
-                    </Text.Body2>
-                  </S.RegisterDrop>
-                )}
-              </S.EditBtn>
-            ) : (
-              <S.EditBtn
-                Color="#FF812E"
-                onClick={() => router.push(`/mypage/edit`)}
-              >
-                <Text.Caption1
-                  color="white"
-                  pointer
-                  onMouseEnter={() => setIsRegisterDropVisible(true)}
-                  onMouseLeave={() => setIsRegisterDropVisible(false)}
-                >
-                  등록
-                </Text.Caption1>
-                {isRegisterDropVisible && (
-                  <S.RegisterDrop>
                     <Text.Body2 color="white">
                       프로필을 등록해주세요!
                     </Text.Body2>
                   </S.RegisterDrop>
                 )}
               </S.EditBtn>
-              // <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
-              //   <Text.Caption1 color="gray700" pointer>
-              //     수정
-              //   </Text.Caption1>
-              // </S.EditBtn>
+            ) : (
+              <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
+                <Text.Caption1 color="gray700" pointer>
+                  수정
+                </Text.Caption1>
+              </S.EditBtn>
             )}
           </S.Profile>
           <>
