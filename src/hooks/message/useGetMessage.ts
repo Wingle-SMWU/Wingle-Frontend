@@ -3,17 +3,19 @@ import { useQuery } from "react-query";
 import { Message } from "@/src/types/message/messageType";
 import { getMessage } from "@/src/api/message/messageApi";
 
-const useGetMessage = (roomId: number , page: number , size: number ) => {
+const useGetMessage = (roomId: number, page: number, size: number) => {
   const [roomList, setRoomList] = useState<any>([]); // 화면
   const [messageList, setMessageList] = useState<any>([]);
   const [myInfo, setMyInfo] = useState<Message>();
   const [receiverInfo, setReceiverInfo] = useState<Message>();
-  
+
   const { data: messageData, refetch } = useQuery({
     enabled: roomId !== 0,
     refetchOnWindowFocus: false,
-    queryKey: ["message", page],
-    queryFn: () => { return getMessage(roomId, page, size)},
+    queryKey: ["message", roomId],
+    queryFn: () => {
+      return getMessage(roomId, page, size);
+    },
     onSuccess: (item) => {
       setRoomList(item);
       setMessageList(item);
@@ -23,7 +25,7 @@ const useGetMessage = (roomId: number , page: number , size: number ) => {
         } else {
           setReceiverInfo(message);
         }
-      })
+      });
     },
   });
 
@@ -34,7 +36,7 @@ const useGetMessage = (roomId: number , page: number , size: number ) => {
     setMessageList,
     myInfo,
     receiverInfo,
-    messageData: messageData
+    messageData: messageData,
   };
 };
 

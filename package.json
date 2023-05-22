@@ -19,7 +19,6 @@
     "eslint-config-next": "13.1.2",
     "exceljs": "^4.3.0",
     "next": "13.1.2",
-    "nookies": "^2.5.2",
     "pretendard": "^1.3.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",

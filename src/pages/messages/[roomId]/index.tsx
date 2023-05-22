@@ -16,21 +16,6 @@ import { Room } from "@/src/types/message/roomType";
 import { convertDateYear } from "@/src/utils/convertDateYear";
 import useGetRoom from "@/src/hooks/message/useGetRoom";
 import Loading from "@/src/components/ui/loadingUI";
-import { parseCookies, setCookie, destroyCookie } from "nookies";
-
-export async function getServerSideProps(context: any) {
-  const { roomId } = context.query;
-
-  try {
-    const res = await instance.get(
-      `/messages/${roomId}?page=${0}&size=${1000}`
-    );
-    const data = await res.data;
-    return { props: { data } };
-  } catch (err) {
-    return { props: { data: null } };
-  }
-}
 
 export default function MessageSend() {
   const router = useRouter();
@@ -41,7 +26,6 @@ export default function MessageSend() {
   const { messageDataRoom } = useGetRoom(0, 10000);
   const {
     messageData,
-    roomList,
     messageList,
     setMessageList,
     myInfo,
@@ -99,28 +83,6 @@ export default function MessageSend() {
   };
 
   useEffect(() => {
-    const handlePopstate = () => {
-      const cookies = parseCookies();
-      const isReloaded = cookies.reload;
-
-      if (!isReloaded) {
-        setCookie(null, "reload", "true", {
-          maxAge: 1, // 쿠키 유효 시간 설정 (1초로 설정)
-        });
-        location.reload(); // 페이지 새로고침
-      } else {
-        destroyCookie(null, "reload");
-      }
-    };
-
-    window.onpopstate = handlePopstate;
-
-    return () => {
-      window.onpopstate = null;
-    };
-  }, []);
-
-  useEffect(() => {
     const data = {
       content: newMsg?.content,
       createdTime: newMsg?.createdTime,
@@ -146,13 +108,7 @@ export default function MessageSend() {
         <S.TitleBox>
           <Arrow_back
             style={{ paddingTop: 5, cursor: "pointer" }}
-            onClick={() =>
-              router.push(
-                `/messages/${roomId}?page=${0}&size=${1000}`,
-                "/messages",
-                { shallow: true }
-              )
-            }
+            onClick={() => router.back()}
           />
           <Margin direction="row" size={13} />
           <Text.Title1 color="gray900">쪽지보내기</Text.Title1>
@@ -163,9 +119,9 @@ export default function MessageSend() {
           </S.YourInfoBox>
         </S.TitleBox>
         <S.MessageRoomList ref={scrollRef}>
-          {messageList?.length > 0 ? (
+          {messageData?.length > 0 ? (
             <>
-              {messageList?.map((list: Message) => {
+              {messageData?.map((list: Message) => {
                 list.nickname;
                 const { createdTime, content } = list;
                 const newList = { content, createdTime };
@@ -174,40 +130,21 @@ export default function MessageSend() {
                 if (currentDate !== prevDate) {
                   prevDate = currentDate;
                   if (list?.sender === true) {
-                    if (list?.sender === true) {
-                      return (
-                        <React.Fragment key={currentDate}>
-                          <S.DateBox>
-                            <S.DateDisplay>
-                              <span>{currentDate}</span>
-                            </S.DateDisplay>
-                          </S.DateBox>
-                          <SendMsg
-                            list={{
-                              content: list.content,
-                              createdTime: String(list.createdTime),
-                            }}
-                          />
-                        </React.Fragment>
-                      );
-                    } else {
-                      prevNickname.nickName = list.nickname;
-                      return (
-                        <React.Fragment key={currentDate}>
-                          <S.DateBox>
-                            <S.DateDisplay>
-                              <span>{currentDate}</span>
-                            </S.DateDisplay>
-                          </S.DateBox>
-                          <SendMsg
-                            list={{
-                              content: list.content,
-                              createdTime: String(list.createdTime),
-                            }}
-                          />
-                        </React.Fragment>
-                      );
-                    }
+                    return (
+                      <React.Fragment key={currentDate}>
+                        <S.DateBox>
+                          <S.DateDisplay>
+                            <span>{currentDate}</span>
+                          </S.DateDisplay>
+                        </S.DateBox>
+                        <SendMsg
+                          list={{
+                            content: list.content,
+                            createdTime: String(list.createdTime),
+                          }}
+                        />
+                      </React.Fragment>
+                    );
                   } else {
                     if (list?.sender === false) {
                       return (
