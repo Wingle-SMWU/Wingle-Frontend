@@ -1,44 +1,45 @@
 import styled from "styled-components";
 import { Text } from "@/src/components/ui";
-import { useState } from "react";
-import { useRecoilValue } from "recoil";
 import { profileStateAtom } from "@/src/atoms/profileStateAtom";
-import { getImageUrl } from "@/src/modules/utils";
-import { countryImg } from "./countryImg";
+import { getImageUrl, countryImg } from "@/src/modules/utils";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
-
 export default function Profile() {
-  // const [isRegisterBtnHover, setIsRegisterBtnHover] = useState(false);
-  
   const { profileData } = useGetProfile();
-
-  // const handleRegisterBtnHover = () => {
-  //   setIsRegisterBtnHover(true);
-  // };
-  // const handleRegisterBtnLeave = () => {
-  //   setIsRegisterBtnHover(false);
-  // };
 
   return (
     <>
       <S.UserBox>
         <S.UserImgBox>
           <S.UserProfileImg
-            src={profileData && (profileData.image ? profileData.image : getImageUrl("기본"))}
+            src={
+              profileData &&
+              (profileData.image ? profileData.image : getImageUrl("기본"))
+            }
             alt="프로필"
           />
-          <S.UserFlagImg src={profileData && countryImg(profileData.nation)} alt="국기" />
+          <S.UserFlagImg
+            src={profileData && countryImg(profileData.nation)}
+            alt="국기"
+          />
         </S.UserImgBox>
         <S.UserInfoBox>
           <S.UserNicknameAndSex>
-            <Text.Body1 color="gray900">{profileData && profileData.nickname}</Text.Body1>
+            <Text.Body1 color="gray900">
+              {profileData && profileData.nickname}
+            </Text.Body1>
             <S.UserSexImg
-              src={profileData && profileData.gender ? "/mypage/female.svg" : "/mypage/male.svg"}
+              src={
+                profileData && profileData.gender
+                  ? "/mypage/female.svg"
+                  : "/mypage/male.svg"
+              }
               alt="성별"
             />
           </S.UserNicknameAndSex>
-          <Text.Body6 color="gray800">{profileData && profileData.nation}</Text.Body6>
+          <Text.Body6 color="gray800">
+            {profileData && profileData.nation}
+          </Text.Body6>
         </S.UserInfoBox>
       </S.UserBox>
     </>
@@ -87,12 +88,11 @@ const S = {
     display: flex;
   `,
   UserSexImg: styled.img`
-  width : 16px;
-  height : 16px;
-  padding-left : 4px;
-  margin : 3px 0px;
+    width: 16px;
+    height: 16px;
+    padding-left: 4px;
+    margin: 3px 0px;
   `,
-
 
   DropBubbleHigh: styled.div`
     position: absolute;

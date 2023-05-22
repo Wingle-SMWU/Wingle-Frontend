@@ -3,7 +3,7 @@ import betweenTime from "@/src/utils/betweenTime";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import styled from "styled-components";
-import { countryImg } from "../../mypage/countryImg";
+import { countryImg } from "@/src/modules/utils";
 
 export default function ListCard({
   imgUrl,

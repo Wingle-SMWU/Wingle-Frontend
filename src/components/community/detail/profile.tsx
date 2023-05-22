@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Modal from "../../modal";
 import { Margin, Text } from "../../ui";
 import betweenTime from "@/src/utils/betweenTime";
-import { countryImg } from "../../mypage/countryImg";
+import { countryImg } from "@/src/modules/utils";
 
 export default function Profile({
   article,

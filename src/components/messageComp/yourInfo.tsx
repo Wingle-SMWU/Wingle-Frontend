@@ -4,7 +4,7 @@ import { Text } from "../ui";
 import { Room } from "@/src/types/message/roomType";
 import Image from "next/image";
 import { getImageUrl } from "@/src/modules/utils";
-import { countryImg } from "../mypage/countryImg";
+import { countryImg } from "@/src/modules/utils";
 
 const YourInfo = ({ list }: { list: Room }) => {
   const { image, nickname, nation } = list;
