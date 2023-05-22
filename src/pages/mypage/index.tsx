@@ -17,7 +17,9 @@ export default function Mypage() {
   useEffect(() => {
     if (
       profileData &&
-      (profileData.interests || profileData.introduce || profileData.languages)
+      (profileData.interests.length ||
+        profileData.introduce ||
+        profileData.languages.length)
     ) {
       setEditText(false);
     }
