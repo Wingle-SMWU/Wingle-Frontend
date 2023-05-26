@@ -3,12 +3,12 @@ import SendDisable from "../../../public/images/message/sendDisable.svg";
 
 interface IconProps {
   text: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  onCick: () => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onClick: () => void;
 }
 
-const MsgInput = ({ text, onChange, onKeyDown, onCick }: IconProps) => {
+const MsgInput = ({ text, onChange, onKeyDown, onClick }: IconProps) => {
   return (
     <S.Container>
       <S.TextBox>
@@ -19,7 +19,7 @@ const MsgInput = ({ text, onChange, onKeyDown, onCick }: IconProps) => {
           placeholder="쪽지 내용을 입력해 보세요."
           maxLength={200}
         />
-        <S.SendIcon text={text} onClick={onCick} />
+        <S.SendIcon text={text} onClick={onClick} />
       </S.TextBox>
     </S.Container>
   );
@@ -41,19 +41,21 @@ const S = {
     border-top: 0.8px solid #eeeef2;
   `,
 
-  TextInput: styled.input`
+  TextInput: styled.textarea`
     border: none;
     width: 100%;
-    height: 19px;
-    /* height: 1rem; */
     padding: 0.5rem 1.4rem;
     padding-right: 0;
+    margin-top: 1.4rem;
     font-family: "Pretendard";
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 140%;
+    max-height: 33px;
     overflow-y: scroll;
+    resize: none;
+
     :focus {
       outline: none;
     }

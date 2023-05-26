@@ -1,7 +1,7 @@
 import { Text, Margin } from "../../../components/ui";
 import styled from "styled-components";
 import useGetMessage from "../../../hooks/message/useGetMessage";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import SendMsg from "@/src/components/messageComp/sendMsg";
 import ReceptionMsg from "@/src/components/messageComp/receptionMsg";
@@ -9,21 +9,22 @@ import YourInfo from "@/src/components/messageComp/yourInfo";
 import MsgInput from "../../../components/messageComp/msgInput";
 import Arrow_back from "../../../../public/images/message/arrow_back.svg";
 import { useRouter } from "next/router";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import instance from "../../../api/axiosModule";
 import { Message, NewMsgProps } from "@/src/types/message/messageType";
-import { Room } from "@/src/types/message/roomType";
 import { convertDateYear } from "@/src/utils/convertDateYear";
-import useGetRoom from "@/src/hooks/message/useGetRoom";
 import Loading from "@/src/components/ui/loadingUI";
 
 export default function MessageSend() {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const [text, setText] = useState("");
-  const { nickName, roomId } = router.query;
+  const { roomId } = router.query;
   const { page, size } = useParams(); // 채널 구분
-  const { messageDataRoom } = useGetRoom(0, 10000);
+  const [yourInfo, setYourInfo] = useState<{
+    nickname: string;
+    image: string;
+    nation: string;
+  }>();
   const {
     messageData,
     messageList,
@@ -32,16 +33,26 @@ export default function MessageSend() {
     receiverInfo,
     refetch,
   } = useGetMessage(Number(roomId) ?? 0, Number(page) ?? 1, Number(size) ?? 10);
+
   let prevNickname = { nickName: "" };
   let prevDate = "";
   const [newMsg, setNewMsg] = useState<NewMsgProps>();
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const yourInfo = JSON.parse(
+        window.sessionStorage.getItem("yourInfo") || "{}"
+      );
+      setYourInfo(yourInfo);
+    }
+  }, []);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (scrollRef.current && messageList.length > 0) {
+    if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messageList]);
+  }, [messageData]);
 
   const addMsg = async (text: string) => {
     const response = await instance.post(`/messages`, {
@@ -51,12 +62,9 @@ export default function MessageSend() {
     return response.data;
   };
 
-  const { mutate } = useMutation(addMsg, {
-    onMutate: async () => {
-      await queryClient.cancelQueries("messages");
-    },
+  const { mutate, isLoading } = useMutation(addMsg, {
     onSuccess: () => {
-      queryClient.invalidateQueries("messages");
+      setText("");
       refetch();
     },
     onError: (err) => {
@@ -64,22 +72,24 @@ export default function MessageSend() {
     },
   });
 
-  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
 
-  const handleSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.nativeEvent.isComposing) return;
+  const handleSendMessage = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.shiftKey && e.key === "Enter") {
+      return;
+    }
+
     if (e.key === "Enter" && text) {
-      mutate(text);
-      setText("");
+      e.preventDefault();
+      if (!isLoading) mutate(text);
     }
   };
 
   const handleClickSendMessage = () => {
     if (!text) return;
     mutate(text);
-    setText("");
   };
 
   useEffect(() => {
@@ -113,15 +123,19 @@ export default function MessageSend() {
           <Margin direction="row" size={13} />
           <Text.Title1 color="gray900">쪽지보내기</Text.Title1>
           <S.YourInfoBox>
-            {messageDataRoom?.map((list: Room) => {
-              return <YourInfo list={list} key={list.roomId} />;
-            })}
+            <YourInfo
+              list={{
+                recipientImage: yourInfo?.image ?? "",
+                nickname: yourInfo?.nickname ?? "",
+                nation: yourInfo?.nation ?? "",
+              }}
+            />
           </S.YourInfoBox>
         </S.TitleBox>
         <S.MessageRoomList ref={scrollRef}>
-          {messageData?.length > 0 ? (
+          {messageData ? (
             <>
-              {messageData?.map((list: Message) => {
+              {messageData?.messages.map((list: Message) => {
                 list.nickname;
                 const { createdTime, content } = list;
                 const newList = { content, createdTime };
@@ -163,7 +177,7 @@ export default function MessageSend() {
                         </React.Fragment>
                       );
                     } else {
-                      prevNickname.nickName = list.nickname;
+                      prevNickname.nickName === list.nickname;
                       return (
                         <React.Fragment key={currentDate}>
                           <S.DateBox>
@@ -194,7 +208,7 @@ export default function MessageSend() {
                         />
                       );
                     } else {
-                      prevNickname.nickName = list.nickname;
+                      prevNickname.nickName === list.nickname;
                       return (
                         <SendMsg
                           key={String(list.createdTime)}
@@ -217,7 +231,7 @@ export default function MessageSend() {
                         />
                       );
                     } else {
-                      prevNickname.nickName = list.nickname;
+                      prevNickname.nickName === list.nickname;
                       return (
                         <ReceptionMsg
                           key={String(list.createdTime)}
@@ -240,7 +254,7 @@ export default function MessageSend() {
           text={text}
           onChange={handleChangeText}
           onKeyDown={handleSendMessage}
-          onCick={handleClickSendMessage}
+          onClick={handleClickSendMessage}
         />
       </S.Container>
     </>

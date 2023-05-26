@@ -1,15 +1,20 @@
 export interface GetMessageResponse {
-  status:  number;
+  status: number;
   message: string;
-  data:    Message[];
+  data: Data;
+}
+
+export interface Data {
+  recipientImage: string;
+  messages: Message[];
 }
 
 export interface Message {
-  messageId:   number;
-  nickname:    string;
-  content:     string;
+  messageId: number;
+  nickname: null | string;
+  content: string;
   createdTime: Date;
-  sender:      boolean;
+  sender: boolean;
 }
 
 export interface NewMsgProps {

@@ -17,7 +17,13 @@ const SendMsg = ({ list }: Iprops) => {
         <S.MessageInfoBox>
           <S.DateBox>{convertDate(createdTime)}</S.DateBox>
           <S.MessageContainer>
-            <p>{content}</p>
+            <p
+              style={{
+                whiteSpace: "pre-line",
+              }}
+            >
+              {content}
+            </p>
           </S.MessageContainer>
         </S.MessageInfoBox>
       </S.Box>
@@ -77,6 +83,6 @@ const S = {
       color: #ffffff;
     }
   `,
-}
+};
 
 export default SendMsg;

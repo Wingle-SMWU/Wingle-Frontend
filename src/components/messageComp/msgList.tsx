@@ -10,7 +10,17 @@ const MsgList = ({ list }: { list: Room }) => {
   const router = useRouter();
 
   const handleMoveChatRoom = () => {
-    router.push(`/messages/${roomId}?page=${0}&size=${1000}`);
+    router.push(`/messages/${roomId}?page=${0}&size=${1000}`, undefined, {});
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(
+        "yourInfo",
+        JSON.stringify({
+          nickname,
+          image,
+          nation,
+        })
+      );
+    }
   };
   return (
     <>

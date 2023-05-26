@@ -15,7 +15,13 @@ const ReceptionMsg = ({ list }: Iprops) => {
       <S.Box>
         <S.MessageInfoBox>
           <S.MessageArea>
-            <p>{content}</p>
+            <p
+              style={{
+                whiteSpace: "pre-line",
+              }}
+            >
+              {content}
+            </p>
           </S.MessageArea>
           <span>{convertDate(createdTime)}</span>
         </S.MessageInfoBox>
@@ -51,7 +57,7 @@ const S = {
       color: #959599;
     }
   `,
-  
+
   MessageArea: styled.div`
     display: flex;
     flex-direction: row;
@@ -70,6 +76,6 @@ const S = {
       font-size: 14px;
     }
   `,
-}
+};
 
 export default ReceptionMsg;
