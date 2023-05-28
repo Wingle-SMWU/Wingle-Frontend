@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { convertDate } from "@/src/utils/convertDate";
+import { convertTime } from "@/src/utils/convertTime";
 
 interface Iprops {
   list: {
@@ -23,7 +23,7 @@ const ReceptionMsg = ({ list }: Iprops) => {
               {content}
             </p>
           </S.MessageArea>
-          <span>{convertDate(createdTime)}</span>
+          <span>{convertTime(createdTime)}</span>
         </S.MessageInfoBox>
       </S.Box>
     </S.Container>
@@ -65,7 +65,7 @@ const S = {
     padding: 8px 12px;
     gap: 8px;
     max-width: 29rem;
-    /* max-width: 18.2rem; */
+    margin-left: 10px;
     background-color: #eeeef2;
     border-radius: 12px;
     p {

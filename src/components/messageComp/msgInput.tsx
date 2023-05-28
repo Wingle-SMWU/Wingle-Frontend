@@ -46,6 +46,7 @@ const S = {
     width: 100%;
     padding: 0.5rem 1.4rem;
     padding-right: 0;
+    padding-left: 24px;
     margin-top: 1.4rem;
     font-family: "Pretendard";
     font-style: normal;
@@ -64,7 +65,7 @@ const S = {
   SendIcon: styled(SendDisable)<{ text: string }>`
     width: 40px;
     height: 32px;
-    padding-right: 15px;
+    padding-right: 24px;
     padding-left: 8px;
     fill: ${(props) => (props.text ? "#49494D" : "#DCDCE0")};
     cursor: ${({ text }) => (text ? "pointer" : "auto")};

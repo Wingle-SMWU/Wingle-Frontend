@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { convertDate } from "@/src/utils/convertDate";
+import { convertTime } from "@/src/utils/convertTime";
 
 interface Iprops {
   list: {
@@ -15,7 +15,7 @@ const SendMsg = ({ list }: Iprops) => {
     <S.Container>
       <S.Box>
         <S.MessageInfoBox>
-          <S.DateBox>{convertDate(createdTime)}</S.DateBox>
+          <S.DateBox>{convertTime(createdTime)}</S.DateBox>
           <S.MessageContainer>
             <p
               style={{
@@ -68,8 +68,8 @@ const S = {
 
   MessageContainer: styled.div`
     max-width: 29rem;
-    /* max-width: 18.2rem; */
     line-height: 22.4px;
+    margin-right: 10px;
     background-color: #ff812e;
     border-radius: 12px;
     padding: 8px 12px;

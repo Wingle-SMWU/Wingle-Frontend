@@ -321,7 +321,7 @@ const S = {
       font-weight: 500;
       font-size: 12px;
       line-height: 140%;
-      color: #9c9c9c;
+      color: #6c6c70;
     }
   `,
 
