@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { getRefreshTokenFromLocalStorage } from "../utils/refreshTokenHandler";
 
-export const useRedirectToMain = () => {
+export const useRedirectToMain = (): void => {
   const router = useRouter();
   useEffect(() => {
     if (
