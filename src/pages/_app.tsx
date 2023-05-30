@@ -7,7 +7,8 @@ import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import styled from "styled-components";
-import useAppVersion from '../hooks/useAppVersion';
+import useAppVersion from "../hooks/useAppVersion";
+import { useRedirectToMain } from "../hooks/useRedirectToMain";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const version = useAppVersion();
@@ -26,6 +27,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         },
       })
   );
+
+  useRedirectToMain();
 
   return (
     <>
@@ -52,15 +55,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 }
 
 const S = {
-  Wrapper: styled.div<{version: string}>`
-    ${props => props.version === 'mobile' && 
+  Wrapper: styled.div<{ version: string }>`
+    ${(props) =>
+      props.version === "mobile" &&
       css`
         width: 500px;
         max-width: 500px;
         min-height: 100vh;
         background-color: white;
-        `
-      }
-  `
-
+      `}
+  `,
 };

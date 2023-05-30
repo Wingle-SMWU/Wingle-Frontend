@@ -23,10 +23,10 @@ export default function Admin() {
 
   return (
     <S.Main>
-      <Header />
-      <Tabbar currIdx={currIdx} handleClickTabBar={handleClickTabBar} />
       {data && (
         <>
+          <Header />
+          <Tabbar currIdx={currIdx} handleClickTabBar={handleClickTabBar} />
           <Content data={data.data.list} />
           <PageBtn
             totalPages={data.data.totalPages}
