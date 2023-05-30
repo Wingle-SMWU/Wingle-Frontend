@@ -15,9 +15,6 @@ export const useRedirectToMain = () => {
         if (!logined) {
           alert("로그인이 필요합니다.");
           router.replace("/auth/login");
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
         }
       };
       checkLogined();
