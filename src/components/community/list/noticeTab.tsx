@@ -5,7 +5,7 @@ import Loading from "../../ui/loadingUI";
 import NoData from "../../ui/NoDataUI";
 import { reverseArray } from "@/src/utils/reverseArray";
 
-export default function InteractTab({
+export default function NoticeTab({
   forumId,
   imgUrl,
 }: {
