@@ -36,7 +36,7 @@ export default function PasswordVerify() {
     if (!isErrorPassword && !isErrorPasswordCheck) {
       setSignUpFormData((prev) => ({
         ...prev,
-        password: password,
+        password,
       }));
     }
   }, [isErrorPassword, isErrorPasswordCheck, password, setSignUpFormData]);
