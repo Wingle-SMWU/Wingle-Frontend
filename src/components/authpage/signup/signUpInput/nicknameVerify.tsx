@@ -1,4 +1,92 @@
+import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
+import { Margin, Text } from "@/src/components/ui";
+import { useCallback, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import styled from "styled-components";
+import { ErrorMent } from "../errorMent";
+import {
+  checkNicknameAvailable,
+  sendEmailAuth,
+  verifyEmailCertification,
+} from "@/src/api/auth/emailAPI";
+import { useMutation } from "react-query";
+
+interface StyledInputProps {
+  small: boolean;
+  error: boolean;
+}
+
 export default function NicknameVerify() {
+  const [inputData, setInputData] = useState({
+    nickname: "",
+  });
+  const { nickname } = inputData;
+  const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
+
+  const [isErrorNickName, setErrorNickName] = useState(true);
+  const [isCheckedNickname, setCheckedNickname] = useState(false);
+  const [isVerifiedNickname, setVerifiedNickname] = useState(false);
+
+  const handleInputData = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputData((prevData) => ({
+        ...prevData,
+        [e.target.name]: e.target.value,
+      }));
+    },
+    []
+  );
+
+  // 닉네임 유효성 검사
+  const handleErrorNickName = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const pattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
+      if (
+        !pattern.test(e.target.value) ||
+        e.target.value.length < 2 ||
+        e.target.value.length > 10
+      ) {
+        setErrorNickName(true);
+      } else {
+        setErrorNickName(false);
+      }
+    },
+    []
+  );
+
+  // 닉네임 중복 확인 기능
+  const { mutate: CheckNickname } = useMutation(
+    () => checkNicknameAvailable(nickname),
+    {
+      onSuccess: () => {
+        setCheckedNickname(true);
+        setVerifiedNickname(true);
+        setSignUpFormData((prev) => ({
+          ...prev,
+          nickname,
+          isNicknameChecked: true,
+        }));
+      },
+      onError: (error) => {
+        setCheckedNickname(true);
+        setVerifiedNickname(false);
+        setSignUpFormData((prev) => ({
+          ...prev,
+          nickname: "",
+          isNicknameChecked: false,
+        }));
+        throw error;
+      },
+    }
+  );
+
+  const handleCheckNickname = useCallback(() => {
+    if (nickname === "") {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+    CheckNickname();
+  }, [CheckNickname, nickname]);
   return (
     <>
       <Text.Body1 color="gray700">닉네임</Text.Body1>
@@ -39,3 +127,48 @@ export default function NicknameVerify() {
     </>
   );
 }
+
+const S = {
+  ContentWrapper: styled.div`
+    padding-bottom: 24px;
+  `,
+  Content: styled.div`
+    display: flex;
+  `,
+  InputField: styled.div<StyledInputProps>`
+    height: 50px;
+    border: ${(props) =>
+      props.error ? "1px solid #FF7070" : "1px solid #dcdce0;"};
+    border-radius: 8px;
+    margin-bottom: 8px;
+
+    & > input {
+      width: ${(props) => (props.small ? "312px" : "392px")};
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      height: 22px;
+
+      &::placeholder {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 140%;
+        color: #959599;
+      }
+    }
+  `,
+  Button: styled.button`
+    font-size: 16px;
+    font-weight: 700;
+    color: #49494d;
+    width: 99px;
+  `,
+  ButtonWrapper: styled.div<StyledInputProps>`
+    display: ${(props) => (props.small ? "flex" : "none")};
+    height: 50px;
+    width: 99px;
+    border: 1px solid #959599;
+    border-radius: 8px;
+    margin-left: 8px;
+  `,
+};
