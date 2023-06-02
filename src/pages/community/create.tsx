@@ -18,7 +18,11 @@ export default function Create() {
     setContents(event.target.value);
   };
   const onClickModal = () => {
-    setModalVisible((prev) => !prev);
+    if (contents) {
+      setModalVisible((prev) => !prev);
+    } else {
+      router.back();
+    }
   };
 
   const fetchArticle = async () => {
