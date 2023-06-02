@@ -131,6 +131,8 @@ export const Text = {
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;
+    max-height: 48px;
+    overflow: hidden;
     /* common */
     display: ${({ box }) => (box ? "block" : "inline")};
     cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};

@@ -69,7 +69,9 @@ export default function ListCard({
         </S.ContentsHeaderInfo>
       </S.ContentsHeader>
       <Text.Body4 color="gray900" pointer={true}>
-        {content}
+        {content.split("\n").map((text, i) => (
+          <div key={i}>{text}</div>
+        ))}
       </Text.Body4>
     </S.Contents>
   );
