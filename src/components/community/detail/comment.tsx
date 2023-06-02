@@ -81,7 +81,11 @@ export default function Comment({
               )}
             </S.CommentTop>
             <S.CommentBottom>
-              <Text.Body3 color="gray900">{content}</Text.Body3>
+              <Text.Body3 color="gray900">
+                {content.split("\n").map((text, i) => (
+                  <div key={i}>{text}</div>
+                ))}
+              </Text.Body3>
             </S.CommentBottom>
           </S.Comment>
         );
