@@ -29,7 +29,8 @@ export default function InputBox() {
     name: "",
     nickname: "",
   });
-  const { email, emailCertification, password, passwordCheck, name, nickname } = inputData;
+  const { email, emailCertification, password, passwordCheck, name, nickname } =
+    inputData;
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const [isErrorEmailCertify, setErrorEmailCertify] = useState(true);
@@ -40,9 +41,15 @@ export default function InputBox() {
   const [isCheckedNickname, setCheckedNickname] = useState(false);
   const [isVerifiedNickname, setVerifiedNickname] = useState(false);
 
-  const handleInputData = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
-  }, []);
+  const handleInputData = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputData((prevData) => ({
+        ...prevData,
+        [e.target.name]: e.target.value,
+      }));
+    },
+    []
+  );
 
   // 이메일 인증메일 보내기
   const { mutate: sendEmail } = useMutation(() => sendEmailAuth(email), {
@@ -103,12 +110,20 @@ export default function InputBox() {
         name: name,
       }));
     }
-  }, [isErrorName, isErrorPassword, isErrorPasswordCheck, name, password, setSignUpFormData]);
+  }, [
+    isErrorName,
+    isErrorPassword,
+    isErrorPasswordCheck,
+    name,
+    password,
+    setSignUpFormData,
+  ]);
 
   // 비밀번호 유효성 검사
   const handleErrorPassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+      const passwordRegex =
+        /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
       if (!passwordRegex.test(e.target.value)) {
         setErrorPassword(true);
       } else {
@@ -124,53 +139,68 @@ export default function InputBox() {
   // 비밀번호와 맞는지 확인 기능
   const handleErrorPasswordCheck = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      e.target.value === password ? setErrorPasswordCheck(false) : setErrorPasswordCheck(true);
+      e.target.value === password
+        ? setErrorPasswordCheck(false)
+        : setErrorPasswordCheck(true);
     },
     [password]
   );
 
   // 이름 유효성 검사
-  const handleErrorName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const special_pattern = /^[a-zA-Z가-힣\s]+$/;
-    if (!special_pattern.test(e.target.value)) {
-      setErrorName(true);
-    } else {
-      setErrorName(false);
-    }
-  }, []);
+  const handleErrorName = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const special_pattern = /^[a-zA-Z가-힣\s]+$/;
+      if (!special_pattern.test(e.target.value)) {
+        setErrorName(true);
+      } else {
+        setErrorName(false);
+      }
+    },
+    []
+  );
 
   // 닉네임 유효성 검사
-  const handleErrorNickName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const pattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
-    if (!pattern.test(e.target.value) || e.target.value.length < 2 || e.target.value.length > 10) {
-      setErrorNickName(true);
-    } else {
-      setErrorNickName(false);
-    }
-  }, []);
+  const handleErrorNickName = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const pattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
+      if (
+        !pattern.test(e.target.value) ||
+        e.target.value.length < 2 ||
+        e.target.value.length > 10
+      ) {
+        setErrorNickName(true);
+      } else {
+        setErrorNickName(false);
+      }
+    },
+    []
+  );
 
   // 닉네임 중복 확인 기능
-  const { mutate: CheckNickname } = useMutation(() => checkNicknameAvailable(nickname), {
-    onSuccess: () => {
-      setCheckedNickname(true);
-      setVerifiedNickname(true);
-      setSignUpFormData((prev) => ({
-        ...prev,
-        nickname,
-        isNicknameChecked: true,
-      }));
-    },
-    onError: (error) => {
-      setCheckedNickname(true);
-      setVerifiedNickname(false);
-      setSignUpFormData((prev) => ({
-        ...prev,
-        nickname: "",
-        isNicknameChecked: false,
-      }));
-      throw error;
-    },
-  });
+  const { mutate: CheckNickname } = useMutation(
+    () => checkNicknameAvailable(nickname),
+    {
+      onSuccess: () => {
+        setCheckedNickname(true);
+        setVerifiedNickname(true);
+        setSignUpFormData((prev) => ({
+          ...prev,
+          nickname,
+          isNicknameChecked: true,
+        }));
+      },
+      onError: (error) => {
+        setCheckedNickname(true);
+        setVerifiedNickname(false);
+        setSignUpFormData((prev) => ({
+          ...prev,
+          nickname: "",
+          isNicknameChecked: false,
+        }));
+        throw error;
+      },
+    }
+  );
 
   const handleCheckNickname = useCallback(() => {
     if (nickname === "") {
@@ -201,7 +231,9 @@ export default function InputBox() {
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={false}>
-            <S.Button onClick={() => handleSendEmail()}>{buttonMessage}</S.Button>
+            <S.Button onClick={() => handleSendEmail()}>
+              {buttonMessage}
+            </S.Button>
           </S.ButtonWrapper>
         </S.Content>
         <ErrorMent error={false} errorMent="" ment={emailMent} />
@@ -279,7 +311,11 @@ export default function InputBox() {
           </S.InputField>
           <S.ButtonWrapper small={false} error={false}></S.ButtonWrapper>
         </S.Content>
-        <ErrorMent error={isErrorPasswordCheck} errorMent="정보를 정확히 입력해주세요." ment=" " />
+        <ErrorMent
+          error={isErrorPasswordCheck}
+          errorMent="정보를 정확히 입력해주세요."
+          ment=" "
+        />
       </S.ContentWrapper>
 
       <Text.Body1 color="gray700">이름</Text.Body1>
@@ -354,7 +390,8 @@ const S = {
   `,
   InputField: styled.div<StyledInputProps>`
     height: 50px;
-    border: ${(props) => (props.error ? "1px solid #FF7070" : "1px solid #dcdce0;")};
+    border: ${(props) =>
+      props.error ? "1px solid #FF7070" : "1px solid #dcdce0;"};
     border-radius: 8px;
     margin-bottom: 8px;
 
