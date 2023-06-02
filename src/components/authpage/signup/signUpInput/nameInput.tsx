@@ -11,10 +11,8 @@ interface StyledInputProps {
 }
 
 export default function NameInput() {
-  const [inputData, setInputData] = useState({
-    name: "",
-  });
-  const { name } = inputData;
+  const [nameInputData, setNameInputData] = useState("");
+
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const [isErrorName, setErrorName] = useState(true);
@@ -24,18 +22,14 @@ export default function NameInput() {
     if (!isErrorName) {
       setSignUpFormData((prev) => ({
         ...prev,
-
-        name: name,
+        name: nameInputData,
       }));
     }
-  }, [isErrorName, name, setSignUpFormData]);
+  }, [isErrorName, nameInputData, setSignUpFormData]);
 
   const handleInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputData((prevData) => ({
-        ...prevData,
-        [e.target.name]: e.target.value,
-      }));
+      setNameInputData(e.target.value);
     },
     []
   );
@@ -62,7 +56,7 @@ export default function NameInput() {
           <S.InputField small={false} error={isErrorName}>
             <input
               name="name"
-              value={name}
+              value={nameInputData}
               type="string"
               placeholder="김윙글"
               onChange={(e) => {

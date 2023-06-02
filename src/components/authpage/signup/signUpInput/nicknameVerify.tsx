@@ -4,11 +4,7 @@ import { useCallback, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { ErrorMent } from "../errorMent";
-import {
-  checkNicknameAvailable,
-  sendEmailAuth,
-  verifyEmailCertification,
-} from "@/src/api/auth/emailAPI";
+import { checkNicknameAvailable } from "@/src/api/auth/emailAPI";
 import { useMutation } from "react-query";
 
 interface StyledInputProps {
@@ -17,10 +13,8 @@ interface StyledInputProps {
 }
 
 export default function NicknameVerify() {
-  const [inputData, setInputData] = useState({
-    nickname: "",
-  });
-  const { nickname } = inputData;
+  const [inputNicknameData, setNicknameInputData] = useState("");
+
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const [isErrorNickName, setErrorNickName] = useState(true);
@@ -29,10 +23,7 @@ export default function NicknameVerify() {
 
   const handleInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputData((prevData) => ({
-        ...prevData,
-        [e.target.name]: e.target.value,
-      }));
+      setNicknameInputData(e.target.value);
     },
     []
   );
@@ -56,14 +47,14 @@ export default function NicknameVerify() {
 
   // 닉네임 중복 확인 기능
   const { mutate: CheckNickname } = useMutation(
-    () => checkNicknameAvailable(nickname),
+    () => checkNicknameAvailable(inputNicknameData),
     {
       onSuccess: () => {
         setCheckedNickname(true);
         setVerifiedNickname(true);
         setSignUpFormData((prev) => ({
           ...prev,
-          nickname,
+          inputNicknameData,
           isNicknameChecked: true,
         }));
       },
@@ -81,12 +72,12 @@ export default function NicknameVerify() {
   );
 
   const handleCheckNickname = useCallback(() => {
-    if (nickname === "") {
+    if (inputNicknameData === "") {
       alert("닉네임을 입력해주세요.");
       return;
     }
     CheckNickname();
-  }, [CheckNickname, nickname]);
+  }, [CheckNickname, inputNicknameData]);
   return (
     <>
       <Text.Body1 color="gray700">닉네임</Text.Body1>
@@ -96,7 +87,7 @@ export default function NicknameVerify() {
           <S.InputField small={true} error={isErrorNickName}>
             <input
               name="nickname"
-              value={nickname}
+              value={inputNicknameData}
               type="string"
               placeholder="희망찬윙그리"
               onChange={(e) => {
