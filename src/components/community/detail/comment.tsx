@@ -5,6 +5,7 @@ import betweenTime from "@/src/utils/betweenTime";
 import { useState } from "react";
 import styled from "styled-components";
 import { countryImg } from "@/src/modules/utils";
+import NoData from "../../ui/NoDataUI";
 
 export default function Comment({
   comments,
@@ -27,7 +28,6 @@ export default function Comment({
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
-
   return (
     <S.Wrapper>
       <S.CommentCount>
@@ -90,6 +90,7 @@ export default function Comment({
           </S.Comment>
         );
       })}
+      <S.NoComment>{!comments.length && <NoData type="comment" />}</S.NoComment>
 
       {modalVisible && (
         <Modal
@@ -105,6 +106,7 @@ export default function Comment({
 const S = {
   Wrapper: styled.div`
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     background-color: #fff;
@@ -120,7 +122,12 @@ const S = {
     flex-direction: column;
     border-bottom: 1px solid #eeeef2;
   `,
-
+  NoComment: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  `,
   CommentTop: styled.div`
     display: flex;
     flex-direction: row;

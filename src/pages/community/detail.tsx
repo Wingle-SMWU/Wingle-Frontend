@@ -66,6 +66,11 @@ const S = {
 
   DetailTop: styled.div`
     padding-bottom: 56px;
+    height: 1px;
+    min-height: calc(100vh - 57px);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
   `,
 
   CommentInputFixed: styled.div`
