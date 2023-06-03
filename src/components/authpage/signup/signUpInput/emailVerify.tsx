@@ -9,6 +9,7 @@ import {
   verifyEmailCertification,
 } from "@/src/api/auth/emailAPI";
 import { useMutation } from "react-query";
+import TextInputWithButton from "@/src/components/ui/textInputWithButton";
 
 interface StyledInputProps {
   small: boolean;
@@ -91,6 +92,21 @@ export default function EmailVerify() {
 
   return (
     <>
+      <S.Content>
+        <TextInputWithButton
+          label="이메일"
+          name="이메일"
+          placeholder="abc@naver.com"
+          value={email}
+          onChange={(e) => {
+            handleInputData(e);
+          }}
+          buttonMessage={buttonMessage}
+          buttonDisabled={false}
+        />
+        <Margin direction="row" size={8} />
+      </S.Content>
+
       <Text.Body1 color="gray700">이메일</Text.Body1>
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
@@ -153,6 +169,7 @@ const S = {
   `,
   Content: styled.div`
     display: flex;
+    /* align-items: center; */
   `,
   InputField: styled.div<StyledInputProps>`
     height: 50px;
