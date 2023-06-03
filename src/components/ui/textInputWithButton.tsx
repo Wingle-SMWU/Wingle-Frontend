@@ -22,6 +22,7 @@ interface TextInputProps extends InputFieldProps {
   errorMessage?: string; // error가 true일 경우 보여줄 에러 메시지, error 필수
   description?: string; // error가 false일 경우 보여줄 메시지, description 겸용
   buttonMessage: string;
+  buttonDisabled?: boolean;
 }
 
 export default function TextInputWithButton({
@@ -37,6 +38,7 @@ export default function TextInputWithButton({
   errorMessage,
   description,
   buttonMessage,
+  buttonDisabled,
 }: TextInputProps) {
   return (
     <S.Container>
@@ -55,7 +57,7 @@ export default function TextInputWithButton({
           />
         </S.InputField>
         <Margin direction="row" size={8} />
-        <Button size="md" type="fill">
+        <Button size="md" type="fill" disabled={buttonDisabled}>
           {buttonMessage}
         </Button>
       </S.ButtonContainer>
