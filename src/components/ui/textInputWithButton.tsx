@@ -22,6 +22,7 @@ interface TextInputProps extends InputFieldProps {
   errorMessage?: string; // error가 true일 경우 보여줄 에러 메시지, error 필수
   description?: string; // error가 false일 경우 보여줄 메시지, description 겸용
   buttonMessage: string;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   buttonDisabled?: boolean;
 }
 
@@ -39,6 +40,7 @@ export default function TextInputWithButton({
   description,
   buttonMessage,
   buttonDisabled,
+  onClick,
 }: TextInputProps) {
   return (
     <S.Container>
@@ -57,7 +59,12 @@ export default function TextInputWithButton({
           />
         </S.InputField>
         <Margin direction="row" size={8} />
-        <Button size="md" type="fill" disabled={buttonDisabled}>
+        <Button
+          size="md"
+          type="fill"
+          disabled={buttonDisabled}
+          onClick={onClick}
+        >
           {buttonMessage}
         </Button>
       </S.ButtonContainer>
@@ -120,38 +127,3 @@ const S = {
     display: flex;
   `,
 };
-
-// EXAMPLE : 아래처럼 사용하세요!!(src/pages/test.tsx)
-// export default function Test() {
-//   const [inputValue, setInputValue] = useState("");
-
-//   const handleInputChange = (event: any) => {
-//     setInputValue(event.target.value);
-//   };
-
-//   const handleError = () => {
-//     if (inputValue.length < 5) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   };
-
-//   return (
-//     <>
-//       <Margin size={50} direction="column" />
-//       <div>
-//         <TextInputUI
-//           name="test"
-//           value={inputValue}
-//           onChange={handleInputChange}
-//           onBlur={() => console.log("onBlur")}
-//           error={handleError()}
-//           placeholder="텍스트를 입력해주세요."
-//           errorMessage="5글자 이상 입력해주세요."
-//           description="5글자 이상 하셨군요!"
-//         />
-//       </div>
-//     </>
-//   );
-// }
