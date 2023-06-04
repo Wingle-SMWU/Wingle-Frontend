@@ -7,6 +7,7 @@ type ButtonProps = {
   size: "sm" | "md" | "lg";
   type?: "fill" | "line";
   disabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
 export default function Button({
@@ -14,12 +15,18 @@ export default function Button({
   disabled,
   size,
   type,
+  onClick,
 }: ButtonProps) {
   const sizeStyle = S.Size[size];
   const typeStyle = type ? S.Type[type] : "";
 
   return (
-    <S.Button disabled={disabled} sizeStyle={sizeStyle} typeStyle={typeStyle}>
+    <S.Button
+      disabled={disabled}
+      sizeStyle={sizeStyle}
+      typeStyle={typeStyle}
+      onClick={onClick}
+    >
       <p>{children}</p>
     </S.Button>
   );
