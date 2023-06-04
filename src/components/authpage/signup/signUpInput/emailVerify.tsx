@@ -1,9 +1,8 @@
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
-import { Margin, Text } from "@/src/components/ui";
+import { Margin } from "@/src/components/ui";
 import { useCallback, useState } from "react";
 import { useSetRecoilState } from "recoil";
-import styled from "styled-components";
-import { ErrorMent } from "../errorMent";
+
 import {
   sendEmailAuth,
   verifyEmailCertification,
@@ -11,14 +10,10 @@ import {
 import { useMutation } from "react-query";
 import TextInputWithButton from "@/src/components/ui/textInputWithButton";
 
-interface StyledInputProps {
-  small: boolean;
-  error: boolean;
-}
-
 export default function EmailVerify() {
   const [buttonMessage, setButtonMessage] = useState("인증 전송");
   const [emailMent, setEmailMent] = useState("");
+  const [emailCertificationMent, setEmailCertificationMent] = useState("");
 
   const [email, setEmail] = useState("");
   const [emailCertification, setEmailCertification] = useState("");
@@ -28,7 +23,9 @@ export default function EmailVerify() {
   const [isErrorEmail, setErrorEmail] = useState(false);
   const [isDisabledEmailButton, setDisabledEmailButton] = useState(true);
 
-  const [isErrorEmailCertify, setErrorEmailCertify] = useState(true);
+  const [isErrorEmailCertify, setErrorEmailCertify] = useState(false);
+  const [isDisabledEmailCertifyButton, setDisabledEmailCertifyButton] =
+    useState(true);
 
   const handleEmailInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value),
@@ -61,6 +58,23 @@ export default function EmailVerify() {
     []
   );
 
+  // 이메일 인증번호 유효성 검사
+  const handleErrorEmailCertify = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const emailRegex = /^\d+$/;
+      const value = e.target.value;
+      const hasValidFormat = emailRegex.test(value);
+      const isLongEnough = value.length >= 4;
+
+      if (!hasValidFormat || !isLongEnough) {
+        setDisabledEmailCertifyButton(true);
+      } else {
+        setDisabledEmailCertifyButton(false);
+      }
+    },
+    []
+  );
+
   // 이메일 인증메일 보내기
   const { mutate: sendEmail } = useMutation(() => sendEmailAuth(email), {
     onMutate: () => {
@@ -86,7 +100,7 @@ export default function EmailVerify() {
   }, [email, sendEmail]);
 
   // 이메일 인증번호 확인
-  const { mutate: verifyEmail, isLoading: isLoadingVerifyEmail } = useMutation(
+  const { mutate: verifyEmail } = useMutation(
     () => verifyEmailCertification({ email, emailCertification }),
     {
       onSuccess: () => {
@@ -95,6 +109,7 @@ export default function EmailVerify() {
           ...prev,
           email,
         }));
+        setEmailCertificationMent("인증번호가 일치합니다.");
       },
       onError: (error) => {
         setErrorEmailCertify(true);
@@ -113,122 +128,41 @@ export default function EmailVerify() {
 
   return (
     <>
-      <S.Content>
-        <TextInputWithButton
-          label="이메일"
-          name="이메일"
-          placeholder="abc@naver.com"
-          value={email}
-          onChange={(e) => {
-            handleEmailInputData(e);
-            handleErrorEmail(e);
-          }}
-          error={isErrorEmail}
-          errorMessage={emailMent}
-          buttonMessage={buttonMessage}
-          buttonDisabled={isDisabledEmailButton}
-        />
-        <Margin direction="row" size={8} />
-      </S.Content>
+      <TextInputWithButton
+        label="이메일"
+        name="이메일"
+        placeholder="abc@naver.com"
+        value={email}
+        onChange={(e) => {
+          handleEmailInputData(e);
+          handleErrorEmail(e);
+        }}
+        error={isErrorEmail}
+        errorMessage={emailMent}
+        buttonMessage={buttonMessage}
+        buttonDisabled={isDisabledEmailButton}
+        onClick={handleSendEmail}
+        description={emailMent}
+      />
+      <Margin direction="column" size={24} />
 
-      <Text.Body1 color="gray700">이메일</Text.Body1>
-      <Margin direction="column" size={8} />
-      <S.ContentWrapper>
-        <S.Content>
-          <S.InputField small={true} error={false}>
-            <input
-              name="email"
-              value={email}
-              type="email"
-              placeholder="abc@naver.com"
-              onChange={(e) => {
-                handleInputData(e);
-              }}
-            />
-          </S.InputField>
-          <S.ButtonWrapper small={true} error={false}>
-            <S.Button onClick={() => handleSendEmail()}>
-              {buttonMessage}
-            </S.Button>
-          </S.ButtonWrapper>
-        </S.Content>
-        <ErrorMent error={false} errorMent="" ment={emailMent} />
-      </S.ContentWrapper>
-      <Text.Body1 color="gray700">인증번호 입력</Text.Body1>
-      <Margin direction="column" size={8} />
-      <S.ContentWrapper>
-        <S.Content>
-          <S.InputField small={true} error={isErrorEmailCertify}>
-            <input
-              name="emailCertification"
-              value={emailCertification}
-              type="string"
-              placeholder="인증번호"
-              onChange={(e) => {
-                handleInputData(e);
-              }}
-            />
-          </S.InputField>
-          <S.ButtonWrapper small={true} error={isErrorEmailCertify}>
-            <S.Button onClick={() => handleVerifyEmail()}>인증 확인</S.Button>
-          </S.ButtonWrapper>
-        </S.Content>
-        {isLoadingVerifyEmail ? (
-          <ErrorMent error={false} errorMent="" ment="인증 확인 중 입니다." />
-        ) : (
-          <ErrorMent
-            error={isErrorEmailCertify}
-            errorMent="인증정보가 일치하지 않습니다."
-            ment="인증이 완료되었습니다."
-          />
-        )}
-      </S.ContentWrapper>
+      <TextInputWithButton
+        label="이메일 인증"
+        name="이메일 인증"
+        placeholder="인증번호"
+        value={emailCertification}
+        onChange={(e) => {
+          handleEmailertificationInputData(e);
+          handleErrorEmailCertify(e);
+        }}
+        error={isErrorEmailCertify}
+        errorMessage="인증번호가 일치하지 않습니다."
+        buttonMessage="인증 확인"
+        buttonDisabled={isDisabledEmailCertifyButton}
+        onClick={handleVerifyEmail}
+        description={emailCertificationMent}
+      />
+      <Margin direction="column" size={24} />
     </>
   );
 }
-
-const S = {
-  ContentWrapper: styled.div`
-    padding-bottom: 24px;
-  `,
-  Content: styled.div`
-    display: flex;
-    /* align-items: center; */
-  `,
-  InputField: styled.div<StyledInputProps>`
-    height: 50px;
-    border: ${(props) =>
-      props.error ? "1px solid #FF7070" : "1px solid #dcdce0;"};
-    border-radius: 8px;
-    margin-bottom: 8px;
-
-    & > input {
-      width: ${(props) => (props.small ? "312px" : "392px")};
-      border: none;
-      padding: 14px;
-      border-radius: 8px;
-      height: 22px;
-
-      &::placeholder {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 140%;
-        color: #959599;
-      }
-    }
-  `,
-  Button: styled.button`
-    font-size: 16px;
-    font-weight: 700;
-    color: #49494d;
-    width: 99px;
-  `,
-  ButtonWrapper: styled.div<StyledInputProps>`
-    display: ${(props) => (props.small ? "flex" : "none")};
-    height: 50px;
-    width: 99px;
-    border: 1px solid #959599;
-    border-radius: 8px;
-    margin-left: 8px;
-  `,
-};
