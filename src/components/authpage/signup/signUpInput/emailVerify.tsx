@@ -20,22 +20,43 @@ export default function EmailVerify() {
   const [buttonMessage, setButtonMessage] = useState("인증 전송");
   const [emailMent, setEmailMent] = useState("");
 
-  const [inputData, setInputData] = useState({
-    email: "",
-    emailCertification: "",
-  });
-  const { email, emailCertification } = inputData;
+  const [email, setEmail] = useState("");
+  const [emailCertification, setEmailCertification] = useState("");
 
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
+  const [isErrorEmail, setErrorEmail] = useState(false);
+  const [isDisabledEmailButton, setDisabledEmailButton] = useState(true);
+
   const [isErrorEmailCertify, setErrorEmailCertify] = useState(true);
 
-  const handleInputData = useCallback(
+  const handleEmailInputData = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value),
+    []
+  );
+  const handleEmailertificationInputData = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      setEmailCertification(e.target.value),
+    []
+  );
+
+  // 이메일 유효성 검사
+  const handleErrorEmail = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputData((prevData) => ({
-        ...prevData,
-        [e.target.name]: e.target.value,
-      }));
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const value = e.target.value;
+      const hasValidFormat = emailRegex.test(value);
+      const isLongEnough = value.length >= 5;
+
+      if (!hasValidFormat || !isLongEnough) {
+        setErrorEmail(true);
+        setDisabledEmailButton(true);
+        setEmailMent("입력 형식에 맞지 않습니다.");
+      } else {
+        setErrorEmail(false);
+        setDisabledEmailButton(false);
+        setEmailMent("");
+      }
     },
     []
   );
@@ -99,10 +120,13 @@ export default function EmailVerify() {
           placeholder="abc@naver.com"
           value={email}
           onChange={(e) => {
-            handleInputData(e);
+            handleEmailInputData(e);
+            handleErrorEmail(e);
           }}
+          error={isErrorEmail}
+          errorMessage={emailMent}
           buttonMessage={buttonMessage}
-          buttonDisabled={false}
+          buttonDisabled={isDisabledEmailButton}
         />
         <Margin direction="row" size={8} />
       </S.Content>
