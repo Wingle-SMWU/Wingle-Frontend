@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Text } from "@/src/components/ui";
-import { profileStateAtom } from "@/src/atoms/profileStateAtom";
 import { getImageUrl, countryImg } from "@/src/modules/utils";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 

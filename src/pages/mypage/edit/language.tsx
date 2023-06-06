@@ -2,54 +2,54 @@ import styled from "styled-components";
 import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import instance from "@/src/api/axiosModule";
 import SelectLanguageBox from "@/src/components/mypage/selectLanguage";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { LanguagesType } from "@/src/types/mypage/profileType";
 import Loading from "@/src/components/ui/loadingUI";
 import { postLanguage } from "@/src/api/mypage/profileData";
-import { useMutation,useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
-export default function Language() {
-  const [loading, setLoading ] = useState(true);
+export default function Language(): JSX.Element {
+  const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [btnActive, setBtnActive] = useState(false);
-  const [language,setLanguage] = useState<String[]>([]);
+  const [language, setLanguage] = useState<string[]>([]);
   const [initialLanguage, setInitialLanguage] = useState<LanguagesType[]>([]);
-  const [initialLanguageValue1,setInitialLanguageValue1] = useState('');
-  const [initialLanguageValue2,setInitialLanguageValue2] = useState('');
-  const [initialLanguageValue3,setInitialLanguageValue3] = useState('');
+  const [initialLanguageValue1, setInitialLanguageValue1] = useState("");
+  const [initialLanguageValue2, setInitialLanguageValue2] = useState("");
+  const [initialLanguageValue3, setInitialLanguageValue3] = useState("");
 
   const queryClient = useQueryClient();
   const { profileData } = useGetProfile();
 
-  const onClickModal = () => {
+  const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
 
-  const handleSubmit = () => {
-      fetchLanguage.mutate(language);
-      router.push(`/mypage/edit`)
+  const handleSubmit = (): void => {
+    fetchLanguage.mutate(language);
+    router.push(`/mypage/edit`);
   };
 
   const fetchLanguage = useMutation(postLanguage, {
-     onSuccess: () => {
+    onSuccess: () => {
       queryClient.invalidateQueries("profile");
     },
-  })
-  
-  const getLanguageAtIndex = (str: string, index: number) => {
+  });
+
+  const getLanguageAtIndex = (str: string, index: number): void => {
     setLanguage((prevLanguage) => {
       const updatedLanguage = [...prevLanguage];
       updatedLanguage[index] = str;
       return updatedLanguage;
     });
-};
+  };
 
-  const resetBtn = () => {
-    setLanguage([])
-    setBtnActive(false)
+  const resetBtn = (): void => {
+    setLanguage([]);
+    setBtnActive(false);
     for (let i = 0; i < 3; i++) {
       const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
       if (profileData && profileData.languages[i]) {
@@ -59,34 +59,32 @@ export default function Language() {
       }
     }
   };
- 
 
   useEffect(() => {
-   if (language[0]) {
-    setBtnActive(true)
-   }
-  },[language,btnActive])
+    if (language[0]) {
+      setBtnActive(true);
+    }
+  }, [language, btnActive]);
 
   useEffect(() => {
     if (profileData) {
-        setInitialLanguage(profileData.languages);
+      setInitialLanguage(profileData.languages);
     }
   }, [profileData]);
 
-
-useEffect(() => {
-  for (let i = 0; i < 3; i++) {
-    const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
-    if (initialLanguage[i]) {
-      setInitialLanguageValue(initialLanguage[i].interest);
-    } else {
-      setInitialLanguageValue('');
+  useEffect(() => {
+    for (let i = 0; i < 3; i++) {
+      const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
+      if (initialLanguage[i]) {
+        setInitialLanguageValue(initialLanguage[i].interest);
+      } else {
+        setInitialLanguageValue("");
+      }
     }
-  }
-  setLoading(false);
-}, [initialLanguage]);
+    setLoading(false);
+  }, [initialLanguage]);
 
-if (loading) return <Loading />
+  if (loading) return <Loading />;
 
   return (
     <>
@@ -103,7 +101,11 @@ if (loading) return <Loading />
             </S.Left>
             <Text.Body1
               color={btnActive ? "gray900" : "gray500"}
-              onClick={btnActive ? handleSubmit : () => alert("언어를 선택해주세요")}
+              onClick={
+                btnActive
+                  ? handleSubmit
+                  : (): void => alert("언어를 선택해주세요")
+              }
               pointer
             >
               완료
@@ -112,17 +114,33 @@ if (loading) return <Loading />
           <S.SelectBox>
             <Text.Body5 color="gray700">1순위</Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox getLanguageAtIndex={(str) => getLanguageAtIndex(str, 0)} initialLanguage={initialLanguageValue1} idx={0}/>
+            <SelectLanguageBox
+              getLanguageAtIndex={(str): void => getLanguageAtIndex(str, 0)}
+              initialLanguage={initialLanguageValue1}
+              idx={0}
+            />
 
             <Margin direction="column" size={24} />
-            <Text.Body5 color= { language[0]!==''? "gray700" : "gray500"}>2순위</Text.Body5>
+            <Text.Body5 color={language[0] !== "" ? "gray700" : "gray500"}>
+              2순위
+            </Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox getLanguageAtIndex={(str) => getLanguageAtIndex(str, 1)} initialLanguage={initialLanguageValue2} idx={1}/>
+            <SelectLanguageBox
+              getLanguageAtIndex={(str): void => getLanguageAtIndex(str, 1)}
+              initialLanguage={initialLanguageValue2}
+              idx={1}
+            />
 
             <Margin direction="column" size={24} />
-            <Text.Body5 color={ language[1]!==''? "gray700" : "gray500"}>3순위</Text.Body5>
+            <Text.Body5 color={language[1] !== "" ? "gray700" : "gray500"}>
+              3순위
+            </Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox getLanguageAtIndex={(str) => getLanguageAtIndex(str, 2)} initialLanguage={initialLanguageValue3} idx={2} />
+            <SelectLanguageBox
+              getLanguageAtIndex={(str): void => getLanguageAtIndex(str, 2)}
+              initialLanguage={initialLanguageValue3}
+              idx={2}
+            />
           </S.SelectBox>
           <S.ResetBox>
             <S.ResetBtn>
@@ -179,7 +197,7 @@ const S = {
   ResetBox: styled.div`
     display: flex;
     justify-content: flex-end;
-    margin-top : 50px;
+    margin-top: 50px;
   `,
   ResetBtn: styled.button`
     width: 79px;

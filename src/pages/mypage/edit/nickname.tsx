@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { postUpdateProfile } from "@/src/api/mypage/updateProfile";
 import { getProfile } from "@/src/api/mypage/profileData";
 
-export default function Nickname() {
+export default function Nickname(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState<string>("");
   const [nameMessage, setNameMessage] = useState<string>("");
@@ -67,7 +67,7 @@ export default function Nickname() {
   if (isError || isIdle) return <>에러</>;
   if (fileError) alert("업로드 가능한 이미지 크기 제한을 초과했습니다.");
 
-  const onChangeName = (e: any) => {
+  const onChangeName = (e: any): void => {
     const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
     const nameCurrent = e.target.value;
     if (nameCurrent === "") {
@@ -84,29 +84,29 @@ export default function Nickname() {
     }
   };
 
-  const onClickModal = () => {
+  const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
 
-  const onLoadFile = (e: any) => {
+  const onLoadFile = (e: any): Promise<void> => {
     const reader = new FileReader();
     reader.readAsDataURL(e);
     return new Promise<void>((resolve) => {
-      reader.onload = () => {
+      reader.onload = (): void => {
         setImage(reader.result);
         resolve();
       };
     });
   };
 
-  const deleteFileImage = () => {
+  const deleteFileImage = (): void => {
     URL.revokeObjectURL(image);
     setImage(null);
     setImageDelete(profileData.image !== null);
     setImageFile(null);
   };
 
-  const handleFileUpload = (event: any) => {
+  const handleFileUpload = (event: any): void => {
     const imageFile = event.target.files?.[0];
     const formData = new FormData();
     formData.append("image", imageFile);
@@ -125,11 +125,11 @@ export default function Nickname() {
     }
   };
 
-  const handleUploadButtonClick = () => {
+  const handleUploadButtonClick = (): void => {
     fileInputRef.current?.click();
   };
 
-  const onClickComplete = async () => {
+  const onClickComplete = async (): Promise<void> => {
     if (!isName) return;
     if (name === "") {
       setName(profileData.nickname);
@@ -171,7 +171,7 @@ export default function Nickname() {
                 ref={fileInputRef}
                 type="file"
                 accept=".jpeg, .jpg, .png"
-                onChange={(e) => {
+                onChange={(e): void => {
                   handleFileUpload(e);
                 }}
                 style={{ display: "none" }}
@@ -185,7 +185,7 @@ export default function Nickname() {
                 cancel={image}
                 src="/mypage/cancel.png"
                 alt="변경 아이콘"
-                onClick={(e) => {
+                onClick={(e): void => {
                   e.stopPropagation();
                   deleteFileImage();
                 }}

@@ -1,7 +1,8 @@
 import { ProfileUpdateType } from "@/src/types/mypage/profileType";
+import { NextApiResponse } from "next";
 import instance from "../axiosModule";
 
-const withFormData = (data: ProfileUpdateType) => {
+const withFormData = (data: ProfileUpdateType): FormData => {
   const formData = new FormData();
   Object.entries(data).forEach(([key, value]) => {
     if (typeof value === "boolean") {
@@ -22,7 +23,7 @@ const withFormData = (data: ProfileUpdateType) => {
 
 export const postUpdateProfile = async (
   profileUpdateData: ProfileUpdateType
-) => {
+): Promise<NextApiResponse> => {
   const response = await instance.post(
     "/profile",
     withFormData(profileUpdateData),

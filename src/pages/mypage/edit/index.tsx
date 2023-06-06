@@ -7,12 +7,12 @@ import { useState } from "react";
 import Loading from "@/src/components/ui/loadingUI";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
-export default function Edit() {
+export default function Edit(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
 
   const { profileData, isLoading, isError } = useGetProfile();
 
-  const onClickModal = () => {
+  const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
 
@@ -27,7 +27,7 @@ export default function Edit() {
             <S.GoBackArrow
               src="/back-arrow.svg"
               alt="뒤로가기"
-              onClick={() => router.push(`/mypage`)}
+              onClick={(): Promise<boolean> => router.push(`/mypage`)}
             />
             <Margin direction="row" size={13} />
             <Text.Title1 color="gray900">프로필 수정</Text.Title1>
@@ -39,7 +39,9 @@ export default function Edit() {
               <S.EditBtn
                 src="/modify.svg"
                 alt="연필"
-                onClick={() => router.push(`/mypage/edit/nickname`)}
+                onClick={(): Promise<boolean> =>
+                  router.push(`/mypage/edit/nickname`)
+                }
               />
             </S.UserBox>
           </>
@@ -53,7 +55,9 @@ export default function Edit() {
                 <S.EditBtn
                   src="/modify.svg"
                   alt="연필"
-                  onClick={() => router.push(`/mypage/edit/language`)}
+                  onClick={(): Promise<boolean> =>
+                    router.push(`/mypage/edit/language`)
+                  }
                 />
               </S.Language>
               <S.LanguageContent>
@@ -83,7 +87,9 @@ export default function Edit() {
                 <S.EditBtn
                   src="/modify.svg"
                   alt="연필"
-                  onClick={() => router.push(`/mypage/edit/introduce`)}
+                  onClick={(): Promise<boolean> =>
+                    router.push(`/mypage/edit/introduce`)
+                  }
                 />
               </S.Introduce>
               <S.IntroduceContent>
@@ -98,7 +104,9 @@ export default function Edit() {
                 <S.EditBtn
                   src="/modify.svg"
                   alt="연필"
-                  onClick={() => router.push(`/mypage/edit/interest`)}
+                  onClick={(): Promise<boolean> =>
+                    router.push(`/mypage/edit/interest`)
+                  }
                 />
               </S.Interest>
               <S.InterestBoxContainer>

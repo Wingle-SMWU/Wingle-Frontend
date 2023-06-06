@@ -2,49 +2,48 @@ import styled from "styled-components";
 import router from "next/router";
 import { Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
-import { useState,useCallback,useEffect } from "react";
-import { useMutation,useQueryClient } from "react-query";
+import { useState, useCallback, useEffect } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { postIntroduce } from "@/src/api/mypage/profileData";
 
-export default function Introduce() {
+export default function Introduce(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
-  const [isIntroduce,setIsIntroduce] = useState(false);
-  const [introduce,setIntroduce] = useState('');
+  const [isIntroduce, setIsIntroduce] = useState(false);
+  const [introduce, setIntroduce] = useState("");
 
   const queryClient = useQueryClient();
 
-  const onChangeIntroduce = useCallback((e: any) => {
+  const onChangeIntroduce = useCallback((e: any): void => {
     const nameCurrent = e.target.value;
     setIntroduce(nameCurrent);
   }, []);
 
-   const { profileData } = useGetProfile();
+  const { profileData } = useGetProfile();
 
   useEffect(() => {
     if (introduce.length < 2 || introduce.length > 400) {
-      setIsIntroduce(false)
+      setIsIntroduce(false);
     } else {
       setIsIntroduce(true);
     }
   }, [introduce]);
 
-  const onClickModal = () => {
+  const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
 
-
-  const fetchIntroduce = useMutation(postIntroduce,{
+  const fetchIntroduce = useMutation(postIntroduce, {
     onSuccess: () => {
       queryClient.invalidateQueries("profile");
     },
-  })
+  });
 
-  const handleSubmit= () => {
+  const handleSubmit = (): void => {
     fetchIntroduce.mutate(introduce);
-    router.push(`/mypage/edit`)
-  }
-  
+    router.push(`/mypage/edit`);
+  };
+
   return (
     <>
       <S.Wapper>
@@ -59,8 +58,8 @@ export default function Introduce() {
               <Text.Title1 color="gray900">자기소개</Text.Title1>
             </S.Left>
             <Text.Body1
-              color={isIntroduce ? "gray900":"gray500"} // 비활성화 상태
-              onClick={handleSubmit} 
+              color={isIntroduce ? "gray900" : "gray500"} // 비활성화 상태
+              onClick={handleSubmit}
               pointer={isIntroduce}
             >
               완료
