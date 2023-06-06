@@ -51,7 +51,7 @@ export default function Edit(): JSX.Element {
             <S.GoBackArrow
               src="/back-arrow.svg"
               alt="뒤로가기"
-              onClick={(): Promise<boolean> => router.push(`/mypage`)}
+              onClick={(): void => router.back()}
             />
             <Margin direction="row" size={13} />
             <Text.Title1 color="gray900">프로필</Text.Title1>
