@@ -253,7 +253,7 @@ const S = {
     cursor: pointer;
   `,
   CloseIcon: styled.img<{ cancel: boolean }>`
-    display: ${({ cancel }) => (cancel ? "auto" : "none")};
+    display: ${({ cancel }): string => (cancel ? "auto" : "none")};
     width: 24px;
     height: 24px;
     border-radius: 100px;

@@ -137,8 +137,8 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid ${(props) => props.Color || "#6c6c70"};
-    background-color: ${(props) => props.Color || "white"};
+    border: 1px solid ${(props): string => props.Color || "#6c6c70"};
+    background-color: ${(props): string => props.Color || "white"};
     border-radius: 8px;
   `,
   RegisterDrop: styled.div`

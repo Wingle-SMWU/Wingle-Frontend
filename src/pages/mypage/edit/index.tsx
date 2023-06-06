@@ -139,14 +139,14 @@ export default function Edit(): JSX.Element {
   );
 }
 
-interface IntesestBoxProps {
+type IntesestBoxProps = {
   backgroundColor: string;
-}
+};
 
-interface LanguageText {
+type LanguageText = {
   fontWeight: number;
   width: number;
-}
+};
 const S = {
   Wapper: styled.div`
     width: 100%;
@@ -229,11 +229,11 @@ const S = {
     padding-right: 6px;
   `,
   LanguageText: styled.div<LanguageText>`
-    width: ${(props) => props.width}px;
+    width: ${(props): number => props.width}px;
     color: #49494d;
     font-size: 14px;
     font-family: "Pretendard";
-    font-weight: ${(props) => props.fontWeight};
+    font-weight: ${(props): number => props.fontWeight};
   `,
   Introduce: styled.div`
     width: 452px;
@@ -263,7 +263,7 @@ const S = {
     border-radius: 40px;
     padding: 8px 15px;
     display: inline-flex;
-    background-color: ${(props) => props.backgroundColor};
+    background-color: ${(props): string => props.backgroundColor};
     margin: 8px;
   `,
 
