@@ -13,7 +13,7 @@ export default function ListCard({
   imgUrl: string;
   isNotice: boolean;
   article: Article;
-}) {
+}): JSX.Element {
   const router = useRouter();
   const {
     articleId,
@@ -52,7 +52,12 @@ export default function ListCard({
 
   return (
     <S.Contents onClick={onClickMoveToDetail}>
-      <S.ContentsHeader>
+      <S.ContentsHeader
+        onClick={(e) => {
+          e.stopPropagation();
+          router.replace(`/profile?userID=${userId}`);
+        }}
+      >
         {currentTab === "교류" ? (
           <S.ImageBox>
             <S.ContentsHeaderImg src={userImage ? userImage : imgUrl} />
@@ -93,6 +98,7 @@ const S = {
     display: flex;
     flex-direction: row;
     align-items: center;
+    cursor: pointer;
   `,
 
   ImageBox: styled.div`

@@ -5,6 +5,7 @@ import Modal from "../../modal";
 import { Margin, Text } from "../../ui";
 import betweenTime from "@/src/utils/betweenTime";
 import { countryImg } from "@/src/modules/utils";
+import { useRouter } from "next/router";
 
 export default function Profile({
   article,
@@ -14,31 +15,38 @@ export default function Profile({
   currentTab: string;
 }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const { isMine, userNickname, createdTime, forumId, articleId } = article;
+  const { isMine, userNickname, createdTime, forumId, articleId, userId } =
+    article;
   const onClickModal = () => {
     setModalVisible((prev) => !prev);
   };
 
   const time = betweenTime(createdTime);
-
+  const router = useRouter();
   return (
     <>
       <S.Profile>
         <S.ProfileLeft>
-          {currentTab === "교류" ? (
-            <S.ImageBox>
-              <S.ProfileImg
-                src={
-                  article.userImage
-                    ? article.userImage
-                    : getImageUrl(currentTab)
-                }
-              />
-              <S.NationIcon src={countryImg(article.userNation)} />
-            </S.ImageBox>
-          ) : (
-            <S.ProfileImg src={getImageUrl(currentTab)} />
-          )}
+          <S.ProfileImgWrapper
+            onClick={() => {
+              router.push(`/profile?userID=${userId}`);
+            }}
+          >
+            {currentTab === "교류" ? (
+              <S.ImageBox>
+                <S.ProfileImg
+                  src={
+                    article.userImage
+                      ? article.userImage
+                      : getImageUrl(currentTab)
+                  }
+                />
+                <S.NationIcon src={countryImg(article.userNation)} />
+              </S.ImageBox>
+            ) : (
+              <S.ProfileImg src={getImageUrl(currentTab)} />
+            )}
+          </S.ProfileImgWrapper>
           <Margin direction="row" size={10} />
           <S.ProfileInfo>
             <Text.Body6 color="gray900">{userNickname}</Text.Body6>
@@ -75,7 +83,9 @@ const S = {
     align-items: center;
     padding: 65px 24px 8px 24px;
   `,
-
+  ProfileImgWrapper: styled.div`
+    cursor: pointer;
+  `,
   ProfileImg: styled.img`
     border-radius: 50%;
     width: 36px;
