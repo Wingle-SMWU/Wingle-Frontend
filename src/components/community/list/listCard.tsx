@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import styled from "styled-components";
 import { countryImg } from "@/src/modules/utils";
+import { useRecoilValue } from "recoil";
+import { currentTabStateAtom } from "@/src/atoms/community/tab";
 
 export default function ListCard({
   imgUrl,
@@ -31,14 +33,9 @@ export default function ListCard({
     userNation,
   } = article;
 
-  const currentTab: string = useMemo(() => {
-    if (!router.query.tab) {
-      return "자유";
-    }
-    return String(router.query.tab);
-  }, [router.query.tab]);
+  const currentTab = useRecoilValue(currentTabStateAtom);
 
-  const onClickMoveToDetail = () => {
+  const onClickMoveToDetail = (): void => {
     if (isNotice) {
       return;
     }
@@ -52,14 +49,14 @@ export default function ListCard({
 
   return (
     <S.Contents onClick={onClickMoveToDetail}>
-      <S.ContentsHeader
-        onClick={(e) => {
-          e.stopPropagation();
-          router.replace(`/profile?userID=${userId}`);
-        }}
-      >
+      <S.ContentsHeader>
         {currentTab === "교류" ? (
-          <S.ImageBox>
+          <S.ImageBox
+            onClick={(e) => {
+              e.stopPropagation();
+              router.replace(`/profile?userID=${userId}`);
+            }}
+          >
             <S.ContentsHeaderImg src={userImage ? userImage : imgUrl} />
             <S.NationIcon src={countryImg(userNation)} />
           </S.ImageBox>
