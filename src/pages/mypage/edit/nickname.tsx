@@ -9,6 +9,7 @@ import { ProfileUpdateType } from "@/src/types/mypage/profileType";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { postUpdateProfile } from "@/src/api/mypage/updateProfile";
 import { getProfile } from "@/src/api/mypage/profileData";
+import { checkNicknameAvailable } from "../../../api/auth/emailAPI";
 
 export default function Nickname(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -70,6 +71,7 @@ export default function Nickname(): JSX.Element {
   const onChangeName = (e: any): void => {
     const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
     const nameCurrent = e.target.value;
+
     if (nameCurrent === "") {
       setName(profileData.nickname);
       setIsName(true);
@@ -77,10 +79,9 @@ export default function Nickname(): JSX.Element {
     } else if (!nameRegex.test(nameCurrent)) {
       setNameMessage("한글/영어 2글자 이상 10글자 이하");
       setIsName(false);
-    } else if (nameRegex) {
-      setNameMessage("사용 가능한 형식입니다.");
+    } else {
       setName(nameCurrent);
-      setIsName(true);
+      checkNickname(nameCurrent);
     }
   };
 
@@ -127,6 +128,18 @@ export default function Nickname(): JSX.Element {
 
   const handleUploadButtonClick = (): void => {
     fileInputRef.current?.click();
+  };
+
+  // 닉네임 중복 확인 기능
+  const checkNickname = async (name: string): Promise<void> => {
+    try {
+      await checkNicknameAvailable(name);
+      setNameMessage("사용 가능한 닉네임입니다.");
+      setIsName(true);
+    } catch {
+      setNameMessage("이미 사용 중인 닉네임입니다.");
+      setIsName(false);
+    }
   };
 
   const onClickComplete = async (): Promise<void> => {
