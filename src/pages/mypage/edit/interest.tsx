@@ -4,35 +4,33 @@ import { Text } from "@/src/components/ui";
 import SelectInterest from "@/src/components/mypage/SelectInterest";
 import { useState } from "react";
 import Modal from "@/src/components/modal";
-import instance from "@/src/api/axiosModule";
-import { useMutation,useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { postInterest } from "@/src/api/mypage/profileData";
 
-export default function Interest() {
+export default function Interest(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
-  const [interest,setInterest] = useState<String[]>([]);
+  const [interest, setInterest] = useState<string[]>([]);
 
   const queryClient = useQueryClient();
 
-  const onClickModal = () => {
+  const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
 
-  const parentFunction = (arr:any) => {
+  const parentFunction = (arr: any): void => {
     setInterest(arr);
   };
 
-   const fetchInterest = useMutation(postInterest,{
+  const fetchInterest = useMutation(postInterest, {
     onSuccess: () => {
       queryClient.invalidateQueries("profile");
     },
-  })
+  });
 
-
-  const handleSubmit = async () => {
-    fetchInterest.mutate(interest)
-    router.push(`/mypage/edit`)
-  }
+  const handleSubmit = async (): Promise<void> => {
+    fetchInterest.mutate(interest);
+    router.push(`/mypage/edit`);
+  };
 
   return (
     <>
@@ -56,7 +54,7 @@ export default function Interest() {
               완료
             </Text.Body1>
           </S.Header>
-          <SelectInterest parentFunction={parentFunction}/>
+          <SelectInterest parentFunction={parentFunction} />
         </S.Content>
         {modalVisible && (
           <Modal type="profile-back" onClickModal={onClickModal} />
@@ -92,4 +90,3 @@ const S = {
     cursor: pointer;
   `,
 };
-

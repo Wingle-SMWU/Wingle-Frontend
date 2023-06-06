@@ -1,21 +1,45 @@
 import Modal from "@/src/components/modal";
-import Profile from "@/src/components/mypage/Profile";
 import { Text, Margin } from "@/src/components/ui";
-import router from "next/router";
 import styled from "styled-components";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import Loading from "@/src/components/ui/loadingUI";
-import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+import instance from "@/src/api/axiosModule";
+import { getImageUrl, countryImg } from "@/src/modules/utils";
+import { ProfileStateType } from "@/src/types/mypage/profileType";
 
 export default function Edit(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [profileData, setProfileData] = useState<ProfileStateType>();
 
-  const { profileData, isLoading, isError } = useGetProfile();
+  const router = useRouter();
+  const userID = router.query["userID"];
+
+  const getProfile = async (): Promise<void> => {
+    try {
+      const res = await instance.get(`/profile/${userID}`);
+      setProfileData(res.data.data);
+      setIsLoading(false);
+    } catch (err) {
+      setIsError(true);
+      throw err;
+    }
+  };
+  useEffect(() => {
+    if (userID) getProfile();
+  }, [userID]);
 
   const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
 
+  const sendNote = (): void => {
+    // 연주님이 추가 필요
+    // userID는 위에서 가져오면 돼요!
+    // router.push('/messages/~)
+  };
   if (isLoading) return <Loading />;
   if (isError) return <>에러</>;
 
@@ -30,23 +54,47 @@ export default function Edit(): JSX.Element {
               onClick={(): Promise<boolean> => router.push(`/mypage`)}
             />
             <Margin direction="row" size={13} />
-            <Text.Title1 color="gray900">프로필 수정</Text.Title1>
+            <Text.Title1 color="gray900">프로필</Text.Title1>
           </S.Header>
           <>
             <S.UserBox>
-              <Profile />
-
-              <S.EditBtn
-                src="/modify.svg"
-                alt="연필"
-                onClick={(): Promise<boolean> =>
-                  router.push(`/mypage/edit/nickname`)
-                }
-              />
+              <S.UserImgBox>
+                <S.UserProfileImg
+                  src={
+                    profileData &&
+                    (profileData.image
+                      ? profileData.image
+                      : getImageUrl("기본"))
+                  }
+                  alt="프로필"
+                />
+                <S.UserFlagImg
+                  src={profileData && countryImg(profileData.nation)}
+                  alt="국기"
+                />
+              </S.UserImgBox>
+              <S.UserInfoBox>
+                <S.UserNicknameAndSex>
+                  <Text.Body1 color="gray900">
+                    {profileData && profileData.nickname}
+                  </Text.Body1>
+                  <S.UserSexImg
+                    src={
+                      profileData && profileData.gender
+                        ? "/mypage/female.svg"
+                        : "/mypage/male.svg"
+                    }
+                    alt="성별"
+                  />
+                </S.UserNicknameAndSex>
+                <Text.Body6 color="gray800">
+                  {profileData && profileData.nation}
+                </Text.Body6>
+              </S.UserInfoBox>
             </S.UserBox>
           </>
 
-          <S.EditList>
+          {/* <S.EditList>
             <Margin direction="column" size={32} />
 
             <S.Column>
@@ -129,7 +177,8 @@ export default function Edit(): JSX.Element {
                   })}
               </S.InterestBoxContainer>
             </S.Column>
-          </S.EditList>
+          </S.EditList> */}
+          <S.Note onClick={sendNote}>쪽지 보내기</S.Note>
         </S.Content>
         {modalVisible && (
           <Modal type="profile-back" onClickModal={onClickModal} />
@@ -139,14 +188,14 @@ export default function Edit(): JSX.Element {
   );
 }
 
-type IntesestBoxProps = {
+interface IntesestBoxProps {
   backgroundColor: string;
-};
+}
 
-type LanguageText = {
+interface LanguageText {
   fontWeight: number;
   width: number;
-};
+}
 const S = {
   Wapper: styled.div`
     width: 100%;
@@ -170,17 +219,32 @@ const S = {
   UserBox: styled.div`
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #eeeef2;
+    /* border-bottom: 1px solid #eeeef2; */
     gap: 14px;
     position: relative;
   `,
   UserImgBox: styled.div`
     width: 56px;
     height: 56px;
-    border: 1px solid green;
+    position: relative;
   `,
   UserProfileImg: styled.img`
+    width: 56px;
+    height: 56px;
+    position: absolute;
+    border-radius: 100px;
     border: 1px solid #eeeef2;
+  `,
+  UserFlagImg: styled.img`
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 100px;
+    right: 0%;
+    bottom: 0%;
+    z-index: 1;
   `,
   UserInfoBox: styled.div`
     width: 340px;
@@ -189,6 +253,38 @@ const S = {
     flex-direction: column;
     justify-content: center;
   `,
+  UserNicknameAndSex: styled.div`
+    display: flex;
+  `,
+  UserSexImg: styled.img`
+    width: 16px;
+    height: 16px;
+    padding-left: 4px;
+    margin: 3px 0px;
+  `,
+
+  DropBubbleHigh: styled.div`
+    position: absolute;
+    top: 63px;
+    left: 435px;
+    border-bottom: 8px solid #303033;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+  `,
+
+  DropBubbleLow: styled.div`
+    width: 153px;
+    height: 42px;
+    background-color: #303033;
+    border-radius: 8px;
+    position: absolute;
+    top: 70px;
+    left: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+
   RegisterBtn: styled.button`
     width: 45px;
     height: 33px;
@@ -198,12 +294,7 @@ const S = {
     background-color: #ff812e;
     border-radius: 8px;
   `,
-  EditBtn: styled.img`
-    width: 24px;
-    height: 24px;
-    border-radius: 18px;
-    cursor: pointer;
-  `,
+
   EditList: styled.div`
     width: 452px;
     display: flex;
@@ -270,5 +361,26 @@ const S = {
   Column: styled.div`
     display: flex;
     flex-direction: column;
+  `,
+  Note: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 17px 16px;
+    gap: 6px;
+    position: fixed;
+    width: 404px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 32px;
+
+    /* main_orange/orange500 */
+    background: #ff812e;
+    border-radius: 8px;
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    color: #ffffff;
   `,
 };

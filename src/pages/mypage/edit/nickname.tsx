@@ -9,8 +9,9 @@ import { ProfileUpdateType } from "@/src/types/mypage/profileType";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { postUpdateProfile } from "@/src/api/mypage/updateProfile";
 import { getProfile } from "@/src/api/mypage/profileData";
+import { checkNicknameAvailable } from "../../../api/auth/emailAPI";
 
-export default function Nickname() {
+export default function Nickname(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState<string>("");
   const [nameMessage, setNameMessage] = useState<string>("");
@@ -67,46 +68,48 @@ export default function Nickname() {
   if (isError || isIdle) return <>에러</>;
   if (fileError) alert("업로드 가능한 이미지 크기 제한을 초과했습니다.");
 
-  const onChangeName = (e: any) => {
+  const onChangeName = (e: any): void => {
     const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
     const nameCurrent = e.target.value;
+
     if (nameCurrent === "") {
       setName(profileData.nickname);
       setIsName(true);
       setNameMessage("");
     } else if (!nameRegex.test(nameCurrent)) {
-      setNameMessage("한글/영어 2글자 이상 10글자 이하");
+      setNameMessage(
+        "한글/영어 2글자 이상 10글자 이하, 숫자와 특수기호 사용 금지"
+      );
       setIsName(false);
-    } else if (nameRegex) {
-      setNameMessage("사용 가능한 형식입니다.");
+    } else {
       setName(nameCurrent);
-      setIsName(true);
+      checkNickname(nameCurrent);
     }
   };
 
-  const onClickModal = () => {
+  const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
 
-  const onLoadFile = (e: any) => {
+  const onLoadFile = (e: any): Promise<void> => {
     const reader = new FileReader();
     reader.readAsDataURL(e);
     return new Promise<void>((resolve) => {
-      reader.onload = () => {
+      reader.onload = (): void => {
         setImage(reader.result);
         resolve();
       };
     });
   };
 
-  const deleteFileImage = () => {
+  const deleteFileImage = (): void => {
     URL.revokeObjectURL(image);
     setImage(null);
     setImageDelete(profileData.image !== null);
     setImageFile(null);
   };
 
-  const handleFileUpload = (event: any) => {
+  const handleFileUpload = (event: any): void => {
     const imageFile = event.target.files?.[0];
     const formData = new FormData();
     formData.append("image", imageFile);
@@ -125,11 +128,23 @@ export default function Nickname() {
     }
   };
 
-  const handleUploadButtonClick = () => {
+  const handleUploadButtonClick = (): void => {
     fileInputRef.current?.click();
   };
 
-  const onClickComplete = async () => {
+  // 닉네임 중복 확인 기능
+  const checkNickname = async (name: string): Promise<void> => {
+    try {
+      await checkNicknameAvailable(name);
+      setNameMessage("사용 가능한 닉네임입니다.");
+      setIsName(true);
+    } catch {
+      setNameMessage("이미 사용 중인 닉네임입니다.");
+      setIsName(false);
+    }
+  };
+
+  const onClickComplete = async (): Promise<void> => {
     if (!isName) return;
     if (name === "") {
       setName(profileData.nickname);
@@ -171,7 +186,7 @@ export default function Nickname() {
                 ref={fileInputRef}
                 type="file"
                 accept=".jpeg, .jpg, .png"
-                onChange={(e) => {
+                onChange={(e): void => {
                   handleFileUpload(e);
                 }}
                 style={{ display: "none" }}
@@ -185,7 +200,7 @@ export default function Nickname() {
                 cancel={image}
                 src="/mypage/cancel.png"
                 alt="변경 아이콘"
-                onClick={(e) => {
+                onClick={(e): void => {
                   e.stopPropagation();
                   deleteFileImage();
                 }}
@@ -253,7 +268,7 @@ const S = {
     cursor: pointer;
   `,
   CloseIcon: styled.img<{ cancel: boolean }>`
-    display: ${({ cancel }) => (cancel ? "auto" : "none")};
+    display: ${({ cancel }): string => (cancel ? "auto" : "none")};
     width: 24px;
     height: 24px;
     border-radius: 100px;

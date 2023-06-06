@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import Loading from "@/src/components/ui/loadingUI";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
-export default function Mypage() {
+export default function Mypage(): JSX.Element {
   const [editText, setEditText] = useState(true);
   const [isRegisterDropVisible, setIsRegisterDropVisible] = useState(false);
 
@@ -25,7 +25,7 @@ export default function Mypage() {
     }
   }, [profileData]);
 
-  const handleLogout = () => {
+  const handleLogout = (): void => {
     localStorage.clear();
     router.push("/auth/login");
   };
@@ -45,13 +45,13 @@ export default function Mypage() {
             {editText ? (
               <S.EditBtn
                 Color="#FF812E"
-                onClick={() => router.push(`/mypage/edit`)}
+                onClick={(): Promise<boolean> => router.push(`/mypage/edit`)}
               >
                 <Text.Caption1
                   color="white"
                   pointer
-                  onMouseEnter={() => setIsRegisterDropVisible(true)}
-                  onMouseLeave={() => setIsRegisterDropVisible(false)}
+                  onMouseEnter={(): void => setIsRegisterDropVisible(true)}
+                  onMouseLeave={(): void => setIsRegisterDropVisible(false)}
                 >
                   등록
                 </Text.Caption1>
@@ -64,7 +64,9 @@ export default function Mypage() {
                 )}
               </S.EditBtn>
             ) : (
-              <S.EditBtn onClick={() => router.push(`/mypage/edit`)}>
+              <S.EditBtn
+                onClick={(): Promise<boolean> => router.push(`/mypage/edit`)}
+              >
                 <Text.Caption1 color="gray700" pointer>
                   수정
                 </Text.Caption1>
@@ -76,7 +78,7 @@ export default function Mypage() {
             <Text.Body1
               color="gray900"
               pointer
-              onClick={() => router.push(`/mypage/postList`)}
+              onClick={(): Promise<boolean> => router.push(`/mypage/postList`)}
             >
               내가 쓴 게시글
             </Text.Body1>
@@ -135,8 +137,8 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid ${(props) => props.Color || "#6c6c70"};
-    background-color: ${(props) => props.Color || "white"};
+    border: 1px solid ${(props): string => props.Color || "#6c6c70"};
+    background-color: ${(props): string => props.Color || "white"};
     border-radius: 8px;
   `,
   RegisterDrop: styled.div`
