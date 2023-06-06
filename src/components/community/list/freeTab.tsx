@@ -3,7 +3,6 @@ import { getArticles } from "@/src/api/community/get/articlesList";
 import { useQuery, useQueryClient } from "react-query";
 import Loading from "../../ui/loadingUI";
 import NoData from "../../ui/NoDataUI";
-import { reverseArray } from "@/src/utils/reverseArray";
 
 export default function FreeTab({
   forumId,
@@ -32,7 +31,7 @@ export default function FreeTab({
   return (
     <>
       {freeArticles.length ? (
-        reverseArray(freeArticles).map((article: Article, i: number) => (
+        freeArticles.map((article: Article, i: number) => (
           <ListCard
             key={i}
             imgUrl={imgUrl}
