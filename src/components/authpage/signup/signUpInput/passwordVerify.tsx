@@ -1,38 +1,40 @@
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { Margin, Text } from "@/src/components/ui";
-import { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { ErrorMent } from "../errorMent";
+import TextInputUI from "@/src/components/ui/textInputUI";
 
 interface StyledInputProps {
   small: boolean;
   error: boolean;
 }
 
-export default function PasswordVerify() {
-  const [inputData, setInputData] = useState({
-    password: "",
-    passwordCheck: "",
-  });
-  const { password, passwordCheck } = inputData;
+export default function PasswordVerify(): JSX.Element {
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const [isErrorPassword, setErrorPassword] = useState(true);
   const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(true);
 
-  const handleInputData = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputData((prevData) => ({
-        ...prevData,
-        [e.target.name]: e.target.value,
-      }));
+  const handlepasswordInputData = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      setPassword(e.target.value);
+    },
+    []
+  );
+  const handlepasswordCheckInputData = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      setPassword(e.target.value);
     },
     []
   );
 
   // useEffect로 비밀번호, 비밀번호 확인 존재 시 회원가입 폼 데이터 저장
-  useEffect(() => {
+  useEffect((): void => {
     if (!isErrorPassword && !isErrorPasswordCheck) {
       setSignUpFormData((prev) => ({
         ...prev,
@@ -43,7 +45,7 @@ export default function PasswordVerify() {
 
   // 비밀번호 유효성 검사
   const handleErrorPassword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
       const passwordRegex =
         /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
       if (!passwordRegex.test(e.target.value)) {
@@ -60,7 +62,7 @@ export default function PasswordVerify() {
 
   // 비밀번호와 맞는지 확인 기능
   const handleErrorPasswordCheck = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
       e.target.value === password
         ? setErrorPasswordCheck(false)
         : setErrorPasswordCheck(true);
@@ -70,6 +72,22 @@ export default function PasswordVerify() {
 
   return (
     <>
+      <TextInputUI
+        label="비밀번호"
+        name="비밀번호"
+        placeholder="비밀번호"
+        value={password}
+        onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+          handleEmailInputData(e);
+          handleErrorEmail(e);
+        }}
+        error={isErrorEmail}
+        errorMessage={emailMent}
+        buttonMessage={buttonMessage}
+        buttonDisabled={isDisabledEmailButton}
+        onClick={handleSendEmail}
+        description={emailMent}
+      />
       <Text.Body1 color="gray700">비밀번호</Text.Body1>
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
@@ -80,7 +98,7 @@ export default function PasswordVerify() {
               value={password}
               type="password"
               placeholder="비밀번호"
-              onChange={(e) => {
+              onChange={(e: ChangeEvent<HTMLInputElement>): void => {
                 handleInputData(e);
                 handleErrorPassword(e);
               }}
@@ -104,7 +122,7 @@ export default function PasswordVerify() {
               value={passwordCheck}
               type="password"
               placeholder="비밀번호 확인"
-              onChange={(e) => {
+              onChange={(e: ChangeEvent<HTMLInputElement>): void => {
                 handleInputData(e);
                 handleErrorPasswordCheck(e);
               }}
@@ -131,13 +149,13 @@ const S = {
   `,
   InputField: styled.div<StyledInputProps>`
     height: 50px;
-    border: ${(props) =>
+    border: ${(props): "1px solid #FF7070" | "1px solid #dcdce0;" =>
       props.error ? "1px solid #FF7070" : "1px solid #dcdce0;"};
     border-radius: 8px;
     margin-bottom: 8px;
 
     & > input {
-      width: ${(props) => (props.small ? "312px" : "392px")};
+      width: ${(props): "312px" | "392px" => (props.small ? "312px" : "392px")};
       border: none;
       padding: 14px;
       border-radius: 8px;
