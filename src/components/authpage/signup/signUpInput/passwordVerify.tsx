@@ -11,8 +11,13 @@ export default function PasswordVerify(): JSX.Element {
 
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
-  const [isErrorPassword, setErrorPassword] = useState(true);
-  const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(true);
+  const [isErrorPassword, setErrorPassword] = useState(false);
+  const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(false);
+
+  const [passwordMent, setPasswordMent] = useState(
+    "‘영문자+숫자+특수기호’ 포함 8자 이상 15자 미만"
+  );
+  const [passwordCheckMent, setPasswordCheckMent] = useState("");
 
   const handlepasswordInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -46,8 +51,10 @@ export default function PasswordVerify(): JSX.Element {
         /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
       if (!passwordRegex.test(e.target.value)) {
         setErrorPassword(true);
+        setPasswordMent("‘영문자+숫자+특수기호’ 포함 8자 이상 15자 미만");
       } else {
         setErrorPassword(false);
+        setPasswordMent("사용 가능한 비밀번호입니다.");
       }
       if (e.target.value !== passwordCheck) {
         setErrorPasswordCheck(true);
@@ -56,12 +63,21 @@ export default function PasswordVerify(): JSX.Element {
     [passwordCheck]
   );
 
-  // 비밀번호와 맞는지 확인 기능
+  // 비밀번호와 맞는지 확인 유효성 검사
   const handleErrorPasswordCheck = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
-      e.target.value === password
-        ? setErrorPasswordCheck(false)
-        : setErrorPasswordCheck(true);
+      if (e.target.value === "") {
+        setErrorPasswordCheck(true);
+        setPasswordCheckMent("");
+        return;
+      }
+      if (e.target.value === password) {
+        setErrorPasswordCheck(false);
+        setPasswordCheckMent("비밀번호가 일치합니다.");
+      } else {
+        setErrorPasswordCheck(true);
+        setPasswordCheckMent("");
+      }
     },
     [password]
   );
@@ -80,12 +96,8 @@ export default function PasswordVerify(): JSX.Element {
         }}
         error={isErrorPassword}
         errorMessage="‘영문자+숫자+특수기호’ 포함 8자 이상 15자 미만"
+        description={passwordMent}
       />
-      {!isErrorPassword && (
-        <Text.Caption3 color="gray900">
-          사용 가능한 비밀번호입니다.
-        </Text.Caption3>
-      )}
       <Margin direction="column" size={24} />
 
       <TextInputUI
@@ -100,10 +112,8 @@ export default function PasswordVerify(): JSX.Element {
         }}
         error={isErrorPasswordCheck}
         errorMessage="비밀번호가 일치하지 않습니다."
+        description={passwordCheckMent}
       />
-      {!isErrorPasswordCheck && (
-        <Text.Caption3 color="gray900">비밀번호가 일치합니다.</Text.Caption3>
-      )}
       <Margin direction="column" size={24} />
     </>
   );
