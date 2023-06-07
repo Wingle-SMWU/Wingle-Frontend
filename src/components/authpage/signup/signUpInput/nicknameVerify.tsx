@@ -1,28 +1,35 @@
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { Margin, Text } from "@/src/components/ui";
-import { useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { ErrorMent } from "../errorMent";
 import { checkNicknameAvailable } from "@/src/api/auth/emailAPI";
 import { useMutation } from "react-query";
+import { EmailAuthResponse } from "@/src/types/auth/emailApiType";
+import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
+import TextInputWithButton from "@/src/components/ui/textInputWithButton";
 
 interface StyledInputProps {
   small: boolean;
   error: boolean;
 }
 
-export default function NicknameVerify() {
-  const [inputNicknameData, setNicknameInputData] = useState("");
+export default function NicknameVerify(): JSX.Element {
+  const [nicknameInputData, setNicknameInputData] = useState("");
 
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const [isErrorNickName, setErrorNickName] = useState(true);
   const [isCheckedNickname, setCheckedNickname] = useState(false);
   const [isVerifiedNickname, setVerifiedNickname] = useState(false);
+  const [isDisabledDoubleCheckButton, setDisabledDoubleCheckButton] =
+    useState(true);
 
-  const handleInputData = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [nicknameMent, setNicknameMent] = useState("");
+
+  const handleNicknameInputData = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
       setNicknameInputData(e.target.value);
     },
     []
@@ -30,16 +37,20 @@ export default function NicknameVerify() {
 
   // 닉네임 유효성 검사
   const handleErrorNickName = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const pattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      const nicknameRegax = /^[a-zA-Z0-9가-힣]{2,10}$/;
+      const value = e.target.value;
+
       if (
-        !pattern.test(e.target.value) ||
+        !nicknameRegax.test(value) ||
         e.target.value.length < 2 ||
         e.target.value.length > 10
       ) {
         setErrorNickName(true);
+        setDisabledDoubleCheckButton(false);
       } else {
         setErrorNickName(false);
+        setDisabledDoubleCheckButton(true);
       }
     },
     []
@@ -47,39 +58,64 @@ export default function NicknameVerify() {
 
   // 닉네임 중복 확인 기능
   const { mutate: CheckNickname } = useMutation(
-    () => checkNicknameAvailable(inputNicknameData),
+    (): Promise<EmailAuthResponse> => checkNicknameAvailable(nicknameInputData),
     {
-      onSuccess: () => {
+      onSuccess: (): void => {
         setCheckedNickname(true);
         setVerifiedNickname(true);
-        setSignUpFormData((prev) => ({
-          ...prev,
-          inputNicknameData,
-          isNicknameChecked: true,
-        }));
+        setSignUpFormData(
+          (prev: SignUpFormData): SignUpFormData => ({
+            ...prev,
+            nickname: nicknameInputData,
+            isNicknameChecked: true,
+          })
+        );
       },
-      onError: (error) => {
+      onError: (error: unknown): never => {
         setCheckedNickname(true);
         setVerifiedNickname(false);
-        setSignUpFormData((prev) => ({
-          ...prev,
-          nickname: "",
-          isNicknameChecked: false,
-        }));
+        setSignUpFormData(
+          (prev: SignUpFormData): SignUpFormData => ({
+            ...prev,
+            nickname: "",
+            isNicknameChecked: false,
+          })
+        );
         throw error;
       },
     }
   );
 
-  const handleCheckNickname = useCallback(() => {
-    if (inputNicknameData === "") {
+  const handleCheckNickname = useCallback((): void => {
+    if (nicknameInputData === "") {
       alert("닉네임을 입력해주세요.");
       return;
     }
     CheckNickname();
-  }, [CheckNickname, inputNicknameData]);
+  }, [CheckNickname, nicknameInputData]);
+
   return (
     <>
+      <TextInputWithButton
+        label="닉네임"
+        name="닉네임"
+        value={nicknameInputData}
+        onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+          handleNicknameInputData(e);
+          handleErrorNickName(e);
+          setVerifiedNickname(false);
+          setCheckedNickname(false);
+        }}
+        placeholder="실명을 입력하세요"
+        error={isErrorNickName}
+        errorMessage="한글 또는 영문으로 입력해주세요."
+        buttonMessage="중복 확인"
+        buttonDisabled={isDisabledDoubleCheckButton}
+        onClick={handleCheckNickname}
+        description={nicknameMent}
+      />
+      <Margin direction="column" size={24} />
+
       <Text.Body1 color="gray700">닉네임</Text.Body1>
       <Margin direction="column" size={8} />
       <S.ContentWrapper>
@@ -90,7 +126,7 @@ export default function NicknameVerify() {
               value={inputNicknameData}
               type="string"
               placeholder="희망찬윙그리"
-              onChange={(e) => {
+              onChange={(e: ChangeEvent<HTMLInputElement>): void => {
                 handleInputData(e);
                 handleErrorNickName(e);
                 setVerifiedNickname(false);
@@ -99,7 +135,9 @@ export default function NicknameVerify() {
             />
           </S.InputField>
           <S.ButtonWrapper small={true} error={false}>
-            <S.Button onClick={() => handleCheckNickname()}>중복 확인</S.Button>
+            <S.Button onClick={(): void => handleCheckNickname()}>
+              중복 확인
+            </S.Button>
           </S.ButtonWrapper>
         </S.Content>
         <ErrorMent

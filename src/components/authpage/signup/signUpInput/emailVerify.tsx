@@ -12,10 +12,6 @@ import { EmailAuthResponse } from "@/src/types/auth/emailApiType";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 
 export default function EmailVerify(): JSX.Element {
-  const [buttonMessage, setButtonMessage] = useState("인증 전송");
-  const [emailMent, setEmailMent] = useState("");
-  const [emailCertificationMent, setEmailCertificationMent] = useState("");
-
   const [email, setEmail] = useState("");
   const [emailCertification, setEmailCertification] = useState("");
 
@@ -27,6 +23,10 @@ export default function EmailVerify(): JSX.Element {
   const [isErrorEmailCertify, setErrorEmailCertify] = useState(false);
   const [isDisabledEmailCertifyButton, setDisabledEmailCertifyButton] =
     useState(true);
+
+  const [buttonMessage, setButtonMessage] = useState("인증 전송");
+  const [emailMent, setEmailMent] = useState("");
+  const [emailCertificationMent, setEmailCertificationMent] = useState("");
 
   const handleEmailInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => setEmail(e.target.value),
