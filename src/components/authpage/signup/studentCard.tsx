@@ -102,9 +102,15 @@ export default function StudentCard(): JSX.Element {
           </Text.Caption3>
         </S.ErrorWrapper>
       ) : uploadedFileName ? (
-        <S.FileName color="gray500" onClick={handleUploadButtonClick}>
-          {uploadedFileName}
-        </S.FileName>
+        <S.AttagementButton onClick={handleUploadButtonClick}>
+          <S.AttagementLogo
+            src="/auth/attachment.svg"
+            alt="attachment"
+            width={12}
+            height={13}
+          />
+          <Text.Caption3 color="gray900">{uploadedFileName}</Text.Caption3>
+        </S.AttagementButton>
       ) : (
         <Text.Caption3 color="gray500">
           20MB 이하 파일을 업로드해주세요.
@@ -159,7 +165,16 @@ const S = {
   UploadLogo: styled(Image)`
     padding-right: 10px;
   `,
-  FileName: styled(Text.Caption3)`
+  AttagementLogo: styled(Image)`
+    padding-right: 6px;
+  `,
+  AttagementButton: styled.div`
+    display: flex;
+    align-items: center;
     cursor: pointer;
+
+    span {
+      cursor: pointer;
+    }
   `,
 };
