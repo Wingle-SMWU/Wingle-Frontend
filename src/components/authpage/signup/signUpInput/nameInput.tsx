@@ -11,7 +11,9 @@ export default function NameInput(): JSX.Element {
 
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
-  const [isErrorName, setErrorName] = useState(true);
+  const [isErrorName, setErrorName] = useState(false);
+
+  const [nameMent, setNameMent] = useState("한글 또는 영문으로 입력해주세요.");
 
   // useEffect로 이름 존재 시 회원가입 폼 데이터 저장
   useEffect((): void => {
@@ -36,10 +38,18 @@ export default function NameInput(): JSX.Element {
   const handleErrorName = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
       const special_pattern = /^[a-zA-Z가-힣\s]+$/;
-      if (!special_pattern.test(e.target.value)) {
+      const value = e.target.value;
+
+      if (
+        !special_pattern.test(value) ||
+        value.includes("  ") ||
+        value.trim() === ""
+      ) {
         setErrorName(true);
+        setNameMent("한글 또는 영문으로 입력해주세요.");
       } else {
         setErrorName(false);
+        setNameMent("양식에 올바른 이름입니다.");
       }
     },
     []
@@ -57,7 +67,8 @@ export default function NameInput(): JSX.Element {
         }}
         placeholder="실명을 입력하세요"
         error={isErrorName}
-        errorMessage="한글 또는 영문으로 입력해주세요. "
+        errorMessage="한글 또는 영문으로 입력해주세요."
+        description={nameMent}
       />
       <Margin direction="column" size={24} />
     </>
