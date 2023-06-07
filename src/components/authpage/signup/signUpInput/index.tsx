@@ -7,8 +7,7 @@ import NicknameVerify from "./nicknameVerify";
 export default function InputBox() {
   return (
     <>
-      <Text.Title1 color="gray900">학생 정보</Text.Title1>
-      <Margin direction="column" size={16} />
+      <Margin direction="column" size={24} />
 
       <EmailVerify />
       <PasswordVerify />
