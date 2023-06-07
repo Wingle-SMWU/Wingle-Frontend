@@ -26,7 +26,10 @@ export default function EmailVerify(): JSX.Element {
 
   const [buttonMessage, setButtonMessage] = useState("인증 전송");
   const [emailMent, setEmailMent] = useState("");
+  const [emailErrorMent, setEmailErrorMent] =
+    useState("입력 형식에 맞지 않습니다.");
   const [emailCertificationMent, setEmailCertificationMent] = useState("");
+  // const [emailSendingLimitCount, setEmailSendingLimitCount] = useState(0);
 
   const handleEmailInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => setEmail(e.target.value),
@@ -47,11 +50,10 @@ export default function EmailVerify(): JSX.Element {
       if (!emailRegex.test(value) || !(value.length >= 5)) {
         setErrorEmail(true);
         setDisabledEmailButton(true);
-        setEmailMent("입력 형식에 맞지 않습니다.");
+        setEmailErrorMent("입력 형식에 맞지 않습니다.");
       } else {
         setErrorEmail(false);
         setDisabledEmailButton(false);
-        setEmailMent("");
       }
     },
     []
@@ -81,11 +83,14 @@ export default function EmailVerify(): JSX.Element {
       },
       onSuccess: (): void => {
         setButtonMessage("재전송");
-        setEmailMent("인증메일을 전송했습니다.");
+        setEmailMent(`인증메일을 전송했습니다.`);
+        setErrorEmailCertify(true);
       },
       onError: (error: unknown): never => {
-        setErrorEmailCertify(true);
-        alert(error);
+        setErrorEmail(true);
+        setDisabledEmailButton(true);
+        setButtonMessage("전송");
+        setEmailErrorMent("이미 가입된 이메일입니다.");
         throw error;
       },
     }
@@ -141,7 +146,7 @@ export default function EmailVerify(): JSX.Element {
           handleErrorEmail(e);
         }}
         error={isErrorEmail}
-        errorMessage={emailMent}
+        errorMessage={emailErrorMent}
         buttonMessage={buttonMessage}
         buttonDisabled={isDisabledEmailButton}
         onClick={handleSendEmail}
