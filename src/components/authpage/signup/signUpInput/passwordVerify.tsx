@@ -18,7 +18,7 @@ export default function PasswordVerify(): JSX.Element {
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const [isErrorPassword, setErrorPassword] = useState(true);
-  const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(true);
+  const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(false);
 
   const handlepasswordInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -28,7 +28,7 @@ export default function PasswordVerify(): JSX.Element {
   );
   const handlepasswordCheckInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
-      setPassword(e.target.value);
+      setPasswordCheck(e.target.value);
     },
     []
   );
@@ -78,15 +78,12 @@ export default function PasswordVerify(): JSX.Element {
         placeholder="비밀번호"
         value={password}
         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-          handleEmailInputData(e);
-          handleErrorEmail(e);
+          handlepasswordInputData(e);
+          handleErrorPassword(e);
         }}
-        error={isErrorEmail}
-        errorMessage={emailMent}
-        buttonMessage={buttonMessage}
-        buttonDisabled={isDisabledEmailButton}
-        onClick={handleSendEmail}
-        description={emailMent}
+        error={isErrorPassword}
+        errorMessage="‘영문자+숫자+특수기호’ 포함 8자 이상 15자 미만"
+        description="‘영문자+숫자+특수기호’ 포함 8자 이상 15자 미만"
       />
       <Text.Body1 color="gray700">비밀번호</Text.Body1>
       <Margin direction="column" size={8} />
