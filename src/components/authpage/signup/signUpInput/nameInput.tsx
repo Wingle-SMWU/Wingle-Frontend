@@ -37,11 +37,11 @@ export default function NameInput(): JSX.Element {
   // 이름 유효성 검사
   const handleErrorName = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
-      const special_pattern = /^[a-zA-Z가-힣\s]+$/;
+      const nameRegax = /^[a-zA-Z가-힣\s]+$/;
       const value = e.target.value;
 
       if (
-        !special_pattern.test(value) ||
+        !nameRegax.test(value) ||
         value.includes("  ") ||
         value.trim() === ""
       ) {

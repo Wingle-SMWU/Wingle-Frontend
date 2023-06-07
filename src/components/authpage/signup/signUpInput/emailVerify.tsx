@@ -2,7 +2,6 @@ import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { Margin } from "@/src/components/ui";
 import { ChangeEvent, useCallback, useState } from "react";
 import { useSetRecoilState } from "recoil";
-
 import {
   sendEmailAuth,
   verifyEmailCertification,
@@ -44,10 +43,8 @@ export default function EmailVerify(): JSX.Element {
     (e: React.ChangeEvent<HTMLInputElement>): void => {
       const emailRegex = /^[A-Za-z0-9]+@[^\s@]+\.[^\s@]+$/; // 영어와 숫자만 사용 가능한 정규식
       const value = e.target.value;
-      const hasValidFormat = emailRegex.test(value);
-      const isLongEnough = value.length >= 5;
 
-      if (!hasValidFormat || !isLongEnough) {
+      if (!emailRegex.test(value) || !(value.length >= 5)) {
         setErrorEmail(true);
         setDisabledEmailButton(true);
         setEmailMent("입력 형식에 맞지 않습니다.");
@@ -65,10 +62,8 @@ export default function EmailVerify(): JSX.Element {
     (e: React.ChangeEvent<HTMLInputElement>): void => {
       const emailRegex = /^\d+$/;
       const value = e.target.value;
-      const hasValidFormat = emailRegex.test(value);
-      const isLongEnough = value.length >= 4;
 
-      if (!hasValidFormat || !isLongEnough) {
+      if (!emailRegex.test(value) || !(value.length >= 4)) {
         setDisabledEmailCertifyButton(true);
       } else {
         setDisabledEmailCertifyButton(false);

@@ -49,7 +49,9 @@ export default function PasswordVerify(): JSX.Element {
     (e: React.ChangeEvent<HTMLInputElement>): void => {
       const passwordRegex =
         /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
-      if (!passwordRegex.test(e.target.value)) {
+      const value = e.target.value;
+
+      if (!passwordRegex.test(value)) {
         setErrorPassword(true);
         setPasswordMent("‘영문자+숫자+특수기호’ 포함 8자 이상 15자 미만");
       } else {
@@ -66,12 +68,14 @@ export default function PasswordVerify(): JSX.Element {
   // 비밀번호와 맞는지 확인 유효성 검사
   const handleErrorPasswordCheck = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
-      if (e.target.value === "") {
+      const value = e.target.value;
+
+      if (value === "") {
         setErrorPasswordCheck(true);
         setPasswordCheckMent("");
         return;
       }
-      if (e.target.value === password) {
+      if (value === password) {
         setErrorPasswordCheck(false);
         setPasswordCheckMent("비밀번호가 일치합니다.");
       } else {
