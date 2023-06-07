@@ -14,6 +14,7 @@ interface TextInputProps extends InputFieldProps {
   label?: string; // 제목
   name: string; // input의 name
   value: string; // input의 value
+  type?: string; // input의 type
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void; // input의 onChange
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void; // input의 onBlur
   disabled?: boolean; // input의 disabled, 기본값 false, true일 경우 input 비활성화
@@ -27,6 +28,7 @@ export default function TextInputUI({
   width,
   name,
   value,
+  type,
   onChange,
   error,
   onBlur,
@@ -41,7 +43,7 @@ export default function TextInputUI({
       <Margin direction="column" size={8} />
       <S.InputField width={width} error={error}>
         <input
-          type="text"
+          type={type || "text"}
           id={name}
           name={name}
           value={value}
