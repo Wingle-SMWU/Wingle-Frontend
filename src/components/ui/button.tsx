@@ -16,7 +16,7 @@ export default function Button({
   size,
   type,
   onClick,
-}: ButtonProps) {
+}: ButtonProps): JSX.Element {
   const sizeStyle = S.Size[size];
   const typeStyle = type ? S.Type[type] : "";
 
@@ -75,7 +75,7 @@ const S = {
     border-radius: 8px;
     font-weight: 700;
     font-family: Pretendard;
-    font-height: 140%;
+    line-height: 140%;
     border: var(--btn-border);
     width: var(--btn-width);
     height: var(--btn-height);
@@ -89,8 +89,7 @@ const S = {
     }
 
     &:active,
-    &:hover,
-    &:focus {
+    &:hover {
       opacity: 80%;
     }
 
