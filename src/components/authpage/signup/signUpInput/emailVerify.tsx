@@ -29,7 +29,7 @@ export default function EmailVerify(): JSX.Element {
   const [emailErrorMent, setEmailErrorMent] =
     useState("입력 형식에 맞지 않습니다.");
   const [emailCertificationMent, setEmailCertificationMent] = useState("");
-  // const [emailSendingLimitCount, setEmailSendingLimitCount] = useState(0);
+  const [emailSendingLimitCount, setEmailSendingLimitCount] = useState(1);
 
   const handleEmailInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => setEmail(e.target.value),
@@ -83,13 +83,14 @@ export default function EmailVerify(): JSX.Element {
       },
       onSuccess: (): void => {
         setButtonMessage("재전송");
-        setEmailMent(`인증메일을 전송했습니다.`);
+        setEmailMent(`인증메일을 전송했습니다. (${emailSendingLimitCount}/5)`);
       },
       onError: (error: unknown): never => {
         setErrorEmail(true);
         setDisabledEmailButton(true);
         setButtonMessage("전송");
         setEmailErrorMent("이미 가입된 이메일입니다.");
+        setEmailSendingLimitCount(0);
         throw error;
       },
     }
@@ -100,8 +101,17 @@ export default function EmailVerify(): JSX.Element {
       alert("이메일을 입력해주세요.");
       return;
     }
+    if (emailSendingLimitCount === 5) {
+      setErrorEmail(true);
+      setEmailErrorMent(
+        "인증 메일 보내기 횟수를 모두 차감했습니다. 나중에 다시 시도해주세요."
+      );
+      setDisabledEmailButton(true);
+      return;
+    }
+    setEmailSendingLimitCount(emailSendingLimitCount + 1);
     sendEmail();
-  }, [email, sendEmail]);
+  }, [email, emailSendingLimitCount, sendEmail]);
 
   // 이메일 인증번호 확인
   const { mutate: verifyEmail } = useMutation(
