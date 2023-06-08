@@ -84,7 +84,6 @@ export default function EmailVerify(): JSX.Element {
       onSuccess: (): void => {
         setButtonMessage("재전송");
         setEmailMent(`인증메일을 전송했습니다.`);
-        setErrorEmailCertify(true);
       },
       onError: (error: unknown): never => {
         setErrorEmail(true);
