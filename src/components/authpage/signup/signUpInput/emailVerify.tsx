@@ -90,7 +90,7 @@ export default function EmailVerify(): JSX.Element {
         setDisabledEmailButton(true);
         setButtonMessage("전송");
         setEmailErrorMent("이미 가입된 이메일입니다.");
-        setEmailSendingLimitCount(0);
+        setEmailSendingLimitCount((prevCount) => (prevCount = 0));
         throw error;
       },
     }
@@ -101,6 +101,7 @@ export default function EmailVerify(): JSX.Element {
       alert("이메일을 입력해주세요.");
       return;
     }
+
     if (emailSendingLimitCount === 5) {
       setErrorEmail(true);
       setEmailErrorMent(
@@ -109,7 +110,8 @@ export default function EmailVerify(): JSX.Element {
       setDisabledEmailButton(true);
       return;
     }
-    setEmailSendingLimitCount(emailSendingLimitCount + 1);
+
+    setEmailSendingLimitCount((prevCount) => prevCount + 1);
     sendEmail();
   }, [email, emailSendingLimitCount, sendEmail]);
 
