@@ -25,9 +25,11 @@ const useGetMessage = (roomId: number, page: number, size: number) => {
     },
     onSuccess: (item) => {
       setMessageList(item);
-      item?.messages.forEach((message) => {
-        handleInfoUpdate(message);
-      });
+      if (item.messages !== null) {
+        item?.messages.forEach((message) => {
+          handleInfoUpdate(message);
+        });
+      }
     },
   });
 

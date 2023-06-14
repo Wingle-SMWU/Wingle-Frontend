@@ -8,7 +8,13 @@ export const getMessage = async (
   size: number
 ) => {
   const { data: response } = await instance.get<GetMessageResponse>(
-    `/messages/${roomId}?page=${0}&size=${1000}`
+    `/messages/${roomId}`,
+    {
+      params: {
+        page: 0,
+        size: 1000,
+      },
+    }
   );
   return response.data;
 };

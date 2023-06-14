@@ -16,7 +16,7 @@ const MsgInput = ({ text, onChange, onKeyDown, onClick }: IconProps) => {
           value={text}
           onChange={onChange}
           onKeyDown={onKeyDown}
-          placeholder="쪽지 내용을 입력해 보세요."
+          placeholder="내용을 입력하세요."
           maxLength={200}
         />
         <S.SendIcon text={text} onClick={onClick} />

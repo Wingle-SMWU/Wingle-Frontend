@@ -7,12 +7,15 @@ import Loading from "@/src/components/ui/loadingUI";
 import instance from "@/src/api/axiosModule";
 import { getImageUrl, countryImg } from "@/src/modules/utils";
 import { ProfileStateType } from "@/src/types/mypage/profileType";
+import { RoomNumberResponse } from "@/src/types/message/roomType";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 
 export default function Edit(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [profileData, setProfileData] = useState<ProfileStateType>();
+  const { profileData: myProfileData } = useGetProfile();
 
   const router = useRouter();
   const userID = router.query["userID"];
@@ -35,11 +38,34 @@ export default function Edit(): JSX.Element {
     setModalVisible((prev) => !prev);
   };
 
-  const sendNote = (): void => {
-    // 연주님이 추가 필요
-    // userID는 위에서 가져오면 돼요!
-    // router.push('/messages/~)
-  };
+  const sendNote = (() => {
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(
+        "yourInfo",
+        JSON.stringify({
+          nickname: profileData?.nickname ?? "",
+          image: profileData?.image ?? "",
+          nation: profileData?.nation ?? "",
+        })
+      );
+    }
+
+    return (): void => {
+      instance
+        .post(`/messages/room`, {
+          originId: userID,
+          originType: "Profile",
+        })
+        .then((response) => {
+          const roomId = response.data.data as RoomNumberResponse;
+          router.push(`/messages/${roomId.roomId}`);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+  })();
+
   if (isLoading) return <Loading />;
   if (isError) return <>에러</>;
 
@@ -178,7 +204,11 @@ export default function Edit(): JSX.Element {
               </S.InterestBoxContainer>
             </S.Column>
           </S.EditList> */}
-          <S.Note onClick={sendNote}>쪽지 보내기</S.Note>
+          {myProfileData?.nickname !== profileData?.nickname ? (
+            <S.Note onClick={sendNote}>쪽지 보내기</S.Note>
+          ) : (
+            ""
+          )}
         </S.Content>
         {modalVisible && (
           <Modal type="profile-back" onClickModal={onClickModal} />
@@ -373,6 +403,7 @@ const S = {
     left: 50%;
     transform: translateX(-50%);
     bottom: 32px;
+    cursor: pointer;
 
     /* main_orange/orange500 */
     background: #ff812e;

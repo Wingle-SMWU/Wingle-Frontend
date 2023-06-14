@@ -16,13 +16,8 @@ const YourInfo = ({ list }: UserInfo) => {
   const { recipientImage, nickname, nation } = list;
   const router = useRouter();
 
-  const handleMoveOpponentInfo = () => {
-    // 경로는 임시. 추후에 상대방 프로필 페이지로 이동할 수 있게 수정 필요
-    router.push(`/ex/${nickname}`);
-  };
-
   return (
-    <S.Container onClick={handleMoveOpponentInfo}>
+    <S.Container>
       <S.LeftBox>
         <S.ImageBox>
           <S.UserImage
@@ -34,7 +29,7 @@ const YourInfo = ({ list }: UserInfo) => {
           <S.NationIcon src={countryImg(nation)} />
         </S.ImageBox>
         <S.TitleBox>
-          <Text.Body5 color="gray900">{list.nickname}</Text.Body5>
+          <Text.Body5 color="gray900">{nickname}</Text.Body5>
         </S.TitleBox>
       </S.LeftBox>
     </S.Container>
@@ -48,7 +43,6 @@ const S = {
     display: flex;
     align-items: center;
     margin-top: -30px;
-    cursor: pointer;
     position: absolute;
     left: 22px;
   `,
@@ -67,7 +61,6 @@ const S = {
     right: 0%;
     bottom: 0%;
     z-index: 0;
-    cursor: pointer;
     border: 1px solid #ffffff;
   `,
 
@@ -81,7 +74,6 @@ const S = {
     margin-left: 0.9rem;
 
     span {
-      cursor: pointer;
       font-weight: 600;
     }
   `,

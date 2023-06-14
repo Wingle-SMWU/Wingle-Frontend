@@ -24,7 +24,9 @@ export default function message(page: number, size: number) {
       <S.MsgContainer>
         {messageDataRoom?.length > 0 ? (
           messageDataRoom.map((list: Room) => {
-            return <MsgList list={list} key={list.roomId} />;
+            if (list.recentChat !== null) {
+              return <MsgList list={list} key={list.roomId} />;
+            }
           })
         ) : (
           <>

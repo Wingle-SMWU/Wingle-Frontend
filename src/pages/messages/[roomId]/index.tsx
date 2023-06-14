@@ -133,7 +133,9 @@ export default function MessageSend() {
           </S.YourInfoBox>
         </S.TitleBox>
         <S.MessageRoomList ref={scrollRef}>
-          {messageData ? (
+          {messageData.toString().length > 0 &&
+          messageData !== null &&
+          messageData.messages !== null ? (
             <>
               {messageData?.messages.map((list: Message) => {
                 list.nickname;
@@ -247,7 +249,7 @@ export default function MessageSend() {
               })}
             </>
           ) : (
-            <S.Empty></S.Empty>
+            ""
           )}
         </S.MessageRoomList>
         <MsgInput
@@ -322,18 +324,6 @@ const S = {
       font-size: 12px;
       line-height: 140%;
       color: #6c6c70;
-    }
-  `,
-
-  Empty: styled.div`
-    width: 100%;
-    height: 75vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    p {
-      font-weight: 600;
-      color: #a7a7a7;
     }
   `,
 };
