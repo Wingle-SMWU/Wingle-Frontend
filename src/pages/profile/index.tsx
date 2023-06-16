@@ -7,8 +7,9 @@ import Loading from "@/src/components/ui/loadingUI";
 import instance from "@/src/api/axiosModule";
 import { getImageUrl, countryImg } from "@/src/modules/utils";
 import { ProfileStateType } from "@/src/types/mypage/profileType";
-import { RoomNumberResponse } from "@/src/types/message/roomType";
+import { Room, RoomNumberResponse } from "@/src/types/message/roomType";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+import useGetRoom from "@/src/hooks/message/useGetRoom";
 
 export default function Edit(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -16,6 +17,7 @@ export default function Edit(): JSX.Element {
   const [isError, setIsError] = useState(false);
   const [profileData, setProfileData] = useState<ProfileStateType>();
   const { profileData: myProfileData } = useGetProfile();
+  const { messageDataRoom } = useGetRoom(0, 10000);
 
   const router = useRouter();
   const userID = router.query["userID"];
@@ -39,30 +41,54 @@ export default function Edit(): JSX.Element {
   };
 
   const sendNote = (() => {
-    if (typeof window !== "undefined") {
-      window.sessionStorage.setItem(
-        "yourInfo",
-        JSON.stringify({
-          nickname: profileData?.nickname ?? "",
-          image: profileData?.image ?? "",
-          nation: profileData?.nation ?? "",
-        })
-      );
-    }
+    const setYourInfo = (): void => {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(
+          "yourInfo",
+          JSON.stringify({
+            nickname: profileData?.nickname ?? "",
+            image: profileData?.image ?? "",
+            nation: profileData?.nation ?? "",
+          })
+        );
+      }
+    };
+
+    const findExistingRoom = (rooms: Room[]): number | undefined => {
+      return rooms.find((room: Room) => {
+        return (
+          room.roomId !== null &&
+          room.roomId !== undefined &&
+          room.nickname === profileData?.nickname
+        );
+      })?.roomId;
+    };
+
+    const createNewRoom = async (): Promise<number> => {
+      const response = await instance.post(`/messages/room`, {
+        originId: userID,
+        originType: "Profile",
+      });
+      const roomId = response.data.data as RoomNumberResponse;
+      return roomId.roomId;
+    };
 
     return (): void => {
-      instance
-        .post(`/messages/room`, {
-          originId: userID,
-          originType: "Profile",
-        })
-        .then((response) => {
-          const roomId = response.data.data as RoomNumberResponse;
-          router.push(`/messages/${roomId.roomId}`);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      if (messageDataRoom) {
+        setYourInfo();
+        const existingRoomId = findExistingRoom(messageDataRoom);
+        if (existingRoomId) {
+          router.push(`/messages/${existingRoomId}`);
+        } else {
+          createNewRoom()
+            .then((newRoomId) => {
+              router.push(`/messages/${newRoomId}`);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+      }
     };
   })();
 
