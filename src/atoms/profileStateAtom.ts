@@ -25,12 +25,6 @@ export const profileUpdateStateAtom = atom<ProfileUpdateType>({
   default: {
     image: null,
     imageDelete: false,
-    age: 0,
-    interests: [],
-    introduce: "",
-    languages: [],
-    nation: "",
-    sns: null,
-    image: "",
+    nickname:""
   },
 });
