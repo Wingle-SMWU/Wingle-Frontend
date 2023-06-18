@@ -9,7 +9,7 @@ export type ProfileStateType = {
   age: number;
   interests: string[];
   introduce: string;
-  languages: languagesType[];
+  languages: LanguagesType[];
   nation: string;
   sns: any;
   image: string;
