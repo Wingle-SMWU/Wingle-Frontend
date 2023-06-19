@@ -17,7 +17,7 @@ const MsgInput = ({ text, onChange, onKeyDown, onClick }: IconProps) => {
           onChange={onChange}
           onKeyDown={onKeyDown}
           placeholder="내용을 입력하세요."
-          maxLength={200}
+          maxLength={500}
         />
         <S.SendIcon text={text} onClick={onClick} />
       </S.TextBox>
