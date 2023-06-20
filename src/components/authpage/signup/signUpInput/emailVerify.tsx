@@ -1,6 +1,6 @@
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { Margin } from "@/src/components/ui";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import {
   sendEmailAuth,
@@ -31,6 +31,8 @@ export default function EmailVerify(): JSX.Element {
     useState("입력 형식에 맞지 않습니다.");
   const [emailCertificationMent, setEmailCertificationMent] = useState("");
   const [emailSendingLimitCount, setEmailSendingLimitCount] = useState(1);
+  const [isVerificationTimerStart, setVerificationTimerStart] = useState(false);
+  const [verificationTimer, setVerificationTimer] = useState(180);
 
   const handleEmailInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => setEmail(e.target.value),
@@ -81,10 +83,12 @@ export default function EmailVerify(): JSX.Element {
     {
       onMutate: (): void => {
         setButtonMessage("전송 중");
+        setVerificationTimerStart(false);
       },
       onSuccess: (): void => {
         setButtonMessage("재전송");
         setEmailMent(`인증메일을 전송했습니다. (${emailSendingLimitCount}/5)`);
+        setVerificationTimerStart(true);
       },
       onError: (error: unknown): never => {
         setErrorEmail(true);
@@ -115,6 +119,28 @@ export default function EmailVerify(): JSX.Element {
     setEmailSendingLimitCount((prevCount) => prevCount + 1);
     sendEmail();
   }, [email, emailSendingLimitCount, sendEmail]);
+
+  useEffect(() => {
+    let timerInterval: ReturnType<typeof setInterval>;
+
+    if (isVerificationTimerStart) {
+      setVerificationTimer(180); // 3분(180초)으로 초기화
+
+      timerInterval = setInterval(() => {
+        setVerificationTimer((prevTimer) => prevTimer - 1); // 1초씩 감소
+
+        if (verificationTimer <= 0) {
+          // 타이머 종료
+          clearInterval(timerInterval);
+        }
+      }, 1000);
+    }
+
+    return () => {
+      // 컴포넌트 언마운트 시 타이머 정리
+      clearInterval(timerInterval);
+    };
+  }, [isVerificationTimerStart]);
 
   // 이메일 인증번호 확인
   const { mutate: verifyEmail } = useMutation(
@@ -166,7 +192,16 @@ export default function EmailVerify(): JSX.Element {
       />
       <Margin direction="column" size={24} />
 
-      <S.DropDownLabel>이메일 인증</S.DropDownLabel>
+      <S.DropDownLabel>
+        이메일 인증{" "}
+        {isVerificationTimerStart && (
+          <>
+            {Math.floor(verificationTimer / 60)}:
+            {verificationTimer % 60 < 10 ? "0" : ""}
+            {verificationTimer % 60}
+          </>
+        )}
+      </S.DropDownLabel>
       <Margin direction="column" size={8} />
       <TextInputWithButton
         name="이메일 인증"
