@@ -140,6 +140,7 @@ export default function EmailVerify(): JSX.Element {
       // 컴포넌트 언마운트 시 타이머 정리
       clearInterval(timerInterval);
     };
+    // 일부터 불린 데이터를 담당하는 상태만 의존성 배열에 추가했음
   }, [isVerificationTimerStart]);
 
   // 이메일 인증번호 확인
@@ -195,11 +196,11 @@ export default function EmailVerify(): JSX.Element {
       <S.DropDownLabel>
         이메일 인증{" "}
         {isVerificationTimerStart && (
-          <>
-            {Math.floor(verificationTimer / 60)}:
+          <S.Timer>
+            ({Math.floor(verificationTimer / 60)}:
             {verificationTimer % 60 < 10 ? "0" : ""}
-            {verificationTimer % 60}
-          </>
+            {verificationTimer % 60})
+          </S.Timer>
         )}
       </S.DropDownLabel>
       <Margin direction="column" size={8} />
@@ -228,5 +229,9 @@ const S = {
     font-size: 16px;
     font-weight: 700;
     color: ${({ theme }) => theme.color.gray700};
+  `,
+  Timer: styled.span`
+    font-weight: 400;
+    color: ${({ theme }) => theme.color.red500};
   `,
 };
