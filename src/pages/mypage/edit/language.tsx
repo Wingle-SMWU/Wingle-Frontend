@@ -3,7 +3,6 @@ import router from "next/router";
 import { Margin, Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState, useEffect } from "react";
-import instance from "@/src/api/axiosModule";
 import SelectLanguageBox from "@/src/components/mypage/selectLanguage";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { LanguagesType } from "@/src/types/mypage/profileType";
@@ -76,7 +75,7 @@ export default function Language(): JSX.Element {
     for (let i = 0; i < 3; i++) {
       const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
       if (initialLanguage[i]) {
-        setInitialLanguageValue(initialLanguage[i].interest);
+        setInitialLanguageValue(initialLanguage[i].language);
       } else {
         setInitialLanguageValue("");
       }
