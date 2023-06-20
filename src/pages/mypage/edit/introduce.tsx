@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import router from "next/router";
+import { useRouter } from "next/router";
 import { Text } from "@/src/components/ui";
 import Modal from "@/src/components/modal";
 import { useState, useCallback, useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { postIntroduce } from "@/src/api/mypage/profileData";
+import Loading from "@/src/components/ui/loadingUI";
 
 export default function Introduce(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -13,16 +14,27 @@ export default function Introduce(): JSX.Element {
   const [introduce, setIntroduce] = useState("");
   const [textCount, setTextCount] = useState(0);
 
+  const { profileData, isLoading } = useGetProfile();
+  const router = useRouter();
   const queryClient = useQueryClient();
 
-  const onChangeIntroduce = useCallback((e: any): void => {
-    const nameCurrent = e.target.value;
-    setIntroduce(nameCurrent);
-  }, []);
-
-  const { profileData } = useGetProfile();
+  const onChangeIntroduce = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+      const nameCurrent = e.target.value;
+      setIntroduce(nameCurrent);
+    },
+    []
+  );
 
   useEffect(() => {
+    if (profileData?.introduce.length) {
+      setTextCount(profileData.introduce.length);
+      setIntroduce(profileData.introduce);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    setTextCount(introduce.length);
     if (introduce.length < 2 || introduce.length > 400) {
       setIsIntroduce(false);
     } else {
@@ -45,9 +57,13 @@ export default function Introduce(): JSX.Element {
     router.push(`/mypage/edit`);
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <>
-      <S.Wapper>
+      <S.Wrapper>
         <S.Content>
           <S.Header>
             <S.Left>
@@ -70,22 +86,22 @@ export default function Introduce(): JSX.Element {
           <S.Description
             maxLength={400}
             placeholder="자기소개를 작성해주세요! (최대 400자)"
+            defaultValue={introduce}
             onChange={onChangeIntroduce}
-            defaultValue={profileData && profileData.introduce}
           />
-          <S.TextCount>{textCount}/500</S.TextCount>
+          <S.TextCount>{textCount}/400</S.TextCount>
         </S.Content>
 
         {modalVisible && (
           <Modal type="profile-back" onClickModal={onClickModal} />
         )}
-      </S.Wapper>
+      </S.Wrapper>
     </>
   );
 }
 
 const S = {
-  Wapper: styled.div`
+  Wrapper: styled.div`
     width: 500px;
     min-width: 360px;
     height: 100%;
