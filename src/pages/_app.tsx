@@ -10,7 +10,7 @@ import styled from "styled-components";
 import useAppVersion from "../hooks/useAppVersion";
 import { useRedirectToMain } from "../hooks/useRedirectToMain";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const version = useAppVersion();
   const STALE_TIME = 10 * 60 * 1000;
   const CACHE_TIME = 10 * 60 * 1000;

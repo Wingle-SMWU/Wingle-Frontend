@@ -66,14 +66,14 @@ export default function Edit(): JSX.Element {
                     <S.LanguageChartContent key={v.order}>
                       <S.LanguageChart src={`/mypage/language${v.order}.svg`} />
                       <S.LanguageText fontWeight={550} width={28}>
-                        {v.interest.substring(0, 2)}{" "}
+                        {v.language.substring(0, 2)}{" "}
                       </S.LanguageText>
                       <S.LanguageText
                         fontWeight={400}
                         width={262}
                         color="orange500"
                       >
-                        {v.interest.substring(2)}
+                        {v.language.substring(2)}
                       </S.LanguageText>
                     </S.LanguageChartContent>
                   ))}
