@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
 import { Margin, Text } from "../ui";
+import Button from "./button";
 
 // InputField Props만 따로 정의
 interface InputFieldProps {
@@ -14,21 +15,22 @@ interface TextInputProps extends InputFieldProps {
   label?: string; // 제목
   name: string; // input의 name
   value: string; // input의 value
-  type?: string; // input의 type
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void; // input의 onChange
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void; // input의 onBlur
   disabled?: boolean; // input의 disabled, 기본값 false, true일 경우 input 비활성화
   placeholder?: string;
   errorMessage?: string; // error가 true일 경우 보여줄 에러 메시지, error 필수
   description?: string; // error가 false일 경우 보여줄 메시지, description 겸용
+  buttonMessage: string;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  buttonDisabled?: boolean;
 }
 
-export default function TextInputUI({
+export default function TextInputWithButton({
   label,
   width,
   name,
   value,
-  type,
   onChange,
   error,
   onBlur,
@@ -36,22 +38,36 @@ export default function TextInputUI({
   placeholder,
   errorMessage,
   description,
+  buttonMessage,
+  buttonDisabled,
+  onClick,
 }: TextInputProps) {
   return (
     <S.Container>
       {label && <S.DropDownLabel disabled={disabled}>{label}</S.DropDownLabel>}
-      <S.InputField width={width} error={error}>
-        <input
-          type={type || "text"}
-          id={name}
-          name={name}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          disabled={disabled}
-          placeholder={placeholder}
-        />
-      </S.InputField>
+      <S.ButtonContainer>
+        <S.InputField width={width} error={error}>
+          <input
+            type="text"
+            id={name}
+            name={name}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+            disabled={disabled}
+            placeholder={placeholder}
+          />
+        </S.InputField>
+        <Margin direction="row" size={8} />
+        <Button
+          size="md"
+          type="fill"
+          disabled={buttonDisabled}
+          onClick={onClick}
+        >
+          {buttonMessage}
+        </Button>
+      </S.ButtonContainer>
       {error ? (
         <S.ErrorWrapper>
           <Image src="/auth/error.svg" alt="error" width={16} height={16} />
@@ -71,6 +87,10 @@ const S = {
   Container: styled.div`
     display: flex;
     flex-direction: column;
+  `,
+  ButtonContainer: styled.div`
+    display: flex;
+    flex-direction: row;
   `,
   DropDownLabel: styled.label<{ disabled: boolean }>`
     margin-bottom: 8px;
@@ -107,38 +127,3 @@ const S = {
     display: flex;
   `,
 };
-
-// EXAMPLE : 아래처럼 사용하세요!!(src/pages/test.tsx)
-// export default function Test() {
-//   const [inputValue, setInputValue] = useState("");
-
-//   const handleInputChange = (event: any) => {
-//     setInputValue(event.target.value);
-//   };
-
-//   const handleError = () => {
-//     if (inputValue.length < 5) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   };
-
-//   return (
-//     <>
-//       <Margin size={50} direction="column" />
-//       <div>
-//         <TextInputUI
-//           name="test"
-//           value={inputValue}
-//           onChange={handleInputChange}
-//           onBlur={() => console.log("onBlur")}
-//           error={handleError()}
-//           placeholder="텍스트를 입력해주세요."
-//           errorMessage="5글자 이상 입력해주세요."
-//           description="5글자 이상 하셨군요!"
-//         />
-//       </div>
-//     </>
-//   );
-// }

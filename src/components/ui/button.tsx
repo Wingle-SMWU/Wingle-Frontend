@@ -1,24 +1,31 @@
-import React from 'react';
+import React from "react";
 import styled, { css } from "styled-components";
-import { theme } from '@/src/styles/theme';
+import { theme } from "@/src/styles/theme";
 
 type ButtonProps = {
-  children: React.ReactNode,
-  size: 'sm' | 'lg',
-  type?: 'fill' | 'line',
-  disabled?: boolean,
-}
+  children: React.ReactNode;
+  size: "sm" | "md" | "lg";
+  type?: "fill" | "line";
+  disabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+};
 
-
-export default function Button({ children, disabled, size, type }: ButtonProps) {
+export default function Button({
+  children,
+  disabled,
+  size,
+  type,
+  onClick,
+}: ButtonProps): JSX.Element {
   const sizeStyle = S.Size[size];
-  const typeStyle = type ? S.Type[type] : '';
+  const typeStyle = type ? S.Type[type] : "";
 
   return (
     <S.Button
       disabled={disabled}
       sizeStyle={sizeStyle}
       typeStyle={typeStyle}
+      onClick={onClick}
     >
       <p>{children}</p>
     </S.Button>
@@ -28,17 +35,23 @@ export default function Button({ children, disabled, size, type }: ButtonProps) 
 const S = {
   Size: {
     sm: css`
-    --btn-width: 37px;
-    --btn-height: 33px;
-    --btn-padding: 8px;
-    --btn-font-size: 12px;
-  `,
-  lg: css`
-    --btn-width: 312px;
-    --btn-height: 52px;
-    --btn-padding: 14px 16px;
-    --btn-font-size: 16px;
-  `,
+      --btn-width: 37px;
+      --btn-height: 33px;
+      --btn-padding: 8px;
+      --btn-font-size: 12px;
+    `,
+    md: css`
+      --btn-width: 99px;
+      --btn-height: 50px;
+      --btn-padding: 14px 16px;
+      --btn-font-size: 16px;
+    `,
+    lg: css`
+      --btn-width: 312px;
+      --btn-height: 52px;
+      --btn-padding: 14px 16px;
+      --btn-font-size: 16px;
+    `,
   },
 
   Type: {
@@ -62,7 +75,7 @@ const S = {
     border-radius: 8px;
     font-weight: 700;
     font-family: Pretendard;
-    font-height: 140%;
+    line-height: 140%;
     border: var(--btn-border);
     width: var(--btn-width);
     height: var(--btn-height);
@@ -76,8 +89,7 @@ const S = {
     }
 
     &:active,
-    &:hover,
-    &:focus {
+    &:hover {
       opacity: 80%;
     }
 
@@ -88,5 +100,5 @@ const S = {
       background: ${theme.color.gray200};
       color: ${theme.color.gray500};
     }
-  `
-}
+  `,
+};
