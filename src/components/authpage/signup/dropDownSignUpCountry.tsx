@@ -1,113 +1,43 @@
 import React, { useState, useCallback } from "react";
-import { Text, Margin } from "@/src/components/ui";
-import styled from "styled-components";
 import { countryList } from "../../../constants/countryList";
-import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { CountryListType } from "@/src/types/countryList";
+import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
+import DropDownCommon from "../../ui/dropDownUI";
+import { Margin } from "../../ui";
 
-interface StyledInputProps {
-  isActive: boolean;
-}
-
-export default function DropDownSignUpCountry() {
-  const [isActive, setIsActive] = useState(false);
-  const [nation, setNation] = useState("REPUBLIC OF KOREA");
+export default function DropDownSignUpCountry(): JSX.Element {
+  const [nation, setNation] = useState("대한민국");
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
-  const onActiveToggle = useCallback(() => {
-    setIsActive((prev) => !prev);
-  }, []);
-
   const handleSelectItem = useCallback(
-    (selected: CountryListType) => {
-      if (selected) {
-        setNation(selected.country);
-        setIsActive(false);
-        setSignUpFormData((prev) => ({ ...prev, nation: selected.code }));
+    (selected: string): void => {
+      const country = countryList.find(
+        (item: CountryListType) => item.nation === selected
+      );
+      if (country) {
+        setNation(selected);
+        setSignUpFormData(
+          (prev: SignUpFormData): SignUpFormData => ({
+            ...prev,
+            nation: country.code,
+          })
+        );
       }
     },
     [setSignUpFormData]
   );
 
   return (
-    <S.Container>
-      <Text.Body1 color="gray700">국적</Text.Body1>
-      <S.DropdownContainer>
-        <S.DropdownBody onClick={onActiveToggle}>
-          <S.Selected>
-            <S.CountryItem color="gray900">{nation}</S.CountryItem>
-          </S.Selected>
-          <S.Selected>
-            <Image
-              src="/auth/arrow_down.svg"
-              alt="arrow"
-              width={20}
-              height={20}
-            />
-          </S.Selected>
-        </S.DropdownBody>
-        <Margin direction="column" size={8} />
-
-        <S.DropdownMenu isActive={isActive}>
-          {countryList.map((item) => (
-            <S.DropdownItemContainer
-              id="item"
-              key={item.code}
-              onClick={() => handleSelectItem(item)}
-            >
-              <S.CountryItem color="gray900">{item.country}</S.CountryItem>
-            </S.DropdownItemContainer>
-          ))}
-        </S.DropdownMenu>
-        <Margin direction="column" size={16} />
-      </S.DropdownContainer>
-    </S.Container>
+    <>
+      <DropDownCommon
+        label="국적"
+        list={countryList.map((item: CountryListType): string => item.nation)}
+        selected={nation}
+        handleSelectedChange={handleSelectItem}
+      />
+      <Margin direction="column" size={24} />
+    </>
   );
 }
-
-const S = {
-  Container: styled.div``,
-  DropdownContainer: styled.div`
-    margin-top: 8px;
-    &:hover {
-      cursor: pointer;
-    }
-  `,
-  DropdownBody: styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 452px;
-    height: 50px;
-    border: 1px solid #dcdce0;
-    border-radius: 8px;
-    cursor: pointer;
-  `,
-  Selected: styled.div`
-    padding-left: 15px;
-    padding-right: 15px;
-  `,
-  DropdownMenu: styled.ul<StyledInputProps>`
-    overflow: auto;
-    position: absolute;
-    background-color: white;
-    display: ${(props) => (props.isActive ? `block` : `none`)};
-    width: 452px;
-    height: 208px;
-    border: 1px solid #dcdce0;
-    border-radius: 8px;
-    padding-top: 21px;
-  `,
-  DropdownItemContainer: styled.li`
-    display: flex;
-    align-items: center;
-    padding-top: 0px;
-    padding-bottom: 26px;
-    padding-left: 16px;
-  `,
-  CountryItem: styled(Text.Body3)`
-    cursor: pointer;
-  `,
-};

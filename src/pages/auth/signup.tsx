@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
-import InputBox from "../../components/authpage/signup/signUpInput";
+import InputBox from "../../components/authpage/signup/signUpInput/index";
 import DropDown from "../../components/authpage/signup/dropDownSignUpCountry";
 import StudentCard from "../../components/authpage/signup/studentCard";
 import GenderSelectBox from "../../components/authpage/signup/genderSelect";
