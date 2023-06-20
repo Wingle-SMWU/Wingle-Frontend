@@ -10,6 +10,7 @@ import { useMutation } from "react-query";
 import TextInputWithButton from "@/src/components/ui/textInputWithButton";
 import { EmailAuthResponse } from "@/src/types/auth/emailApiType";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
+import styled from "styled-components";
 
 export default function EmailVerify(): JSX.Element {
   const [email, setEmail] = useState("");
@@ -165,8 +166,9 @@ export default function EmailVerify(): JSX.Element {
       />
       <Margin direction="column" size={24} />
 
+      <S.DropDownLabel>이메일 인증</S.DropDownLabel>
+      <Margin direction="column" size={8} />
       <TextInputWithButton
-        label="이메일 인증"
         name="이메일 인증"
         placeholder="인증번호"
         value={emailCertification}
@@ -185,3 +187,11 @@ export default function EmailVerify(): JSX.Element {
     </>
   );
 }
+const S = {
+  DropDownLabel: styled.label`
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: ${({ theme }) => theme.color.gray700};
+  `,
+};
