@@ -11,6 +11,7 @@ export default function Introduce(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [isIntroduce, setIsIntroduce] = useState(false);
   const [introduce, setIntroduce] = useState("");
+  const [textCount, setTextCount] = useState(0);
 
   const queryClient = useQueryClient();
 
@@ -72,7 +73,9 @@ export default function Introduce(): JSX.Element {
             onChange={onChangeIntroduce}
             defaultValue={profileData && profileData.introduce}
           />
+          <S.TextCount>{textCount}/500</S.TextCount>
         </S.Content>
+
         {modalVisible && (
           <Modal type="profile-back" onClickModal={onClickModal} />
         )}
@@ -123,5 +126,12 @@ const S = {
       font-weight: 400;
       color: gray;
     }
+  `,
+  TextCount: styled.div`
+    position: fixed;
+    bottom: 40px;
+    left: calc(50vw + 250px - 54.04px);
+    font-size: 12px;
+    color: #959599;
   `,
 };
