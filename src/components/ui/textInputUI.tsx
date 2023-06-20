@@ -40,7 +40,6 @@ export default function TextInputUI({
   return (
     <S.Container>
       {label && <S.DropDownLabel disabled={disabled}>{label}</S.DropDownLabel>}
-      <Margin direction="column" size={8} />
       <S.InputField width={width} error={error}>
         <input
           type={type || "text"}
