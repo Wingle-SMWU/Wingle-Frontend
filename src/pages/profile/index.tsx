@@ -146,19 +146,12 @@ export default function Edit(): JSX.Element {
             </S.UserBox>
           </>
 
-          {/* <S.EditList>
+          <S.EditList>
             <Margin direction="column" size={32} />
 
             <S.Column>
               <S.Language>
                 <Text.Body1 color="gray900">사용언어</Text.Body1>
-                <S.EditBtn
-                  src="/modify.svg"
-                  alt="연필"
-                  onClick={(): Promise<boolean> =>
-                    router.push(`/mypage/edit/language`)
-                  }
-                />
               </S.Language>
               <S.LanguageContent>
                 {profileData &&
@@ -166,14 +159,14 @@ export default function Edit(): JSX.Element {
                     <S.LanguageChartContent key={v.order}>
                       <S.LanguageChart src={`/mypage/language${v.order}.svg`} />
                       <S.LanguageText fontWeight={550} width={28}>
-                        {v.interest.substring(0, 2)}{" "}
+                        {v.language.substring(0, 2)}{" "}
                       </S.LanguageText>
                       <S.LanguageText
                         fontWeight={400}
                         width={262}
                         color="orange500"
                       >
-                        {v.interest.substring(2)}
+                        {v.language.substring(2)}
                       </S.LanguageText>
                     </S.LanguageChartContent>
                   ))}
@@ -184,13 +177,6 @@ export default function Edit(): JSX.Element {
             <S.Column>
               <S.Introduce>
                 <Text.Body1 color="gray900">자기소개</Text.Body1>
-                <S.EditBtn
-                  src="/modify.svg"
-                  alt="연필"
-                  onClick={(): Promise<boolean> =>
-                    router.push(`/mypage/edit/introduce`)
-                  }
-                />
               </S.Introduce>
               <S.IntroduceContent>
                 {profileData && profileData.introduce}
@@ -201,13 +187,6 @@ export default function Edit(): JSX.Element {
             <S.Column>
               <S.Interest>
                 <Text.Body1 color="gray900">관심사</Text.Body1>
-                <S.EditBtn
-                  src="/modify.svg"
-                  alt="연필"
-                  onClick={(): Promise<boolean> =>
-                    router.push(`/mypage/edit/interest`)
-                  }
-                />
               </S.Interest>
               <S.InterestBoxContainer>
                 {profileData &&
@@ -229,7 +208,7 @@ export default function Edit(): JSX.Element {
                   })}
               </S.InterestBoxContainer>
             </S.Column>
-          </S.EditList> */}
+          </S.EditList>
           {myProfileData?.nickname !== profileData?.nickname ? (
             <S.Note onClick={sendNote}>쪽지 보내기</S.Note>
           ) : (
