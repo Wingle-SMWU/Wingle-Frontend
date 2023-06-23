@@ -2,7 +2,11 @@ import { Text } from "../../ui";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-export default function Header({ currentTab }: { currentTab: string }) {
+export default function Header({
+  currentTab,
+}: {
+  currentTab: string;
+}): JSX.Element {
   const router = useRouter();
 
   return (
@@ -10,7 +14,7 @@ export default function Header({ currentTab }: { currentTab: string }) {
       <S.Header>
         <S.BackArrow
           src="/community/arrow-back.svg"
-          onClick={() => router.back()}
+          onClick={(): void => router.back()}
         />
         <Text.Title2 color="gray900">{currentTab}게시판</Text.Title2>
       </S.Header>

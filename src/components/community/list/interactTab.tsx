@@ -12,7 +12,7 @@ export default function InteractTab({
   forumId: number;
   imgUrl: string;
   my: boolean;
-}) {
+}): JSX.Element {
   const {
     data: interactArticles,
     isLoading,

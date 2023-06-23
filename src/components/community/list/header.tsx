@@ -14,10 +14,10 @@ export default function Header({
   tab,
   onClickTab,
 }: {
-  myArticle?: boolean,
+  myArticle?: boolean;
   tab: string;
   onClickTab: (event: any) => void;
-}) {
+}): JSX.Element {
   const {
     data: TabArr,
     isLoading,
@@ -29,23 +29,30 @@ export default function Header({
   });
 
   const router = useRouter();
-    
+
   if (isLoading) return <div>로딩중</div>;
   if (isError || isIdle) return <div>에러</div>;
 
   return (
     <>
       <S.Header>
-        {
-          myArticle ?
-            <>
-              <Image style={{cursor: 'pointer'}} src="/community/arrow-back.svg" alt="" width={24} height={24} 
-                onClick={() => {router.push('/mypage')}} />
-              <Text.Title1 color="gray900">내가 쓴 게시글</Text.Title1>
-            </>
-          :
-            <Text.Title1 color="gray900">커뮤니티</Text.Title1>
-        }
+        {myArticle ? (
+          <>
+            <Image
+              style={{ cursor: "pointer" }}
+              src="/community/arrow-back.svg"
+              alt=""
+              width={24}
+              height={24}
+              onClick={(): void => {
+                router.push("/mypage");
+              }}
+            />
+            <Text.Title1 color="gray900">내가 쓴 게시글</Text.Title1>
+          </>
+        ) : (
+          <Text.Title1 color="gray900">커뮤니티</Text.Title1>
+        )}
       </S.Header>
       <S.HeaderBar>
         {TabArr.map((el: { name: string; id: number }) => {
@@ -68,7 +75,6 @@ export default function Header({
   );
 }
 
-
 const S = {
   Header: styled.div`
     display: flex;
@@ -89,7 +95,7 @@ const S = {
   `,
 
   TextUnderLine: styled.div<Tab>`
-    border-bottom: ${({ tab }) =>
+    border-bottom: ${({ tab }): string =>
       tab ? "2px solid #ff812e" : "2px solid #fff"};
     padding-bottom: 6px;
   `,

@@ -1,6 +1,6 @@
 import ListCard from "./listCard";
 import { getArticles } from "@/src/api/community/get/articlesList";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import Loading from "../../ui/loadingUI";
 import NoData from "../../ui/NoDataUI";
 
@@ -12,7 +12,7 @@ export default function FreeTab({
   forumId: number;
   imgUrl: string;
   my: boolean;
-}) {
+}): JSX.Element {
   const {
     data: freeArticles,
     isLoading,

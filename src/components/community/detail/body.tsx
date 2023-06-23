@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Text } from "../../ui";
 
-export default function Body({ content }: { content: string }) {
+export default function Body({ content }: { content: string }): JSX.Element {
   return (
     <S.Body>
       <S.Contents>

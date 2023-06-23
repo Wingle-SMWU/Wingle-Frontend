@@ -6,7 +6,7 @@ import { ChangeEvent, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 
-export default function Create() {
+export default function Create(): JSX.Element {
   const router = useRouter();
   const { tab: currentTab, forumId } = router.query;
   const [contents, setContents] = useState("");
@@ -14,10 +14,10 @@ export default function Create() {
 
   const queryClient = useQueryClient();
 
-  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setContents(event.target.value);
   };
-  const onClickModal = () => {
+  const onClickModal = (): void => {
     if (contents) {
       setModalVisible((prev) => !prev);
     } else {
@@ -25,7 +25,7 @@ export default function Create() {
     }
   };
 
-  const fetchArticle = async () => {
+  const fetchArticle = async (): Promise<void | Article> => {
     if (!forumId) {
       return;
     }
@@ -55,6 +55,7 @@ export default function Create() {
     onSuccess: (data) => {
       setContents("");
       queryClient.invalidateQueries("articles");
+      if (!data) return;
       router.replace({
         pathname: `/community/detail`,
         query: { tab: currentTab, forumId: forumId, articleId: data.articleId },
@@ -80,7 +81,7 @@ export default function Create() {
           <Text.Body1
             pointer={contents ? true : false}
             color={contents ? "gray900" : "gray500"}
-            onClick={() => updateArticle.mutate()}
+            onClick={(): void => updateArticle.mutate()}
           >
             등록
           </Text.Body1>

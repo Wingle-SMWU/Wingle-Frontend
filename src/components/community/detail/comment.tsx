@@ -17,7 +17,7 @@ export default function Comment({
   currentTab: string;
   forumId: string;
   articleId: string;
-}) {
+}): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteInform, setDeleteInform] = useState({
     forumId: "",
@@ -25,7 +25,7 @@ export default function Comment({
     id: 0,
   });
 
-  const onClickModal = () => {
+  const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
   return (
@@ -68,7 +68,7 @@ export default function Comment({
               {isMine && (
                 <S.CancelImg
                   src="/community/detail/close-gray.svg"
-                  onClick={() => {
+                  onClick={(): void => {
                     onClickModal();
                     setDeleteInform({
                       ...deleteInform,
