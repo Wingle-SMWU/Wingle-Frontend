@@ -12,7 +12,7 @@ import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
-export default function Community({ tab }: { tab: string }) {
+export default function Community(): JSX.Element {
   const router = useRouter();
 
   const {
@@ -25,7 +25,7 @@ export default function Community({ tab }: { tab: string }) {
     queryKey: ["forums"],
   });
 
-  const onClickMoveToWrite = () => {
+  const onClickMoveToWrite = (): void => {
     const forumId = getForumId();
     router.push({
       pathname: `/community/create`,
@@ -35,7 +35,7 @@ export default function Community({ tab }: { tab: string }) {
 
   const [currentTab, setCurrentTab] = useRecoilState(currentTabStateAtom);
 
-  const onClickTab = (event: any) => {
+  const onClickTab = (event: any): void => {
     setCurrentTab(event.target.textContent);
     router.push({ query: { tab: event.target.textContent } });
   };
@@ -43,7 +43,7 @@ export default function Community({ tab }: { tab: string }) {
   if (isLoading) return <Loading />;
   if (isError || isIdle) return <div>에러</div>;
 
-  const getForumId = () => {
+  const getForumId = (): number => {
     const forum = TabArr.filter(
       (forum: { id: number; name: string }) => forum.name === currentTab
     );
@@ -72,7 +72,7 @@ export default function Community({ tab }: { tab: string }) {
       )}
       <S.Box>
         <S.CreateIcon
-          tab={tab}
+          tab={currentTab}
           src="community/list/new-write.svg"
           onClick={onClickMoveToWrite}
         />
@@ -96,12 +96,12 @@ const S = {
     margin-right: 30px;
   `,
 
-  CreateIcon: styled.img<Tab>`
+  CreateIcon: styled.img<{ tab: string }>`
     width: 50px;
     height: 50px;
     position: fixed;
     bottom: 94px;
-    display: ${({ tab }) => (tab === "공지" ? "none" : "block")};
     cursor: pointer;
+    display: ${({ tab }): string => (tab === "공지" ? "none" : "block")};
   `,
 };

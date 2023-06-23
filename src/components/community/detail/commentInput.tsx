@@ -10,10 +10,10 @@ export default function CommentInput({
 }: {
   forumId: number;
   articleId: number;
-}) {
+}): JSX.Element {
   const [comment, setComment] = useState<string>("");
 
-  const fetchComments = async () => {
+  const fetchComments = async (): Promise<Comment> => {
     const { data: response } = await instance.post(
       `/community/articles/comments`,
       {
@@ -45,7 +45,7 @@ export default function CommentInput({
     },
   });
 
-  const onChangeComment = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeComment = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setComment(event.target.value);
   };
 
@@ -82,7 +82,7 @@ export default function CommentInput({
             ? "/community/detail/send.svg"
             : "/community/detail/send-disable.svg"
         }
-        onClick={() => {
+        onClick={(): void => {
           comment && updateComment.mutate();
           setComment("");
           handleResetHeight();
@@ -122,6 +122,6 @@ const S = {
   PostIcon: styled.img<{ comment: string }>`
     width: 32px;
     height: 32px;
-    cursor: ${({ comment }) => (comment ? "pointer" : "auto")};
+    cursor: ${({ comment }): string => (comment ? "pointer" : "auto")};
   `,
 };

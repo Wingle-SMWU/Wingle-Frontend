@@ -10,7 +10,7 @@ export default function NoticeTab({
 }: {
   forumId: number;
   imgUrl: string;
-}) {
+}): JSX.Element {
   const {
     data: noticeArticles,
     isLoading,

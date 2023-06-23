@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
-export default function Detail() {
+export default function Detail(): JSX.Element {
   const router = useRouter();
   const currentTab = `${router.query.tab}`;
   const forumId = `${router.query.forumId}`;

@@ -1,7 +1,6 @@
 import { Text } from "../../ui";
 import betweenTime from "@/src/utils/betweenTime";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
 import styled from "styled-components";
 import { countryImg } from "@/src/modules/utils";
 import { useRecoilValue } from "recoil";
@@ -52,7 +51,7 @@ export default function ListCard({
       <S.ContentsHeader>
         {currentTab === "교류" ? (
           <S.ImageBox
-            onClick={(e) => {
+            onClick={(e): void => {
               e.stopPropagation();
               router.replace(`/profile?userID=${userId}`);
             }}

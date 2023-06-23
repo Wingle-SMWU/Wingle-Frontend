@@ -13,11 +13,11 @@ export default function Profile({
 }: {
   article: Article;
   currentTab: string;
-}) {
+}): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const { isMine, userNickname, createdTime, forumId, articleId, userId } =
     article;
-  const onClickModal = () => {
+  const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
 
@@ -29,7 +29,7 @@ export default function Profile({
         <S.ProfileLeft>
           {currentTab === "교류" ? (
             <S.ImageBox
-              onClick={() => {
+              onClick={(): void => {
                 router.push(`/profile?userID=${userId}`);
               }}
             >
