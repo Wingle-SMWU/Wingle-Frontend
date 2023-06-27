@@ -1,4 +1,5 @@
 import { getForums } from "@/src/api/community/get/forums";
+import { currentTabStateAtom } from "@/src/atoms/community/tab";
 import FreeTab from "@/src/components/community/list/freeTab";
 import Header from "@/src/components/community/list/header";
 import InteractTab from "@/src/components/community/list/interactTab";
@@ -7,18 +8,22 @@ import { getImageUrl } from "@/src/modules/utils";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { useQuery } from "react-query";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 export default function PostList() {
   const router = useRouter();
-  const currentTab: string = useMemo(() => {
-    if (!router.query.tab) {
-      return "자유";
-    }
-    return String(router.query.tab);
-  }, [router.query.tab]);
+  // const currentTab: string = useMemo(() => {
+  //   if (!router.query.tab) {
+  //     return "자유";
+  //   }
+  //   return String(router.query.tab);
+  // }, [router.query.tab]);
+
+  const [currentTab, setCurrentTab] = useRecoilState(currentTabStateAtom);
 
   const onClickTab = (event: any) => {
+    setCurrentTab(event.target.textContent);
     router.push({ query: { tab: event.target.textContent } });
   };
 
@@ -38,20 +43,22 @@ export default function PostList() {
   return (
     <S.Wrapper>
       <Header myArticle={true} tab={currentTab} onClickTab={onClickTab} />
-      {currentTab === TabArr[0].name && (
-        <FreeTab
-          forumId={TabArr[0].id}
-          imgUrl={getImageUrl(currentTab)}
-          my={true}
-        />
-      )}
-      {currentTab === TabArr[1].name && (
-        <InteractTab
-          forumId={TabArr[1].id}
-          imgUrl={getImageUrl(currentTab)}
-          my={true}
-        />
-      )}
+      <S.Forum>
+        {currentTab === TabArr[0].name && (
+          <FreeTab
+            forumId={TabArr[0].id}
+            imgUrl={getImageUrl(currentTab)}
+            my={true}
+          />
+        )}
+        {currentTab === TabArr[1].name && (
+          <InteractTab
+            forumId={TabArr[1].id}
+            imgUrl={getImageUrl(currentTab)}
+            my={true}
+          />
+        )}
+      </S.Forum>
     </S.Wrapper>
   );
 }
@@ -61,5 +68,8 @@ const S = {
     display: flex;
     flex-direction: column;
     background-color: white;
+  `,
+  Forum: styled.div`
+    margin-top: 107px;
   `,
 };
