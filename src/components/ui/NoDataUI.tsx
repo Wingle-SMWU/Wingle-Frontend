@@ -48,7 +48,7 @@ const S = {
     ${({ type }) =>
       (type === "article" || type === "message") &&
       `
-      position: absolute;
+      margin-top: -107px;
       width: 500px;
       max-width: 500px;
       height: 100vh;
