@@ -268,6 +268,9 @@ const S = {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    width: 100%;
+    position: fixed;
+    max-width: 500px;
   `,
 
   TitleBox: styled.div`
@@ -321,7 +324,7 @@ const S = {
       font-family: "Pretendard";
       font-style: normal;
       font-weight: 500;
-      font-size: 12px;
+      font-size: 11.5px;
       line-height: 140%;
       color: #6c6c70;
     }
