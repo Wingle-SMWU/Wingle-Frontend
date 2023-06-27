@@ -18,6 +18,7 @@ export default function Body({ content }: { content: string }): JSX.Element {
 const S = {
   Body: styled.div`
     width: 100%;
+    background-color: #fff;
   `,
 
   Contents: styled.div`

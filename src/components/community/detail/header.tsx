@@ -25,6 +25,7 @@ export default function Header({
 const S = {
   Wrapper: styled.div`
     width: 100%;
+    z-index: 10;
     max-width: 500px;
     background-color: #fff;
     position: fixed;
