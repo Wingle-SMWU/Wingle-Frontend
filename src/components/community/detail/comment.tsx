@@ -29,7 +29,7 @@ export default function Comment({
     setModalVisible((prev) => !prev);
   };
   return (
-    <S.Wrapper>
+    <S.Wrapper comments={comments}>
       <S.CommentCount>
         <Text.Body3 color="gray900">댓글 {comments.length}</Text.Body3>
       </S.CommentCount>
@@ -104,12 +104,13 @@ export default function Comment({
 }
 
 const S = {
-  Wrapper: styled.div`
+  Wrapper: styled.div<{ comments: Comment[] }>`
     width: 100%;
-    height: 100%;
+    height: ${({ comments }) => (comments.length ? "auto" : "100%")};
     display: flex;
     flex-direction: column;
     background-color: #fff;
+    padding-bottom: 57px;
   `,
 
   CommentCount: styled.div`
