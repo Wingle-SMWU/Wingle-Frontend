@@ -53,23 +53,25 @@ export default function Community(): JSX.Element {
   return (
     <S.Wrapper>
       <Header tab={currentTab} onClickTab={onClickTab} />
-      {currentTab === TabArr[0].name && (
-        <FreeTab
-          forumId={TabArr[0].id}
-          imgUrl={getImageUrl(currentTab)}
-          my={false}
-        />
-      )}
-      {currentTab === TabArr[1].name && (
-        <InteractTab
-          forumId={TabArr[1].id}
-          imgUrl={getImageUrl(currentTab)}
-          my={false}
-        />
-      )}
-      {currentTab === TabArr[2].name && (
-        <NoticeTab forumId={TabArr[2].id} imgUrl={getImageUrl(currentTab)} />
-      )}
+      <S.Forum>
+        {currentTab === TabArr[0].name && (
+          <FreeTab
+            forumId={TabArr[0].id}
+            imgUrl={getImageUrl(currentTab)}
+            my={false}
+          />
+        )}
+        {currentTab === TabArr[1].name && (
+          <InteractTab
+            forumId={TabArr[1].id}
+            imgUrl={getImageUrl(currentTab)}
+            my={false}
+          />
+        )}
+        {currentTab === TabArr[2].name && (
+          <NoticeTab forumId={TabArr[2].id} imgUrl={getImageUrl(currentTab)} />
+        )}
+      </S.Forum>
       <S.Box>
         <S.CreateIcon
           tab={currentTab}
@@ -88,7 +90,9 @@ const S = {
     background-color: white;
     padding-bottom: 72px;
   `,
-
+  Forum: styled.div`
+    margin-top: 107px;
+  `,
   Box: styled.div`
     display: flex;
     flex-direction: column;
