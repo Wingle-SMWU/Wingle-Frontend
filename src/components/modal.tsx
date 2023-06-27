@@ -139,12 +139,6 @@ export default function Modal({
   return (
     <Style.Wrapper>
       <Style.Modal>
-        <Style.AbsolutePoint>
-          <Style.CloseIcon
-            src="/community/modal/close-black.svg"
-            onClick={onClickModal}
-          />
-        </Style.AbsolutePoint>
         <Style.Main>
           <Text.Title2 color="gray900">{modalTitle}</Text.Title2>
           <Margin direction="column" size={8} />
@@ -186,16 +180,6 @@ const Style = {
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-  `,
-
-  AbsolutePoint: styled.div`
-    position: absolute;
-  `,
-
-  CloseIcon: styled.img`
-    position: relative;
-    top: 10.83px;
-    left: 282.49px;
   `,
 
   Main: styled.div`
