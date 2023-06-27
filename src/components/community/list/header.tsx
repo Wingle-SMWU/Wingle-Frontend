@@ -34,7 +34,7 @@ export default function Header({
   if (isError || isIdle) return <div>에러</div>;
 
   return (
-    <>
+    <S.Wrapper>
       <S.Header>
         {myArticle ? (
           <>
@@ -71,11 +71,19 @@ export default function Header({
           );
         })}
       </S.HeaderBar>
-    </>
+    </S.Wrapper>
   );
 }
 
 const S = {
+  Wrapper: styled.div`
+    position: fixed;
+    background-color: #fff;
+    width: 100%;
+    max-width: 500px;
+    z-index: 10;
+  `,
+
   Header: styled.div`
     display: flex;
     flex-direction: row;
