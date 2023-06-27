@@ -1,6 +1,6 @@
 import { Margin } from "../../ui";
 import instance from "@/src/api/axiosModule";
-import { ChangeEvent, useCallback, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 
@@ -51,6 +51,11 @@ export default function CommentInput({
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
+  const handleResetHeight = () => {
+    if (inputRef.current !== null) {
+      inputRef.current.style.height = "auto";
+    }
+  };
   const handleResizeHeight = useCallback(() => {
     if (inputRef.current !== null) {
       inputRef.current.style.height = "auto";
@@ -80,6 +85,7 @@ export default function CommentInput({
         onClick={(): void => {
           comment && updateComment.mutate();
           setComment("");
+          handleResetHeight();
         }}
       />
     </S.Wrapper>
