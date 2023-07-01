@@ -20,16 +20,16 @@ export default function DropDownCommon({
   handleSelectedChange,
   description,
   disabled = false,
-}: DropDownProps) {
+}: DropDownProps): JSX.Element {
   const [isActive, setIsActive] = useState(false);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (): void => {
     if (!disabled) {
       setIsActive(!isActive);
     }
   };
 
-  const handleSelect = (item: string) => {
+  const handleSelect = (item: string): void => {
     handleSelectedChange(item);
     setIsActive(false);
   };
@@ -61,7 +61,7 @@ export default function DropDownCommon({
             <S.DropdownItemContainer
               key={item}
               isSelected={item === selected}
-              onClick={() => {
+              onClick={(): void => {
                 handleSelect(item);
               }}
             >
