@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Loading from "@/src/components/ui/loadingUI";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+import { theme } from "@/src/styles/theme";
 
 export default function Edit(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -110,13 +111,14 @@ export default function Edit(): JSX.Element {
                 />
               </S.Interest>
               <S.InterestBoxContainer>
+                <Margin size={8} direction={"column"} />
                 {profileData &&
                   profileData.interests.map((item, index) => {
                     const isLastItemInRow = (index + 1) % 3 === 0;
 
                     return (
                       <S.ShowInterest key={item}>
-                        <S.InterestBox backgroundColor="#FFF3EB">
+                        <S.InterestBox>
                           <Text.Body6 color="gray900" pointer>
                             {item}
                           </Text.Body6>
@@ -138,10 +140,6 @@ export default function Edit(): JSX.Element {
     </>
   );
 }
-
-type IntesestBoxProps = {
-  backgroundColor: string;
-};
 
 type LanguageText = {
   fontWeight: number;
@@ -244,7 +242,7 @@ const S = {
     padding-top: 16px;
     font-size: 16px;
     line-height: 140%;
-    color: theme.color.gray900;
+    color: ${theme.color.gray900};
   `,
   InterestBoxContainer: styled.div`
     width: 80%;
@@ -258,13 +256,14 @@ const S = {
     display: inline-flex;
     flex-direction: column;
   `,
-  InterestBox: styled.div<IntesestBoxProps>`
+  InterestBox: styled.div`
     cursor: pointer;
     border-radius: 40px;
     padding: 8px 15px;
     display: inline-flex;
-    background-color: ${(props): string => props.backgroundColor};
-    margin: 8px;
+    background-color: ${theme.color.orange100};
+    border: 1px solid ${theme.color.orange300};
+    margin: 8px 8px 0px 0px;
   `,
 
   Column: styled.div`

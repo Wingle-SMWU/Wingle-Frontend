@@ -10,6 +10,7 @@ import { ProfileStateType } from "@/src/types/mypage/profileType";
 import { Room, RoomNumberResponse } from "@/src/types/message/roomType";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import useGetRoom from "@/src/hooks/message/useGetRoom";
+import { theme } from "@/src/styles/theme";
 
 export default function Edit(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,6 +26,7 @@ export default function Edit(): JSX.Element {
   const getProfile = async (): Promise<void> => {
     try {
       const res = await instance.get(`/profile/${userID}`);
+      console.log("res", res);
       setProfileData(res.data.data);
       setIsLoading(false);
     } catch (err) {
@@ -40,7 +42,7 @@ export default function Edit(): JSX.Element {
     setModalVisible((prev) => !prev);
   };
 
-  const sendNote = (() => {
+  const sendNote = ((): void => {
     const setYourInfo = (): void => {
       if (typeof window !== "undefined") {
         window.sessionStorage.setItem(
@@ -73,7 +75,7 @@ export default function Edit(): JSX.Element {
       return roomId.roomId;
     };
 
-    return (): void => {
+    return () => {
       if (messageDataRoom) {
         setYourInfo();
         const existingRoomId = findExistingRoom(messageDataRoom);
@@ -189,13 +191,14 @@ export default function Edit(): JSX.Element {
                 <Text.Body1 color="gray900">관심사</Text.Body1>
               </S.Interest>
               <S.InterestBoxContainer>
+                <Margin size={8} direction={"column"} />
                 {profileData &&
                   profileData.interests.map((item, index) => {
                     const isLastItemInRow = (index + 1) % 3 === 0;
 
                     return (
                       <S.ShowInterest key={item}>
-                        <S.InterestBox backgroundColor="#FFF3EB">
+                        <S.InterestBox>
                           <Text.Body6 color="gray900" pointer>
                             {item}
                           </Text.Body6>
@@ -221,10 +224,6 @@ export default function Edit(): JSX.Element {
       </S.Wapper>
     </>
   );
-}
-
-interface IntesestBoxProps {
-  backgroundColor: string;
 }
 
 interface LanguageText {
@@ -384,13 +383,14 @@ const S = {
     display: inline-flex;
     flex-direction: column;
   `,
-  InterestBox: styled.div<IntesestBoxProps>`
+  InterestBox: styled.div`
     cursor: pointer;
     border-radius: 40px;
     padding: 8px 15px;
     display: inline-flex;
-    background-color: ${(props): string => props.backgroundColor};
-    margin: 8px;
+    background-color: ${theme.color.orange100};
+    border: 1px solid ${theme.color.orange300};
+    margin: 8px 8px 0px 0px;
   `,
 
   Column: styled.div`
