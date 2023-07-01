@@ -63,6 +63,9 @@ const S = {
         max-width: 500px;
         min-height: 100vh;
         background-color: white;
+        @media (max-width: 500px) {
+          width: 100vw;
+        }
       `}
   `,
 };

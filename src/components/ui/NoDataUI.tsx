@@ -52,6 +52,9 @@ const S = {
       width: 500px;
       max-width: 500px;
       height: 100vh;
+      @media (max-width: 500px) {
+      width: 100vw;
+    }
     `}
   `,
   Text: styled.div`
