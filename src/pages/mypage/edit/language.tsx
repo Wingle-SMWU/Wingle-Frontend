@@ -9,6 +9,7 @@ import { LanguagesType } from "@/src/types/mypage/profileType";
 import Loading from "@/src/components/ui/loadingUI";
 import { postLanguage } from "@/src/api/mypage/profileData";
 import { useMutation, useQueryClient } from "react-query";
+import { theme } from "@/src/styles/theme";
 
 export default function Language(): JSX.Element {
   const [loading, setLoading] = useState(true);
@@ -142,11 +143,9 @@ export default function Language(): JSX.Element {
             />
           </S.SelectBox>
           <S.ResetBox>
-            <S.ResetBtn>
-              <Text.Caption3 color="gray700" pointer onClick={resetBtn}>
-                선택 초기화
-              </Text.Caption3>
-            </S.ResetBtn>
+            <S.ResetBtnBox>
+              <S.ResetBtn onClick={resetBtn}>선택 초기화</S.ResetBtn>
+            </S.ResetBtnBox>
           </S.ResetBox>
         </S.Content>
         {modalVisible && (
@@ -198,10 +197,16 @@ const S = {
     justify-content: flex-end;
     margin-top: 50px;
   `,
-  ResetBtn: styled.button`
-    width: 79px;
-    height: 33px;
-    border: 1px solid #dcdce0;
+  ResetBtnBox: styled.div`
+    border: 1px solid ${theme.color.gray300};
     border-radius: 8px;
+  `,
+  ResetBtn: styled.button`
+    padding: 8px 12px;
+    font-size: 12px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 700;
+    color: ${theme.color.gray700};
   `,
 };
