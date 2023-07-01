@@ -110,11 +110,15 @@ const S = {
   `,
   Content: styled.div`
     padding: 0 24px;
+    margin-top: 56px;
   `,
   Header: styled.div`
     width: 100%;
     height: 50px;
     padding: 14px 0;
+    position: fixed;
+    top: 0;
+    z-index: 1;
   `,
   Profile: styled.div`
     display: flex;
