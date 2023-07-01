@@ -74,7 +74,6 @@ const S = {
     border-radius: 100px;
     right: 0%;
     bottom: 0%;
-    z-index: 1;
   `,
   UserInfoBox: styled.div`
     width: 340px;

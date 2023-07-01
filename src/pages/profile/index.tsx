@@ -241,10 +241,16 @@ const S = {
   `,
   Content: styled.div`
     padding: 0 24px;
+    margin-top: 56px;
   `,
   Header: styled.div`
     display: flex;
-    padding: 14px 0;
+    padding: 14px 0px;
+    position: fixed;
+    background-color: ${theme.color.white};
+    z-index: 1;
+    width: 452px;
+    top: 0px;
   `,
   GoBackArrow: styled.img`
     cursor: pointer;
@@ -278,7 +284,6 @@ const S = {
     border-radius: 100px;
     right: 0%;
     bottom: 0%;
-    z-index: 1;
   `,
   UserInfoBox: styled.div`
     width: 340px;
