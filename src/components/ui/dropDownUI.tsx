@@ -47,12 +47,21 @@ export default function DropDownCommon({
             {selected || dropDownPlaceHolder || "Select an item"}
           </S.DropdownSelected>
           <S.DropdownSelected disabled={false} selected={selected}>
-            <Image
-              src="/auth/arrow_down.svg"
-              alt="arrow"
-              width={20}
-              height={20}
-            />
+            {isActive ? (
+              <Image
+                src="/auth/arrow_up.svg"
+                alt="arrow"
+                width={20}
+                height={20}
+              />
+            ) : (
+              <Image
+                src="/auth/arrow_down.svg"
+                alt="arrow"
+                width={20}
+                height={20}
+              />
+            )}
           </S.DropdownSelected>
         </S.DropdownBody>
 
