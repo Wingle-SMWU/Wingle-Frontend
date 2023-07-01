@@ -31,7 +31,7 @@ export default function Edit(): JSX.Element {
               onClick={(): Promise<boolean> => router.push(`/mypage`)}
             />
             <Margin direction="row" size={13} />
-            <Text.Title1 color="gray900">프로필 수정</Text.Title1>
+            <Text.Title1 color="gray900">내 프로필</Text.Title1>
           </S.Header>
           <>
             <S.UserBox>
