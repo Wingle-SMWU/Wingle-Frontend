@@ -68,7 +68,7 @@ export default function CommentInput({
       <S.CommentInput
         placeholder="댓글을 입력해보세요."
         onChange={onChangeComment}
-        maxLength={500}
+        maxLength={1000}
         rows={1}
         ref={inputRef}
         onInput={handleResizeHeight}
