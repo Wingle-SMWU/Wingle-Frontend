@@ -7,7 +7,10 @@ export default function Body({ content }: { content: string }): JSX.Element {
       <S.Contents>
         <Text.Body3 color="gray900">
           {content.split("\n").map((text, i) => (
-            <div key={i}>{text}</div>
+            <div key={i}>
+              {text}
+              <br />
+            </div>
           ))}
         </Text.Body3>
       </S.Contents>

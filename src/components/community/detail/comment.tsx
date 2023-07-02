@@ -6,6 +6,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { countryImg } from "@/src/modules/utils";
 import NoData from "../../ui/NoDataUI";
+import { useRouter } from "next/router";
 
 export default function Comment({
   comments,
@@ -24,7 +25,7 @@ export default function Comment({
     articleId: "",
     id: 0,
   });
-
+  const router = useRouter();
   const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
@@ -51,7 +52,11 @@ export default function Comment({
             <S.CommentTop>
               <S.CommentTopLeft>
                 {currentTab === "교류" ? (
-                  <S.ImageBox>
+                  <S.ImageBox
+                    onClick={(e): void => {
+                      router.replace(`/profile?userID=${userId}`);
+                    }}
+                  >
                     <S.ProfileImg
                       src={userImage ? userImage : getImageUrl(currentTab)}
                     />
@@ -148,6 +153,7 @@ const S = {
     position: relative;
     width: 36px;
     height: 36px;
+    cursor: pointer;
   `,
   NationIcon: styled.img`
     width: 16px;

@@ -91,7 +91,7 @@ export default function Create(): JSX.Element {
         <S.Contents
           placeholder="자유롭게 글을 작성해보세요!"
           onChange={onChangeContents}
-          maxLength={1000}
+          maxLength={3000}
           value={contents}
         />
       </S.Body>
