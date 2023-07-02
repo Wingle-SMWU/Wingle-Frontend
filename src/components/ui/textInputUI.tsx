@@ -36,7 +36,7 @@ export default function TextInputUI({
   placeholder,
   errorMessage,
   description,
-}: TextInputProps) {
+}: TextInputProps): JSX.Element {
   return (
     <S.Container>
       {label && <S.DropDownLabel disabled={disabled}>{label}</S.DropDownLabel>}
@@ -55,7 +55,7 @@ export default function TextInputUI({
       {error ? (
         <S.ErrorWrapper>
           <Image src="/auth/error.svg" alt="error" width={16} height={16} />
-          <Margin direction="row" size={8} />
+          <Margin direction="row" size={4} />
           <Text.Caption3 color="red500">{errorMessage}</Text.Caption3>
         </S.ErrorWrapper>
       ) : (
@@ -88,7 +88,10 @@ const S = {
     margin-bottom: 8px;
 
     & > input {
-      width: ${({ width }) => (width ? { width } : "312px")};
+      width: ${({ width }) =>
+        width
+          ? `calc(${width} * (100vw / 1440))`
+          : `calc(312px * (100vw / 1440))`};
       border: none;
       padding: 14px 16px;
       border-radius: 8px;
