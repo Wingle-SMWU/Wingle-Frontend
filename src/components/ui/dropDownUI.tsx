@@ -106,13 +106,13 @@ const S = {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 452px;
+    width: calc(452px * (100vw / 1440));
     height: 50px;
     background-color: ${({ theme, disabled }) =>
       disabled ? theme.color.gray200 : theme.color.white};
     border: 1px solid
       ${({ theme, isActive }) =>
-        isActive ? theme.color.gray600 : theme.color.gray200};
+        isActive ? theme.color.gray600 : theme.color.gray300};
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
     border-radius: 8px;
   `,
