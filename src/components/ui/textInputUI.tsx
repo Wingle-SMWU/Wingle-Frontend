@@ -53,11 +53,13 @@ export default function TextInputUI({
         />
       </S.InputField>
       {error ? (
-        <S.ErrorWrapper>
-          <Image src="/auth/error.svg" alt="error" width={16} height={16} />
-          <Margin direction="row" size={4} />
-          <Text.Caption3 color="red500">{errorMessage}</Text.Caption3>
-        </S.ErrorWrapper>
+        errorMessage ? (
+          <S.ErrorWrapper>
+            <Image src="/auth/error.svg" alt="error" width={16} height={16} />
+            <Margin direction="row" size={4} />
+            <Text.Caption3 color="red500">{errorMessage}</Text.Caption3>
+          </S.ErrorWrapper>
+        ) : null
       ) : (
         description && (
           <Text.Caption3 color="gray900">{description}</Text.Caption3>
