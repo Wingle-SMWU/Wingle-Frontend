@@ -82,18 +82,20 @@ const S = {
       disabled ? theme.color.gray500 : theme.color.gray700};
   `,
   InputField: styled.div<InputFieldProps>`
+    width: ${({ width }): string =>
+      width
+        ? `calc(${width} * (100vw / 1440))`
+        : `calc(452px * (100vw / 1440))`};
     height: 50px;
     border: 1px solid
       ${({ error, theme }): string =>
         error ? theme.color.red400 : theme.color.gray300};
     border-radius: 8px;
     margin-bottom: 8px;
+    position: relative;
 
     & > input {
-      width: ${({ width }): string =>
-        width
-          ? `calc(${width} * (100vw / 1440))`
-          : `calc(312px * (100vw / 1440))`};
+      width: calc(100% - 32px);
       border: none;
       padding: 14px 16px;
       border-radius: 8px;
