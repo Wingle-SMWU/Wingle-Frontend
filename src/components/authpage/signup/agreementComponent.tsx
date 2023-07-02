@@ -9,7 +9,7 @@ export function AgreementComponent({
   isRequired,
   handleCheck,
   detail,
-}: AgreementComponentProps) {
+}: AgreementComponentProps): JSX.Element {
   const [isAgreed, setAgreed] = useState(false);
   const [isActive, setActive] = useState(false);
 
@@ -24,8 +24,10 @@ export function AgreementComponent({
           alt="selectedCheck"
           width={20}
           height={20}
-          src={isAgreed ? "/auth/selectedCheck.svg" : "/auth/unselectedCheck.svg"}
-          onClick={() => {
+          src={
+            isAgreed ? "/auth/selectedCheck.svg" : "/auth/unselectedCheck.svg"
+          }
+          onClick={(): void => {
             setAgreed((prev) => !prev);
           }}
         />
@@ -33,7 +35,7 @@ export function AgreementComponent({
         <Text.Body2
           color="gray900"
           pointer={true}
-          onClick={() => {
+          onClick={(): void => {
             setAgreed((prev) => !prev);
           }}
         >
@@ -52,7 +54,7 @@ export function AgreementComponent({
             width={20}
             height={20}
             src="/auth/arrow_down.svg"
-            onClick={() => {
+            onClick={(): void => {
               setActive((prev) => !prev);
             }}
           />
@@ -70,10 +72,10 @@ const S = {
   `,
   PrivacyPolicyIcon: styled.div<{ Condition: boolean }>`
     margin-left: auto;
-    display: ${(props) => (props.Condition ? `block` : `none`)};
+    display: ${(props): string => (props.Condition ? `block` : `none`)};
   `,
   PrivacyPolicyContent: styled.div<{ Condition: boolean }>`
-    display: ${(props) => (props.Condition ? `block` : `none`)};
+    display: ${(props): string => (props.Condition ? `block` : `none`)};
     overflow: auto;
     margin-top: 8px;
     padding: 16px;

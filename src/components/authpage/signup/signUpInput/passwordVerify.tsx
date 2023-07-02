@@ -3,7 +3,7 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import TextInputUI from "@/src/components/ui/textInputUI";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
-import { Margin, Text } from "@/src/components/ui";
+import { Margin } from "@/src/components/ui";
 
 export default function PasswordVerify(): JSX.Element {
   const [password, setPassword] = useState("");

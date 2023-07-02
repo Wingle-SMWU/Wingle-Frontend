@@ -13,7 +13,7 @@ interface StyledInputProps {
   error: boolean;
 }
 
-export default function Login() {
+export default function Login(): JSX.Element {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,12 +33,12 @@ export default function Login() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     login();
   };
 
-  const handleSignup = () => {
+  const handleSignup = (): void => {
     router.push("/auth/signup");
   };
 
@@ -69,7 +69,7 @@ export default function Login() {
               type="email"
               placeholder="이메일"
               value={email}
-              onChange={(e) => {
+              onChange={(e): void => {
                 setEmail(e.target.value);
                 setError(false);
               }}
@@ -80,7 +80,7 @@ export default function Login() {
               type="password"
               placeholder="비밀번호"
               value={password}
-              onChange={(e) => {
+              onChange={(e): void => {
                 setPassword(e.target.value);
                 setError(false);
               }}
@@ -120,7 +120,8 @@ const S = {
     margin: 0 auto;
     width: 452px;
     height: 50px;
-    border: 1px solid ${(props) => (props.error ? "#FF7070" : "#dcdce0;")};
+    border: 1px solid
+      ${(props): string => (props.error ? "#FF7070" : "#dcdce0;")};
     border-radius: 8px;
     margin-bottom: 18px;
     display: flex;
@@ -152,14 +153,15 @@ const S = {
   LoginButton: styled.button`
     width: 452px;
     height: 50px;
-    background-color: ${({ disabled }) => (disabled ? "#eee" : "#ff812e")};
-    color: ${({ disabled }) => (disabled ? "#959599" : "#fff")};
+    background-color: ${({ disabled }): string =>
+      disabled ? "#eee" : "#ff812e"};
+    color: ${({ disabled }): string => (disabled ? "#959599" : "#fff")};
     border-radius: 8px;
     margin: 0 auto;
     font-weight: 700;
     font-size: 16px;
     line-height: 22.4px;
-    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+    cursor: ${({ disabled }): string => (disabled ? "not-allowed" : "pointer")};
   `,
 
   RegisterButton: styled.button`

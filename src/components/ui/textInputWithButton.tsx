@@ -41,7 +41,7 @@ export default function TextInputWithButton({
   buttonMessage,
   buttonDisabled,
   onClick,
-}: TextInputProps) {
+}: TextInputProps): JSX.Element {
   return (
     <S.Container>
       {label && <S.DropDownLabel disabled={disabled}>{label}</S.DropDownLabel>}
@@ -96,13 +96,13 @@ const S = {
     margin-bottom: 8px;
     font-size: 16px;
     font-weight: 700;
-    color: ${({ theme, disabled }) =>
+    color: ${({ theme, disabled }): string =>
       disabled ? theme.color.gray500 : theme.color.gray700};
   `,
   InputField: styled.div<InputFieldProps>`
     height: 50px;
     border: 1px solid
-      ${({ error, theme }) =>
+      ${({ error, theme }): string =>
         error ? theme.color.red400 : theme.color.gray300};
     border-radius: 8px;
     margin-bottom: 8px;
@@ -116,10 +116,10 @@ const S = {
       font-weight: 400;
       font-size: 16px;
       line-height: 140%;
-      color: ${({ theme }) => theme.color.gray900};
+      color: ${({ theme }): string => theme.color.gray900};
 
       &::placeholder {
-        color: ${({ theme }) => theme.color.gray300};
+        color: ${({ theme }): string => theme.color.gray300};
       }
     }
   `,

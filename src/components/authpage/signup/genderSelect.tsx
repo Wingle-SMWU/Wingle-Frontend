@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 
-export default function GenderSelectBox() {
+export default function GenderSelectBox(): JSX.Element {
   const [gender, setGender] = useState(true);
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
@@ -22,7 +22,7 @@ export default function GenderSelectBox() {
       <S.Wrapper>
         <Margin direction="column" size={9} />
         <S.GenderWrapper
-          onClick={() => {
+          onClick={(): void => {
             setGender(true);
           }}
         >
@@ -36,7 +36,7 @@ export default function GenderSelectBox() {
           <Text.Body3 color="gray900">여성</Text.Body3>
         </S.GenderWrapper>
         <S.GenderWrapper
-          onClick={() => {
+          onClick={(): void => {
             setGender(false);
           }}
         >

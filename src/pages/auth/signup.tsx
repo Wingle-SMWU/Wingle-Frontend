@@ -14,7 +14,7 @@ import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { useRecoilValue } from "recoil";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 
-export default function SignUp() {
+export default function SignUp(): JSX.Element {
   const [isButtonDisabled, setButtonDisabled] = useState(true);
 
   const signUpFormData = useRecoilValue(signUpFormDataAtom);
@@ -40,7 +40,7 @@ export default function SignUp() {
     { onSuccess: () => router.push("/auth/complete") }
   );
 
-  const handleSignUpSubmit = () => {
+  const handleSignUpSubmit = (): void => {
     if (!isButtonDisabled) {
       signUpMutation(signUpFormData);
     }
@@ -54,7 +54,7 @@ export default function SignUp() {
           alt="arrow"
           width={24}
           height={24}
-          onClick={() => router.push("/auth/login")}
+          onClick={(): Promise<boolean> => router.push("/auth/login")}
         />
         <Margin direction="row" size={14} />
         <Text.Title2 color="gray900">회원가입</Text.Title2>
@@ -89,13 +89,14 @@ const S = {
     cursor: pointer;
   `,
   CompleteButton: styled.button<{ disabled: boolean }>`
-    background-color: ${({ disabled }) => (disabled ? "#EEEEF2" : "#FF812E")};
-    color: ${({ disabled }) => (disabled ? "#959599" : "#fff")};
+    background-color: ${({ disabled }): string =>
+      disabled ? "#EEEEF2" : "#FF812E"};
+    color: ${({ disabled }): string => (disabled ? "#959599" : "#fff")};
     border-radius: 8px;
     width: 452px;
     height: 50px;
     margin-bottom: 144px;
-    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+    cursor: ${({ disabled }): string => (disabled ? "not-allowed" : "pointer")};
     border-radius: 8px;
     margin: 0 auto;
     font-weight: 700;

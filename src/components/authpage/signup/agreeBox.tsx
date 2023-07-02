@@ -5,9 +5,10 @@ import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { AgreementComponent } from "./agreementComponent";
 
-export default function AgreeBox() {
+export default function AgreeBox(): JSX.Element {
   const [termsOfUse, checkTermsOfUse] = useState(false);
-  const [termsOfPersonalInformation, checkTermsOfPersonalInformation] = useState(false);
+  const [termsOfPersonalInformation, checkTermsOfPersonalInformation] =
+    useState(false);
   const [termsOfPromotion, checkTermsOfPromotion] = useState(false);
 
   const handleUseCheck = useCallback((check: boolean) => {
@@ -31,7 +32,12 @@ export default function AgreeBox() {
       termsOfPersonalInformation: termsOfPersonalInformation,
       termsOfPromotion: termsOfPromotion,
     }));
-  }, [setSignUpFormData, termsOfPersonalInformation, termsOfPromotion, termsOfUse]);
+  }, [
+    setSignUpFormData,
+    termsOfPersonalInformation,
+    termsOfPromotion,
+    termsOfUse,
+  ]);
 
   return (
     <>
