@@ -7,7 +7,8 @@ import { useMutation } from "react-query";
 import { postLogin } from "@/src/api/auth/loginApi";
 import { saveRefreshTokenToLocalStorage } from "@/src/utils/refreshTokenHandler";
 import { saveAccessTokenToLocalStorage } from "@/src/utils/accessTokenHandler";
-import { ErrorMent } from "@/src/components/authpage/signup/errorMent";
+import TextInputUI from "@/src/components/ui/textInputUI";
+import Button from "@/src/components/ui/button";
 
 interface StyledInputProps {
   error: boolean;
@@ -49,14 +50,14 @@ export default function Login(): JSX.Element {
     !password;
 
   return (
-    <>
+    <S.Container>
       <S.Header>
         <Image
           src="/auth/loginLogo.svg"
           alt="logo"
           priority
           width={200}
-          height={200}
+          height={120}
         />
         <Margin direction="column" size={8} />
         <Text.Body6 color="gray700">다함께 즐기는 국제교류 커뮤니티</Text.Body6>
@@ -64,83 +65,67 @@ export default function Login(): JSX.Element {
 
       <form onSubmit={handleSubmit}>
         <S.AccountWrapper>
-          <S.InputField error={error}>
-            <input
-              type="email"
-              placeholder="이메일"
-              value={email}
-              onChange={(e): void => {
-                setEmail(e.target.value);
-                setError(false);
-              }}
-            />
-          </S.InputField>
-          <S.InputField error={error}>
-            <input
-              type="password"
-              placeholder="비밀번호"
-              value={password}
-              onChange={(e): void => {
-                setPassword(e.target.value);
-                setError(false);
-              }}
-            />
-          </S.InputField>
-          <ErrorMent
+          <TextInputUI
+            type="email"
+            name="email"
+            placeholder="이메일"
+            value={email}
+            onChange={(e): void => {
+              setEmail(e.target.value);
+              setError(false);
+            }}
             error={error}
-            errorMent="아이디 혹은 비밀번호를 정확히 입력해 주세요."
+          />
+          <Margin direction="column" size={8} />
+
+          <TextInputUI
+            type="password"
+            name="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e): void => {
+              setPassword(e.target.value);
+              setError(false);
+            }}
+            error={error}
+            errorMessage="아이디 혹은 비밀번호를 정확히 입력해 주세요."
           />
         </S.AccountWrapper>
 
         <S.ButtonWrapper>
-          <S.LoginButton disabled={isButtonDisabled} type="submit">
+          {/* TODO: 버튼 width 모바일뷰로 수정 */}
+          <Button
+            disabled={isButtonDisabled}
+            size="lg"
+            type="fill"
+            buttonType="submit"
+          >
             로그인
-          </S.LoginButton>
+          </Button>
+
           <S.RegisterButton type="button" onClick={handleSignup}>
             회원가입
           </S.RegisterButton>
         </S.ButtonWrapper>
       </form>
-    </>
+    </S.Container>
   );
 }
 
 const S = {
+  Container: styled.div`
+    padding: 0 24px;
+  `,
+
   Header: styled.div`
     width: 200px;
     margin: 0 auto;
     padding: 48px;
+    text-align: center;
   `,
 
   AccountWrapper: styled.div`
-    padding-bottom: 30px;
-  `,
-
-  InputField: styled.div<StyledInputProps>`
-    margin: 0 auto;
-    width: 452px;
-    height: 50px;
-    border: 1px solid
-      ${(props): string => (props.error ? "#FF7070" : "#dcdce0;")};
-    border-radius: 8px;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-
-    & > input {
-      border: none;
-      padding: 0 16px;
-      border-radius: 8px;
-      height: 100%;
-      flex: 1;
-
-      &::placeholder {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 140%;
-        color: #959599;
-      }
-    }
+    padding-bottom: 40px;
   `,
 
   ButtonWrapper: styled.div`
