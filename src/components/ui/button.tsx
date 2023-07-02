@@ -6,6 +6,7 @@ type ButtonProps = {
   children: React.ReactNode;
   size: "sm" | "md" | "lg";
   type?: "fill" | "line";
+  buttonType?: string;
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
@@ -16,12 +17,14 @@ export default function Button({
   size,
   type,
   onClick,
+  buttonType = "button",
 }: ButtonProps): JSX.Element {
   const sizeStyle = S.Size[size];
   const typeStyle = type ? S.Type[type] : "";
 
   return (
     <S.Button
+      type={buttonType}
       disabled={disabled}
       sizeStyle={sizeStyle}
       typeStyle={typeStyle}
