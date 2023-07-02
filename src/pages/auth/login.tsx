@@ -169,7 +169,7 @@ const S = {
     width: 56px;
     border-bottom: 1px solid #49494d;
     color: #49494d;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 16px;
     line-height: 20px;
     cursor: pointer;
