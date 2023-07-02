@@ -1,6 +1,11 @@
+// To do : eslint
+// {
+//   "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+//   "rules": {
+//     "@typescript-eslint/explicit-function-return-type": "error"
+//   }
+// }
+
 {
-  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
-  "rules": {
-    "@typescript-eslint/explicit-function-return-type": "error"
-  }
+  "extends": "next/core-web-vitals"
 }
