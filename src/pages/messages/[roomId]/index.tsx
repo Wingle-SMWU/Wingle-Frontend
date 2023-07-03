@@ -32,6 +32,8 @@ export default function MessageSend() {
     myInfo,
     receiverInfo,
     refetch,
+    isLoading: messagesLoading,
+    isIdle: messagesIdle,
   } = useGetMessage(Number(roomId) ?? 0, Number(page) ?? 1, Number(size) ?? 10);
 
   let prevNickname = { nickName: "" };
@@ -108,7 +110,7 @@ export default function MessageSend() {
     }
   }, [newMsg]);
 
-  if (messageData === undefined) {
+  if (!messageData || messagesLoading || messagesIdle) {
     return <Loading />;
   }
 
