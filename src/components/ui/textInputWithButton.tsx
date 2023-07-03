@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Margin, Text } from "../ui";
 import Button from "./button";
@@ -16,7 +16,6 @@ interface TextInputProps extends InputFieldProps {
   name: string; // input의 name
   value: string; // input의 value
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void; // input의 onChange
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void; // input의 onBlur
   disabled?: boolean; // input의 disabled, 기본값 false, true일 경우 input 비활성화
   placeholder?: string;
   errorMessage?: string; // error가 true일 경우 보여줄 에러 메시지, error 필수
@@ -33,7 +32,6 @@ export default function TextInputWithButton({
   value,
   onChange,
   error,
-  onBlur,
   disabled = false,
   placeholder,
   errorMessage,
@@ -42,18 +40,30 @@ export default function TextInputWithButton({
   buttonDisabled,
   onClick,
 }: TextInputProps): JSX.Element {
+  const [isFocused, setIsFocused] = useState(false);
+
+  // 포커스 이벤트 처리 함수
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  // 블러 이벤트 처리 함수
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
   return (
     <S.Container>
       {label && <S.DropDownLabel disabled={disabled}>{label}</S.DropDownLabel>}
-      <S.ButtonContainer>
-        <S.InputField width={width} error={error}>
+      <S.InputButtonContainer>
+        <S.InputField width={width} error={error} isFocused={isFocused}>
           <input
             type="text"
             id={name}
             name={name}
             value={value}
             onChange={onChange}
-            onBlur={onBlur}
+            onFocus={handleFocus} // 포커스 이벤트 처리
+            onBlur={handleBlur} // 블러 이벤트 처리
             disabled={disabled}
             placeholder={placeholder}
           />
@@ -67,7 +77,7 @@ export default function TextInputWithButton({
         >
           {buttonMessage}
         </Button>
-      </S.ButtonContainer>
+      </S.InputButtonContainer>
       {error ? (
         <S.ErrorWrapper>
           <Image src="/auth/error.svg" alt="error" width={16} height={16} />
@@ -88,7 +98,7 @@ const S = {
     display: flex;
     flex-direction: column;
   `,
-  ButtonContainer: styled.div`
+  InputButtonContainer: styled.div`
     display: flex;
     flex-direction: row;
   `,
@@ -99,16 +109,19 @@ const S = {
     color: ${({ theme, disabled }): string =>
       disabled ? theme.color.gray500 : theme.color.gray700};
   `,
-  InputField: styled.div<InputFieldProps>`
+  InputField: styled.div<InputFieldProps & { isFocused: boolean }>`
+    /* width: calc(452px * (100vw / 1440)); */
     height: 50px;
     border: 1px solid
       ${({ error, theme }): string =>
         error ? theme.color.red400 : theme.color.gray300};
+    border-color: ${({ isFocused, theme }): string | false =>
+      isFocused && `${theme.color.gray600}`};
     border-radius: 8px;
     margin-bottom: 8px;
 
     & > input {
-      width: ${({ width }) => (width ? { width } : "312px")};
+      width: calc(100% - 32px);
       border: none;
       padding: 14px 16px;
       border-radius: 8px;
