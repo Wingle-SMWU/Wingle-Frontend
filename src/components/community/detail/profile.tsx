@@ -86,7 +86,6 @@ const S = {
     border-radius: 50%;
     width: 36px;
     height: 36px;
-    cursor: pointer;
   `,
 
   ProfileInfo: styled.div`
@@ -97,6 +96,7 @@ const S = {
     position: relative;
     width: 36px;
     height: 36px;
+    cursor: pointer;
   `,
   NationIcon: styled.img`
     width: 16px;
