@@ -42,23 +42,38 @@ export function AgreementComponent({
           {agreementTitle}
         </Text.Body2>
         <Margin direction="row" size={3} />
+
         {isRequired ? (
           <Text.Body2 color="orange500">(필수)</Text.Body2>
         ) : (
           <Text.Body2 color="gray500">(선택)</Text.Body2>
         )}
 
-        <S.PrivacyPolicyIcon Condition={isRequired}>
-          <Image
-            alt="selectedCheck"
-            width={20}
-            height={20}
-            src="/auth/arrow_down.svg"
-            onClick={(): void => {
-              setActive((prev) => !prev);
-            }}
-          />
-        </S.PrivacyPolicyIcon>
+        {isActive ? (
+          <S.PrivacyPolicyIconOpen Condition={isRequired}>
+            <Image
+              alt="selectedCheck"
+              width={20}
+              height={20}
+              src="/auth/arrow_up.svg"
+              onClick={(): void => {
+                setActive((prev) => !prev);
+              }}
+            />
+          </S.PrivacyPolicyIconOpen>
+        ) : (
+          <S.PrivacyPolicyIconNotOpen Condition={isRequired}>
+            <Image
+              alt="selectedCheck"
+              width={20}
+              height={20}
+              src="/auth/arrow_down.svg"
+              onClick={(): void => {
+                setActive((prev) => !prev);
+              }}
+            />
+          </S.PrivacyPolicyIconNotOpen>
+        )}
       </S.AgreementWrapper>
       <S.PrivacyPolicyContent Condition={isActive}>
         <Text.Body6 color="gray700">{detail}</Text.Body6>
@@ -70,7 +85,11 @@ const S = {
   AgreementWrapper: styled.div`
     display: flex;
   `,
-  PrivacyPolicyIcon: styled.div<{ Condition: boolean }>`
+  PrivacyPolicyIconOpen: styled.div<{ Condition: boolean }>`
+    margin-left: auto;
+    display: ${(props): string => (props.Condition ? `block` : `none`)};
+  `,
+  PrivacyPolicyIconNotOpen: styled.div<{ Condition: boolean }>`
     margin-left: auto;
     display: ${(props): string => (props.Condition ? `block` : `none`)};
   `,
