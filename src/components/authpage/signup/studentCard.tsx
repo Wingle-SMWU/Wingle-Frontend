@@ -135,7 +135,9 @@ const S = {
     display: ${(props): "none" | "block" =>
       props.isActive ? `block` : `none`};
     position: absolute;
-    width: 452px;
+    width: calc(100vw - 32px);
+    max-width: 452px;
+    aspect-ratio: 452/100;
     height: 100px;
     border-radius: 8px;
     background-color: #49494d;
