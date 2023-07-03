@@ -101,6 +101,7 @@ const S = {
     align-items: center;
     border-top: 1px solid #eeeef2;
     background-color: #fff;
+    position: sticky;
   `,
 
   CommentInput: styled.textarea`
