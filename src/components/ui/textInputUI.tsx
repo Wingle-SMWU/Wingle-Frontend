@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Margin, Text } from "../ui";
 
@@ -16,7 +16,6 @@ interface TextInputProps extends InputFieldProps {
   value: string; // input의 value
   type?: string; // input의 type
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void; // input의 onChange
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void; // input의 onBlur
   disabled?: boolean; // input의 disabled, 기본값 false, true일 경우 input 비활성화
   placeholder?: string;
   errorMessage?: string; // error가 true일 경우 보여줄 에러 메시지, error 필수
@@ -31,23 +30,35 @@ export default function TextInputUI({
   type,
   onChange,
   error,
-  onBlur,
   disabled = false,
   placeholder,
   errorMessage,
   description,
 }: TextInputProps): JSX.Element {
+  const [isFocused, setIsFocused] = useState(false);
+
+  // 포커스 이벤트 처리 함수
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  // 블러 이벤트 처리 함수
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   return (
     <S.Container>
       {label && <S.DropDownLabel disabled={disabled}>{label}</S.DropDownLabel>}
-      <S.InputField width={width} error={error}>
+      <S.InputField width={width} error={error} isFocused={isFocused}>
         <input
           type={type || "text"}
           id={name}
           name={name}
           value={value}
           onChange={onChange}
-          onBlur={onBlur}
+          onFocus={handleFocus} // 포커스 이벤트 처리
+          onBlur={handleBlur} // 블러 이벤트 처리
           disabled={disabled}
           placeholder={placeholder}
         />
@@ -81,15 +92,15 @@ const S = {
     color: ${({ theme, disabled }): string =>
       disabled ? theme.color.gray500 : theme.color.gray700};
   `,
-  InputField: styled.div<InputFieldProps>`
+  InputField: styled.div<InputFieldProps & { isFocused: boolean }>`
     width: ${({ width }): string =>
-      width
-        ? `calc(${width} * (100vw / 1440))`
-        : `calc(452px * (100vw / 1440))`};
+      width ? `calc(${width} * (100vw / 1440))` : `100%`};
     height: 50px;
     border: 1px solid
       ${({ error, theme }): string =>
         error ? theme.color.red400 : theme.color.gray300};
+    border-color: ${({ isFocused, theme }): string | false =>
+      isFocused && `${theme.color.gray600}`};
     border-radius: 8px;
     margin-bottom: 8px;
     position: relative;
