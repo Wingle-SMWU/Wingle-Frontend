@@ -94,7 +94,7 @@ const S = {
       disabled ? "#EEEEF2" : "#FF812E"};
     color: ${({ disabled }): string => (disabled ? "#959599" : "#fff")};
     border-radius: 8px;
-    width: 452px;
+    width: 100%;
     height: 50px;
     margin-bottom: 144px;
     cursor: ${({ disabled }): string => (disabled ? "not-allowed" : "pointer")};

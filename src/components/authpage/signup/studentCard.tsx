@@ -148,7 +148,7 @@ const S = {
   `,
 
   UploadButton: styled.button`
-    width: 452px;
+    width: 100%;
     height: 52px;
     background-color: ${theme.color.orange500};
     outline: none;
