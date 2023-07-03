@@ -24,6 +24,9 @@ const S = {
     justify-content: center;
     align-items: center;
     position: absolute;
+    @media (max-width: 500px) {
+      width: 100vw;
+    }
   `,
 
   Spinner: styled.div`
