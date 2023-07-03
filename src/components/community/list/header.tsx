@@ -77,11 +77,12 @@ export default function Header({
 
 const S = {
   Wrapper: styled.div`
-    position: fixed;
     background-color: #fff;
     width: 100%;
     max-width: 500px;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
   `,
 
   Header: styled.div`
