@@ -5,6 +5,7 @@ export interface GetMessageResponse {
 }
 
 export interface Data {
+  recipientUserId: number;
   recipientImage: string;
   messages: Message[];
 }

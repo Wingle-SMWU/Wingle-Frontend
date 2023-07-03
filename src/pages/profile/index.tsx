@@ -7,18 +7,19 @@ import Loading from "@/src/components/ui/loadingUI";
 import instance from "@/src/api/axiosModule";
 import { getImageUrl, countryImg } from "@/src/modules/utils";
 import { ProfileStateType } from "@/src/types/mypage/profileType";
-import { Room, RoomNumberResponse } from "@/src/types/message/roomType";
+import { RoomNumberResponse } from "@/src/types/message/roomType";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
-import useGetRoom from "@/src/hooks/message/useGetRoom";
-import { theme } from "@/src/styles/theme";
+import { useResetRecoilState } from "recoil";
+import { recipientUserId } from "@/src/atoms/message/recipientUserId";
 
 export default function Edit(): JSX.Element {
+  const resetRecipientUserId = useResetRecoilState(recipientUserId);
+  const [fromMessages, setFromMessages] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [profileData, setProfileData] = useState<ProfileStateType>();
   const { profileData: myProfileData } = useGetProfile();
-  const { messageDataRoom } = useGetRoom(0, 10000);
 
   const router = useRouter();
   const userID = router.query["userID"];
@@ -34,15 +35,35 @@ export default function Edit(): JSX.Element {
       throw err;
     }
   };
+
+  useEffect(() => {
+    const { fromMessages } = router.query;
+    if (fromMessages === "true") {
+      setFromMessages(true);
+    }
+
+    return () => {
+      resetRecipientUserId();
+    };
+  }, [router.query]);
+
   useEffect(() => {
     if (userID) getProfile();
   }, [userID]);
-
   const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
 
-  const sendNote = ((): void => {
+  const createNewRoom = async (): Promise<number> => {
+    const response = await instance.post(`/messages/room`, {
+      originId: userID,
+      originType: "Profile",
+    });
+    const roomId = response.data.data as RoomNumberResponse;
+    return roomId.roomId;
+  };
+
+  const sendNote = async () => {
     const setYourInfo = (): void => {
       if (typeof window !== "undefined") {
         window.sessionStorage.setItem(
@@ -55,44 +76,12 @@ export default function Edit(): JSX.Element {
         );
       }
     };
+    setYourInfo();
+    const roomId = await createNewRoom();
+    router.push(`/messages/${roomId}`);
+  };
 
-    const findExistingRoom = (rooms: Room[]): number | undefined => {
-      return rooms.find((room: Room) => {
-        return (
-          room.roomId !== null &&
-          room.roomId !== undefined &&
-          room.nickname === profileData?.nickname
-        );
-      })?.roomId;
-    };
-
-    const createNewRoom = async (): Promise<number> => {
-      const response = await instance.post(`/messages/room`, {
-        originId: userID,
-        originType: "Profile",
-      });
-      const roomId = response.data.data as RoomNumberResponse;
-      return roomId.roomId;
-    };
-
-    return () => {
-      if (messageDataRoom) {
-        setYourInfo();
-        const existingRoomId = findExistingRoom(messageDataRoom);
-        if (existingRoomId) {
-          router.push(`/messages/${existingRoomId}`);
-        } else {
-          createNewRoom()
-            .then((newRoomId) => {
-              router.push(`/messages/${newRoomId}`);
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        }
-      }
-    };
-  })();
+  const isMe = myProfileData?.nickname === profileData?.nickname;
 
   if (isLoading) return <Loading />;
   if (isError) return <>에러</>;
@@ -212,11 +201,9 @@ export default function Edit(): JSX.Element {
               </S.InterestBoxContainer>
             </S.Column>
           </S.EditList>
-          {myProfileData?.nickname !== profileData?.nickname ? (
+          {!isMe && !fromMessages ? (
             <S.Note onClick={sendNote}>쪽지 보내기</S.Note>
-          ) : (
-            ""
-          )}
+          ) : null}
         </S.Content>
         {modalVisible && (
           <Modal type="profile-back" onClickModal={onClickModal} />
@@ -247,7 +234,7 @@ const S = {
     display: flex;
     padding: 14px 0px;
     position: fixed;
-    background-color: ${theme.color.white};
+    background-color: ${({ theme }) => theme.color.white};
     z-index: 1;
     width: 452px;
     top: 0px;
@@ -374,7 +361,7 @@ const S = {
     padding-top: 16px;
     font-size: 16px;
     line-height: 140%;
-    color: theme.color.gray900;
+    color: ${({ theme }) => theme.color.gray900};
   `,
   InterestBoxContainer: styled.div`
     width: 80%;
@@ -393,8 +380,8 @@ const S = {
     border-radius: 40px;
     padding: 8px 15px;
     display: inline-flex;
-    background-color: ${theme.color.orange100};
-    border: 1px solid ${theme.color.orange300};
+    background-color: ${({ theme }) => theme.color.orange100};
+    border: 1px solid ${({ theme }) => theme.color.orange300};
     margin: 8px 8px 0px 0px;
   `,
 
