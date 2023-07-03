@@ -43,7 +43,7 @@ export default function PostList() {
   return (
     <S.Wrapper>
       <Header myArticle={true} tab={currentTab} onClickTab={onClickTab} />
-      <S.Forum>
+      <S.Content>
         {currentTab === TabArr[0].name && (
           <FreeTab
             forumId={TabArr[0].id}
@@ -58,7 +58,7 @@ export default function PostList() {
             my={true}
           />
         )}
-      </S.Forum>
+      </S.Content>
     </S.Wrapper>
   );
 }
@@ -68,8 +68,15 @@ const S = {
     display: flex;
     flex-direction: column;
     background-color: white;
+    position: fixed;
+    height: 100vh;
   `,
-  Forum: styled.div`
-    margin-top: 107px;
+  Content: styled.div`
+    overflow-y: scroll;
+    width: 500px;
+    height: 100%;
+    @media (max-width: 500px) {
+      width: 100vw;
+    }
   `,
 };
