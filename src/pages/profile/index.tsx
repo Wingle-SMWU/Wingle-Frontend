@@ -154,7 +154,7 @@ export default function Edit(): JSX.Element {
                       </S.LanguageText>
                       <S.LanguageText
                         fontWeight={400}
-                        width={262}
+                        width={50}
                         color="orange500"
                       >
                         {v.language.substring(2)}
@@ -219,8 +219,15 @@ interface LanguageText {
 }
 const S = {
   Wapper: styled.div`
-    width: 100%;
-    height: 100%;
+    @media (min-width: 501px) {
+      width: 500px;
+      margin: 0 auto; /* Center align when width is 500px or more */
+    }
+    @media (max-width: 500px) {
+      width: 100vw;
+      background-color: white;
+    }
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -229,6 +236,7 @@ const S = {
   Content: styled.div`
     padding: 0 24px;
     margin-top: 56px;
+    background-color: white;
   `,
   Header: styled.div`
     display: flex;
@@ -236,7 +244,10 @@ const S = {
     position: fixed;
     background-color: ${({ theme }) => theme.color.white};
     z-index: 1;
-    width: 452px;
+    @media (max-width: 500px) {
+      width: 100vw;
+      background-color: white;
+    }
     top: 0px;
   `,
   GoBackArrow: styled.img`
@@ -269,11 +280,16 @@ const S = {
     border: 1px solid white;
     background-color: white;
     border-radius: 100px;
-    right: 0%;
-    bottom: 0%;
+    right: 0;
+    bottom: 0;
+    @media (max-width: 500px) {
+      top: 32px;
+      left: 33px;
+    }
   `,
   UserInfoBox: styled.div`
-    width: 340px;
+    // width: 340px;
+    margin-left: 14px;
     height: 86px;
     display: flex;
     flex-direction: column;
@@ -322,12 +338,12 @@ const S = {
   `,
 
   EditList: styled.div`
-    width: 452px;
+    //width: 452px;
     display: flex;
     flex-direction: column;
   `,
   Language: styled.div`
-    width: 452px;
+    //width: 452px;
     display: flex;
     justify-content: space-between;
   `,
@@ -353,7 +369,7 @@ const S = {
     font-weight: ${(props): number => props.fontWeight};
   `,
   Introduce: styled.div`
-    width: 452px;
+    //width: 452px;
     display: flex;
     justify-content: space-between;
   `,
@@ -367,7 +383,7 @@ const S = {
     width: 80%;
   `,
   Interest: styled.div`
-    width: 452px;
+    //width: 452px;
     display: flex;
     justify-content: space-between;
   `,
