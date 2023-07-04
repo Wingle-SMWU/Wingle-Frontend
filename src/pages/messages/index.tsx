@@ -54,17 +54,18 @@ export async function getServerSideProps(context: any) {
 
 const S = {
   Container: styled.div`
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 70px;
     background-color: white;
   `,
 
   TopContainer: styled.div`
-    position: sticky;
-    display: flex;
+    position: fixed;
     padding: 14px 24px;
+    background-color: white;
+    z-index: 20;
+    width: 450px;
   `,
 
   MsgContainer: styled.div`
@@ -72,6 +73,7 @@ const S = {
     flex-direction: column;
     justify-content: center;
     overflow-y: scroll;
+    padding-top: 55px;
   `,
 
   EmptyContainer: styled.div`

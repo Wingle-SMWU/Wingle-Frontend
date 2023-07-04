@@ -63,7 +63,7 @@ const S = {
   LeftBox: styled.div`
     display: flex;
     width: 100%;
-    margin-left: 10px;
+    margin-left: 15px;
   `,
 
   ImageBox: styled.div`
