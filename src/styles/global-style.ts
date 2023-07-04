@@ -15,7 +15,8 @@ export const GlobalStyle = createGlobalStyle`
         background-color: #eeeef2;
         font-size: 11px;
         -webkit-text-size-adjust: none;
-        font-family: -apple-system,BlinkMacSystemFont,helvetica,Apple SD Gothic Neo,sans-serif;       
+        
+        font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
         font-display: fallback;
         ${media.tablet}{
             font-size: 10px;
@@ -26,6 +27,8 @@ export const GlobalStyle = createGlobalStyle`
         justify-content: center;
     }
     button {
+        font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+        font-display: fallback;
         background: none;
         padding: 0;
         border: none;
@@ -34,6 +37,10 @@ export const GlobalStyle = createGlobalStyle`
             cursor: default;
             fill: #f2f3f4;
         }
+    }
+    input {
+        font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+        font-display: fallback;
     }
 
     .pc-tablet-only {
@@ -54,4 +61,5 @@ export const GlobalStyle = createGlobalStyle`
             display: block;
         }
     }
+    
 `;
