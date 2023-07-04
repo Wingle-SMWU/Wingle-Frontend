@@ -147,8 +147,15 @@ type LanguageText = {
 };
 const S = {
   Wapper: styled.div`
-    width: 100%;
-    height: 100%;
+    @media (min-width: 501px) {
+      width: 500px;
+      margin: 0 auto; /* Center align when width is 500px or more */
+    }
+    @media (max-width: 500px) {
+      width: 100vw;
+      background-color: white;
+    }
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -164,7 +171,7 @@ const S = {
     position: fixed;
     background-color: ${theme.color.white};
     z-index: 1;
-    width: 452px;
+    ////width: 452px;
     top: 0px;
   `,
   GoBackArrow: styled.img`
@@ -173,6 +180,8 @@ const S = {
 
   UserBox: styled.div`
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #eeeef2;
     gap: 14px;
@@ -209,12 +218,12 @@ const S = {
     cursor: pointer;
   `,
   EditList: styled.div`
-    width: 452px;
+    //width: 452px;
     display: flex;
     flex-direction: column;
   `,
   Language: styled.div`
-    width: 452px;
+    // //width: 452px;
     display: flex;
     justify-content: space-between;
   `,
@@ -240,7 +249,7 @@ const S = {
     font-weight: ${(props): number => props.fontWeight};
   `,
   Introduce: styled.div`
-    width: 452px;
+    //width: 452px;
     display: flex;
     justify-content: space-between;
   `,
@@ -254,7 +263,7 @@ const S = {
     width: 80%;
   `,
   Interest: styled.div`
-    width: 452px;
+    //width: 452px;
     display: flex;
     justify-content: space-between;
   `,

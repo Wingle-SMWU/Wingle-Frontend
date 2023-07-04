@@ -233,8 +233,12 @@ export default function Nickname(): JSX.Element {
 }
 const S = {
   Wapper: styled.div`
-    width: 500px;
-    min-width: 360px;
+    @media (min-width: 501px) {
+      width: 500px;
+    }
+    @media (max-width: 500px) {
+      width: 100vw;
+    }
     height: 100%;
     display: flex;
     flex-direction: column;

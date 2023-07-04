@@ -158,9 +158,13 @@ export default function Language(): JSX.Element {
 
 const S = {
   Wapper: styled.div`
-    width: 500px;
-    min-width: 360px;
-    height: 100%;
+    @media (min-width: 501px) {
+      width: 500px;
+    }
+    @media (max-width: 500px) {
+      width: 100vw;
+    }
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
