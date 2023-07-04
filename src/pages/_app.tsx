@@ -59,13 +59,15 @@ const S = {
     ${(props) =>
       props.version === "mobile" &&
       css`
-        width: 500px;
-        max-width: 500px;
-        min-height: 100vh;
-        background-color: white;
+        @media (min-width: 501px) {
+          width: 500px;
+        }
         @media (max-width: 500px) {
           width: 100vw;
         }
+        max-width: 500px;
+        min-height: 100vh;
+        background-color: white;
       `}
   `,
 };

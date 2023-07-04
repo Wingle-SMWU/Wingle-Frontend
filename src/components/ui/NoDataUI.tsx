@@ -48,13 +48,15 @@ const S = {
     ${({ type }) =>
       (type === "article" || type === "message") &&
       `
+      @media (min-width: 501px) {
+        width: 500px;
+      }
+      @media (max-width: 500px) {
+        width: 100vw;
+      }
       margin-top: -107px;
-      width: 500px;
       max-width: 500px;
       height: 100vh;
-      @media (max-width: 500px) {
-      width: 100vw;
-    }
     `}
   `,
   Text: styled.div`

@@ -18,15 +18,17 @@ const size = 100;
 
 const S = {
   SpinnerWrapper: styled.div`
-    width: 500px;
+    @media (min-width: 501px) {
+      width: 500px;
+    }
+    @media (max-width: 500px) {
+      width: 100vw;
+    }
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    @media (max-width: 500px) {
-      width: 100vw;
-    }
   `,
 
   Spinner: styled.div`

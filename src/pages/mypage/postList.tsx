@@ -72,11 +72,13 @@ const S = {
     height: 100vh;
   `,
   Content: styled.div`
-    overflow-y: scroll;
-    width: 500px;
-    height: 100%;
+    @media (min-width: 501px) {
+      width: 500px;
+    }
     @media (max-width: 500px) {
       width: 100vw;
     }
+    overflow-y: scroll;
+    height: 100%;
   `,
 };
