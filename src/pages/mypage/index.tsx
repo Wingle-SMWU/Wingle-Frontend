@@ -35,7 +35,7 @@ export default function Mypage(): JSX.Element {
 
   return (
     <>
-      <S.Wapper>
+      <S.Wrapper>
         <S.Content>
           <S.Header>
             <Text.Title1 color="gray900">마이페이지</Text.Title1>
@@ -53,7 +53,7 @@ export default function Mypage(): JSX.Element {
                   onMouseEnter={(): void => setIsRegisterDropVisible(true)}
                   onMouseLeave={(): void => setIsRegisterDropVisible(false)}
                 >
-                  등록
+                  프로필 등록
                 </Text.Caption1>
                 {isRegisterDropVisible && (
                   <S.RegisterDrop>
@@ -68,7 +68,7 @@ export default function Mypage(): JSX.Element {
                 onClick={(): Promise<boolean> => router.push(`/mypage/edit`)}
               >
                 <Text.Caption1 color="gray700" pointer>
-                  수정
+                  프로필 수정
                 </Text.Caption1>
               </S.EditBtn>
             )}
@@ -90,7 +90,7 @@ export default function Mypage(): JSX.Element {
         </S.Content>
         <Footer />
         <Navigation tab={""} />
-      </S.Wapper>
+      </S.Wrapper>
     </>
   );
 }
@@ -100,20 +100,33 @@ interface EditBtnProps {
 }
 
 const S = {
-  Wapper: styled.div`
-    width: 100%;
-    height: 100%;
+  Wrapper: styled.div`
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    @media (min-width: 501px) {
+      width: 500px;
+      margin: 0 auto; /* Center align when width is 500px or more */
+    }
+    @media (max-width: 500px) {
+      width: 100vw;
+      background-color: white;
+    }
   `,
   Content: styled.div`
+    overflow-y: scroll;
+    height: calc(100% - 56px); /* Subtract the height of the header */
     padding: 0 24px;
     margin-top: 56px;
+    @media (max-width: 500px) {
+      // width: 100vw;
+      background-color: white;
+    }
   `,
   Header: styled.div`
-    width: 100%;
+    width: 100vw;
     height: 50px;
     padding: 14px 0;
     position: fixed;
@@ -122,8 +135,12 @@ const S = {
   `,
   Profile: styled.div`
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
     border-bottom: 1px solid #eeeef2;
+    @media (max-width: 500px) {
+      width: 100vw; /* Adjust to fit the screen size */
+    }
   `,
 
   RegisterBtn: styled.button`
@@ -136,15 +153,26 @@ const S = {
     border-radius: 8px;
   `,
   EditBtn: styled.button<EditBtnProps>`
-    width: 45px;
-    height: 33px;
+    @media (min-width: 501px) {
+      width: 79px;
+      height: 33px;
+      margin-top: 24px;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid ${(props): string => props.Color || "#6c6c70"};
     background-color: ${(props): string => props.Color || "white"};
     border-radius: 8px;
+    @media (max-width: 500px) {
+      position: fixed;
+      top: 78px;
+      right: 24px;
+      width: 79px;
+      height: 33px;
+    }
   `,
+
   RegisterDrop: styled.div`
     position: absolute;
     background-color: black;

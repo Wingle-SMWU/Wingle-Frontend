@@ -27,7 +27,7 @@ export default function Introduce(): JSX.Element {
   );
 
   useEffect(() => {
-    if (profileData?.introduce.length) {
+    if (profileData?.introduce && profileData?.introduce.length) {
       setTextCount(profileData.introduce.length);
       setIntroduce(profileData.introduce);
     }
@@ -102,9 +102,13 @@ export default function Introduce(): JSX.Element {
 
 const S = {
   Wrapper: styled.div`
-    width: 500px;
-    min-width: 360px;
-    height: 100%;
+    @media (min-width: 501px) {
+      width: 500px;
+    }
+    @media (max-width: 500px) {
+      width: 100vw;
+    }
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

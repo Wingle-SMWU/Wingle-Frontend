@@ -18,7 +18,7 @@ export default function DropDown({
   selected,
   onSelectedChange,
   description,
-}: DropDownProps) {
+}: DropDownProps): JSX.Element {
   const [isActive, setIsActive] = useState(false);
 
   const onActiveToggle = useCallback(() => {
@@ -41,7 +41,12 @@ export default function DropDown({
         <S.DropdownBody onClick={onActiveToggle} isActive={isActive}>
           <S.DropdownSelected>{selected}</S.DropdownSelected>
           <S.DropdownSelected>
-            <Image src="/auth/arrow_down.svg" alt="arrow" width={20} height={20} />
+            <Image
+              src="/auth/arrow_down.svg"
+              alt="arrow"
+              width={20}
+              height={20}
+            />
           </S.DropdownSelected>
         </S.DropdownBody>
 
@@ -81,7 +86,8 @@ const S = {
     height: 50px;
     background-color: ${({ theme }) => theme.color.white};
     border: 1px solid
-      ${({ theme, isActive }) => (isActive ? theme.color.gray600 : theme.color.gray300)};
+      ${({ theme, isActive }) =>
+        isActive ? theme.color.gray600 : theme.color.gray300};
     border-radius: 8px;
   `,
   DropdownSelected: styled.div`
@@ -131,4 +137,3 @@ const S = {
     margin: 8px 0px;
   `,
 };
-
