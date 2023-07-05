@@ -88,7 +88,7 @@ const S = {
       // width: ${({ menu }) => `${100 / menu.length}%`};
       > p {
         height: 20px;
-        font-family: "Pretendard";
+        font-family: "Pretendard Variable", Pretendard;
         font-style: normal;
         font-weight: 500;
         font-size: 14px;
@@ -145,7 +145,7 @@ const S = {
       > p {
         width: 182px;
         height: 22px;
-        font-family: "Pretendard";
+        font-family: "Pretendard Variable", Pretendard;
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -175,7 +175,7 @@ const S = {
       > p {
         width: 100%;
         height: 17px;
-        font-family: "Pretendard";
+        font-family: "Pretendard Variable", Pretendard;
         font-style: normal;
         font-weight: 700;
         font-size: 12px;

@@ -95,7 +95,7 @@ const S = {
     display: flex;
     flex-direction: column;
     p {
-      font-family: "Pretendard";
+      font-family: "Pretendard Variable", Pretendard;
       font-style: normal;
       font-weight: 400;
       font-size: 16px;
@@ -117,7 +117,7 @@ const S = {
     margin-left: 1rem;
 
     span {
-      font-family: "Pretendard";
+      font-family: "Pretendard Variable", Pretendard;
       font-style: normal;
       font-weight: 400;
       font-size: 12px;

@@ -1,26 +1,30 @@
-import { ADMIN_TAB_LIST } from '@/src/constants/admin';
-import { theme } from '@/src/styles/theme';
-import styled from 'styled-components';
+import { ADMIN_TAB_LIST } from "@/src/constants/admin";
+import { theme } from "@/src/styles/theme";
+import styled from "styled-components";
 
 type TabbarFactor = {
   currIdx: number;
   handleClickTabBar: (idx: number) => void;
-}
+};
 
 export default function Tabbar({ currIdx, handleClickTabBar }: TabbarFactor) {
   return (
     <S.Tabbar>
       <S.Content>
-        {ADMIN_TAB_LIST.map((el: string, idx: number): JSX.Element => (
-          <li 
-            key={idx} 
-            className={idx === currIdx ? 'selected' : ''} 
-            onClick={() => handleClickTabBar(idx)}
-          >{el}</li>
-        ))}
+        {ADMIN_TAB_LIST.map(
+          (el: string, idx: number): JSX.Element => (
+            <li
+              key={idx}
+              className={idx === currIdx ? "selected" : ""}
+              onClick={() => handleClickTabBar(idx)}
+            >
+              {el}
+            </li>
+          )
+        )}
       </S.Content>
     </S.Tabbar>
-  )
+  );
 }
 
 const S = {
@@ -59,7 +63,7 @@ const S = {
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-family: Pretendard;
+      font-family: "Pretendard Variable", Pretendard;
       cursor: pointer;
       color: ${theme.color.gray500};
       &:hover {
@@ -72,4 +76,4 @@ const S = {
       padding-bottom: 7px;
     }
   `,
-}
+};

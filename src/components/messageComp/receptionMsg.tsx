@@ -49,7 +49,7 @@ const S = {
     align-items: flex-end;
     gap: 4px;
     span {
-      font-family: "Pretendard";
+      font-family: "Pretendard Variable", Pretendard;
       font-style: normal;
       font-weight: 500;
       line-height: 140%;
@@ -69,7 +69,7 @@ const S = {
     background-color: #eeeef2;
     border-radius: 12px;
     p {
-      font-family: "Pretendard";
+      font-family: "Pretendard Variable", Pretendard;
       font-style: normal;
       font-weight: 500;
       line-height: 140%;

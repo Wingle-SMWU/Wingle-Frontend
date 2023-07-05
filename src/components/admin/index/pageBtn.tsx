@@ -1,36 +1,35 @@
-import { theme } from '@/src/styles/theme';
-import Pagination from 'react-js-pagination';
-import styled from 'styled-components';
+import { theme } from "@/src/styles/theme";
+import Pagination from "react-js-pagination";
+import styled from "styled-components";
 
 type AdminUsersResp = {
   totalPages: number;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-}
+};
 
 export default function PageBtn({ totalPages, page, setPage }: AdminUsersResp) {
-
   const handleChangePage = (e: number) => {
     setPage(e);
-  }
+  };
 
   return (
     <S.Button page={page}>
-      <Pagination 
+      <Pagination
         activePage={page}
         itemsCountPerPage={10}
         totalItemsCount={totalPages * 10 || 1}
         pageRangeDisplayed={5}
-        prevPageText={"<"}  
+        prevPageText={"<"}
         nextPageText={">"}
         onChange={handleChangePage}
       />
     </S.Button>
-  )
+  );
 }
 
 const S = {
-  Button: styled.ul<{page: number}>`
+  Button: styled.ul<{ page: number }>`
     position: absolute;
     width: 248px;
     height: 40px;
@@ -47,25 +46,26 @@ const S = {
     }
     ul.pagination li {
       display: inline-block;
-      width: 40px;  
+      width: 40px;
       height: 40px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex: none;
       flex-grow: 0;
-      :first-child, :last-child {
+      :first-child,
+      :last-child {
         display: none;
       }
       :nth-child(2) {
-        visibility: ${({page}) => (page === 1 ? 'hidden' : '')};
+        visibility: ${({ page }) => (page === 1 ? "hidden" : "")};
       }
       :nth-last-child(2) a {
-        color: ${theme.color.gray700}; 
+        color: ${theme.color.gray700};
       }
     }
     ul.pagination li a {
-      font-family: 'Pretendard';
+      font-family: "Pretendard Variable", Pretendard;
       text-decoration: none;
       font-size: 14px;
       font-style: normal;
@@ -81,5 +81,5 @@ const S = {
         color: ${theme.color.gray900};
       }
     }
-  `
-}
+  `,
+};

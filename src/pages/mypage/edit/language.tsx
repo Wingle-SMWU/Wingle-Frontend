@@ -208,7 +208,7 @@ const S = {
   ResetBtn: styled.button`
     padding: 8px 12px;
     font-size: 12px;
-    font-family: Pretendard;
+    font-family: "Pretendard Variable", Pretendard;
     font-style: normal;
     font-weight: 700;
     color: ${theme.color.gray700};

@@ -137,7 +137,7 @@ const S = {
     height: 600px;
     font-weight: 400;
     font-size: 16px;
-    font-family: "Pretendard";
+    font-family: "Pretendard Variable", Pretendard;
     line-height: 140%;
     color: #222223;
     ::placeholder {

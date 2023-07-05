@@ -58,7 +58,7 @@ const S = {
   `,
 
   DateBox: styled.span`
-    font-family: "Pretendard";
+    font-family: "Pretendard Variable", Pretendard;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
@@ -76,7 +76,7 @@ const S = {
     gap: 8px;
 
     p {
-      font-family: "Pretendard";
+      font-family: "Pretendard Variable", Pretendard;
       font-style: normal;
       font-weight: 400;
       font-size: 14px;

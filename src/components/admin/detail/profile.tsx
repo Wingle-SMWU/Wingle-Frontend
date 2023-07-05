@@ -44,7 +44,7 @@ const S = {
       height: 60px;
       border-bottom: 1px solid #eeeef2;
       > p {
-        font-family: "Pretendard";
+        font-family: "Pretendard Variable", Pretendard;
         font-style: normal;
         font-size: 14px;
         line-height: 140%;

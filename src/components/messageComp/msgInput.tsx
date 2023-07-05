@@ -48,7 +48,7 @@ const S = {
     padding-right: 0;
     padding-left: 24px;
     margin-top: 1.4rem;
-    font-family: "Pretendard";
+    font-family: "Pretendard Variable", Pretendard;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;

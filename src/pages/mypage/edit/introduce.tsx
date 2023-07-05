@@ -131,7 +131,7 @@ const S = {
   `,
 
   Description: styled.textarea`
-    font-family: pretendard;
+    font-family: "Pretendard Variable", Pretendard;
     width: 100%;
     min-height: 250px;
     border: 1px solid white;

@@ -1,13 +1,12 @@
-import Contents from '@/src/components/admin/detail/contents'
-import Modal from '@/src/components/admin/detail/modal'
-import Header from '@/src/components/admin/index/header'
-import styled from 'styled-components'
-import { theme } from '@/src/styles/theme'
-import Loading from '@/src/components/ui/loadingUI'
-import useDetailDispatch from '@/src/hooks/admin/useDetailDispatch'
+import Contents from "@/src/components/admin/detail/contents";
+import Modal from "@/src/components/admin/detail/modal";
+import Header from "@/src/components/admin/index/header";
+import styled from "styled-components";
+import { theme } from "@/src/styles/theme";
+import Loading from "@/src/components/ui/loadingUI";
+import useDetailDispatch from "@/src/hooks/admin/useDetailDispatch";
 
 export default function Detail() {
-
   const {
     isOpen,
     setIsOpen,
@@ -17,48 +16,62 @@ export default function Detail() {
     data,
     isError,
     isLoading,
-    handleSubmit
-  } = useDetailDispatch()
+    handleSubmit,
+  } = useDetailDispatch();
 
-
-  if(isError) {
-    return (
-      <S.Main modal={isOpen}>
-        404
-      </S.Main>
-    )
+  if (isError) {
+    return <S.Main modal={isOpen}>404</S.Main>;
   }
 
   return (
     <S.Main modal={isOpen}>
       <Header />
-      {data && <>
-        <S.TabBar><p>수락{data.message.split(' ')[1]}</p></S.TabBar>
-        <S.Card card={data.data.idCardImage}/>
-        <Contents userId={userId} data={data.data} setIsOpen={setIsOpen} inputs={inputs} setInputs={setInputs} handleSubmit={handleSubmit}/>
-      </> }
+      {data && (
+        <>
+          <S.TabBar>
+            <p>수락{data.message.split(" ")[1]}</p>
+          </S.TabBar>
+          <S.Card card={data.data.idCardImage} />
+          <Contents
+            userId={userId}
+            data={data.data}
+            setIsOpen={setIsOpen}
+            inputs={inputs}
+            setInputs={setInputs}
+            handleSubmit={handleSubmit}
+          />
+        </>
+      )}
 
-      {isOpen && <Modal setIsOpen={setIsOpen} isLoading={false}>{isOpen}</Modal>}
-      {isLoading && 
-      <>
-        <Modal setIsOpen={setIsOpen} isLoading={true}>{isOpen}</Modal>
-        <S.Load><Loading /></S.Load>
-      </>
-      }
+      {isOpen && (
+        <Modal setIsOpen={setIsOpen} isLoading={false}>
+          {isOpen}
+        </Modal>
+      )}
+      {isLoading && (
+        <>
+          <Modal setIsOpen={setIsOpen} isLoading={true}>
+            {isOpen}
+          </Modal>
+          <S.Load>
+            <Loading />
+          </S.Load>
+        </>
+      )}
 
-      <S.Button onClick={() => setIsOpen('수락')}>
-        <button type='button'>가입수락</button>
+      <S.Button onClick={() => setIsOpen("수락")}>
+        <button type="button">가입수락</button>
       </S.Button>
-
     </S.Main>
-  )
+  );
 }
 
 const S = {
-  Main: styled.div<{modal: string}>`
+  Main: styled.div<{ modal: string }>`
     width: 100%;
     height: 1500px;
-    background: ${({ modal }) => (modal ? theme.color.gray200 : theme.color.white)};
+    background: ${({ modal }) =>
+      modal ? theme.color.gray200 : theme.color.white};
     position: relative;
   `,
   Load: styled.div`
@@ -84,7 +97,7 @@ const S = {
       padding: 8px;
       width: 63px;
       height: 27px;
-      font-family: Pretendard;
+      font-family: "Pretendard Variable", Pretendard;
       font-style: normal;
       font-weight: 700;
       font-size: 18px;
@@ -95,13 +108,13 @@ const S = {
       color: ${theme.color.gray900};
     }
   `,
-  Card: styled.div<{card: string | undefined}>`
+  Card: styled.div<{ card: string | undefined }>`
     position: absolute;
     width: 700px;
     height: 600px;
     left: 373px;
     top: 123px;
-    background-image: ${({ card }) => (card ? `url(${card})` : '')};
+    background-image: ${({ card }) => (card ? `url(${card})` : "")};
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -125,7 +138,7 @@ const S = {
       font-weight: 700;
       font-size: 16px;
       color: ${theme.color.white};
-      font-family: Pretendard;
+      font-family: "Pretendard Variable", Pretendard;
     }
-  `
-}
+  `,
+};

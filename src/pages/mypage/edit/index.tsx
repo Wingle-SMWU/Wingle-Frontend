@@ -245,7 +245,7 @@ const S = {
     width: ${(props): number => props.width}px;
     color: #49494d;
     font-size: 14px;
-    font-family: "Pretendard";
+    font-family: "Pretendard Variable", Pretendard;
     font-weight: ${(props): number => props.fontWeight};
   `,
   Introduce: styled.div`

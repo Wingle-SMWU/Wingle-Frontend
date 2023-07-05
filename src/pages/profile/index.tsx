@@ -365,7 +365,7 @@ const S = {
     width: ${(props): number => props.width}px;
     color: #49494d;
     font-size: 14px;
-    font-family: "Pretendard";
+    font-family: "Pretendard Variable", Pretendard;
     font-weight: ${(props): number => props.fontWeight};
   `,
   Introduce: styled.div`
@@ -421,7 +421,7 @@ const S = {
     /* main_orange/orange500 */
     background: #ff812e;
     border-radius: 8px;
-    font-family: "Pretendard";
+    font-family: "Pretendard Variable", Pretendard;
     font-style: normal;
     font-weight: 700;
     font-size: 16px;

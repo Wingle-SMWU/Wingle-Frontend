@@ -323,7 +323,7 @@ const S = {
     border-radius: 23px;
 
     span {
-      font-family: "Pretendard";
+      font-family: "Pretendard Variable", Pretendard;
       font-style: normal;
       font-weight: 500;
       font-size: 11.5px;
