@@ -89,7 +89,7 @@ export default function Mypage(): JSX.Element {
           </>
         </S.Content>
         <Footer />
-        <Navigation tab={""} />
+        <Navigation tab={"mypage"} />
       </S.Wrapper>
     </>
   );
