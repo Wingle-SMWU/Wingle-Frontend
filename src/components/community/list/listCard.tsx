@@ -3,8 +3,7 @@ import betweenTime from "@/src/utils/betweenTime";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { countryImg } from "@/src/modules/utils";
-import { useRecoilValue } from "recoil";
-import { currentTabStateAtom } from "@/src/atoms/community/tab";
+import { Content } from "../detail/content";
 
 export default function ListCard({
   imgUrl,
@@ -32,24 +31,22 @@ export default function ListCard({
     userNation,
   } = article;
 
-  const currentTab = useRecoilValue(currentTabStateAtom);
-
+  const time = betweenTime(createdTime);
+  const tab = router.query.tab;
   const onClickMoveToDetail = (): void => {
-    if (isNotice) {
-      return;
-    }
+    // if (isNotice) {
+    //   return;
+    // }
     router.push({
       pathname: `/community/detail`,
-      query: { tab: currentTab, forumId: forumId, articleId: articleId },
+      query: { tab, forumId: forumId, articleId: articleId },
     });
   };
-
-  const time = betweenTime(createdTime);
 
   return (
     <S.Contents onClick={onClickMoveToDetail}>
       <S.ContentsHeader>
-        {currentTab === "교류" ? (
+        {tab === "교류" ? (
           <S.ImageBox
             onClick={(e): void => {
               e.stopPropagation();
@@ -71,7 +68,9 @@ export default function ListCard({
       </S.ContentsHeader>
       <Text.Body4 color="gray900" pointer={true}>
         {content.split("\n").map((text, i) => (
-          <div key={i}>{text}</div>
+          <div key={i}>
+            <Content text={text} isNotice={isNotice} isDetail={false} />
+          </div>
         ))}
       </Text.Body4>
     </S.Contents>
