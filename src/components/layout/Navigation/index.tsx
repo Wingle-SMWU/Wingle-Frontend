@@ -2,47 +2,61 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Text } from "../../ui";
+import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+import { theme } from "@/src/styles/theme";
 
-type Radius = {
+type Profile = {
   isRadius: boolean;
+  isActive: boolean;
 };
-
 type Tab = {
   tab: string;
 };
 
-const NavigationMenuArr = [
-  {
-    name: "커뮤니티",
-    page: "/community",
-    normalImg: "/community/list/comu-normal.svg",
-    disableImg: "/community/list/comu-disable.svg",
-  },
-  {
-    name: "쪽지",
-    page: "/messages",
-    normalImg: "/community/list/message-normal.svg",
-    disableImg: "/community/list/message-disable.svg",
-  },
-  {
-    name: "마이페이지",
-    page: "/mypage",
-    normalImg: "/community/list/wingle-manager.svg",
-    disableImg: "/community/list/mypage-disable.svg",
-  },
-];
-
-export default function Navigation(props: { tab: string }) {
+export default function Navigation(props: Tab) {
   const router = useRouter();
   const menu = router.asPath;
 
+  const { profileData } = useGetProfile();
+  const NavigationMenuArr = [
+    {
+      name: "커뮤니티",
+      page: "/community",
+      normalImg: "/community/list/comu-normal.svg",
+      disableImg: "/community/list/comu-disable.svg",
+    },
+    {
+      name: "쪽지",
+      page: "/messages",
+      normalImg: "/community/list/message-normal.svg",
+      disableImg: "/community/list/message-disable.svg",
+    },
+    {
+      name: "마이페이지",
+      page: "/mypage",
+      normalImg: `
+      ${
+        profileData?.image
+          ? `${profileData?.image}`
+          : "/community/list/wingle-active-default.svg"
+      }`,
+      disableImg: `
+      ${
+        profileData?.image
+          ? `${profileData?.image}`
+          : "/community/list/mypage-disable.svg"
+      }`,
+    },
+  ];
+
   return (
-    <Style.Wrapper>
-      <Style.Box>
+    <S.Wrapper>
+      <S.Box>
         {NavigationMenuArr.map((el) => (
-          <Style.NavigationMenu key={el.name} href={el.page}>
-            <Style.NavigationMenuImg
+          <S.NavigationMenu key={el.name} href={el.page}>
+            <S.NavigationMenuImg
               isRadius={el.name === "마이페이지"}
+              isActive={props.tab === "mypage"}
               src={menu.includes(el.page) ? el.normalImg : el.disableImg}
             />
             <Text.Caption2
@@ -50,20 +64,20 @@ export default function Navigation(props: { tab: string }) {
             >
               {el.name}
             </Text.Caption2>
-          </Style.NavigationMenu>
+          </S.NavigationMenu>
         ))}
-      </Style.Box>
-    </Style.Wrapper>
+      </S.Box>
+    </S.Wrapper>
   );
 }
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     width: 100%;
     max-width: 500px;
     height: 72px;
-    border-top: 1px solid #eeeef2;
-    background-color: #fff;
+    border-top: 1px solid ${theme.color.gray200};
+    background-color: ${theme.color.white};
     position: fixed;
     bottom: 0;
   `,
@@ -88,9 +102,11 @@ const Style = {
     text-decoration: none;
   `,
 
-  NavigationMenuImg: styled.img<Radius>`
+  NavigationMenuImg: styled.img<Profile>`
     width: 28px;
     height: 28px;
     border-radius: ${({ isRadius }) => (isRadius ? "50%" : "none")};
+    box-shadow: ${({ isRadius, isActive }) =>
+      isRadius && isActive ? `0 0 0 1px ${theme.color.orange500}` : "none"};
   `,
 };
