@@ -14,7 +14,9 @@ export const Content = ({
     return isDetail ? (
       <Text.Title3 color="gray900">{title}</Text.Title3>
     ) : (
-      <Text.Body2 color="gray900">{title}</Text.Body2>
+      <Text.Body2 color="gray900" pointer={true}>
+        {title}
+      </Text.Body2>
     );
   } else {
     return (
