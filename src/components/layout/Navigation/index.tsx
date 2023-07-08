@@ -50,11 +50,11 @@ export default function Navigation(props: Tab) {
   ];
 
   return (
-    <Style.Wrapper>
-      <Style.Box>
+    <S.Wrapper>
+      <S.Box>
         {NavigationMenuArr.map((el) => (
-          <Style.NavigationMenu key={el.name} href={el.page}>
-            <Style.NavigationMenuImg
+          <S.NavigationMenu key={el.name} href={el.page}>
+            <S.NavigationMenuImg
               isRadius={el.name === "마이페이지"}
               isActive={props.tab === "mypage"}
               src={menu.includes(el.page) ? el.normalImg : el.disableImg}
@@ -64,20 +64,20 @@ export default function Navigation(props: Tab) {
             >
               {el.name}
             </Text.Caption2>
-          </Style.NavigationMenu>
+          </S.NavigationMenu>
         ))}
-      </Style.Box>
-    </Style.Wrapper>
+      </S.Box>
+    </S.Wrapper>
   );
 }
 
-const Style = {
+const S = {
   Wrapper: styled.div`
     width: 100%;
     max-width: 500px;
     height: 72px;
-    border-top: 1px solid #eeeef2;
-    background-color: #fff;
+    border-top: 1px solid ${theme.color.gray200};
+    background-color: ${theme.color.white};
     position: fixed;
     bottom: 0;
   `,
