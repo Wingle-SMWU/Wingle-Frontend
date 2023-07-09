@@ -98,10 +98,6 @@ const S = {
     display: flex;
     flex-direction: column;
   `,
-  InputButtonContainer: styled.div`
-    display: flex;
-    flex-direction: row;
-  `,
   DropDownLabel: styled.label<{ disabled: boolean }>`
     margin-bottom: 8px;
     font-size: 16px;
@@ -109,8 +105,14 @@ const S = {
     color: ${({ theme, disabled }): string =>
       disabled ? theme.color.gray500 : theme.color.gray700};
   `,
+
+  InputButtonContainer: styled.div`
+    display: flex;
+    flex-direction: row;
+  `,
+
   InputField: styled.div<InputFieldProps & { isFocused: boolean }>`
-    width: 100%;
+    width: 77%;
     height: 50px;
     border: 1px solid
       ${({ error, theme }): string =>

@@ -93,8 +93,7 @@ const S = {
       disabled ? theme.color.gray500 : theme.color.gray700};
   `,
   InputField: styled.div<InputFieldProps & { isFocused: boolean }>`
-    width: ${({ width }): string =>
-      width ? `calc(${width} * (100vw / 1440))` : `100%`};
+    width: 100%;
     height: 50px;
     border: 1px solid
       ${({ error, theme }): string =>

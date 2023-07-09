@@ -50,7 +50,7 @@ const S = {
       --btn-font-size: 16px;
     `,
     lg: css`
-      --btn-width: 312px;
+      --btn-width: 100%;
       --btn-height: 52px;
       --btn-padding: 14px 16px;
       --btn-font-size: 16px;
