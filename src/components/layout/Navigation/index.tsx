@@ -103,6 +103,8 @@ const S = {
   `,
 
   NavigationMenuImg: styled.img<Profile>`
+    object-fit: cover;
+
     width: 28px;
     height: 28px;
     border-radius: ${({ isRadius }) => (isRadius ? "50%" : "none")};

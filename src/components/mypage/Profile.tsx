@@ -59,6 +59,7 @@ const S = {
     position: relative;
   `,
   UserProfileImg: styled.img`
+    object-fit: cover;
     width: 56px;
     height: 56px;
     position: absolute;

@@ -254,6 +254,7 @@ const S = {
     position: relative;
   `,
   ProfileImage: styled.img`
+    object-fit: cover;
     width: 88px;
     height: 88px;
     position: absolute;
