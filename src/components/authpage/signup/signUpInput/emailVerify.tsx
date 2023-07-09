@@ -47,7 +47,7 @@ export default function EmailVerify(): JSX.Element {
   // 이메일 유효성 검사
   const handleErrorEmail = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
-      const emailRegex = /^[A-Za-z0-9]+@[^\s@]+\.[^\s@]+$/; // 영어와 숫자만 사용 가능한 정규식
+      const emailRegex = /^[A-Za-z0-9._]+@[^\s@]+\.[^\s@]+$/; // 영어, 숫자, '.', '_'만 사용 가능한 정규식
       const value = e.target.value;
 
       if (!emailRegex.test(value) || !(value.length >= 5)) {
