@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { countryImg } from "@/src/modules/utils";
 import { Content } from "../detail/content";
+import { useRecoilValue } from "recoil";
+import { currentTabStateAtom } from "@/src/atoms/community/tab";
 
 export default function ListCard({
   imgUrl,
@@ -32,7 +34,7 @@ export default function ListCard({
   } = article;
 
   const time = betweenTime(createdTime);
-  const tab = router.query.tab;
+  const tab = useRecoilValue(currentTabStateAtom);
   const onClickMoveToDetail = (): void => {
     // if (isNotice) {
     //   return;
