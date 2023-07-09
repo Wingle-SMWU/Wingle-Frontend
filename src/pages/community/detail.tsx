@@ -39,19 +39,23 @@ export default function Detail(): JSX.Element {
         <Header currentTab={currentTab} />
         <Profile article={article.data} currentTab={currentTab} />
         <Body content={article.data.content} />
-        <Comment
-          comments={comments.data}
-          currentTab={currentTab}
-          forumId={forumId}
-          articleId={articleId}
-        />
+        {currentTab !== "공지" && (
+          <Comment
+            comments={comments.data}
+            currentTab={currentTab}
+            forumId={forumId}
+            articleId={articleId}
+          />
+        )}
       </S.DetailTop>
-      <S.CommentInputFixed>
-        <CommentInput
-          forumId={article.data.forumId}
-          articleId={article.data.articleId}
-        />
-      </S.CommentInputFixed>
+      {currentTab !== "공지" && (
+        <S.CommentInputFixed>
+          <CommentInput
+            forumId={article.data.forumId}
+            articleId={article.data.articleId}
+          />
+        </S.CommentInputFixed>
+      )}
     </S.Wrapper>
   );
 }
