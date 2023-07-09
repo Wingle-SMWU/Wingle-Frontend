@@ -75,9 +75,11 @@ export function AgreementComponent({
           </S.PrivacyPolicyIconNotOpen>
         )}
       </S.AgreementWrapper>
-      <S.PrivacyPolicyContent Condition={isActive}>
-        <Text.Body6 color="gray700">{detail}</Text.Body6>
-      </S.PrivacyPolicyContent>
+      {detail && (
+        <S.PrivacyPolicyContent Condition={isActive}>
+          {detail()}
+        </S.PrivacyPolicyContent>
+      )}
     </>
   );
 }
