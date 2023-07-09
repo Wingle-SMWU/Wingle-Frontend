@@ -63,6 +63,8 @@ export default function Language(): JSX.Element {
   useEffect(() => {
     if (languageArr[0]) {
       setBtnActive(true);
+    } else {
+      setInitialLanguageFn();
     }
   }, [languageArr, btnActive]);
 
@@ -72,7 +74,7 @@ export default function Language(): JSX.Element {
     }
   }, [profileData]);
 
-  useEffect(() => {
+  const setInitialLanguageFn = () => {
     for (let i = 0; i < 3; i++) {
       const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
       if (initialLanguage[i]) {
@@ -81,6 +83,9 @@ export default function Language(): JSX.Element {
         setInitialLanguageValue("");
       }
     }
+  };
+  useEffect(() => {
+    setInitialLanguageFn();
     setLoading(false);
   }, [initialLanguage]);
 
