@@ -15,6 +15,8 @@ export const useRedirectToMain = (): void => {
         if (!logined) {
           alert("로그인이 필요합니다.");
           router.replace("/auth/login");
+        } else {
+          router.replace("/community");
         }
       };
       checkLogined();
