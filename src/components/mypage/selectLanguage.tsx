@@ -32,7 +32,7 @@ export default function SelectLanguageBox({
       // (preSelctArr[idx - 1] === undefined || preSelctArr[idx - 1] === "")
       (preSelected[idx - 1] === undefined || preSelected[idx - 1] === "")
     ) {
-      setDisabled(true);
+      // setDisabled(true);
     }
     console.log(
       "idx 이전 선택 : ",
@@ -45,7 +45,9 @@ export default function SelectLanguageBox({
 
   return (
     <DropDownCommon
-      list={countryList.map((country) => country.enNation)}
+      list={countryList
+        .filter((country) => !preSelected.includes(country.enNation))
+        .map((country) => country.enNation)}
       selected={language.length ? language : "언어선택"}
       handleSelectedChange={handleChange}
       dropDownPlaceHolder={language}
