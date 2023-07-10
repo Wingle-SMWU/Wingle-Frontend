@@ -86,6 +86,8 @@ export default function EmailVerify(): JSX.Element {
       onMutate: (): void => {
         setButtonMessage("전송 중");
         setVerificationTimerStart(false);
+        setEmailCertificationMent("");
+        setEmailCertification("");
       },
       onSuccess: (response): void => {
         setButtonMessage("재전송");
@@ -96,7 +98,6 @@ export default function EmailVerify(): JSX.Element {
         setErrorEmail(true);
         setDisabledEmailButton(true);
         setButtonMessage("전송");
-        console.log(error);
 
         setEmailErrorMent(
           error.response?.data?.message ||
@@ -145,6 +146,12 @@ export default function EmailVerify(): JSX.Element {
         if (verificationTimer <= 0) {
           // 타이머 종료
           clearInterval(timerInterval);
+          setVerificationTimerStart(false);
+          setDisabledEmailButton(true);
+          setButtonMessage("전송");
+          setEmailMent("");
+          setEmailCertificationMent("유효시간이 초과되었습니다.");
+          setErrorEmailCertify(true);
         }
       }, 1000);
     }
@@ -170,6 +177,7 @@ export default function EmailVerify(): JSX.Element {
           })
         );
         setEmailCertificationMent("인증번호가 일치합니다.");
+        setVerificationTimerStart(false);
       },
       onError: (error: unknown): never => {
         setErrorEmailCertify(true);
