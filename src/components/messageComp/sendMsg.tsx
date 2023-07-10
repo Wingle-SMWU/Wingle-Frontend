@@ -67,7 +67,7 @@ const S = {
   `,
 
   MessageContainer: styled.div`
-    max-width: 29rem;
+    max-width: 24rem;
     line-height: 22.4px;
     margin-right: 10px;
     background-color: #ff812e;

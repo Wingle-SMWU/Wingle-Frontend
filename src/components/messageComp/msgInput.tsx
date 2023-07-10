@@ -66,7 +66,6 @@ const S = {
     width: 40px;
     height: 32px;
     padding-right: 24px;
-    padding-left: 8px;
     fill: ${(props) => (props.text ? "#49494D" : "#DCDCE0")};
     cursor: ${({ text }) => (text ? "pointer" : "auto")};
   `,

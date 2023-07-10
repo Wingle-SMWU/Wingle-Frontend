@@ -64,7 +64,7 @@ const S = {
     align-items: flex-start;
     padding: 8px 12px;
     gap: 8px;
-    max-width: 29rem;
+    max-width: 24rem;
     margin-left: 10px;
     background-color: #eeeef2;
     border-radius: 12px;
