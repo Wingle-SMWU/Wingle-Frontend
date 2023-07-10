@@ -11,6 +11,8 @@ import TextInputWithButton from "@/src/components/ui/textInputWithButton";
 import { EmailAuthResponse } from "@/src/types/auth/emailApiType";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import styled from "styled-components";
+import message from "../../../../pages/messages/index";
+import { AxiosError } from "axios";
 
 export default function EmailVerify(): JSX.Element {
   const [email, setEmail] = useState("");
@@ -30,7 +32,7 @@ export default function EmailVerify(): JSX.Element {
   const [emailErrorMent, setEmailErrorMent] =
     useState("입력 형식에 맞지 않습니다.");
   const [emailCertificationMent, setEmailCertificationMent] = useState("");
-  const [emailSendingLimitCount, setEmailSendingLimitCount] = useState(1);
+  const [emailSendingLimitCount, setEmailSendingLimitCount] = useState(0);
   const [isVerificationTimerStart, setVerificationTimerStart] = useState(false);
   const [verificationTimer, setVerificationTimer] = useState(180);
 
@@ -85,21 +87,33 @@ export default function EmailVerify(): JSX.Element {
         setButtonMessage("전송 중");
         setVerificationTimerStart(false);
       },
-      onSuccess: (): void => {
+      onSuccess: (response): void => {
         setButtonMessage("재전송");
-        setEmailMent(`인증메일을 전송했습니다. (${emailSendingLimitCount}/5)`);
+        setEmailSendingLimitCount(response.data.requestCount || 0);
         setVerificationTimerStart(true);
       },
-      onError: (error: unknown): never => {
+      onError: (error: any): void => {
         setErrorEmail(true);
         setDisabledEmailButton(true);
         setButtonMessage("전송");
-        setEmailErrorMent("이미 가입된 이메일입니다.");
-        setEmailSendingLimitCount((prevCount) => (prevCount = 0));
+        console.log(error);
+
+        setEmailErrorMent(
+          error.response?.data?.message ||
+            "메일 인증 요청은 하루에 5회까지 가능합니다."
+        );
+        setEmailSendingLimitCount(0);
         throw error;
       },
     }
   );
+
+  // 이메일 전송 횟수가 변경될 때 메시지를 업데이트
+  useEffect(() => {
+    if (emailSendingLimitCount !== 0) {
+      setEmailMent(`인증메일을 전송했습니다. (${emailSendingLimitCount}/5)`);
+    }
+  }, [emailSendingLimitCount]);
 
   const handleSendEmail = useCallback((): void => {
     if (email === "") {
@@ -116,7 +130,6 @@ export default function EmailVerify(): JSX.Element {
       return;
     }
 
-    setEmailSendingLimitCount((prevCount) => prevCount + 1);
     sendEmail();
   }, [email, emailSendingLimitCount, sendEmail]);
 
@@ -183,6 +196,10 @@ export default function EmailVerify(): JSX.Element {
         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
           handleEmailInputData(e);
           handleErrorEmail(e);
+
+          // 보내기 횟수 0으로 만들어 초기화
+          setEmailSendingLimitCount(0);
+          setEmailMent("");
         }}
         error={isErrorEmail}
         errorMessage={emailErrorMent}

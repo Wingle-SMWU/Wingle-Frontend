@@ -3,6 +3,7 @@ export interface EmailAuthResponse {
   message: string;
   data: {
     certificationKey?: string;
+    requestCount?: number;
   };
 }
 
