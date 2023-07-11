@@ -14,14 +14,14 @@ export default function DropDownSignUpCountry(): JSX.Element {
   const handleSelectItem = useCallback(
     (selected: string): void => {
       const country = countryList.find(
-        (item: CountryListType) => item.nation === selected
+        (item: CountryListType) => item.enNation === selected
       );
       if (country) {
         setNation(selected);
         setSignUpFormData(
           (prev: SignUpFormData): SignUpFormData => ({
             ...prev,
-            nation: country.code,
+            nation: country.enNation,
           })
         );
       }
@@ -33,7 +33,7 @@ export default function DropDownSignUpCountry(): JSX.Element {
     <>
       <DropDownCommon
         label="국적"
-        list={countryList.map((item: CountryListType): string => item.nation)}
+        list={countryList.map((item: CountryListType): string => item.enNation)}
         selected={nation}
         handleSelectedChange={handleSelectItem}
       />

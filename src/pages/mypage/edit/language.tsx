@@ -15,7 +15,7 @@ export default function Language(): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [btnActive, setBtnActive] = useState(false);
-  const [language, setLanguage] = useState<string[]>([]);
+  const [languageArr, setLanguageArr] = useState<string[]>([]);
   const [initialLanguage, setInitialLanguage] = useState<LanguagesType[]>([]);
   const [initialLanguageValue1, setInitialLanguageValue1] = useState("");
   const [initialLanguageValue2, setInitialLanguageValue2] = useState("");
@@ -29,7 +29,7 @@ export default function Language(): JSX.Element {
   };
 
   const handleSubmit = (): void => {
-    fetchLanguage.mutate(language);
+    fetchLanguage.mutate(languageArr);
     router.push(`/mypage/edit`);
   };
 
@@ -40,7 +40,7 @@ export default function Language(): JSX.Element {
   });
 
   const getLanguageAtIndex = (str: string, index: number): void => {
-    setLanguage((prevLanguage) => {
+    setLanguageArr((prevLanguage) => {
       const updatedLanguage = [...prevLanguage];
       updatedLanguage[index] = str;
       return updatedLanguage;
@@ -48,7 +48,7 @@ export default function Language(): JSX.Element {
   };
 
   const resetBtn = (): void => {
-    setLanguage([]);
+    setLanguageArr([]);
     setBtnActive(false);
     for (let i = 0; i < 3; i++) {
       const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
@@ -61,10 +61,12 @@ export default function Language(): JSX.Element {
   };
 
   useEffect(() => {
-    if (language[0]) {
+    if (languageArr[0]) {
       setBtnActive(true);
+    } else {
+      setInitialLanguageFn();
     }
-  }, [language, btnActive]);
+  }, [languageArr, btnActive]);
 
   useEffect(() => {
     if (profileData) {
@@ -72,7 +74,7 @@ export default function Language(): JSX.Element {
     }
   }, [profileData]);
 
-  useEffect(() => {
+  const setInitialLanguageFn = () => {
     for (let i = 0; i < 3; i++) {
       const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
       if (initialLanguage[i]) {
@@ -81,6 +83,9 @@ export default function Language(): JSX.Element {
         setInitialLanguageValue("");
       }
     }
+  };
+  useEffect(() => {
+    setInitialLanguageFn();
     setLoading(false);
   }, [initialLanguage]);
 
@@ -117,28 +122,31 @@ export default function Language(): JSX.Element {
             <SelectLanguageBox
               getLanguageAtIndex={(str): void => getLanguageAtIndex(str, 0)}
               initialLanguage={initialLanguageValue1}
+              preSelctArr={languageArr}
               idx={0}
             />
 
             <Margin direction="column" size={24} />
-            <Text.Body5 color={language[0] !== "" ? "gray700" : "gray500"}>
+            <Text.Body5 color={languageArr[0] !== "" ? "gray700" : "gray500"}>
               2순위
             </Text.Body5>
             <Margin direction="column" size={8} />
             <SelectLanguageBox
               getLanguageAtIndex={(str): void => getLanguageAtIndex(str, 1)}
               initialLanguage={initialLanguageValue2}
+              preSelctArr={languageArr}
               idx={1}
             />
 
             <Margin direction="column" size={24} />
-            <Text.Body5 color={language[1] !== "" ? "gray700" : "gray500"}>
+            <Text.Body5 color={languageArr[1] !== "" ? "gray700" : "gray500"}>
               3순위
             </Text.Body5>
             <Margin direction="column" size={8} />
             <SelectLanguageBox
               getLanguageAtIndex={(str): void => getLanguageAtIndex(str, 2)}
               initialLanguage={initialLanguageValue3}
+              preSelctArr={languageArr}
               idx={2}
             />
           </S.SelectBox>

@@ -69,7 +69,7 @@ export default function Nickname(): JSX.Element {
   if (fileError) alert("업로드 가능한 이미지 크기 제한을 초과했습니다.");
 
   const onChangeName = (e: any): void => {
-    const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
+    const nameRegex = /^[가-힣a-zA-Z0-9]{2,10}$/;
     const nameCurrent = e.target.value;
 
     if (nameCurrent === "") {
@@ -77,9 +77,7 @@ export default function Nickname(): JSX.Element {
       setIsName(true);
       setNameMessage("");
     } else if (!nameRegex.test(nameCurrent)) {
-      setNameMessage(
-        "한글/영어 2글자 이상 10글자 이하, 숫자와 특수기호 사용 금지"
-      );
+      setNameMessage("한글/영문/숫자 2자 이상 10자 미만");
       setIsName(false);
     } else {
       setName(nameCurrent);
