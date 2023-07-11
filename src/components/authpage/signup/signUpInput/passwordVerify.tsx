@@ -47,6 +47,13 @@ export default function PasswordVerify(): JSX.Element {
   // 비밀번호 유효성 검사
   const handleErrorPassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
+      // 초기화
+      setSignUpFormData(
+        (prev: SignUpFormData): SignUpFormData => ({
+          ...prev,
+          password: "",
+        })
+      );
       const passwordRegex =
         /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
       const value = e.target.value;
@@ -79,6 +86,13 @@ export default function PasswordVerify(): JSX.Element {
         setErrorPasswordCheck(false);
         setPasswordCheckMent("비밀번호가 일치합니다.");
       } else {
+        // 초기화
+        setSignUpFormData(
+          (prev: SignUpFormData): SignUpFormData => ({
+            ...prev,
+            password: "",
+          })
+        );
         setErrorPasswordCheck(true);
         setPasswordCheckMent("");
       }

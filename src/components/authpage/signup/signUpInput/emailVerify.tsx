@@ -46,6 +46,13 @@ export default function EmailVerify(): JSX.Element {
   // 이메일 유효성 검사
   const handleErrorEmail = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
+      // 초기화
+      setSignUpFormData(
+        (prev: SignUpFormData): SignUpFormData => ({
+          ...prev,
+          email: "",
+        })
+      );
       setErrorEmailCertify(false);
       setEmailCertificationMent("");
       setEmailMent("");

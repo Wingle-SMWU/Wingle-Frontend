@@ -45,6 +45,13 @@ export default function NameInput(): JSX.Element {
         value.includes("  ") ||
         value.trim() === ""
       ) {
+        // 초기화
+        setSignUpFormData(
+          (prev: SignUpFormData): SignUpFormData => ({
+            ...prev,
+            password: "",
+          })
+        );
         setErrorName(true);
         setNameMent("한글 또는 영문으로 입력해주세요.");
       } else {
