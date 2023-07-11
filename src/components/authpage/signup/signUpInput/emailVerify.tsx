@@ -11,28 +11,25 @@ import TextInputWithButton from "@/src/components/ui/textInputWithButton";
 import { EmailAuthResponse } from "@/src/types/auth/emailApiType";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import styled from "styled-components";
-import message from "../../../../pages/messages/index";
-import { AxiosError } from "axios";
 
 export default function EmailVerify(): JSX.Element {
-  const [email, setEmail] = useState("");
-  const [emailCertification, setEmailCertification] = useState("");
-
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
+  const [email, setEmail] = useState("");
+  const [emailMent, setEmailMent] = useState("");
   const [isErrorEmail, setErrorEmail] = useState(false);
+  const [emailErrorMent, setEmailErrorMent] = useState("");
   const [isDisabledEmailButton, setDisabledEmailButton] = useState(true);
+  const [buttonMessage, setButtonMessage] = useState("인증 전송");
+  const [emailSendingLimitCount, setEmailSendingLimitCount] = useState(0);
 
+  const [emailCertification, setEmailCertification] = useState("");
   const [isErrorEmailCertify, setErrorEmailCertify] = useState(false);
   const [isDisabledEmailCertifyButton, setDisabledEmailCertifyButton] =
     useState(true);
 
-  const [buttonMessage, setButtonMessage] = useState("인증 전송");
-  const [emailMent, setEmailMent] = useState("");
-  const [emailErrorMent, setEmailErrorMent] =
-    useState("입력 형식에 맞지 않습니다.");
   const [emailCertificationMent, setEmailCertificationMent] = useState("");
-  const [emailSendingLimitCount, setEmailSendingLimitCount] = useState(0);
+
   const [isVerificationTimerStart, setVerificationTimerStart] = useState(false);
   const [verificationTimer, setVerificationTimer] = useState(180);
 
@@ -49,6 +46,10 @@ export default function EmailVerify(): JSX.Element {
   // 이메일 유효성 검사
   const handleErrorEmail = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
+      setErrorEmailCertify(false);
+      setEmailCertificationMent("");
+      setEmailMent("");
+
       const emailRegex = /^[A-Za-z0-9._]+@[^\s@]+\.[^\s@]+$/; // 영어, 숫자, '.', '_'만 사용 가능한 정규식
       const value = e.target.value;
 
@@ -59,6 +60,7 @@ export default function EmailVerify(): JSX.Element {
       } else {
         setErrorEmail(false);
         setDisabledEmailButton(false);
+        setEmailErrorMent("");
       }
     },
     []
@@ -67,6 +69,9 @@ export default function EmailVerify(): JSX.Element {
   // 이메일 인증번호 유효성 검사
   const handleErrorEmailCertify = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
+      setErrorEmailCertify(false);
+      setEmailCertificationMent("");
+
       const emailRegex = /^\d+$/;
       const value = e.target.value;
 
@@ -88,6 +93,7 @@ export default function EmailVerify(): JSX.Element {
         setVerificationTimerStart(false);
         setEmailCertificationMent("");
         setEmailCertification("");
+        setEmailSendingLimitCount(0);
       },
       onSuccess: (response): void => {
         setButtonMessage("재전송");
@@ -98,7 +104,6 @@ export default function EmailVerify(): JSX.Element {
         setErrorEmail(true);
         setDisabledEmailButton(true);
         setButtonMessage("전송");
-
         setEmailErrorMent(
           error.response?.data?.message ||
             "메일 인증 요청은 하루에 5회까지 가능합니다."
@@ -122,17 +127,8 @@ export default function EmailVerify(): JSX.Element {
       return;
     }
 
-    if (emailSendingLimitCount === 5) {
-      setErrorEmail(true);
-      setEmailErrorMent(
-        "인증 메일 보내기 횟수를 모두 차감했습니다. 나중에 다시 시도해주세요."
-      );
-      setDisabledEmailButton(true);
-      return;
-    }
-
     sendEmail();
-  }, [email, emailSendingLimitCount, sendEmail]);
+  }, [email, sendEmail]);
 
   useEffect(() => {
     let timerInterval: ReturnType<typeof setInterval>;
@@ -141,18 +137,23 @@ export default function EmailVerify(): JSX.Element {
       setVerificationTimer(180); // 3분(180초)으로 초기화
 
       timerInterval = setInterval(() => {
-        setVerificationTimer((prevTimer) => prevTimer - 1); // 1초씩 감소
+        setVerificationTimer((prevTimer) => {
+          // 1초씩 감소
+          const nextTimer = prevTimer - 1;
 
-        if (verificationTimer <= 0) {
-          // 타이머 종료
-          clearInterval(timerInterval);
-          setVerificationTimerStart(false);
-          setDisabledEmailButton(true);
-          setButtonMessage("전송");
-          setEmailMent("");
-          setEmailCertificationMent("유효시간이 초과되었습니다.");
-          setErrorEmailCertify(true);
-        }
+          if (nextTimer <= 0) {
+            // 타이머 종료
+            clearInterval(timerInterval);
+            setVerificationTimerStart(false);
+            setEmailCertification("");
+            setErrorEmailCertify(true);
+            setEmailCertificationMent("유효시간이 초과되었습니다.");
+            setDisabledEmailCertifyButton(true);
+
+            return 0;
+          }
+          return nextTimer;
+        });
       }, 1000);
     }
 
@@ -160,7 +161,6 @@ export default function EmailVerify(): JSX.Element {
       // 컴포넌트 언마운트 시 타이머 정리
       clearInterval(timerInterval);
     };
-    // 일부터 불린 데이터를 담당하는 상태만 의존성 배열에 추가했음
   }, [isVerificationTimerStart]);
 
   // 이메일 인증번호 확인
@@ -179,8 +179,9 @@ export default function EmailVerify(): JSX.Element {
         setEmailCertificationMent("인증번호가 일치합니다.");
         setVerificationTimerStart(false);
       },
-      onError: (error: unknown): never => {
+      onError: (error: any): never => {
         setErrorEmailCertify(true);
+        setEmailCertificationMent(error.response?.data?.message);
         throw error;
       },
     }
@@ -238,7 +239,7 @@ export default function EmailVerify(): JSX.Element {
           handleErrorEmailCertify(e);
         }}
         error={isErrorEmailCertify}
-        errorMessage="인증번호가 일치하지 않습니다."
+        errorMessage={emailCertificationMent}
         buttonMessage="인증 확인"
         buttonDisabled={isDisabledEmailCertifyButton}
         onClick={handleVerifyEmail}
