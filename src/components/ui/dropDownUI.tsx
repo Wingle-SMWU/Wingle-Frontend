@@ -131,7 +131,7 @@ const S = {
     top: calc(100% + 8px);
     left: 0;
     z-index: 1;
-    width: 452px;
+    width: -webkit-fill-available;
     height: 312px;
     padding: 8px 0;
     background-color: ${({ theme }) => theme.color.white};
