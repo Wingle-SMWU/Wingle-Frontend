@@ -102,7 +102,7 @@ export default function NicknameVerify(): JSX.Element {
           handleNicknameInputData(e);
           handleErrorNickName(e);
         }}
-        placeholder="실명을 입력하세요"
+        placeholder="닉네임을 입력하세요"
         error={isErrorNickName}
         errorMessage={nicknameErrorMent}
         buttonMessage="중복 확인"
