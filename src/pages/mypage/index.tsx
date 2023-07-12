@@ -36,10 +36,10 @@ export default function Mypage(): JSX.Element {
   return (
     <>
       <S.Wrapper>
+        <S.Header>
+          <Text.Title1 color="gray900">마이페이지</Text.Title1>
+        </S.Header>
         <S.Content>
-          <S.Header>
-            <Text.Title1 color="gray900">마이페이지</Text.Title1>
-          </S.Header>
           <S.Profile>
             <Profile />
             {editText ? (
@@ -121,28 +121,29 @@ const S = {
     padding: 0 24px;
     margin-top: 56px;
     @media (max-width: 500px) {
-      // width: 100vw;
       background-color: white;
     }
   `,
   Header: styled.div`
-    width: 100vw;
-    height: 50px;
-    padding: 14px 0;
+    background-color: white;
+    max-width: 452px;
+    height: 28px;
     position: fixed;
-    top: 0;
     z-index: 1;
+    @media (min-width: 501px) {
+      width: 100%;
+    }
+    @media (max-width: 500px) {
+      width: calc(100vw - 48px);
+    }
+    padding: 14px 24px;
   `,
   Profile: styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     border-bottom: 1px solid #eeeef2;
-    @media (max-width: 500px) {
-      width: 100vw; /* Adjust to fit the screen size */
-    }
   `,
-
   RegisterBtn: styled.button`
     width: 45px;
     height: 33px;
