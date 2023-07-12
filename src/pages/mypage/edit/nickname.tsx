@@ -10,6 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { postUpdateProfile } from "@/src/api/mypage/updateProfile";
 import { getProfile } from "@/src/api/mypage/profileData";
 import { checkNicknameAvailable } from "../../../api/auth/emailAPI";
+import { theme } from "@/src/styles/theme";
 
 export default function Nickname(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -257,7 +258,7 @@ const S = {
     height: 88px;
     position: absolute;
     border-radius: 100px;
-    border: 1px solid #eeeef2;
+    border: 1px solid ${theme.color.gray200};
     cursor: pointer;
   `,
   CameraIcon: styled.img`
@@ -280,7 +281,7 @@ const S = {
     top: 0%;
     z-index: 0;
     cursor: pointer;
-    background-color: #eeeef2;
+    background-color: ${theme.color.gray200};
   `,
   NicknameChangeBox: styled.div`
     .message {
@@ -298,16 +299,20 @@ const S = {
   InputNickname: styled.input`
     width: 93%;
     height: 52px;
-    border: 1px solid #dcdce0;
+    border: 1px solid ${theme.color.gray300};
     border-radius: 8px;
     padding: 0px 16px;
     margin-bottom: 8px;
 
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+
     ::placeholder {
-      color: #959599;
+      color: ${theme.color.gray500};
     }
     :focus {
-      border: 1px solid #dcdce0;
+      border: 1px solid ${theme.color.gray300};
     }
   `,
   InputImage: styled.input`
