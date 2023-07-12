@@ -2,6 +2,7 @@ import { Margin, Text } from "../ui";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+import { theme } from "@/src/styles/theme";
 
 type InterestItem = {
   id: number;
@@ -45,10 +46,10 @@ export default function SelectInterest({ parentFunction }: Props) {
 
   useEffect(() => {
     if (profileData) {
-    const initialSelectedItems = interestItems
-      .filter((item) => profileData.interests.includes(item.title))
-      .map((item) => item.title);
-    setSelectedItems(initialSelectedItems);
+      const initialSelectedItems = interestItems
+        .filter((item) => profileData.interests.includes(item.title))
+        .map((item) => item.title);
+      setSelectedItems(initialSelectedItems);
     }
   }, [profileData]);
 
@@ -60,7 +61,7 @@ export default function SelectInterest({ parentFunction }: Props) {
             <S.InterestBox
               selected={selectedItems.includes(item.title)}
               onClick={() => handleClick(item)}
-              backgroundColor={isSelected(item) ? "#FFF3EB" : "#eeeef2"}
+              backgroundColor={isSelected(item) ? "#FFF3EB" : "#fffff"}
             >
               <Text.Body6 color="gray900" pointer key={item.title}>
                 {item.title}
@@ -76,16 +77,22 @@ export default function SelectInterest({ parentFunction }: Props) {
 
 const S = {
   ShowInterest: styled.div`
+    max-width: 312px;
     display: flex;
     flex-wrap: wrap;
     width: 80%;
+    gap: 8px;
   `,
   InterestBox: styled.div<{ selected: boolean; backgroundColor: string }>`
     cursor: pointer;
     border-radius: 40px;
-    padding: 8px 15px;
+    display: flex;
+    padding: 8px 16px 8px 12px;
+    align-items: center;
     background-color: ${(props) => props.backgroundColor};
-    margin: 8px;
-    border: ${(props) => (props.selected ? "1px solid #FFD7BD" : null)};
+    border: ${(props) =>
+      props.selected
+        ? `1px solid ${theme.color.orange500}`
+        : `1px solid ${theme.color.gray300}`};
   `,
 };
