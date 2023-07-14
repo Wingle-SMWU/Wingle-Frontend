@@ -27,7 +27,6 @@ export default function Edit(): JSX.Element {
   const getProfile = async (): Promise<void> => {
     try {
       const res = await instance.get(`/profile/${userID}`);
-      console.log("res", res);
       setProfileData(res.data.data);
       setIsLoading(false);
     } catch (err) {

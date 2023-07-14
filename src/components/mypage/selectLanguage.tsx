@@ -16,7 +16,6 @@ export default function SelectLanguageBox({
     setLanguage(selectedLanguage);
   };
 
-  console.log(preSelctArr, "~~");
   useEffect(() => {
     setLanguage(initialLanguage);
   }, [initialLanguage]);
@@ -34,13 +33,6 @@ export default function SelectLanguageBox({
     ) {
       // setDisabled(true);
     }
-    console.log(
-      "idx 이전 선택 : ",
-      idx,
-      preSelctArr,
-      preSelctArr[idx - 1],
-      "~~"
-    );
   }, [language, isdisable]);
 
   return (
