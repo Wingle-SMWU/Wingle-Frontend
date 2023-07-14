@@ -254,13 +254,13 @@ export default function MessageSend() {
             ""
           )}
         </S.MessageRoomList>
-        <MsgInput
-          text={text}
-          onChange={handleChangeText}
-          onKeyDown={handleSendMessage}
-          onClick={handleClickSendMessage}
-        />
       </S.Container>
+      <MsgInput
+        text={text}
+        onChange={handleChangeText}
+        onKeyDown={handleSendMessage}
+        onClick={handleClickSendMessage}
+      />
     </>
   );
 }
