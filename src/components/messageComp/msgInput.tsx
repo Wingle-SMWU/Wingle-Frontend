@@ -27,7 +27,9 @@ const MsgInput = ({ text, onChange, onKeyDown, onClick }: IconProps) => {
 
 const S = {
   Container: styled.div`
-    position: sticky;
+    position: fixed;
+    bottom: 0;
+    max-width: 500px;
     width: 100%;
     box-sizing: border-box;
     background: #ffffff;
@@ -44,9 +46,7 @@ const S = {
   TextInput: styled.textarea`
     border: none;
     width: 100%;
-    padding: 0.5rem 1.4rem;
-    padding-right: 0;
-    padding-left: 24px;
+    padding: 0.5rem 0 0.5rem 24px;
     margin-top: 1.4rem;
     font-family: "Pretendard Variable", Pretendard;
     font-style: normal;
