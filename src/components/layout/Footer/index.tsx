@@ -49,6 +49,9 @@ const S = {
     border-top: 1px solid #eeeef2;
   `,
   Content: styled.div`
+    @media (max-width: 500px) {
+      width: calc(100vw - 48px);
+    }
     padding: 32px 24px;
   `,
   WingleLogo: styled.img`
