@@ -23,16 +23,16 @@ export default function Edit(): JSX.Element {
   return (
     <>
       <S.Wapper>
+        <S.Header>
+          <S.GoBackArrow
+            src="/back-arrow.svg"
+            alt="뒤로가기"
+            onClick={(): Promise<boolean> => router.push(`/mypage`)}
+          />
+          <Margin direction="row" size={13} />
+          <Text.Title1 color="gray900">내 프로필</Text.Title1>
+        </S.Header>
         <S.Content>
-          <S.Header>
-            <S.GoBackArrow
-              src="/back-arrow.svg"
-              alt="뒤로가기"
-              onClick={(): Promise<boolean> => router.push(`/mypage`)}
-            />
-            <Margin direction="row" size={13} />
-            <Text.Title1 color="gray900">내 프로필</Text.Title1>
-          </S.Header>
           <>
             <S.UserBox>
               <Profile />
@@ -153,13 +153,12 @@ const S = {
     }
     @media (max-width: 500px) {
       width: 100vw;
-      background-color: white;
     }
+    background-color: ${theme.color.white};
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* border: 1px solid red; */
   `,
   Content: styled.div`
     padding: 0 24px;
@@ -167,11 +166,12 @@ const S = {
   `,
   Header: styled.div`
     display: flex;
-    padding: 14px 0px;
+    padding: 14px 24px;
     position: fixed;
     background-color: ${theme.color.white};
     z-index: 1;
-    ////width: 452px;
+    max-width: 452px;
+    width: 100%;
     top: 0px;
   `,
   GoBackArrow: styled.img`
@@ -183,7 +183,7 @@ const S = {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #eeeef2;
+    border-bottom: 1px solid ${theme.color.gray200};
     gap: 14px;
     position: relative;
   `,
@@ -193,7 +193,7 @@ const S = {
     border: 1px solid green;
   `,
   UserProfileImg: styled.img`
-    border: 1px solid #eeeef2;
+    border: 1px solid ${theme.color.gray200};
   `,
   UserInfoBox: styled.div`
     width: 340px;
@@ -208,7 +208,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ff812e;
+    background-color: #${theme.color.orange500};
     border-radius: 8px;
   `,
   EditBtn: styled.img`
@@ -218,12 +218,10 @@ const S = {
     cursor: pointer;
   `,
   EditList: styled.div`
-    //width: 452px;
     display: flex;
     flex-direction: column;
   `,
   Language: styled.div`
-    // //width: 452px;
     display: flex;
     justify-content: space-between;
   `,
@@ -249,7 +247,6 @@ const S = {
     font-weight: ${(props): number => props.fontWeight};
   `,
   Introduce: styled.div`
-    //width: 452px;
     display: flex;
     justify-content: space-between;
   `,
@@ -263,7 +260,6 @@ const S = {
     width: 80%;
   `,
   Interest: styled.div`
-    //width: 452px;
     display: flex;
     justify-content: space-between;
   `,
