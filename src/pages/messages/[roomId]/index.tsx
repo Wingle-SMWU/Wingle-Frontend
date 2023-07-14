@@ -292,6 +292,7 @@ const S = {
     box-sizing: border-box;
     overflow-y: scroll;
     height: 100%;
+    padding-bottom: 57px;
   `,
 
   EmptyMessage: styled.div`
