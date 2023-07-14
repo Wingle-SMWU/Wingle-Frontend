@@ -315,8 +315,7 @@ const S = {
     margin: 1.2rem 0;
     padding: 5px 10px;
     text-align: center;
-    width: 110px;
-    height: 25px;
+    width: fit-content;
     background: #fcfcfe;
     border: 1px solid #dcdce0;
     border-radius: 23px;
