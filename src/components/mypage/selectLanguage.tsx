@@ -16,7 +16,6 @@ export default function SelectLanguageBox({
     setLanguage(selectedLanguage);
   };
 
-  console.log(preSelctArr, "~~");
   useEffect(() => {
     setLanguage(initialLanguage);
   }, [initialLanguage]);
@@ -27,20 +26,14 @@ export default function SelectLanguageBox({
 
   useEffect(() => {
     getLanguageAtIndex(language, idx);
-    if (
-      idx !== 0 &&
-      // (preSelctArr[idx - 1] === undefined || preSelctArr[idx - 1] === "")
-      (preSelected[idx - 1] === undefined || preSelected[idx - 1] === "")
-    ) {
-      // setDisabled(true);
-    }
-    console.log(
-      "idx 이전 선택 : ",
-      idx,
-      preSelctArr,
-      preSelctArr[idx - 1],
-      "~~"
-    );
+    // to do : 후 순위 비활성화
+    //if (
+    //   idx !== 0 &&
+    //   // (preSelctArr[idx - 1] === undefined || preSelctArr[idx - 1] === "")
+    //   (preSelected[idx - 1] === undefined || preSelected[idx - 1] === "")
+    // ) {
+    //   // setDisabled(true);
+    // }
   }, [language, isdisable]);
 
   return (

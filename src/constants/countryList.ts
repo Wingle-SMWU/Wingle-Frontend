@@ -1,4 +1,4 @@
-import { CountryListType } from "../types/countryList";
+import { CountryListType } from "../types/list";
 
 export const countryList: CountryListType[] = [
   {
