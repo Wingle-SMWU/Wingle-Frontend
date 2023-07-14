@@ -27,7 +27,8 @@ const MsgInput = ({ text, onChange, onKeyDown, onClick }: IconProps) => {
 
 const S = {
   Container: styled.div`
-    position: sticky;
+    position: fixed;
+    bottom: 0;
     width: 100%;
     box-sizing: border-box;
     background: #ffffff;
