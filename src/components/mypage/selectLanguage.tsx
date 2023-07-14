@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { countryList } from "@/src/constants/countryList";
 import DropDownCommon from "../ui/dropDownUI";
+import { languageList } from "../../constants/languageList";
+import Language from "../../pages/mypage/edit/language";
 
 export default function SelectLanguageBox({
   getLanguageAtIndex,
@@ -38,9 +39,9 @@ export default function SelectLanguageBox({
 
   return (
     <DropDownCommon
-      list={countryList
-        .filter((country) => !preSelected.includes(country.enNation))
-        .map((country) => country.enNation)}
+      list={languageList
+        .filter((language) => !preSelected.includes(language.languageList))
+        .map((language) => language.languageList)}
       selected={language.length ? language : "언어선택"}
       handleSelectedChange={handleChange}
       dropDownPlaceHolder={language}
