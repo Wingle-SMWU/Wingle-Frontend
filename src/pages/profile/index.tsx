@@ -90,16 +90,16 @@ export default function Edit(): JSX.Element {
   return (
     <>
       <S.Wapper>
+        <S.Header>
+          <S.GoBackArrow
+            src="/back-arrow.svg"
+            alt="뒤로가기"
+            onClick={(): void => router.back()}
+          />
+          <Margin direction="row" size={13} />
+          <Text.Title1 color="gray900">프로필</Text.Title1>
+        </S.Header>
         <S.Content>
-          <S.Header>
-            <S.GoBackArrow
-              src="/back-arrow.svg"
-              alt="뒤로가기"
-              onClick={(): void => router.back()}
-            />
-            <Margin direction="row" size={13} />
-            <Text.Title1 color="gray900">프로필</Text.Title1>
-          </S.Header>
           <>
             <S.UserBox>
               <S.UserImgBox>
@@ -238,18 +238,16 @@ const S = {
   Content: styled.div`
     padding: 0 24px;
     margin-top: 56px;
-    background-color: white;
+    background-color: ${theme.color.white};
   `,
   Header: styled.div`
     display: flex;
-    padding: 14px 0px;
+    padding: 14px 24px;
     position: fixed;
-    background-color: ${({ theme }) => theme.color.white};
+    background-color: ${theme.color.white};
     z-index: 1;
-    @media (max-width: 500px) {
-      width: 100vw;
-      background-color: white;
-    }
+    max-width: 452px;
+    width: calc(100% - 48px);
     top: 0px;
   `,
   GoBackArrow: styled.img`
@@ -272,14 +270,14 @@ const S = {
     height: 56px;
     position: absolute;
     border-radius: 100px;
-    border: 1px solid #eeeef2;
+    border: 1px solid ${theme.color.gray200};
   `,
   UserFlagImg: styled.img`
     width: 22px;
     height: 22px;
     position: absolute;
-    border: 1px solid white;
-    background-color: white;
+    border: 1px solid ${theme.color.white};
+    background-color: ${theme.color.white};
     border-radius: 100px;
     right: 0;
     bottom: 0;
@@ -309,7 +307,7 @@ const S = {
     position: absolute;
     top: 63px;
     left: 435px;
-    border-bottom: 8px solid #303033;
+    border-bottom: 8px solid ${theme.color.gray800};
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
   `,
@@ -317,7 +315,7 @@ const S = {
   DropBubbleLow: styled.div`
     width: 153px;
     height: 42px;
-    background-color: #303033;
+    background-color: ${theme.color.gray800};
     border-radius: 8px;
     position: absolute;
     top: 70px;
@@ -333,7 +331,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ff812e;
+    background-color: ${theme.color.orange500};
     border-radius: 8px;
   `,
 
