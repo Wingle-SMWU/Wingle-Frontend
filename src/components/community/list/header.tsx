@@ -51,10 +51,7 @@ export default function Header({
             <Text.Title1 color="gray900">내가 쓴 게시글</Text.Title1>
           </>
         ) : (
-          <>
-            <Text.Title1 color="gray900">커뮤니티</Text.Title1>
-            <Text.Caption2 color="gray500">고려대 서울캠</Text.Caption2>
-          </>
+          <Text.Title1 color="gray900">커뮤니티</Text.Title1>
         )}
       </S.Header>
       <S.HeaderBar>
