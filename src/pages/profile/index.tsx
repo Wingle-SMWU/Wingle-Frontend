@@ -11,6 +11,7 @@ import { RoomNumberResponse } from "@/src/types/message/roomType";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { useResetRecoilState } from "recoil";
 import { recipientUserId } from "@/src/atoms/message/recipientUserId";
+import { theme } from "@/src/styles/theme";
 
 export default function Edit(): JSX.Element {
   const resetRecipientUserId = useResetRecoilState(recipientUserId);
@@ -201,14 +202,16 @@ export default function Edit(): JSX.Element {
               </S.InterestBoxContainer>
             </S.Column>
           </S.EditList>
-          {!isMe && !fromMessages ? (
-            <S.Note onClick={sendNote}>쪽지 보내기</S.Note>
-          ) : null}
         </S.Content>
         {modalVisible && (
           <Modal type="profile-back" onClickModal={onClickModal} />
         )}
       </S.Wapper>
+      {!isMe && !fromMessages ? (
+        <S.SendButtonWrapper>
+          <S.SendButton onClick={sendNote}>쪽지 보내기</S.SendButton>
+        </S.SendButtonWrapper>
+      ) : null}
     </>
   );
 }
@@ -231,7 +234,6 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* border: 1px solid red; */
   `,
   Content: styled.div`
     padding: 0 24px;
@@ -257,7 +259,6 @@ const S = {
   UserBox: styled.div`
     display: flex;
     align-items: center;
-    /* border-bottom: 1px solid #eeeef2; */
     gap: 14px;
     position: relative;
   `,
@@ -288,7 +289,6 @@ const S = {
     }
   `,
   UserInfoBox: styled.div`
-    // width: 340px;
     margin-left: 14px;
     height: 86px;
     display: flex;
@@ -338,12 +338,10 @@ const S = {
   `,
 
   EditList: styled.div`
-    //width: 452px;
     display: flex;
     flex-direction: column;
   `,
   Language: styled.div`
-    //width: 452px;
     display: flex;
     justify-content: space-between;
   `,
@@ -369,7 +367,6 @@ const S = {
     font-weight: ${(props): number => props.fontWeight};
   `,
   Introduce: styled.div`
-    //width: 452px;
     display: flex;
     justify-content: space-between;
   `,
@@ -400,31 +397,35 @@ const S = {
     border: 1px solid ${({ theme }) => theme.color.orange300};
     margin: 8px 8px 0px 0px;
   `,
-
   Column: styled.div`
     display: flex;
     flex-direction: column;
   `,
-  Note: styled.div`
+  SendButtonWrapper: styled.div`
+    max-width: 452px;
+    width: calc(100vw - 48px);
+    position: fixed;
+    display: flex;
+    padding: 0 24px;
+    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 17px 16px;
-    gap: 6px;
-    position: fixed;
-    width: 404px;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 32px;
-    cursor: pointer;
-
-    /* main_orange/orange500 */
-    background: #ff812e;
+    height: 120px;
+    background-color: ${theme.color.white};
+  `,
+  SendButton: styled.div`
     border-radius: 8px;
-    font-family: "Pretendard Variable", Pretendard;
+    font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    font-size: 16px;
-    color: #ffffff;
+    line-height: 140%;
+    background: ${theme.color.orange500};
+    color: ${theme.color.white};
+    display: flex;
+    width: 100%;
+    padding: 14px 16px;
+    justify-content: center;
+    align-items: center;
   `,
 };
