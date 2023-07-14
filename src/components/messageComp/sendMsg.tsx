@@ -46,13 +46,14 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin-right: 0.3rem;
+    max-width: calc(70% + 35px);
   `,
 
   MessageInfoBox: styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-end;
+    justify-content: flex-end;
     padding: 0px;
     gap: 4px;
   `,
@@ -67,13 +68,13 @@ const S = {
   `,
 
   MessageContainer: styled.div`
-    max-width: 24rem;
     line-height: 22.4px;
     margin-right: 10px;
     background-color: #ff812e;
     border-radius: 12px;
     padding: 8px 12px;
     gap: 8px;
+    margin-right: 24px;
 
     p {
       font-family: "Pretendard Variable", Pretendard;
@@ -82,6 +83,7 @@ const S = {
       font-size: 14px;
       line-height: 140%;
       color: #ffffff;
+      word-break: break-all;
     }
   `,
 };

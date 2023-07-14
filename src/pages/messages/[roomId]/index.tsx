@@ -289,7 +289,6 @@ const S = {
   `,
 
   MessageRoomList: styled.div`
-    padding: 1rem;
     box-sizing: border-box;
     overflow-y: scroll;
     height: 100%;
