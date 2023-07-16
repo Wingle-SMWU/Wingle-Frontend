@@ -373,9 +373,7 @@ const S = {
     line-height: 140%;
     color: ${({ theme }) => theme.color.gray900};
   `,
-  InterestBoxContainer: styled.div`
-    width: 80%;
-  `,
+  InterestBoxContainer: styled.div``,
   Interest: styled.div`
     //width: 452px;
     display: flex;

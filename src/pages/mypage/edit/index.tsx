@@ -257,7 +257,7 @@ const S = {
     color: ${theme.color.gray900};
   `,
   InterestBoxContainer: styled.div`
-    width: 80%;
+    width: 100%;
   `,
   Interest: styled.div`
     display: flex;
