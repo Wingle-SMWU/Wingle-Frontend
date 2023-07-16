@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import Loading from "@/src/components/ui/loadingUI";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+import Link from "next/link";
+import { theme } from "@/src/styles/theme";
 
 export default function Mypage(): JSX.Element {
   const [editText, setEditText] = useState(true);
@@ -75,12 +77,22 @@ export default function Mypage(): JSX.Element {
           </S.Profile>
           <>
             <Margin direction="column" size={34} />
+
             <Text.Body1
               color="gray900"
               pointer
               onClick={(): Promise<boolean> => router.push(`/mypage/postList`)}
             >
               내가 쓴 게시글
+            </Text.Body1>
+            <Margin direction="column" size={34} />
+            <Text.Body1 color="gray900" pointer>
+              <Link
+                href="https://answer.moaform.com/answers/EAP2m0"
+                style={{ textDecoration: "none", color: theme.color.gray900 }}
+              >
+                피드백 보내기
+              </Link>
             </Text.Body1>
             <Margin direction="column" size={34} />
             <Text.Body1 color="gray900" pointer onClick={handleLogout}>
