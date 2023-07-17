@@ -8,6 +8,7 @@ import Navigation from "@/src/components/layout/Navigation";
 import { Room } from "@/src/types/message/roomType";
 import instance from "@/src/api/axiosModule";
 import Loading from "@/src/components/ui/loadingUI";
+import NoData from "@/src/components/ui/NoDataUI";
 
 export default function message(page: number, size: number) {
   const { messageDataRoom } = useGetRoom(0, 10000);
@@ -29,14 +30,7 @@ export default function message(page: number, size: number) {
             }
           })
         ) : (
-          <>
-            <S.EmptyContainer>
-              <S.EmptyBox>
-                <Message />
-                <Text.Body3 color="gray500">받은 쪽지가 없어요.</Text.Body3>
-              </S.EmptyBox>
-            </S.EmptyContainer>
-          </>
+          <NoData type="message" />
         )}
         <Navigation tab={""} />
       </S.MsgContainer>
@@ -44,13 +38,13 @@ export default function message(page: number, size: number) {
   );
 }
 
-export async function getServerSideProps(context: any) {
-  const { page, size } = context.query;
-  const res = await instance.get(`/messages/rooms?page=${page}&size=${size}`);
-  const data = await res.data;
+// export async function getServerSideProps(context: any) {
+//   const { page, size } = context.query;
+//   const res = await instance.get(`/messages/rooms?page=${page}&size=${size}`);
+//   const data = await res.data;
 
-  return { props: { data } };
-}
+//   return { props: { data } };
+// }
 
 const S = {
   Container: styled.div`
@@ -74,23 +68,5 @@ const S = {
     justify-content: center;
     overflow-y: scroll;
     padding-top: 55px;
-  `,
-
-  EmptyContainer: styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  `,
-
-  EmptyBox: styled.div`
-    position: absolute;
-    top: 50%;
-    display: grid;
-    gap: 10px;
-
-    span {
-      margin-left: -10px;
-    }
   `,
 };
