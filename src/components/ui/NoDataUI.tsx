@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
+import { Text } from "../ui";
 
 export default function NoData({ type }: { type: noDataType }) {
   const data = {
@@ -31,7 +32,12 @@ export default function NoData({ type }: { type: noDataType }) {
         width={data[type].width}
         height={data[type].height}
       />
-      <S.Text>{data[type].text}</S.Text>
+      <Text.Body2 color="gray500">{data[type].text}</Text.Body2>
+      {type === "message" && (
+        <Text.Body7 color="gray400">
+          교류게시판에서 대화할 친구를 찾아보세요.
+        </Text.Body7>
+      )}
     </S.ImageWrapper>
   );
 }
@@ -54,16 +60,10 @@ const S = {
       @media (max-width: 500px) {
         width: 100vw;
       }
-      margin-top: -107px;
+      margin-top: -60px;
       max-width: 500px;
       height: 100vh;
     `}
-  `,
-  Text: styled.div`
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 22.4px;
-    color: #959599;
   `,
   Comment: styled.div`
     padding: 50px 0;
