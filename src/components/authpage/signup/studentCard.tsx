@@ -68,9 +68,9 @@ export default function StudentCard(): JSX.Element {
         <S.Description>
           <Text.Body5 color="gray100">학생증 인증 방법</Text.Body5>
           <Margin direction="column" size={8} />
+          <Text.Body5 color="gray100">학교, 학과, 학번, 이름</Text.Body5>
           <Text.Body6 color="gray100">
-            카드 학생증 앞면/모바일 학생증 캡처본/숙명포털-학적사항 중 한 가지를
-            첨부해주세요. (이름, 학과, 학번이 정확히 나와야 합니다.)
+            이 모두 나온 실물(모바일) 학생증 사진을 첨부해주세요.
           </Text.Body6>
         </S.Description>
       </S.DescriptionContent>
