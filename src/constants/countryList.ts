@@ -743,11 +743,6 @@ export const countryList: CountryListType[] = [
     enNation: "Ukraine",
   },
   {
-    code: "ET",
-    krNation: "에티오피아",
-    enNation: "Ethiopia",
-  },
-  {
     code: "EG",
     krNation: "이집트",
     enNation: "Egypt",
