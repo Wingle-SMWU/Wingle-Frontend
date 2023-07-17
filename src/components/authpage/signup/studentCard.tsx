@@ -66,7 +66,7 @@ export default function StudentCard(): JSX.Element {
 
       <S.DescriptionContent isActive={isActive}>
         <S.Description>
-          <Text.Body5 color="gray100">학생증 인증 방법</Text.Body5>
+          <Text.Body4 color="gray100">학생증 인증 방법</Text.Body4>
           <Margin direction="column" size={8} />
           <Text.Body5 color="gray100">학교, 학과, 학번, 이름</Text.Body5>
           <Text.Body6 color="gray100">
