@@ -37,7 +37,13 @@ export default function Footer() {
           </Text.Caption2>
           <Margin direction="column" size={11} />
           <Text.Caption2 color="gray500">
-            이용약관 | &nbsp;
+            <Link
+              href="https://wingleeng.notion.site/d75c38cfbedd47309a839b055d56e3d2?pvs=4"
+              style={{ textDecoration: "none", color: theme.color.gray500 }}
+            >
+              이용약관
+            </Link>
+            &nbsp; | &nbsp;
             <Link
               href="https://wingleeng.notion.site/d9824ef9e1cb49f293137cea583ec087?pvs=4"
               style={{ textDecoration: "none", color: theme.color.gray500 }}
