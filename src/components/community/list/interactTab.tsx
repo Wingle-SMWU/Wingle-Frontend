@@ -21,6 +21,7 @@ export default function InteractTab({
   } = useQuery({
     queryFn: getArticles,
     queryKey: ["articles", forumId, 0, 30, my],
+    refetchInterval: 2000,
     cacheTime: 5 * 60 * 1000,
     staleTime: 0,
   });
