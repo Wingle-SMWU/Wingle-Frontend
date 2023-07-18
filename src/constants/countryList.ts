@@ -127,6 +127,11 @@ export const countryList: CountryListType[] = [
     enNation: "Nicaragua",
   },
   {
+    code: "TW",
+    krNation: "대만",
+    enNation: "Taiwan",
+  },
+  {
     code: "KR",
     krNation: "대한민국",
     enNation: "Republic of Korea",
@@ -155,11 +160,6 @@ export const countryList: CountryListType[] = [
     code: "TL",
     krNation: "동티모르",
     enNation: "East Timor",
-  },
-  {
-    code: "TW",
-    krNation: "대만",
-    enNation: "Taiwan",
   },
   {
     code: "LA",
@@ -435,11 +435,6 @@ export const countryList: CountryListType[] = [
     code: "MK",
     krNation: "북마케도니아",
     enNation: "Macedonia",
-  },
-  {
-    code: "CP",
-    krNation: "북한",
-    enNation: "DPR of Korea",
   },
   {
     code: "BG",
@@ -743,14 +738,24 @@ export const countryList: CountryListType[] = [
     enNation: "Ukraine",
   },
   {
-    code: "EG",
-    krNation: "이집트",
-    enNation: "Egypt",
+    code: "IQ",
+    krNation: "이라크",
+    enNation: "Iraq",
+  },
+  {
+    code: "IR",
+    krNation: "이란",
+    enNation: "Iran",
   },
   {
     code: "IL",
     krNation: "이스라엘",
     enNation: "Israel",
+  },
+  {
+    code: "EG",
+    krNation: "이집트",
+    enNation: "Egypt",
   },
   {
     code: "IT",
@@ -781,6 +786,11 @@ export const countryList: CountryListType[] = [
     code: "ZM",
     krNation: "잠비아",
     enNation: "Zambia",
+  },
+  {
+    code: "GQ",
+    krNation: "적도 기니",
+    enNation: "Equatorial Guinea",
   },
   {
     code: "GE",
@@ -873,11 +883,6 @@ export const countryList: CountryListType[] = [
     enNation: "Comoros",
   },
   {
-    code: "XK",
-    krNation: "코소보",
-    enNation: "Kosovo",
-  },
-  {
     code: "CR",
     krNation: "코스타리카",
     enNation: "Costa Rica",
@@ -886,11 +891,6 @@ export const countryList: CountryListType[] = [
     code: "CI",
     krNation: "코트디부아르",
     enNation: "Côte d'Ivoire",
-  },
-  {
-    code: "CC",
-    krNation: "코코스 제도",
-    enNation: "Cocos Islands",
   },
   {
     code: "CO",
@@ -928,11 +928,6 @@ export const countryList: CountryListType[] = [
     enNation: "Croatia",
   },
   {
-    code: "CX",
-    krNation: "크리스마스섬",
-    enNation: "Christmas Island",
-  },
-  {
     code: "KG",
     krNation: "키르기스스탄",
     enNation: "Kyrgyzstan",
@@ -963,11 +958,6 @@ export const countryList: CountryListType[] = [
     enNation: "Thailand",
   },
   {
-    code: "TC",
-    krNation: "터크스 카이코스 제도",
-    enNation: "Turks and Caicos Islands",
-  },
-  {
     code: "TR",
     krNation: "터키",
     enNation: "Turkey",
@@ -986,6 +976,11 @@ export const countryList: CountryListType[] = [
     code: "TO",
     krNation: "통가",
     enNation: "Tonga",
+  },
+  {
+    code: "TM",
+    krNation: "투르크메니스탄",
+    enNation: "Turkmenistan",
   },
   {
     code: "TV",
@@ -1063,16 +1058,6 @@ export const countryList: CountryListType[] = [
     enNation: "France",
   },
   {
-    code: "TF",
-    krNation: "프랑스 남부 지방",
-    enNation: "French Southern and Antarctic Lands",
-  },
-  {
-    code: "PF",
-    krNation: "프랑스령 폴리네시아",
-    enNation: "French Polynesia",
-  },
-  {
     code: "FJ",
     krNation: "피지",
     enNation: "Fiji",
@@ -1086,11 +1071,6 @@ export const countryList: CountryListType[] = [
     code: "PH",
     krNation: "필리핀",
     enNation: "Philippines",
-  },
-  {
-    code: "PN",
-    krNation: "핏케언 제도",
-    enNation: "Pitcairn Islands",
   },
   {
     code: "HU",
