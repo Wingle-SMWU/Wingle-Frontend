@@ -70,7 +70,8 @@ export default function StudentCard(): JSX.Element {
           <Margin direction="column" size={8} />
           <Text.Body5 color="gray100">학교, 학과, 학번, 이름</Text.Body5>
           <Text.Body6 color="gray100">
-            이 모두 나온 실물(모바일) 학생증 사진을 첨부해주세요.
+            이 모두 나온 실물(모바일) 학생증 사진을 첨부해주세요. 대학생 인증
+            용도 이외의 다른 어떠한 용도로도 사용되지 않습니다.
           </Text.Body6>
         </S.Description>
       </S.DescriptionContent>
@@ -129,6 +130,7 @@ const S = {
   `,
   QuestionLogo: styled.img`
     padding-left: 5px;
+    cursor: pointer;
   `,
 
   DescriptionContent: styled.div<{ isActive: boolean }>`
