@@ -56,6 +56,7 @@ export default function EmailVerify(): JSX.Element {
       setErrorEmailCertify(false);
       setEmailCertificationMent("");
       setEmailMent("");
+      setVerificationTimerStart(false);
 
       const emailRegex = /^[A-Za-z0-9._]+@[^\s@]+\.[^\s@]+$/; // 영어, 숫자, '.', '_'만 사용 가능한 정규식
       const value = e.target.value;
@@ -100,6 +101,7 @@ export default function EmailVerify(): JSX.Element {
         setVerificationTimerStart(false);
         setEmailCertificationMent("");
         setEmailCertification("");
+        setDisabledEmailCertifyButton(true);
         setEmailSendingLimitCount(0);
       },
       onSuccess: (response): void => {
