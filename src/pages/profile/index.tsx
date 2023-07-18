@@ -93,12 +93,14 @@ export default function Edit(): JSX.Element {
           <S.GoBackArrow
             src="/back-arrow.svg"
             alt="뒤로가기"
-            onClick={(): void => router.back()}
+            onClick={(): void => {
+              router.replace("/community");
+            }}
           />
           <Margin direction="row" size={13} />
           <Text.Title1 color="gray900">프로필</Text.Title1>
         </S.Header>
-        <S.Content>
+        <S.Content isMe={!isMe}>
           <>
             <S.UserBox>
               <S.UserImgBox>
@@ -205,12 +207,12 @@ export default function Edit(): JSX.Element {
         {modalVisible && (
           <Modal type="profile-back" onClickModal={onClickModal} />
         )}
+        {!isMe && !fromMessages ? (
+          <S.SendButtonWrapper>
+            <S.SendButton onClick={sendNote}>쪽지 보내기</S.SendButton>
+          </S.SendButtonWrapper>
+        ) : null}
       </S.Wapper>
-      {!isMe && !fromMessages ? (
-        <S.SendButtonWrapper>
-          <S.SendButton onClick={sendNote}>쪽지 보내기</S.SendButton>
-        </S.SendButtonWrapper>
-      ) : null}
     </>
   );
 }
@@ -233,11 +235,15 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: fixed;
   `,
-  Content: styled.div`
+  Content: styled.div<{ isMe: boolean }>`
     padding: 0 24px;
     margin-top: 56px;
     background-color: ${theme.color.white};
+    overflow-y: scroll;
+    padding-bottom: 10px;
+    padding-bottom: ${({ isMe }) => (isMe ? "100px" : "10x")};
   `,
   Header: styled.div`
     display: flex;
@@ -401,13 +407,13 @@ const S = {
     width: calc(100vw - 48px);
     position: fixed;
     display: flex;
-    padding: 0 24px;
+    padding: 24px 24px;
     bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 120px;
     background-color: ${theme.color.white};
+    bottom: 0px;
   `,
   SendButton: styled.div`
     border-radius: 8px;
