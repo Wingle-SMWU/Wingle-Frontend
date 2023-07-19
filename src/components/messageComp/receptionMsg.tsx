@@ -40,7 +40,7 @@ const S = {
   Box: styled.div`
     display: flex;
     flex-direction: column;
-    margin-left: 0.5rem;
+    max-width: calc(70% + 35px);
   `,
 
   MessageInfoBox: styled.div`
@@ -64,10 +64,9 @@ const S = {
     align-items: flex-start;
     padding: 8px 12px;
     gap: 8px;
-    max-width: 24rem;
-    margin-left: 10px;
     background-color: #eeeef2;
     border-radius: 12px;
+    margin-left: 24px;
     p {
       font-family: "Pretendard Variable", Pretendard;
       font-style: normal;
@@ -75,6 +74,7 @@ const S = {
       line-height: 140%;
       color: #222223;
       font-size: 14px;
+      word-break: break-all;
     }
   `,
 };

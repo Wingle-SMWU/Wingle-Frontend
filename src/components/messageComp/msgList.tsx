@@ -25,26 +25,27 @@ const MsgList = ({ list }: { list: Room }) => {
   return (
     <>
       <S.Container onClick={handleMoveChatRoom}>
-        <S.LeftBox>
-          <S.ImageBox>
-            <S.UserImage
-              src={image ? image : getImageUrl("기본")}
-              alt="프로필 이미지"
-              width={35}
-              height={35}
-            />
+        <S.Box>
+          <S.Detail>
+            <S.ImageBox>
+              <S.UserImage
+                src={image ? image : getImageUrl("기본")}
+                alt="프로필 이미지"
+                width={35}
+                height={35}
+              />
 
-            <S.NationIcon src={countryImg(nation)} />
-          </S.ImageBox>
-
-          <S.LeftContent>
-            <S.LeftDetail>
+              <S.NationIcon src={countryImg(nation)} />
+            </S.ImageBox>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "2px" }}
+            >
               <span>{nickname}</span>
               <span>{betweenTime(String(createdTime))}</span>
-            </S.LeftDetail>
-            <p>{recentChat}</p>
-          </S.LeftContent>
-        </S.LeftBox>
+            </div>
+          </S.Detail>
+          <S.Content>{recentChat}</S.Content>
+        </S.Box>
       </S.Container>
     </>
   );
@@ -56,14 +57,14 @@ const S = {
     justify-content: space-between;
     border-bottom: 1px solid #eeeef2;
     background: #ffffff;
-    padding: 1rem;
+    padding: 12px 24px;
     cursor: pointer;
   `,
 
-  LeftBox: styled.div`
+  Box: styled.div`
     display: flex;
+    flex-direction: column;
     width: 100%;
-    margin-left: 15px;
   `,
 
   ImageBox: styled.div`
@@ -91,31 +92,24 @@ const S = {
     border-radius: 50%;
   `,
 
-  LeftContent: styled.div`
-    display: flex;
-    flex-direction: column;
-    p {
-      font-family: "Pretendard Variable", Pretendard;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 140%;
-      color: #222223;
-      word-break: keep-all;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      max-width: 450px;
-      margin-left: -34px;
-    }
+  Content: styled.p`
+    font-family: "Pretendard Variable", Pretendard;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    color: #222223;
+    word-break: keep-all;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 450px;
   `,
 
-  LeftDetail: styled.div`
+  Detail: styled.div`
     display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    margin-left: 1rem;
-
+    flex-direction: row;
+    gap: 10px;
     span {
       font-family: "Pretendard Variable", Pretendard;
       font-style: normal;

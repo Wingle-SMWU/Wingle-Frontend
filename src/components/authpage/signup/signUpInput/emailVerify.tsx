@@ -152,6 +152,8 @@ export default function EmailVerify(): JSX.Element {
             // 타이머 종료
             clearInterval(timerInterval);
             setVerificationTimerStart(false);
+            setEmail("");
+            setEmailMent("");
             setEmailCertification("");
             setErrorEmailCertify(true);
             setEmailCertificationMent("유효시간이 초과되었습니다.");

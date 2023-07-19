@@ -20,3 +20,8 @@ export type ProfileUpdateType = {
   imageDelete: boolean;
   nickname: string;
 };
+
+export type InterestItem = {
+  id: number;
+  title: string;
+};

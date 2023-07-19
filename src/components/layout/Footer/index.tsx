@@ -11,7 +11,13 @@ export default function Footer() {
           <S.WingleLogo src="footer-logo.png" alt="wingle-logo" />
           <Margin direction="column" size={32} />
           <Text.Caption2 color="gray500">
-            공식 노션 바로가기 |&nbsp;
+            <Link
+              href="https://www.notion.so/wingleeng/WINGLE-65d959f2494b4fc191fb8cbf3803eb08"
+              style={{ textDecoration: "none", color: theme.color.gray500 }}
+            >
+              공식 노션 바로가기
+            </Link>
+            &nbsp;|&nbsp;
             <Link
               href="https://www.instagram.com/wingle_official"
               style={{ textDecoration: "none", color: theme.color.gray500 }}
@@ -31,7 +37,19 @@ export default function Footer() {
           </Text.Caption2>
           <Margin direction="column" size={11} />
           <Text.Caption2 color="gray500">
-            이용약관 | 개인정보처리방침
+            <Link
+              href="https://wingleeng.notion.site/d75c38cfbedd47309a839b055d56e3d2?pvs=4"
+              style={{ textDecoration: "none", color: theme.color.gray500 }}
+            >
+              이용약관
+            </Link>
+            &nbsp; | &nbsp;
+            <Link
+              href="https://wingleeng.notion.site/d9824ef9e1cb49f293137cea583ec087?pvs=4"
+              style={{ textDecoration: "none", color: theme.color.gray500 }}
+            >
+              개인정보처리방침
+            </Link>
           </Text.Caption2>
         </S.Content>
       </S.Wrapper>

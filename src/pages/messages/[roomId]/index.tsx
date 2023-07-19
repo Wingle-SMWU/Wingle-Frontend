@@ -254,13 +254,13 @@ export default function MessageSend() {
             ""
           )}
         </S.MessageRoomList>
-        <MsgInput
-          text={text}
-          onChange={handleChangeText}
-          onKeyDown={handleSendMessage}
-          onClick={handleClickSendMessage}
-        />
       </S.Container>
+      <MsgInput
+        text={text}
+        onChange={handleChangeText}
+        onKeyDown={handleSendMessage}
+        onClick={handleClickSendMessage}
+      />
     </>
   );
 }
@@ -289,10 +289,10 @@ const S = {
   `,
 
   MessageRoomList: styled.div`
-    padding: 1rem;
     box-sizing: border-box;
     overflow-y: scroll;
     height: 100%;
+    padding-bottom: 57px;
   `,
 
   EmptyMessage: styled.div`
@@ -316,8 +316,7 @@ const S = {
     margin: 1.2rem 0;
     padding: 5px 10px;
     text-align: center;
-    width: 110px;
-    height: 25px;
+    width: fit-content;
     background: #fcfcfe;
     border: 1px solid #dcdce0;
     border-radius: 23px;
