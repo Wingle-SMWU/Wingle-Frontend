@@ -1,4 +1,6 @@
-import { LanguageListType } from "../types/list";
+export type LanguageListType = {
+  languageList: string;
+};
 
 export const languageList: LanguageListType[] = [
   {
