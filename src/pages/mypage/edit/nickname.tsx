@@ -60,10 +60,16 @@ export default function Nickname(): JSX.Element {
   useEffect(() => {
     if (profileData) {
       setName(profileData.nickname);
-      setIsName(true);
+      setIsName(false);
       setImage(profileData.image);
     }
   }, [profileData]);
+
+  useEffect(() => {
+    if (name === profileData?.nickname) {
+      setIsName(false);
+    }
+  }, [name]);
 
   if (isLoading || updateLoading) return <Loading />;
   if (isError || isIdle) return <>에러</>;
