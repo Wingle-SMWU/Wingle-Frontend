@@ -150,7 +150,13 @@ const S = {
   TextCount: styled.div`
     position: fixed;
     bottom: 40px;
-    left: calc(50vw + 250px - 54.04px);
+    @media (min-width: 501px) {
+      left: calc(50vw + 250px - 54.04px);
+    }
+    @media (max-width: 500px) {
+      left: calc(100vw - 48px);
+    }
+
     font-size: 12px;
     color: #959599;
   `,
