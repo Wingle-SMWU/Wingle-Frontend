@@ -60,11 +60,27 @@ export default function Language(): JSX.Element {
     }
   };
 
+  const checkSameArray = (arr1: string[], arr2: string[]): boolean => {
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+  };
+
   useEffect(() => {
-    if (languageArr[0]) {
-      setBtnActive(true);
-    } else {
-      setInitialLanguageFn();
+    if (profileData && profileData.languages) {
+      if (
+        !checkSameArray(
+          profileData.languages.map((v) => v.language),
+          languageArr
+        )
+      ) {
+        if (languageArr[0]) {
+          setBtnActive(true);
+        } else {
+          setInitialLanguageFn();
+        }
+      }
     }
   }, [languageArr, btnActive]);
 

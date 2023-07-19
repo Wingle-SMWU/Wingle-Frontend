@@ -37,7 +37,7 @@ export default function Introduce(): JSX.Element {
     setTextCount(introduce.length);
     if (introduce.length < 2 || introduce.length > 400) {
       setIsIntroduce(false);
-    } else {
+    } else if (introduce !== profileData?.introduce) {
       setIsIntroduce(true);
     }
   }, [introduce]);

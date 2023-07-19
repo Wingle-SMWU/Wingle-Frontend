@@ -22,6 +22,7 @@ export default function Nickname(): JSX.Element {
   const [image, setImage] = useState<any>(null);
   const [imageDelete, setImageDelete] = useState(false);
   const [imageFile, setImageFile] = useState<any>(null);
+  const [isImage, setIsImage] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
 
@@ -60,7 +61,7 @@ export default function Nickname(): JSX.Element {
   useEffect(() => {
     if (profileData) {
       setName(profileData.nickname);
-      setIsName(true);
+      setIsName(false);
       setImage(profileData.image);
     }
   }, [profileData]);
@@ -75,10 +76,10 @@ export default function Nickname(): JSX.Element {
 
     if (nameCurrent === "") {
       setName(profileData.nickname);
-      setIsName(true);
+      setIsName(false);
       setNameMessage("");
     } else if (!nameRegex.test(nameCurrent)) {
-      setNameMessage("한글/영문/숫자 2자 이상 10자 미만");
+      setNameMessage("한글/영문/숫자 2-10자");
       setIsName(false);
     } else {
       setName(nameCurrent);
@@ -93,6 +94,7 @@ export default function Nickname(): JSX.Element {
   const onLoadFile = (e: any): Promise<void> => {
     const reader = new FileReader();
     reader.readAsDataURL(e);
+    setIsImage(true);
     return new Promise<void>((resolve) => {
       reader.onload = (): void => {
         setImage(reader.result);
@@ -106,6 +108,7 @@ export default function Nickname(): JSX.Element {
     setImage(null);
     setImageDelete(profileData.image !== null);
     setImageFile(null);
+    setIsImage(false);
   };
 
   const handleFileUpload = (event: any): void => {
@@ -144,7 +147,6 @@ export default function Nickname(): JSX.Element {
   };
 
   const onClickComplete = async (): Promise<void> => {
-    if (!isName) return;
     if (name === "") {
       setName(profileData.nickname);
     }
@@ -171,9 +173,9 @@ export default function Nickname(): JSX.Element {
               <Text.Title1 color="gray900">프로필 수정</Text.Title1>
             </S.Left>
             <Text.Body1
-              color={isName ? "gray900" : "gray500"} // 비활성화 상태
+              color={isName || isImage ? "gray900" : "gray500"} // 비활성화 상태
               onClick={onClickComplete}
-              pointer={isName}
+              pointer={isName || isImage}
             >
               완료
             </Text.Body1>
