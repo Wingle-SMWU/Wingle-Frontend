@@ -49,7 +49,7 @@ export default function NameInput(): JSX.Element {
         setSignUpFormData(
           (prev: SignUpFormData): SignUpFormData => ({
             ...prev,
-            password: "",
+            name: "",
           })
         );
         setErrorName(true);
