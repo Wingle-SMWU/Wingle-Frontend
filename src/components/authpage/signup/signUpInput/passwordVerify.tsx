@@ -42,7 +42,8 @@ export default function PasswordVerify(): JSX.Element {
         })
       );
     }
-  }, [isErrorPassword, isErrorPasswordCheck, password, setSignUpFormData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isErrorPassword, isErrorPasswordCheck, password]);
 
   // 비밀번호 유효성 검사
   const handleErrorPassword = useCallback(
