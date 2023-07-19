@@ -1,5 +1,8 @@
-import { CountryListType } from "../types/countryList";
-
+export type CountryListType = {
+  code: string;
+  krNation: string;
+  enNation: string;
+};
 export const countryList: CountryListType[] = [
   {
     code: "GH",

@@ -25,7 +25,7 @@ export default function NameInput(): JSX.Element {
         })
       );
     }
-  }, [isErrorName, nameInputData, setSignUpFormData]);
+  }, [isErrorName, nameInputData]);
 
   const handleNameInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {

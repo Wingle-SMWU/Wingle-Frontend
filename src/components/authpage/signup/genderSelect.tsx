@@ -14,7 +14,7 @@ export default function GenderSelectBox(): JSX.Element {
       ...prev,
       gender,
     }));
-  }, [gender, setSignUpFormData]);
+  }, [gender]);
 
   return (
     <>

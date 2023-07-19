@@ -32,12 +32,7 @@ export default function AgreeBox(): JSX.Element {
       termsOfPersonalInformation: termsOfPersonalInformation,
       termsOfPromotion: termsOfPromotion,
     }));
-  }, [
-    setSignUpFormData,
-    termsOfPersonalInformation,
-    termsOfPromotion,
-    termsOfUse,
-  ]);
+  }, [termsOfPersonalInformation, termsOfPromotion, termsOfUse]);
 
   return (
     <>
