@@ -155,10 +155,10 @@ const S = {
   `,
   EditBtn: styled.button<EditBtnProps>`
     @media (min-width: 501px) {
-      width: 79px;
-      height: 33px;
       margin-top: 24px;
     }
+    width: 79px;
+    height: 33px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -166,11 +166,7 @@ const S = {
     background-color: ${(props): string => props.Color || "white"};
     border-radius: 8px;
     @media (max-width: 500px) {
-      position: fixed;
-      top: 78px;
-      right: 24px;
-      width: 79px;
-      height: 33px;
+      margin-top: 27px;
     }
   `,
 
