@@ -2,19 +2,49 @@ import styled from "styled-components";
 import router from "next/router";
 import { Text } from "@/src/components/ui";
 import SelectInterest from "@/src/components/mypage/SelectInterest";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "@/src/components/modal";
 import { useMutation, useQueryClient } from "react-query";
 import { postInterest } from "@/src/api/mypage/profileData";
+import useGetProfile from "../../../hooks/mypage/useGetProfile";
+import Loading from "@/src/components/ui/loadingUI";
 
 export default function Interest(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [interest, setInterest] = useState<string[]>([]);
+  const [isModified, setIsModified] = useState<boolean>(false);
+
+  const { profileData, isLoading } = useGetProfile();
+  const registeredInterest = profileData?.interests;
 
   const queryClient = useQueryClient();
 
   const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (profileData?.interests) {
+      setInterest(profileData.interests);
+    }
+  }, [profileData]);
+
+  useEffect(() => {
+    if (registeredInterest && !checkSameArray(registeredInterest, interest)) {
+      setIsModified(true);
+    } else {
+      setIsModified(false);
+    }
+  }, [interest]);
+
+  const checkSameArray = (arr1: string[], arr2: string[]): boolean => {
+    const set = new Set(arr2);
+
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
+
+    return arr1.every((element) => set.has(element));
   };
 
   const parentFunction = (arr: any): void => {
@@ -32,6 +62,8 @@ export default function Interest(): JSX.Element {
     router.push(`/mypage/edit`);
   };
 
+  if (isLoading) return <Loading />;
+
   return (
     <>
       <S.Wapper>
@@ -46,10 +78,9 @@ export default function Interest(): JSX.Element {
               <Text.Title1 color="gray900">관심사</Text.Title1>
             </S.Left>
             <Text.Body1
-              color="gray900" // 활성화 상태
-              // 비활성화 상태에서는 color="gray500"
+              color={isModified ? "gray900" : "gray500"}
               onClick={handleSubmit}
-              pointer
+              pointer={isModified}
             >
               완료
             </Text.Body1>
