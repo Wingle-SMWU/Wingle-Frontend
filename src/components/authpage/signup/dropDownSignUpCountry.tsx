@@ -10,23 +10,20 @@ export default function DropDownSignUpCountry(): JSX.Element {
   const [nation, setNation] = useState("대한민국");
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
-  const handleSelectItem = useCallback(
-    (selected: string): void => {
-      const country = countryList.find(
-        (item: CountryListType) => item.krNation === selected
+  const handleSelectItem = useCallback((selected: string): void => {
+    const country = countryList.find(
+      (item: CountryListType) => item.krNation === selected
+    );
+    if (country) {
+      setNation(selected);
+      setSignUpFormData(
+        (prev: SignUpFormData): SignUpFormData => ({
+          ...prev,
+          nation: country.code,
+        })
       );
-      if (country) {
-        setNation(selected);
-        setSignUpFormData(
-          (prev: SignUpFormData): SignUpFormData => ({
-            ...prev,
-            nation: country.code,
-          })
-        );
-      }
-    },
-    [setSignUpFormData]
-  );
+    }
+  }, []);
 
   return (
     <>
