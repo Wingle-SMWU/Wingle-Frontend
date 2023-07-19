@@ -78,7 +78,7 @@ export default function Nickname(): JSX.Element {
       setIsName(true);
       setNameMessage("");
     } else if (!nameRegex.test(nameCurrent)) {
-      setNameMessage("한글/영문/숫자 2자 이상 10자 미만");
+      setNameMessage("한글/영문/숫자 2-10자");
       setIsName(false);
     } else {
       setName(nameCurrent);
