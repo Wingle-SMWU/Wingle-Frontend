@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { countryList } from "@/src/constants/countryList";
 import DropDownCommon from "../ui/dropDownUI";
+import { languageList } from "../../constants/languageList";
+import Language from "../../pages/mypage/edit/language";
 
 export default function SelectLanguageBox({
   getLanguageAtIndex,
@@ -16,7 +17,6 @@ export default function SelectLanguageBox({
     setLanguage(selectedLanguage);
   };
 
-  console.log(preSelctArr, "~~");
   useEffect(() => {
     setLanguage(initialLanguage);
   }, [initialLanguage]);
@@ -27,27 +27,21 @@ export default function SelectLanguageBox({
 
   useEffect(() => {
     getLanguageAtIndex(language, idx);
-    if (
-      idx !== 0 &&
-      // (preSelctArr[idx - 1] === undefined || preSelctArr[idx - 1] === "")
-      (preSelected[idx - 1] === undefined || preSelected[idx - 1] === "")
-    ) {
-      // setDisabled(true);
-    }
-    console.log(
-      "idx 이전 선택 : ",
-      idx,
-      preSelctArr,
-      preSelctArr[idx - 1],
-      "~~"
-    );
+    // to do : 후 순위 비활성화
+    //if (
+    //   idx !== 0 &&
+    //   // (preSelctArr[idx - 1] === undefined || preSelctArr[idx - 1] === "")
+    //   (preSelected[idx - 1] === undefined || preSelected[idx - 1] === "")
+    // ) {
+    //   // setDisabled(true);
+    // }
   }, [language, isdisable]);
 
   return (
     <DropDownCommon
-      list={countryList
-        .filter((country) => !preSelected.includes(country.enNation))
-        .map((country) => country.enNation)}
+      list={languageList
+        .filter((language) => !preSelected.includes(language.languageList))
+        .map((language) => language.languageList)}
       selected={language.length ? language : "언어선택"}
       handleSelectedChange={handleChange}
       dropDownPlaceHolder={language}

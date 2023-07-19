@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from "react";
-import { countryList } from "../../../constants/countryList";
+import { countryList, CountryListType } from "../../../constants/countryList";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
-import { CountryListType } from "@/src/types/countryList";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import DropDownCommon from "../../ui/dropDownUI";
 import { Margin } from "../../ui";

@@ -27,7 +27,6 @@ export default function Edit(): JSX.Element {
   const getProfile = async (): Promise<void> => {
     try {
       const res = await instance.get(`/profile/${userID}`);
-      console.log("res", res);
       setProfileData(res.data.data);
       setIsLoading(false);
     } catch (err) {
@@ -149,15 +148,8 @@ export default function Edit(): JSX.Element {
                   profileData.languages.map((v) => (
                     <S.LanguageChartContent key={v.order}>
                       <S.LanguageChart src={`/mypage/language${v.order}.svg`} />
-                      <S.LanguageText fontWeight={550} width={28}>
-                        {v.language.substring(0, 2)}{" "}
-                      </S.LanguageText>
-                      <S.LanguageText
-                        fontWeight={400}
-                        width={50}
-                        color="orange500"
-                      >
-                        {v.language.substring(2)}
+                      <S.LanguageText fontWeight={550} width={50}>
+                        {v.language}
                       </S.LanguageText>
                     </S.LanguageChartContent>
                   ))}
