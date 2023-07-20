@@ -14,6 +14,7 @@ import instance from "../../../api/axiosModule";
 import { Message, NewMsgProps } from "@/src/types/message/messageType";
 import { convertDateYear } from "@/src/utils/convertDateYear";
 import Loading from "@/src/components/ui/loadingUI";
+import { theme } from "@/src/styles/theme";
 
 export default function MessageSend() {
   const router = useRouter();
@@ -63,6 +64,8 @@ export default function MessageSend() {
     });
     return response.data;
   };
+
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate, isLoading } = useMutation(addMsg, {
     onSuccess: () => {
@@ -117,54 +120,38 @@ export default function MessageSend() {
   return (
     <>
       <S.Container>
-        <S.TitleBox>
-          <Arrow_back
-            style={{ paddingTop: 5, cursor: "pointer" }}
-            onClick={() => router.back()}
-          />
-          <Margin direction="row" size={13} />
-          <Text.Title1 color="gray900">쪽지보내기</Text.Title1>
-          <S.YourInfoBox>
-            <YourInfo
-              list={{
-                recipientImage: yourInfo?.image ?? "",
-                nickname: yourInfo?.nickname ?? "",
-                nation: yourInfo?.nation ?? "",
-              }}
+        <S.DetailTop>
+          <S.TitleBox>
+            <Arrow_back
+              style={{ paddingTop: 5, cursor: "pointer" }}
+              onClick={() => router.back()}
             />
-          </S.YourInfoBox>
-        </S.TitleBox>
-        <S.MessageRoomList ref={scrollRef}>
-          {messageData.toString().length > 0 &&
-          messageData !== null &&
-          messageData.messages !== null ? (
-            <>
-              {messageData?.messages.map((list: Message) => {
-                list.nickname;
-                const { createdTime, content } = list;
-                const newList = { content, createdTime };
-                const currentDate = convertDateYear(String(createdTime));
+            <Margin direction="row" size={13} />
+            <Text.Title1 color="gray900">쪽지보내기</Text.Title1>
+            <S.YourInfoBox>
+              <YourInfo
+                list={{
+                  recipientImage: yourInfo?.image ?? "",
+                  nickname: yourInfo?.nickname ?? "",
+                  nation: yourInfo?.nation ?? "",
+                }}
+              />
+            </S.YourInfoBox>
+          </S.TitleBox>
+          <S.MessageRoomList ref={scrollRef}>
+            {messageData.toString().length > 0 &&
+            messageData !== null &&
+            messageData.messages !== null ? (
+              <>
+                {messageData?.messages.map((list: Message) => {
+                  list.nickname;
+                  const { createdTime, content } = list;
+                  const newList = { content, createdTime };
+                  const currentDate = convertDateYear(String(createdTime));
 
-                if (currentDate !== prevDate) {
-                  prevDate = currentDate;
-                  if (list?.sender === true) {
-                    return (
-                      <React.Fragment key={currentDate}>
-                        <S.DateBox>
-                          <S.DateDisplay>
-                            <span>{currentDate}</span>
-                          </S.DateDisplay>
-                        </S.DateBox>
-                        <SendMsg
-                          list={{
-                            content: list.content,
-                            createdTime: String(list.createdTime),
-                          }}
-                        />
-                      </React.Fragment>
-                    );
-                  } else {
-                    if (list?.sender === false) {
+                  if (currentDate !== prevDate) {
+                    prevDate = currentDate;
+                    if (list?.sender === true) {
                       return (
                         <React.Fragment key={currentDate}>
                           <S.DateBox>
@@ -172,24 +159,7 @@ export default function MessageSend() {
                               <span>{currentDate}</span>
                             </S.DateDisplay>
                           </S.DateBox>
-                          <ReceptionMsg
-                            list={{
-                              content: newList.content,
-                              createdTime: String(newList.createdTime),
-                            }}
-                          />
-                        </React.Fragment>
-                      );
-                    } else {
-                      prevNickname.nickName === list.nickname;
-                      return (
-                        <React.Fragment key={currentDate}>
-                          <S.DateBox>
-                            <S.DateDisplay>
-                              <span>{currentDate}</span>
-                            </S.DateDisplay>
-                          </S.DateBox>
-                          <ReceptionMsg
+                          <SendMsg
                             list={{
                               content: list.content,
                               createdTime: String(list.createdTime),
@@ -197,70 +167,107 @@ export default function MessageSend() {
                           />
                         </React.Fragment>
                       );
-                    }
-                  }
-                } else {
-                  if (list?.sender === true) {
-                    if (prevNickname.nickName === list.nickname) {
-                      return (
-                        <SendMsg
-                          key={String(list.createdTime)}
-                          list={{
-                            content: newList.content,
-                            createdTime: String(newList.createdTime),
-                          }}
-                        />
-                      );
                     } else {
-                      prevNickname.nickName === list.nickname;
-                      return (
-                        <SendMsg
-                          key={String(list.createdTime)}
-                          list={{
-                            content: list.content,
-                            createdTime: String(list.createdTime),
-                          }}
-                        />
-                      );
+                      if (list?.sender === false) {
+                        return (
+                          <React.Fragment key={currentDate}>
+                            <S.DateBox>
+                              <S.DateDisplay>
+                                <span>{currentDate}</span>
+                              </S.DateDisplay>
+                            </S.DateBox>
+                            <ReceptionMsg
+                              list={{
+                                content: newList.content,
+                                createdTime: String(newList.createdTime),
+                              }}
+                            />
+                          </React.Fragment>
+                        );
+                      } else {
+                        prevNickname.nickName === list.nickname;
+                        return (
+                          <React.Fragment key={currentDate}>
+                            <S.DateBox>
+                              <S.DateDisplay>
+                                <span>{currentDate}</span>
+                              </S.DateDisplay>
+                            </S.DateBox>
+                            <ReceptionMsg
+                              list={{
+                                content: list.content,
+                                createdTime: String(list.createdTime),
+                              }}
+                            />
+                          </React.Fragment>
+                        );
+                      }
                     }
                   } else {
-                    if (prevNickname.nickName === list.nickname) {
-                      return (
-                        <ReceptionMsg
-                          key={String(list.createdTime)}
-                          list={{
-                            content: newList.content,
-                            createdTime: String(newList.createdTime),
-                          }}
-                        />
-                      );
+                    if (list?.sender === true) {
+                      if (prevNickname.nickName === list.nickname) {
+                        return (
+                          <SendMsg
+                            key={String(list.createdTime)}
+                            list={{
+                              content: newList.content,
+                              createdTime: String(newList.createdTime),
+                            }}
+                          />
+                        );
+                      } else {
+                        prevNickname.nickName === list.nickname;
+                        return (
+                          <SendMsg
+                            key={String(list.createdTime)}
+                            list={{
+                              content: list.content,
+                              createdTime: String(list.createdTime),
+                            }}
+                          />
+                        );
+                      }
                     } else {
-                      prevNickname.nickName === list.nickname;
-                      return (
-                        <ReceptionMsg
-                          key={String(list.createdTime)}
-                          list={{
-                            content: list.content,
-                            createdTime: String(list.createdTime),
-                          }}
-                        />
-                      );
+                      if (prevNickname.nickName === list.nickname) {
+                        return (
+                          <ReceptionMsg
+                            key={String(list.createdTime)}
+                            list={{
+                              content: newList.content,
+                              createdTime: String(newList.createdTime),
+                            }}
+                          />
+                        );
+                      } else {
+                        prevNickname.nickName === list.nickname;
+                        return (
+                          <ReceptionMsg
+                            key={String(list.createdTime)}
+                            list={{
+                              content: list.content,
+                              createdTime: String(list.createdTime),
+                            }}
+                          />
+                        );
+                      }
                     }
                   }
-                }
-              })}
-            </>
-          ) : (
-            ""
-          )}
-        </S.MessageRoomList>
+                })}
+              </>
+            ) : (
+              ""
+            )}
+          </S.MessageRoomList>
+        </S.DetailTop>
+        <S.MessageInputFixed>
+          <MsgInput
+            text={text}
+            onChange={handleChangeText}
+            onKeyDown={handleSendMessage}
+            onClick={handleClickSendMessage}
+          />
+        </S.MessageInputFixed>
       </S.Container>
-      <MsgInput
-        text={text}
-        onChange={handleChangeText}
-        onKeyDown={handleSendMessage}
-        onClick={handleClickSendMessage}
-      />
     </>
   );
 }
@@ -269,19 +276,31 @@ const S = {
   Container: styled.div`
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    width: 100%;
-    position: fixed;
-    max-width: 500px;
-  `,
+    justify-content: space-between;
 
+    /* height: 100vh;
+    width: 100%;
+    max-width: 500px; */
+  `,
+  DetailTop: styled.div`
+    /* padding-bottom: 56px;
+
+    height: 1px;
+    min-height: calc(100vh - 57px); */
+    height: 100vh;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    /* height: 100vh; */
+  `,
   TitleBox: styled.div`
-    position: sticky;
+    width: calc(100% - 48px);
+    max-width: 452px;
+    position: fixed;
     display: flex;
     padding: 14px 24px;
     background: #ffffff;
     border-bottom: 1px solid #eeeef2;
-    box-sizing: border-box;
   `,
 
   YourInfoBox: styled.div`
@@ -290,9 +309,11 @@ const S = {
 
   MessageRoomList: styled.div`
     box-sizing: border-box;
-    overflow-y: scroll;
-    height: 100%;
+    /* overflow-y: scroll;
+    height: 100%; */
+    padding-top: 110px;
     padding-bottom: 57px;
+    background-color: ${theme.color.white};
   `,
 
   EmptyMessage: styled.div`
@@ -329,5 +350,11 @@ const S = {
       line-height: 140%;
       color: #6c6c70;
     }
+  `,
+  MessageInputFixed: styled.div`
+    width: 100%;
+    max-width: 500px;
+    position: fixed;
+    bottom: 0px;
   `,
 };
