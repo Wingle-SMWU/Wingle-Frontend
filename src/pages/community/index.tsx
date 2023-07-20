@@ -99,6 +99,8 @@ const S = {
     }
     padding-top: 105px;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
   `,
   Box: styled.div`
     display: flex;
