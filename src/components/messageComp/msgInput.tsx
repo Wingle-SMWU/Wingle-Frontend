@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import SendDisable from "../../../public/images/message/sendDisable.svg";
+import { Margin } from "../ui";
+import { useCallback, useRef } from "react";
+import { theme } from "@/src/styles/theme";
 
 interface IconProps {
   text: string;
@@ -9,64 +11,78 @@ interface IconProps {
 }
 
 const MsgInput = ({ text, onChange, onKeyDown, onClick }: IconProps) => {
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const handleResizeHeight = useCallback(() => {
+    if (inputRef.current !== null) {
+      inputRef.current.style.height = "auto";
+      inputRef.current.style.height = inputRef?.current?.scrollHeight + "px";
+    }
+  }, []);
+  const handleResetHeight = () => {
+    if (inputRef.current !== null) {
+      inputRef.current.style.height = "auto";
+    }
+  };
   return (
     <S.Container>
-      <S.TextBox>
-        <S.TextInput
-          value={text}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          placeholder="내용을 입력하세요."
-          maxLength={500}
-        />
-        <S.SendIcon text={text} onClick={onClick} />
-      </S.TextBox>
+      <S.TextInput
+        value={text}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        placeholder="내용을 입력하세요."
+        maxLength={500}
+        rows={1}
+        ref={inputRef}
+        onInput={handleResizeHeight}
+      />
+      <Margin direction="row" size={8}></Margin>
+
+      <S.SendIcon
+        text={text}
+        src={
+          text
+            ? "/community/detail/send.svg"
+            : "/community/detail/send-disable.svg"
+        }
+        onClick={() => {
+          handleResetHeight();
+          onClick();
+        }}
+      />
     </S.Container>
   );
 };
 
 const S = {
   Container: styled.div`
-    position: fixed;
-    bottom: 0;
-    max-width: 500px;
-    width: 100%;
-    box-sizing: border-box;
-    background: #ffffff;
-  `,
-
-  TextBox: styled.div`
+    padding: 12px 24px 12px 24px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    height: 56px;
-    border-top: 0.8px solid #eeeef2;
+    border-top: 1px solid ${theme.color.gray200};
+    background-color: ${theme.color.white};
   `,
 
   TextInput: styled.textarea`
-    border: none;
     width: 100%;
-    padding: 0.5rem 0 0.5rem 24px;
-    margin-top: 1.4rem;
+    max-height: 56px;
+    border: none;
     font-family: "Pretendard Variable", Pretendard;
-    font-style: normal;
     font-weight: 400;
     font-size: 16px;
-    line-height: 140%;
-    max-height: 33px;
-    overflow-y: scroll;
-    resize: none;
-
-    :focus {
-      outline: none;
+    line-height: 22px;
+    ::placeholder {
+      color: #959599;
     }
+    resize: none;
+    padding: 0;
+    background-color: inherit;
   `,
 
-  SendIcon: styled(SendDisable)<{ text: string }>`
-    width: 40px;
+  SendIcon: styled.img<{ text: string }>`
+    width: 32px;
     height: 32px;
-    padding-right: 24px;
-    fill: ${(props) => (props.text ? "#49494D" : "#DCDCE0")};
     cursor: ${({ text }) => (text ? "pointer" : "auto")};
   `,
 };
