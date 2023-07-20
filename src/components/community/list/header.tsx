@@ -83,6 +83,7 @@ const S = {
     z-index: 10;
     display: flex;
     flex-direction: column;
+    position: fixed;
   `,
 
   Header: styled.div`

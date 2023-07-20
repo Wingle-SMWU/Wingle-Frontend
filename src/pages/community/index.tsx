@@ -86,8 +86,7 @@ export default function Community(): JSX.Element {
 const S = {
   Wrapper: styled.div`
     display: flex;
-    position: fixed;
-    height: 100vh;
+    padding-bottom: 70px;
     flex-direction: column;
     background-color: white;
   `,
@@ -98,9 +97,8 @@ const S = {
     @media (max-width: 500px) {
       width: 100vw;
     }
+    padding-top: 105px;
     overflow-y: scroll;
-    height: 100%;
-    padding-bottom: 72px;
   `,
   Box: styled.div`
     display: flex;
