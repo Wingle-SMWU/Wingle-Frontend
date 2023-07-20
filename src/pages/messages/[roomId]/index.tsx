@@ -53,7 +53,8 @@ export default function MessageSend() {
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      const lastChildElement = scrollRef.current.lastElementChild;
+      lastChildElement?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messageData]);
 
