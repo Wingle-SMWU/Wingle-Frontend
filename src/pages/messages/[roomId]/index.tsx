@@ -54,7 +54,7 @@ export default function MessageSend() {
   useEffect(() => {
     if (scrollRef.current) {
       const lastChildElement = scrollRef.current.lastElementChild;
-      lastChildElement?.scrollIntoView({ behavior: "smooth" });
+      lastChildElement?.scrollIntoView({ behavior: "instant" });
     }
   }, [messageData]);
 
