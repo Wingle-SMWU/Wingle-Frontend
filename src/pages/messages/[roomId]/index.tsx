@@ -54,7 +54,9 @@ export default function MessageSend() {
   useEffect(() => {
     if (scrollRef.current) {
       const lastChildElement = scrollRef.current.lastElementChild;
-      lastChildElement?.scrollIntoView({ behavior: "instant" });
+      lastChildElement?.scrollIntoView({
+        behavior: "instant" as ScrollBehavior,
+      });
     }
   }, [messageData]);
 
