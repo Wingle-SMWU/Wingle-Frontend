@@ -61,7 +61,7 @@ export default function PasswordVerify(): JSX.Element {
 
       if (!passwordRegex.test(value)) {
         setErrorPassword(true);
-        setPasswordMent("‘영문자+숫자+특수기호’ 포함 8자 이상 15자 미만");
+        setPasswordMent("‘영문자+숫자+특수기호’ 포함 8-15자");
       } else {
         setErrorPassword(false);
         setPasswordMent("사용 가능한 비밀번호입니다.");
