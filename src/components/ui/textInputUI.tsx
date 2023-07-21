@@ -103,12 +103,12 @@ const S = {
     border-radius: 8px;
     margin-bottom: 8px;
     position: relative;
+    overflow: hidden;
 
     & > input {
-      width: calc(100% - 32px);
+      width: calc(100%);
       border: none;
       padding: 14px 16px;
-      border-radius: 8px;
       height: 22px;
       font-weight: 400;
       font-size: 16px;

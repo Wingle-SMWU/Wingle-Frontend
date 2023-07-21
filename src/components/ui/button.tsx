@@ -45,7 +45,7 @@ const S = {
     `,
     md: css`
       --btn-width: 99px;
-      --btn-height: 50px;
+      --btn-height: 52px;
       --btn-padding: 14px 16px;
       --btn-font-size: 16px;
     `,
