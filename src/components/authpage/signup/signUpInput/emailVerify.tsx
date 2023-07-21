@@ -126,7 +126,7 @@ export default function EmailVerify(): JSX.Element {
   // 이메일 전송 횟수가 변경될 때 메시지를 업데이트
   useEffect(() => {
     if (emailSendingLimitCount !== 0) {
-      setEmailMent(`인증메일을 전송했습니다. (${emailSendingLimitCount}/5)`);
+      setEmailMent(`인증번호가 전송되었습니다. (${emailSendingLimitCount}/5)`);
     }
   }, [emailSendingLimitCount]);
 
