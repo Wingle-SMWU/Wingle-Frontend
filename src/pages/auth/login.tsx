@@ -88,7 +88,7 @@ export default function Login(): JSX.Element {
               setError(false);
             }}
             error={error}
-            errorMessage="아이디 혹은 비밀번호를 정확히 입력해 주세요."
+            errorMessage="이메일 혹은 비밀번호를 정확히 입력해 주세요."
           />
         </S.AccountWrapper>
 
