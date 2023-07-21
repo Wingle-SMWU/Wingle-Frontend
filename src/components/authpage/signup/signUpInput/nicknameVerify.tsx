@@ -17,16 +17,13 @@ export default function NicknameVerify(): JSX.Element {
   const [isDisabledDoubleCheckButton, setDisabledDoubleCheckButton] =
     useState(true);
 
-  const [nicknameMent, setNicknameMent] = useState(
-    "한글/영문/숫자 2자 이상 10자 미만"
-  );
-  const [nicknameErrorMent, setNicknameErrorMent] = useState(
-    "한글/영문/숫자 2자 이상 10자 미만"
-  );
+  const [nicknameMent, setNicknameMent] = useState("한글/영문/숫자 2자-10자");
+  const [nicknameErrorMent, setNicknameErrorMent] =
+    useState("한글/영문/숫자 2자-10자");
 
   const handleNicknameInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
-      setNicknameErrorMent("한글/영문/숫자 2자 이상 10자 미만");
+      setNicknameErrorMent("한글/영문/숫자 2자-10자");
       setNicknameInputData(e.target.value);
     },
     []
@@ -78,7 +75,7 @@ export default function NicknameVerify(): JSX.Element {
         );
       },
       onError: (error: unknown): never => {
-        setNicknameMent("한글/영문/숫자 2자 이상 10자 미만");
+        setNicknameMent("한글/영문/숫자 2자-10자");
         setNicknameErrorMent("이미 사용중인 닉네임입니다.");
         setErrorNickName(true);
         setDisabledDoubleCheckButton(true);

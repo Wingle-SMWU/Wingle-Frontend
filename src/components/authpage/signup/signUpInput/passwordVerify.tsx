@@ -15,7 +15,7 @@ export default function PasswordVerify(): JSX.Element {
   const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(false);
 
   const [passwordMent, setPasswordMent] = useState(
-    "‘영문자+숫자+특수기호’ 포함 8자 이상 15자 미만"
+    "‘영문자+숫자+특수기호’ 포함 8-15자"
   );
   const [passwordCheckMent, setPasswordCheckMent] = useState("");
 
@@ -114,7 +114,7 @@ export default function PasswordVerify(): JSX.Element {
           handleErrorPassword(e);
         }}
         error={isErrorPassword}
-        errorMessage="‘영문자+숫자+특수기호’ 포함 8자 이상 15자 미만"
+        errorMessage="‘영문자+숫자+특수기호’ 포함 8-15자"
         description={passwordMent}
       />
       <Margin direction="column" size={24} />
