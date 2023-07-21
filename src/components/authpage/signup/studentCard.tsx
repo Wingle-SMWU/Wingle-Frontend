@@ -52,20 +52,18 @@ export default function StudentCard(): JSX.Element {
 
   return (
     <S.CertifyWrapper>
-      <Text.Title1 color="gray900">
-        학생증 인증
-        <S.QuestionLogo
-          src="/auth/question.svg"
-          alt="question"
-          onClick={(): void => {
-            setIsActive((prev: boolean): boolean => !prev);
-          }}
-        ></S.QuestionLogo>
-      </Text.Title1>
-      <Margin direction="column" size={16} />
-
-      <S.DescriptionContent isActive={isActive}>
-        <S.Description>
+      <S.Header>
+        <Text.Title1 color="gray900">
+          학생증 인증
+          <S.QuestionLogo
+            src="/auth/question.svg"
+            alt="question"
+            onClick={(): void => {
+              setIsActive((prev: boolean): boolean => !prev);
+            }}
+          ></S.QuestionLogo>
+        </Text.Title1>
+        <S.DescriptionContent isActive={isActive}>
           <Text.Body4 color="gray100">학생증 인증 방법</Text.Body4>
           <Margin direction="column" size={8} />
           <Text.Body5 color="gray100">학교, 학과, 학번, 이름</Text.Body5>
@@ -73,8 +71,9 @@ export default function StudentCard(): JSX.Element {
             이 모두 나온 실물(모바일) 학생증 사진을 첨부해주세요. 대학생 인증
             용도 이외의 다른 어떠한 용도로도 사용되지 않습니다.
           </Text.Body6>
-        </S.Description>
-      </S.DescriptionContent>
+        </S.DescriptionContent>
+      </S.Header>
+      <Margin direction="column" size={16} />
 
       <S.UploadButton onClick={handleUploadButtonClick}>
         <input
@@ -123,7 +122,12 @@ export default function StudentCard(): JSX.Element {
 }
 
 const S = {
+  Header: styled.div`
+    width: calc(100vw - 32px);
+    max-width: 452px;
+  `,
   CertifyWrapper: styled.div`
+    position: relative;
     border-bottom: 1px solid #dcdce0;
     margin-top: 46px;
     margin-bottom: 24px;
@@ -137,15 +141,10 @@ const S = {
     display: ${(props): "none" | "block" =>
       props.isActive ? `block` : `none`};
     position: absolute;
-    width: calc(100vw - 32px);
-    max-width: 452px;
-    aspect-ratio: 452/100;
-    height: 100px;
     border-radius: 8px;
     background-color: #49494d;
-  `,
-  Description: styled.div`
-    padding: 16px;
+    padding: 24px;
+    top: 49px;
   `,
   ErrorWrapper: styled.div`
     display: flex;
