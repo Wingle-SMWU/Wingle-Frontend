@@ -8,6 +8,7 @@ export const useRedirectToMain = (): void => {
     if (
       router.pathname !== "/auth/login" &&
       router.pathname !== "/auth/signup" &&
+      router.pathname !== "/auth/complete" &&
       router.pathname !== "/admin"
     ) {
       const checkLogined = () => {
