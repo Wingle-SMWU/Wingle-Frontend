@@ -44,8 +44,8 @@ export default function NicknameVerify(): JSX.Element {
         e.target.value.length > 10
       ) {
         // 초기화
-        setNicknameMent("한글/영문/숫자 2자 이상 10자 미만");
-        setNicknameErrorMent("한글/영문/숫자 2자 이상 10자 미만");
+        setNicknameMent("한글/영문/숫자 2자-10자");
+        setNicknameErrorMent("한글/영문/숫자 2자-10자");
         setSignUpFormData(
           (prev: SignUpFormData): SignUpFormData => ({
             ...prev,
