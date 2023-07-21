@@ -31,7 +31,7 @@ export default function EmailVerify(): JSX.Element {
   const [emailCertificationMent, setEmailCertificationMent] = useState("");
 
   const [isVerificationTimerStart, setVerificationTimerStart] = useState(false);
-  const [verificationTimer, setVerificationTimer] = useState(180);
+  const [verificationTimer, setVerificationTimer] = useState(300);
 
   const handleEmailInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => setEmail(e.target.value),
@@ -143,7 +143,7 @@ export default function EmailVerify(): JSX.Element {
     let timerInterval: ReturnType<typeof setInterval>;
 
     if (isVerificationTimerStart) {
-      setVerificationTimer(180); // 3분(180초)으로 초기화
+      setVerificationTimer(300); // 5분(300초)으로 초기화
 
       timerInterval = setInterval(() => {
         setVerificationTimer((prevTimer) => {
