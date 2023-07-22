@@ -63,8 +63,6 @@ const S = {
     display: flex;
     flex-direction: column;
     background-color: white;
-    position: fixed;
-    height: 100vh;
   `,
   Content: styled.div`
     @media (min-width: 501px) {
@@ -73,7 +71,9 @@ const S = {
     @media (max-width: 500px) {
       width: 100vw;
     }
+    padding-top: 105px;
     overflow-y: scroll;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
   `,
 };
