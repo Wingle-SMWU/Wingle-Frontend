@@ -6,6 +6,7 @@ import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import { theme } from "@/src/styles/theme";
+import { useTranslation } from "next-i18next";
 
 export default function StudentCard(): JSX.Element {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -13,6 +14,7 @@ export default function StudentCard(): JSX.Element {
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   // TODO: 이미지 업로드 시 MultipartFile로 변환해서 보내야 함
   const handleFileUpload = (
@@ -53,7 +55,7 @@ export default function StudentCard(): JSX.Element {
   return (
     <S.CertifyWrapper>
       <Text.Title1 color="gray900">
-        학생증 인증
+        {t("auth:title.ID-card")}
         <S.QuestionLogo
           src="/auth/question.svg"
           alt="question"
@@ -90,7 +92,7 @@ export default function StudentCard(): JSX.Element {
           width={24}
           height={24}
         />
-        <Text.Body1 color="white">학생증 업로드</Text.Body1>
+        <Text.Body1 color="white">{t("auth:btn.ID-card")}</Text.Body1>
       </S.UploadButton>
       <Margin direction="column" size={8} />
 
@@ -114,7 +116,8 @@ export default function StudentCard(): JSX.Element {
         </S.AttagementButton>
       ) : (
         <Text.Caption3 color="gray500">
-          20MB 이하 파일을 업로드해주세요.
+          {t("auth:caption.ID-card")}
+          {/* 20MB 이하 파일을 업로드해주세요. */}
         </Text.Caption3>
       )}
       <Margin direction="column" size={52} />

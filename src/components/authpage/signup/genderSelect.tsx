@@ -4,10 +4,12 @@ import { Text, Margin } from "@/src/components/ui";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
+import { useTranslation } from "next-i18next";
 
 export default function GenderSelectBox(): JSX.Element {
   const [gender, setGender] = useState(true);
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setSignUpFormData((prev) => ({
@@ -18,7 +20,7 @@ export default function GenderSelectBox(): JSX.Element {
 
   return (
     <>
-      <Text.Body1 color="gray700">성별</Text.Body1>
+      <Text.Body1 color="gray700">{t("auth:title.gender")}</Text.Body1>
       <S.Wrapper>
         <Margin direction="column" size={9} />
         <S.GenderWrapper
@@ -33,7 +35,7 @@ export default function GenderSelectBox(): JSX.Element {
             height={20}
           />
           <Margin direction="row" size={8} />
-          <Text.Body3 color="gray900">여성</Text.Body3>
+          <Text.Body3 color="gray900">{t("auth:title.gender-f")}</Text.Body3>
         </S.GenderWrapper>
         <S.GenderWrapper
           onClick={(): void => {
@@ -47,7 +49,7 @@ export default function GenderSelectBox(): JSX.Element {
             height={20}
           />
           <Margin direction="row" size={8} />
-          <Text.Body3 color="gray900">남성</Text.Body3>
+          <Text.Body3 color="gray900">{t("auth:title.gender-m")}</Text.Body3>
         </S.GenderWrapper>
       </S.Wrapper>
     </>

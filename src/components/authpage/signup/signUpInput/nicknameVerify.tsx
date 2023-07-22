@@ -7,8 +7,11 @@ import { useMutation } from "react-query";
 import { EmailAuthResponse } from "@/src/types/auth/emailApiType";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import TextInputWithButton from "@/src/components/ui/textInputWithButton";
+import { useTranslation } from "next-i18next";
 
 export default function NicknameVerify(): JSX.Element {
+  const { t } = useTranslation();
+
   const [nicknameInputData, setNicknameInputData] = useState("");
 
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
@@ -18,15 +21,15 @@ export default function NicknameVerify(): JSX.Element {
     useState(true);
 
   const [nicknameMent, setNicknameMent] = useState(
-    "한글/영문/숫자 2자 이상 10자 미만"
+    `${t("auth:caption.nickname-1")}`
   );
   const [nicknameErrorMent, setNicknameErrorMent] = useState(
-    "한글/영문/숫자 2자 이상 10자 미만"
+    `${t("auth:caption.nickname-1")}`
   );
 
   const handleNicknameInputData = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
-      setNicknameErrorMent("한글/영문/숫자 2자 이상 10자 미만");
+      setNicknameErrorMent(`${t("auth:caption.nickname-1")}`);
       setNicknameInputData(e.target.value);
     },
     []
@@ -44,8 +47,8 @@ export default function NicknameVerify(): JSX.Element {
         e.target.value.length > 10
       ) {
         // 초기화
-        setNicknameMent("한글/영문/숫자 2자 이상 10자 미만");
-        setNicknameErrorMent("한글/영문/숫자 2자 이상 10자 미만");
+        setNicknameMent(`${t("auth:caption.nickname-1")}`);
+        setNicknameErrorMent(`${t("auth:caption.nickname-1")}`);
         setSignUpFormData(
           (prev: SignUpFormData): SignUpFormData => ({
             ...prev,
@@ -68,7 +71,7 @@ export default function NicknameVerify(): JSX.Element {
     (): Promise<EmailAuthResponse> => checkNicknameAvailable(nicknameInputData),
     {
       onSuccess: (): void => {
-        setNicknameMent("사용 가능한 닉네임입니다.");
+        setNicknameMent(`${t("auth:caption.nickname-2")}`);
         setSignUpFormData(
           (prev: SignUpFormData): SignUpFormData => ({
             ...prev,
@@ -78,8 +81,8 @@ export default function NicknameVerify(): JSX.Element {
         );
       },
       onError: (error: unknown): never => {
-        setNicknameMent("한글/영문/숫자 2자 이상 10자 미만");
-        setNicknameErrorMent("이미 사용중인 닉네임입니다.");
+        setNicknameMent(`${t("auth:caption.nickname-1")}`);
+        setNicknameErrorMent(`${t("auth:caption.nickname-2")}`);
         setErrorNickName(true);
         setDisabledDoubleCheckButton(true);
         setSignUpFormData(
@@ -105,17 +108,17 @@ export default function NicknameVerify(): JSX.Element {
   return (
     <>
       <TextInputWithButton
-        label="닉네임"
-        name="닉네임"
+        label={t("auth:title.nickname")}
+        name={t("auth:title.nickname")}
         value={nicknameInputData}
         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
           handleNicknameInputData(e);
           handleErrorNickName(e);
         }}
-        placeholder="닉네임을 입력하세요"
+        placeholder={t("auth:caption.nickname-4")}
         error={isErrorNickName}
         errorMessage={nicknameErrorMent}
-        buttonMessage="중복 확인"
+        buttonMessage={t("auth:btn.dup-check")}
         buttonDisabled={isDisabledDoubleCheckButton}
         onClick={handleCheckNickname}
         description={nicknameMent}

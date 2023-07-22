@@ -4,9 +4,12 @@ import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { AgreementComponent } from "./agreementComponent";
+import { useTranslation } from "next-i18next";
 
 export default function AgreeBox(): JSX.Element {
   const [termsOfUse, checkTermsOfUse] = useState(false);
+  const { t } = useTranslation();
+
   const [termsOfPersonalInformation, checkTermsOfPersonalInformation] =
     useState(false);
   const [termsOfPromotion, checkTermsOfPromotion] = useState(false);
@@ -36,24 +39,24 @@ export default function AgreeBox(): JSX.Element {
 
   return (
     <>
-      <Text.Body1 color="gray700">이용약관 동의</Text.Body1>
+      <Text.Body1 color="gray700">{t("auth:title.acceptTerms")}</Text.Body1>
       <S.Wrapper>
         <AgreementComponent
-          agreementTitle="서비스 이용약관"
+          agreementTitle={t("auth:title.term-1")}
           isRequired={true}
           handleCheck={handleUseCheck}
           detail={Service}
         />
         <Margin direction="column" size={18} />
         <AgreementComponent
-          agreementTitle="개인정보 수집 및 이용동의"
+          agreementTitle={t("auth:title.term-2")}
           isRequired={true}
           handleCheck={handlePersonalInformationCheck}
           detail={PersnalInfo}
         />
         <Margin direction="column" size={18} />
         <AgreementComponent
-          agreementTitle="이벤트, 프로모션알림 메일 수신"
+          agreementTitle={t("auth:title.term-3")}
           isRequired={false}
           handleCheck={handlePromotionCheck}
         />
