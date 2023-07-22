@@ -75,7 +75,7 @@ export default function Community(): JSX.Element {
       <S.Box>
         <S.CreateIcon
           tab={currentTab}
-          src="community/list/new-write.svg"
+          src="/community/list/new-write.svg"
           onClick={onClickMoveToWrite}
         />
       </S.Box>

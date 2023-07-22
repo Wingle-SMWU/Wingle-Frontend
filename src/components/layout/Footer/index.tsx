@@ -8,7 +8,7 @@ export default function Footer() {
     <>
       <S.Wrapper>
         <S.Content>
-          <S.WingleLogo src="footer-logo.png" alt="wingle-logo" />
+          <S.WingleLogo src="/footer-logo.png" alt="wingle-logo" />
           <Margin direction="column" size={32} />
           <Text.Caption2 color="gray500">
             <Link
