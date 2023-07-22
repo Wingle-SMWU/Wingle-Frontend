@@ -25,7 +25,6 @@ export default function Detail(): JSX.Element {
   const comments = useQuery({
     queryFn: getComments,
     queryKey: ["comments", forumId, articleId, 0, 10],
-    refetchInterval: 2000,
     cacheTime: 5 * 60 * 1000,
     staleTime: 0,
   });
