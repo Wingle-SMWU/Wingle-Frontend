@@ -34,7 +34,11 @@ export default function PasswordVerify(): JSX.Element {
 
   // useEffect로 비밀번호, 비밀번호 확인 존재 시 회원가입 폼 데이터 저장
   useEffect((): void => {
-    if (!isErrorPassword && !isErrorPasswordCheck) {
+    if (
+      !isErrorPassword &&
+      !isErrorPasswordCheck &&
+      passwordCheck === password
+    ) {
       setSignUpFormData(
         (prev: SignUpFormData): SignUpFormData => ({
           ...prev,
@@ -66,7 +70,7 @@ export default function PasswordVerify(): JSX.Element {
         setErrorPassword(false);
         setPasswordMent("사용 가능한 비밀번호입니다.");
       }
-      if (e.target.value !== passwordCheck) {
+      if (e.target.value !== passwordCheck && password !== "") {
         setErrorPasswordCheck(true);
       }
     },
