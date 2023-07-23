@@ -97,6 +97,7 @@ export default function EmailVerify(): JSX.Element {
     (): Promise<EmailAuthResponse> => sendEmailAuth(email),
     {
       onMutate: (): void => {
+        setDisabledEmailButton(true);
         setButtonMessage("전송 중");
         setVerificationTimerStart(false);
         setEmailCertificationMent("");
@@ -105,6 +106,7 @@ export default function EmailVerify(): JSX.Element {
         setEmailSendingLimitCount(0);
       },
       onSuccess: (response): void => {
+        setDisabledEmailButton(false);
         setButtonMessage("재전송");
         setEmailSendingLimitCount(response.data.requestCount || 0);
         setVerificationTimerStart(true);
