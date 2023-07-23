@@ -6,6 +6,7 @@ import { countryImg } from "@/src/modules/utils";
 import { Content } from "../detail/content";
 import { useRecoilValue } from "recoil";
 import { currentTabStateAtom } from "@/src/atoms/community/tab";
+import UnivLabel from "../../ui/univLabel";
 
 export default function ListCard({
   imgUrl,
@@ -27,6 +28,7 @@ export default function ListCard({
     isMine,
     likeCount,
     updatedTime,
+    userSchoolName,
     userId,
     userNickname,
     userImage,
@@ -62,9 +64,12 @@ export default function ListCard({
           <S.ContentsHeaderImg src={imgUrl} />
         )}
         <S.ContentsHeaderInfo>
-          <Text.Body6 color="gray900" pointer={true}>
-            {userNickname}
-          </Text.Body6>
+          <S.HeaderTop>
+            <Text.Body6 color="gray900" pointer={true}>
+              {userNickname}
+            </Text.Body6>
+            <UnivLabel univ={userSchoolName} />
+          </S.HeaderTop>
           <Text.Caption3 color="gray500">{time}</Text.Caption3>
         </S.ContentsHeaderInfo>
       </S.ContentsHeader>
@@ -96,6 +101,12 @@ const S = {
     flex-direction: row;
     align-items: center;
     cursor: pointer;
+  `,
+
+  HeaderTop: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 4px;
   `,
 
   ImageBox: styled.div`
