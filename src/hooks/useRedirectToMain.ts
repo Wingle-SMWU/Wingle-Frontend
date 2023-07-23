@@ -15,7 +15,7 @@ export const useRedirectToMain = (): void => {
       router.replace("/auth/login");
     }
 
-    if ((isAuthPage || isAdminPage) && !!logined) {
+    if (isAuthPage && !!logined) {
       router.replace("/community");
     }
   }, [router.pathname]);
