@@ -120,10 +120,10 @@ const S = {
     font-size: 16px;
     color: ${({ theme, disabled, selected }) =>
       disabled
-        ? theme.color.gray500
+        ? theme.color.gray300
         : selected
         ? theme.color.gray900
-        : theme.color.gray500};
+        : theme.color.gray300};
     padding: 14px 16px;
   `,
   DropdownMenuContainer: styled.ul<{ isActive: boolean }>`
