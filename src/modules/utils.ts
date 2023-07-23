@@ -11,8 +11,9 @@ export const getImageUrl = (currentTab: string) => {
 };
 
 export const countryImg = (country: string) => {
+  // code로 쓰인 게 있어서 조건 추가
   const countryUnit = countryList.find((countryUnit: CountryListType) => {
-    return country === countryUnit.enNation;
+    return country === countryUnit.enNation || country === countryUnit.code;
   });
 
   return `/mypage/flag/${countryUnit?.code.toLocaleLowerCase()}.svg`;
