@@ -4,13 +4,16 @@ import { atom } from "recoil";
 export const signUpFormDataAtom = atom<SignUpFormData>({
   key: "signUpFormDataAtom",
   default: {
-    idCardImage: null,
+    idCardImage: "",
     email: "",
     password: "",
+    schoolId: "",
+    department: "",
+    studentNumber: "",
     name: "",
     isNicknameChecked: false,
     nickname: "",
-    nation: "KR",
+    nation: "Republic of Korea",
     gender: true,
     termsOfUse: false,
     termsOfPersonalInformation: false,

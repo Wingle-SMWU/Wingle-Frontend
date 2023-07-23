@@ -90,10 +90,12 @@ const S = {
   PrivacyPolicyIconOpen: styled.div<{ Condition: boolean }>`
     margin-left: auto;
     display: ${(props): string => (props.Condition ? `block` : `none`)};
+    cursor: pointer;
   `,
   PrivacyPolicyIconNotOpen: styled.div<{ Condition: boolean }>`
     margin-left: auto;
     display: ${(props): string => (props.Condition ? `block` : `none`)};
+    cursor: pointer;
   `,
   PrivacyPolicyContent: styled.div<{ Condition: boolean }>`
     display: ${(props): string => (props.Condition ? `block` : `none`)};

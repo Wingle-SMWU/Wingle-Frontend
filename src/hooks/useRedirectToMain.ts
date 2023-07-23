@@ -4,23 +4,19 @@ import { getRefreshTokenFromLocalStorage } from "../utils/refreshTokenHandler";
 
 export const useRedirectToMain = (): void => {
   const router = useRouter();
+
   useEffect(() => {
-    if (
-      router.pathname !== "/auth/login" &&
-      router.pathname !== "/auth/signup" &&
-      router.pathname !== "/auth/complete" &&
-      router.pathname !== "/admin"
-    ) {
-      const checkLogined = () => {
-        const logined = getRefreshTokenFromLocalStorage();
-        if (!logined) {
-          alert("로그인이 필요합니다.");
-          router.replace("/auth/login");
-        } else {
-          router.replace("/community");
-        }
-      };
-      checkLogined();
+    const isAuthPage = router.pathname.includes("/auth");
+    const isAdminPage = router.pathname.includes("/admin");
+    const logined = getRefreshTokenFromLocalStorage();
+
+    if (!isAuthPage && !isAdminPage && !logined) {
+      alert("로그인이 필요합니다.");
+      router.replace("/auth/login");
     }
-  }, []);
+
+    if ((isAuthPage || isAdminPage) && !!logined) {
+      router.replace("/community");
+    }
+  }, [router.pathname]);
 };

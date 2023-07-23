@@ -3,6 +3,7 @@ import EmailVerify from "./emailVerify";
 import PasswordVerify from "./passwordVerify";
 import NameInput from "./nameInput";
 import NicknameVerify from "./nicknameVerify";
+import InputUnivDropdown from "./inputUnivDropdown";
 
 export default function InputBox(): JSX.Element {
   return (
@@ -11,6 +12,7 @@ export default function InputBox(): JSX.Element {
 
       <EmailVerify />
       <PasswordVerify />
+      <InputUnivDropdown />
       <NameInput />
       <NicknameVerify />
     </>

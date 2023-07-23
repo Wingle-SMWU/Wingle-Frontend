@@ -1,7 +1,10 @@
 export interface SignUpFormData {
-  idCardImage: FormData | null;
+  idCardImage: string;
   email: string;
   password: string;
+  schoolId: string;
+  department: string;
+  studentNumber: string;
   name: string;
   isNicknameChecked: boolean;
   nickname: string;
