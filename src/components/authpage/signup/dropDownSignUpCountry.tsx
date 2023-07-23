@@ -19,7 +19,7 @@ export default function DropDownSignUpCountry(): JSX.Element {
       setSignUpFormData(
         (prev: SignUpFormData): SignUpFormData => ({
           ...prev,
-          nation: country.code,
+          nation: country.enNation,
         })
       );
     }
