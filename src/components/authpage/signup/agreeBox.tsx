@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, Margin } from "@/src/components/ui";
 import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
@@ -11,17 +11,17 @@ export default function AgreeBox(): JSX.Element {
     useState(false);
   const [termsOfPromotion, checkTermsOfPromotion] = useState(false);
 
-  const handleUseCheck = useCallback((check: boolean) => {
+  const handleUseCheck = (check: boolean) => {
     checkTermsOfUse(check);
-  }, []);
+  };
 
-  const handlePersonalInformationCheck = useCallback((check: boolean) => {
+  const handlePersonalInformationCheck = (check: boolean) => {
     checkTermsOfPersonalInformation(check);
-  }, []);
+  };
 
-  const handlePromotionCheck = useCallback((check: boolean) => {
+  const handlePromotionCheck = (check: boolean) => {
     checkTermsOfPromotion(check);
-  }, []);
+  };
 
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
