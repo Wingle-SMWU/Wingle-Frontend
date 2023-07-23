@@ -6,6 +6,7 @@ import { Margin, Text } from "../../ui";
 import betweenTime from "@/src/utils/betweenTime";
 import { countryImg } from "@/src/modules/utils";
 import { useRouter } from "next/router";
+import UnivLabel from "../../ui/univLabel";
 
 export default function Profile({
   article,
@@ -15,8 +16,15 @@ export default function Profile({
   currentTab: string;
 }): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
-  const { isMine, userNickname, createdTime, forumId, articleId, userId } =
-    article;
+  const {
+    isMine,
+    userNickname,
+    createdTime,
+    forumId,
+    articleId,
+    userId,
+    userSchoolName,
+  } = article;
   const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
@@ -47,7 +55,10 @@ export default function Profile({
           )}
           <Margin direction="row" size={10} />
           <S.ProfileInfo>
-            <Text.Body6 color="gray900">{userNickname}</Text.Body6>
+            <S.HeaderTop>
+              <Text.Body6 color="gray900">{userNickname}</Text.Body6>
+              <UnivLabel univ={userSchoolName} />
+            </S.HeaderTop>
             <Text.Caption3 color="gray500">{time}</Text.Caption3>
           </S.ProfileInfo>
         </S.ProfileLeft>
@@ -112,7 +123,11 @@ const S = {
     display: flex;
     flex-direction: row;
   `,
-
+  HeaderTop: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  `,
   CancelImg: styled.img`
     width: 24px;
     height: 24px;
