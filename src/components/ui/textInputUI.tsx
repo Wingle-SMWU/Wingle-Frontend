@@ -106,7 +106,7 @@ const S = {
     overflow: hidden;
 
     & > input {
-      width: calc(100%);
+      width: calc(100% - 32px);
       border: none;
       padding: 14px 16px;
       height: 22px;
