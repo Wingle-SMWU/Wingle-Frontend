@@ -66,16 +66,9 @@ export default function Edit(): JSX.Element {
                   profileData.languages.map((v) => (
                     <S.LanguageChartContent key={v.order}>
                       <S.LanguageChart src={`/mypage/language${v.order}.svg`} />
-                      <S.LanguageText fontWeight={550} width={100}>
+                      <S.LanguageText fontWeight={550} width={200}>
                         {v.language}
                       </S.LanguageText>
-                      {/* <S.LanguageText
-                        fontWeight={400}
-                        width={262}
-                        color="orange500"
-                      >
-                        {v.language.substring(2)}
-                      </S.LanguageText> */}
                     </S.LanguageChartContent>
                   ))}
               </S.LanguageContent>
