@@ -12,4 +12,5 @@ type Article = {
   userNickname: string;
   userImage: string;
   userNation: string;
+  userSchoolName: string;
 };
