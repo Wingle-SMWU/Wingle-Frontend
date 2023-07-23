@@ -28,7 +28,7 @@ export default function StudentCard(): JSX.Element {
         setSignUpFormData(
           (prev: SignUpFormData): SignUpFormData => ({
             ...prev,
-            idCardImage: "", // ""로 초기화
+            idCardImageUrl: "", // ""로 초기화
           })
         );
         return;
@@ -50,7 +50,7 @@ export default function StudentCard(): JSX.Element {
     onSuccess: (data) => {
       setSignUpFormData((prev) => ({
         ...prev,
-        idCardImage: data.data.idCardImageUrl,
+        idCardImageUrl: data.data.idCardImageUrl,
       }));
     },
     onError: () => {
@@ -58,7 +58,7 @@ export default function StudentCard(): JSX.Element {
       setError(true);
       setSignUpFormData((prev) => ({
         ...prev,
-        idCardImage: "",
+        idCardImageUrl: "",
       }));
     },
   });

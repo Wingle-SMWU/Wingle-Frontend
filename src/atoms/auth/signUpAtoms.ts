@@ -4,7 +4,7 @@ import { atom } from "recoil";
 export const signUpFormDataAtom = atom<SignUpFormData>({
   key: "signUpFormDataAtom",
   default: {
-    idCardImage: "",
+    idCardImageUrl: "",
     email: "",
     password: "",
     schoolId: "",

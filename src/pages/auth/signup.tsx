@@ -21,7 +21,7 @@ export default function SignUp(): JSX.Element {
 
   useEffect(() => {
     if (
-      signUpFormData.idCardImage &&
+      signUpFormData.idCardImageUrl &&
       signUpFormData.email &&
       signUpFormData.password &&
       signUpFormData.schoolId &&
@@ -40,7 +40,9 @@ export default function SignUp(): JSX.Element {
 
   const { mutate: signUpMutation } = useMutation(
     (signUpData: SignUpFormData) => postSignUp(signUpData),
-    { onSuccess: () => router.push("/auth/complete") }
+    {
+      onSuccess: () => router.push("/auth/complete"),
+    }
   );
 
   const handleSignUpSubmit = (): void => {
