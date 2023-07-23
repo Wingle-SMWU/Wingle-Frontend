@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { countryList, CountryListType } from "../../../constants/countryList";
 import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
@@ -7,12 +7,12 @@ import DropDownCommon from "../../ui/dropDownUI";
 import { Margin } from "../../ui";
 
 export default function DropDownSignUpCountry(): JSX.Element {
-  const [nation, setNation] = useState("대한민국");
+  const [nation, setNation] = useState("Republic of Korea");
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
-  const handleSelectItem = useCallback((selected: string): void => {
+  const handleSelectItem = (selected: string): void => {
     const country = countryList.find(
-      (item: CountryListType) => item.krNation === selected
+      (item: CountryListType) => item.enNation === selected
     );
     if (country) {
       setNation(selected);
@@ -23,13 +23,13 @@ export default function DropDownSignUpCountry(): JSX.Element {
         })
       );
     }
-  }, []);
+  };
 
   return (
     <>
       <DropDownCommon
         label="국적"
-        list={countryList.map((item: CountryListType): string => item.krNation)}
+        list={countryList.map((item: CountryListType): string => item.enNation)}
         selected={nation}
         handleSelectedChange={handleSelectItem}
       />
