@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { countryImg } from "@/src/modules/utils";
 import NoData from "../../ui/NoDataUI";
 import { useRouter } from "next/router";
+import UnivLabel from "../../ui/univLabel";
 
 export default function Comment({
   comments,
@@ -45,6 +46,7 @@ export default function Comment({
           userImage,
           userNation,
           userNickname,
+          userSchoolName,
         } = comment;
         const time = betweenTime(createdTime);
         return (
@@ -66,7 +68,10 @@ export default function Comment({
                   <S.ProfileImg src={getImageUrl(currentTab)} />
                 )}
                 <S.ProfileInfo>
-                  <Text.Body6 color="gray900">{userNickname}</Text.Body6>
+                  <S.HeaderTop>
+                    <Text.Body6 color="gray900">{userNickname}</Text.Body6>
+                    <UnivLabel univ={userSchoolName} />
+                  </S.HeaderTop>
                   <Text.Caption3 color="gray500">{time}</Text.Caption3>
                 </S.ProfileInfo>
               </S.CommentTopLeft>
@@ -128,6 +133,13 @@ const S = {
     flex-direction: column;
     border-bottom: 1px solid #eeeef2;
   `,
+
+  HeaderTop: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  `,
+
   NoComment: styled.div`
     display: flex;
     justify-content: center;

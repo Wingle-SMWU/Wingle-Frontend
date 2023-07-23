@@ -8,4 +8,5 @@ interface Comment {
   userImage: string;
   userNation: string;
   userNickname: string;
+  userSchoolName: string;
 }
