@@ -1,5 +1,5 @@
 export interface SignUpFormData {
-  idCardImage: FormData | null;
+  idCardImage: string;
   email: string;
   password: string;
   name: string;

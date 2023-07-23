@@ -6,6 +6,8 @@ import { useSetRecoilState } from "recoil";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import { theme } from "@/src/styles/theme";
+import { postIdCardImage } from "@/src/api/auth/signUpApi";
+import { useMutation } from "react-query";
 
 export default function StudentCard(): JSX.Element {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -14,7 +16,6 @@ export default function StudentCard(): JSX.Element {
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // TODO: 이미지 업로드 시 MultipartFile로 변환해서 보내야 함
   const handleFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -27,24 +28,40 @@ export default function StudentCard(): JSX.Element {
         setSignUpFormData(
           (prev: SignUpFormData): SignUpFormData => ({
             ...prev,
-            idCardImage: null, // null 로 초기화
+            idCardImage: "", // ""로 초기화
           })
         );
         return;
       }
       setError(false);
+
+      // 파일명 가져오기
+      const fileName = imageFile.name;
+      setUploadedFileName(fileName);
+
       const formData = new FormData();
       formData.append("idCardImage", imageFile);
-      // MultipartFile 데이터를 formData 에 append
-      setSignUpFormData(
-        (prev: SignUpFormData): SignUpFormData => ({
-          ...prev,
-          idCardImage: formData,
-        })
-      );
-      setUploadedFileName(imageFile.name);
+      uploadIdCardImage(formData);
     }
   };
+
+  // React Query
+  const { mutate: uploadIdCardImage } = useMutation(postIdCardImage, {
+    onSuccess: (data) => {
+      setSignUpFormData((prev) => ({
+        ...prev,
+        idCardImage: data.data.idCardImageUrl,
+      }));
+    },
+    onError: () => {
+      // 요청이 실패한 경우 에러 처리
+      setError(true);
+      setSignUpFormData((prev) => ({
+        ...prev,
+        idCardImage: "",
+      }));
+    },
+  });
 
   const handleUploadButtonClick = (): void => {
     fileInputRef.current?.click();
