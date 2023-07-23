@@ -9,7 +9,6 @@ export const useRedirectToMain = (): void => {
     const isAuthPage = router.pathname.includes("/auth");
     const isAdminPage = router.pathname.includes("/admin");
     const logined = getRefreshTokenFromLocalStorage();
-    console.log(!!logined);
 
     if (!isAuthPage && !isAdminPage && !logined) {
       alert("로그인이 필요합니다.");
