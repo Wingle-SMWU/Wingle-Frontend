@@ -95,6 +95,15 @@ export default function Mypage(): JSX.Element {
               </Link>
             </Text.Body1>
             <Margin direction="column" size={34} />
+            <Text.Body1 color="gray900" pointer>
+              <Link
+                href="https://docs.google.com/forms/d/e/1FAIpQLSea_bxSSn0xd6gex-z61NaQhx7En29ZIuia3OTjqwz_MwgcfA/viewform?pli=1"
+                style={{ textDecoration: "none", color: theme.color.gray900 }}
+              >
+                신고하기
+              </Link>
+            </Text.Body1>
+            <Margin direction="column" size={34} />
             <Text.Body1 color="gray900" pointer onClick={handleLogout}>
               로그아웃
             </Text.Body1>
