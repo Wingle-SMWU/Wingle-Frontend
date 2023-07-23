@@ -11,6 +11,7 @@ export interface Room {
   nickname: string;
   recentChat: string;
   createdTime: Date;
+  schoolName: string;
 }
 
 export interface RoomNumberResponse {

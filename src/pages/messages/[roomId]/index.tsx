@@ -25,6 +25,7 @@ export default function MessageSend() {
     nickname: string;
     image: string;
     nation: string;
+    schoolName: string;
   }>();
   const {
     messageData,
@@ -134,6 +135,7 @@ export default function MessageSend() {
             <S.YourInfoBox>
               <YourInfo
                 list={{
+                  recipientSchoolName: yourInfo?.schoolName ?? "",
                   recipientImage: yourInfo?.image ?? "",
                   nickname: yourInfo?.nickname ?? "",
                   nation: yourInfo?.nation ?? "",

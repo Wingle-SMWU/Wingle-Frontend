@@ -5,8 +5,10 @@ import { getImageUrl } from "@/src/modules/utils";
 import { countryImg } from "@/src/modules/utils";
 import { useRecoilState } from "recoil";
 import { recipientUserId } from "@/src/atoms/message/recipientUserId";
+import UnivLabel from "@/src/components/ui/univLabel";
 interface UserInfo {
   list: {
+    recipientSchoolName: string;
     recipientImage: string;
     nickname: string;
     nation: string;
@@ -16,7 +18,7 @@ interface UserInfo {
 const YourInfo = ({ list }: UserInfo) => {
   const router = useRouter();
   const [userRecipientId, setUserRecipientId] = useRecoilState(recipientUserId);
-  const { recipientImage, nickname, nation } = list;
+  const { recipientSchoolName, recipientImage, nickname, nation } = list;
 
   const handleMoveOpponentInfo = async () => {
     if (!!userRecipientId) {
@@ -38,6 +40,7 @@ const YourInfo = ({ list }: UserInfo) => {
         </S.ImageBox>
         <S.TitleBox>
           <Text.Body5 color="gray900">{nickname}</Text.Body5>
+          <UnivLabel univ={recipientSchoolName} />
         </S.TitleBox>
       </S.LeftBox>
     </S.Container>
@@ -76,6 +79,10 @@ const S = {
   `,
   TitleBox: styled.div`
     margin-left: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
     span {
       cursor: pointer;
       font-weight: 600;
