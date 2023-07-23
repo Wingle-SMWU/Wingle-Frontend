@@ -4,9 +4,18 @@ import { Room } from "@/src/types/message/roomType";
 import betweenTime from "@/src/utils/betweenTime";
 import { getImageUrl } from "@/src/modules/utils";
 import { countryImg } from "@/src/modules/utils";
+import UnivLabel from "@/src/components/ui/univLabel";
 
 const MsgList = ({ list }: { list: Room }) => {
-  const { image, nickname, createdTime, recentChat, roomId, nation } = list;
+  const {
+    image,
+    nickname,
+    createdTime,
+    recentChat,
+    roomId,
+    nation,
+    schoolName,
+  } = list;
   const router = useRouter();
 
   const handleMoveChatRoom = () => {
@@ -18,6 +27,7 @@ const MsgList = ({ list }: { list: Room }) => {
           nickname,
           image,
           nation,
+          schoolName,
         })
       );
     }
@@ -34,13 +44,15 @@ const MsgList = ({ list }: { list: Room }) => {
                 width={35}
                 height={35}
               />
-
               <S.NationIcon src={countryImg(nation)} />
             </S.ImageBox>
             <div
               style={{ display: "flex", flexDirection: "column", gap: "2px" }}
             >
-              <span>{nickname}</span>
+              <S.HeaderTop>
+                <span>{nickname}</span>
+                <UnivLabel univ={schoolName} />
+              </S.HeaderTop>
               <span>{betweenTime(String(createdTime))}</span>
             </div>
           </S.Detail>
@@ -71,6 +83,12 @@ const S = {
     position: relative;
     width: 36px;
     height: 36px;
+  `,
+
+  HeaderTop: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 4px;
   `,
 
   NationIcon: styled.img`
