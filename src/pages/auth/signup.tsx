@@ -16,6 +16,7 @@ import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 
 export default function SignUp(): JSX.Element {
   const [isButtonDisabled, setButtonDisabled] = useState(true);
+  const [buttonMent, setButtonMent] = useState("작성완료");
 
   const signUpFormData = useRecoilValue(signUpFormDataAtom);
 
@@ -41,7 +42,16 @@ export default function SignUp(): JSX.Element {
   const { mutate: signUpMutation } = useMutation(
     (signUpData: SignUpFormData) => postSignUp(signUpData),
     {
+      onMutate: () => {
+        setButtonDisabled(true);
+        setButtonMent("제출 중");
+      },
       onSuccess: () => router.push("/auth/complete"),
+      onError: () => {
+        alert("제출 중 오류가 생겼습니다. 다시 시도해주세요.");
+        setButtonDisabled(false);
+        setButtonMent("작성완료");
+      },
     }
   );
 
@@ -75,7 +85,7 @@ export default function SignUp(): JSX.Element {
         disabled={isButtonDisabled}
         onClick={handleSignUpSubmit}
       >
-        작성완료
+        {buttonMent}
       </S.CompleteButton>
     </S.Wrapper>
   );
