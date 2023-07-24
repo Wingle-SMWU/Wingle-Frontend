@@ -10,19 +10,6 @@ import Loading from "@/src/components/ui/loadingUI";
 import { postLanguage } from "@/src/api/mypage/profileData";
 import { useMutation, useQueryClient } from "react-query";
 import { theme } from "@/src/styles/theme";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
-import { useTranslation } from "react-i18next";
-
-export const getStaticProps: GetStaticProps = async ({
-  locale = "en" || "ko",
-}) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["profile"])),
-    },
-  };
-};
 
 export default function Language(): JSX.Element {
   const [loading, setLoading] = useState(true);
@@ -33,8 +20,6 @@ export default function Language(): JSX.Element {
   const [initialLanguageValue1, setInitialLanguageValue1] = useState("");
   const [initialLanguageValue2, setInitialLanguageValue2] = useState("");
   const [initialLanguageValue3, setInitialLanguageValue3] = useState("");
-
-  const { t } = useTranslation();
 
   const queryClient = useQueryClient();
   const { profileData } = useGetProfile();
@@ -82,25 +67,8 @@ export default function Language(): JSX.Element {
     return true;
   };
 
-  // useEffect(() => {
-  //   if (profileData && profileData.languages) {
-  //     if (
-  //       !checkSameArray(
-  //         profileData.languages.map((v) => v.language),
-  //         languageArr
-  //       )
-  //     ) {
-  //       if (languageArr[0]) {
-  //         setBtnActive(true);
-  //       } else {
-  //         setInitialLanguageFn();
-  //       }
-  //     }
-  //   }
-  // }, [languageArr, btnActive]);
-
   useEffect(() => {
-    if (profileData) {
+    if (profileData && profileData.languages) {
       if (
         !checkSameArray(
           profileData.languages.map((v) => v.language),
@@ -110,12 +78,11 @@ export default function Language(): JSX.Element {
         if (languageArr[0]) {
           setBtnActive(true);
         } else {
-          setBtnActive(false);
           setInitialLanguageFn();
         }
       }
     }
-  }, [languageArr]);
+  }, [languageArr, btnActive]);
 
   useEffect(() => {
     if (profileData) {
@@ -151,26 +118,22 @@ export default function Language(): JSX.Element {
                 alt="뒤로가기"
                 onClick={onClickModal}
               />
-              <Text.Title1 color="gray900">
-                {t("profile:edit.language.head")}
-              </Text.Title1>
+              <Text.Title1 color="gray900">사용 가능 언어</Text.Title1>
             </S.Left>
             <Text.Body1
               color={btnActive ? "gray900" : "gray500"}
               onClick={
                 btnActive
                   ? handleSubmit
-                  : (): void => alert(`${t("profile:edit.language.caption")}`)
+                  : (): void => alert("언어를 선택해주세요")
               }
               pointer
             >
-              {t("profile:edit.done")}
+              완료
             </Text.Body1>
           </S.Header>
           <S.SelectBox>
-            <Text.Body5 color="gray700">
-              {t("profile:edit.language.first")}
-            </Text.Body5>
+            <Text.Body5 color="gray700">1순위</Text.Body5>
             <Margin direction="column" size={8} />
             <SelectLanguageBox
               getLanguageAtIndex={(str): void => getLanguageAtIndex(str, 0)}
@@ -181,7 +144,7 @@ export default function Language(): JSX.Element {
 
             <Margin direction="column" size={24} />
             <Text.Body5 color={languageArr[0] !== "" ? "gray700" : "gray500"}>
-              {t("profile:edit.language.second")}
+              2순위
             </Text.Body5>
             <Margin direction="column" size={8} />
             <SelectLanguageBox
@@ -193,7 +156,7 @@ export default function Language(): JSX.Element {
 
             <Margin direction="column" size={24} />
             <Text.Body5 color={languageArr[1] !== "" ? "gray700" : "gray500"}>
-              {t("profile:edit.language.third")}
+              3순위
             </Text.Body5>
             <Margin direction="column" size={8} />
             <SelectLanguageBox

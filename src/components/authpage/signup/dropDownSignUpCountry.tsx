@@ -5,12 +5,9 @@ import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import DropDownCommon from "../../ui/dropDownUI";
 import { Margin } from "../../ui";
-import { useTranslation } from "next-i18next";
 
 export default function DropDownSignUpCountry(): JSX.Element {
   const [nation, setNation] = useState("Republic of Korea");
-  const { t } = useTranslation();
-
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const handleSelectItem = (selected: string): void => {
@@ -31,7 +28,7 @@ export default function DropDownSignUpCountry(): JSX.Element {
   return (
     <>
       <DropDownCommon
-        label={t("auth:title.nationality")}
+        label="국적"
         list={countryList.map((item: CountryListType): string => item.enNation)}
         selected={nation}
         handleSelectedChange={handleSelectItem}

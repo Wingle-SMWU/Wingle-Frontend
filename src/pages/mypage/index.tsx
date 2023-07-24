@@ -9,23 +9,8 @@ import Loading from "@/src/components/ui/loadingUI";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import Link from "next/link";
 import { theme } from "@/src/styles/theme";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
-
-export const getStaticProps: GetStaticProps = async ({
-  locale = "en" || "ko",
-}) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["myPage", "footer", "navbar"])),
-    },
-  };
-};
 
 export default function Mypage(): JSX.Element {
-  const { t } = useTranslation();
-
   const [editText, setEditText] = useState(true);
   const [isRegisterDropVisible, setIsRegisterDropVisible] = useState(false);
 
@@ -54,7 +39,7 @@ export default function Mypage(): JSX.Element {
     <>
       <S.Wrapper>
         <S.Header>
-          <Text.Title1 color="gray900">{t("myPage:head")}</Text.Title1>
+          <Text.Title1 color="gray900">마이페이지</Text.Title1>
         </S.Header>
         <S.Content>
           <S.Profile>
@@ -70,12 +55,12 @@ export default function Mypage(): JSX.Element {
                   onMouseEnter={(): void => setIsRegisterDropVisible(true)}
                   onMouseLeave={(): void => setIsRegisterDropVisible(false)}
                 >
-                  {t("myPage:register")}
+                  프로필 등록
                 </Text.Caption1>
                 {isRegisterDropVisible && (
                   <S.RegisterDrop>
                     <Text.Body2 color="white">
-                      {t("myPage:profileNotice")}
+                      프로필을 등록해주세요!
                     </Text.Body2>
                   </S.RegisterDrop>
                 )}
@@ -85,7 +70,7 @@ export default function Mypage(): JSX.Element {
                 onClick={(): Promise<boolean> => router.push(`/mypage/edit`)}
               >
                 <Text.Caption1 color="gray700" pointer>
-                  {t("myPage:edit")}
+                  프로필 수정
                 </Text.Caption1>
               </S.EditBtn>
             )}
@@ -98,7 +83,7 @@ export default function Mypage(): JSX.Element {
               pointer
               onClick={(): Promise<boolean> => router.push(`/mypage/postList`)}
             >
-              {t("myPage:mypost")}
+              내가 쓴 게시글
             </Text.Body1>
             <Margin direction="column" size={34} />
             <Text.Body1 color="gray900" pointer>
@@ -106,7 +91,7 @@ export default function Mypage(): JSX.Element {
                 href="https://answer.moaform.com/answers/EAP2m0"
                 style={{ textDecoration: "none", color: theme.color.gray900 }}
               >
-                {t("myPage:feedback")}
+                피드백 보내기
               </Link>
             </Text.Body1>
             <Margin direction="column" size={34} />
@@ -115,12 +100,12 @@ export default function Mypage(): JSX.Element {
                 href="https://docs.google.com/forms/d/e/1FAIpQLSea_bxSSn0xd6gex-z61NaQhx7En29ZIuia3OTjqwz_MwgcfA/viewform?pli=1"
                 style={{ textDecoration: "none", color: theme.color.gray900 }}
               >
-                {t("myPage:report")}
+                신고하기
               </Link>
             </Text.Body1>
             <Margin direction="column" size={34} />
             <Text.Body1 color="gray900" pointer onClick={handleLogout}>
-              {t("myPage:logout")}
+              로그아웃
             </Text.Body1>
           </>
         </S.Content>

@@ -3,29 +3,22 @@ import styled from "styled-components";
 import { Margin, Text } from "@/src/components/ui";
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
-
-export const getStaticProps: GetStaticProps = async ({
-  locale = "en" || "ko",
-}) => {
-  return { props: { ...(await serverSideTranslations(locale, ["complete"])) } };
-};
 
 export default function SignupComplete(): JSX.Element {
-  const { t } = useTranslation();
-
   return (
     <>
       <S.Wrapper>
-        <Text.Body5 color="orange500">{t("complete:notice")}</Text.Body5>
+        <Text.Body5 color="orange500">가입신청 완료</Text.Body5>
         <Margin direction="column" size={8} />
-        <S.TitleWrapper>{t("complete:title-1")}</S.TitleWrapper>
-        <S.TitleWrapper>{t("complete:title-2")}</S.TitleWrapper>
+        <S.TitleWrapper>가입이 승인되면</S.TitleWrapper>
+        <S.TitleWrapper>메일을 보내드릴게요</S.TitleWrapper>
         <Margin direction="column" size={8} />
-        <S.ContentWrapper>{t("complete:caption-1")}</S.ContentWrapper>
-        <S.ContentWrapper>{t("complete:caption-2")}</S.ContentWrapper>
+        <S.ContentWrapper>
+          메일이 오지 않는다면 스팸함을 확인하거나
+        </S.ContentWrapper>
+        <S.ContentWrapper>
+          wingle.kr@gmail.com으로 문의해주세요.
+        </S.ContentWrapper>
         <Margin direction="column" size={77} />
 
         <S.IMGWrapper href={"/auth/login"}>

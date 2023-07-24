@@ -11,18 +11,6 @@ import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
-
-export const getStaticProps: GetStaticProps = async ({
-  locale = "en" || "ko",
-}) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["community", "navbar"])),
-    },
-  };
-};
 
 export default function Community(): JSX.Element {
   const router = useRouter();

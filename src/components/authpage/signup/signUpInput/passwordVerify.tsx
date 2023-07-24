@@ -4,11 +4,8 @@ import { useSetRecoilState } from "recoil";
 import TextInputUI from "@/src/components/ui/textInputUI";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import { Margin } from "@/src/components/ui";
-import { useTranslation } from "next-i18next";
 
 export default function PasswordVerify(): JSX.Element {
-  const { t } = useTranslation();
-
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
 
@@ -18,7 +15,7 @@ export default function PasswordVerify(): JSX.Element {
   const [isErrorPasswordCheck, setErrorPasswordCheck] = useState(false);
 
   const [passwordMent, setPasswordMent] = useState(
-    `${t("auth:caption.pass-1")}`
+    "‘영문자+숫자+특수기호’ 포함 8-15자"
   );
   const [passwordCheckMent, setPasswordCheckMent] = useState("");
 
@@ -68,10 +65,10 @@ export default function PasswordVerify(): JSX.Element {
 
       if (!passwordRegex.test(value)) {
         setErrorPassword(true);
-        setPasswordMent(`${t("auth:caption.pass-1")}`);
+        setPasswordMent("‘영문자+숫자+특수기호’ 포함 8-15자");
       } else {
         setErrorPassword(false);
-        setPasswordMent(`${t("auth:caption.pass-2")}`);
+        setPasswordMent("사용 가능한 비밀번호입니다.");
       }
       if (e.target.value !== passwordCheck && password !== "") {
         setErrorPasswordCheck(true);
@@ -92,7 +89,7 @@ export default function PasswordVerify(): JSX.Element {
       }
       if (value === password) {
         setErrorPasswordCheck(false);
-        setPasswordCheckMent(`${t("auth:caption.pass-3")}`);
+        setPasswordCheckMent("비밀번호가 일치합니다.");
       } else {
         // 초기화
         setSignUpFormData(
@@ -111,9 +108,9 @@ export default function PasswordVerify(): JSX.Element {
   return (
     <>
       <TextInputUI
-        label={t("auth:title.password")}
-        name={t("auth:title.password")}
-        placeholder={t("auth:title.password")}
+        label="비밀번호"
+        name="비밀번호"
+        placeholder="비밀번호"
         value={password}
         type="password"
         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
@@ -121,15 +118,15 @@ export default function PasswordVerify(): JSX.Element {
           handleErrorPassword(e);
         }}
         error={isErrorPassword}
-        errorMessage={t("auth:caption.pass-1")}
+        errorMessage="‘영문자+숫자+특수기호’ 포함 8-15자"
         description={passwordMent}
       />
       <Margin direction="column" size={24} />
 
       <TextInputUI
-        label={t("auth:title.verify-password")}
-        name={t("auth:title.verify-password")}
-        placeholder={t("auth:title.verify-password")}
+        label="비밀번호 확인"
+        name="비밀번호 확인"
+        placeholder="비밀번호 확인"
         value={passwordCheck}
         type="password"
         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
@@ -137,7 +134,7 @@ export default function PasswordVerify(): JSX.Element {
           handleErrorPasswordCheck(e);
         }}
         error={isErrorPasswordCheck}
-        errorMessage={t("auth:caption.pass-4")}
+        errorMessage="비밀번호가 일치하지 않습니다."
         description={passwordCheckMent}
       />
       <Margin direction="column" size={24} />

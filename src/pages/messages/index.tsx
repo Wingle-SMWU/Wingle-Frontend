@@ -9,22 +9,9 @@ import { Room } from "@/src/types/message/roomType";
 import instance from "@/src/api/axiosModule";
 import Loading from "@/src/components/ui/loadingUI";
 import NoData from "@/src/components/ui/NoDataUI";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
-import { useTranslation } from "react-i18next";
-
-export const getStaticProps: GetStaticProps = async ({
-  locale = "en" || "ko",
-}) => {
-  return {
-    props: { ...(await serverSideTranslations(locale, ["message", "navbar"])) },
-  };
-};
 
 export default function message(page: number, size: number) {
   const { messageDataRoom } = useGetRoom(0, 10000);
-
-  const { t } = useTranslation();
 
   if (messageDataRoom === undefined) {
     return <Loading />;
@@ -33,7 +20,7 @@ export default function message(page: number, size: number) {
   return (
     <S.Container>
       <S.TopContainer>
-        <Text.Title1 color="gray900">{t("message:head")}</Text.Title1>
+        <Text.Title1 color="gray900">쪽지함</Text.Title1>
       </S.TopContainer>
       <S.MsgContainer>
         {messageDataRoom?.length > 0 ? (

@@ -8,23 +8,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { postInterest } from "@/src/api/mypage/profileData";
 import useGetProfile from "../../../hooks/mypage/useGetProfile";
 import Loading from "@/src/components/ui/loadingUI";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
-import { useTranslation } from "react-i18next";
-
-export const getStaticProps: GetStaticProps = async ({
-  locale = "en" || "ko",
-}) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["profile"])),
-    },
-  };
-};
 
 export default function Interest(): JSX.Element {
-  const { t } = useTranslation();
-
   const [modalVisible, setModalVisible] = useState(false);
   const [interest, setInterest] = useState<string[]>([]);
   const [isModified, setIsModified] = useState<boolean>(false);
@@ -90,16 +75,14 @@ export default function Interest(): JSX.Element {
                 alt="뒤로가기"
                 onClick={onClickModal}
               />
-              <Text.Title1 color="gray900">
-                {t("profile:edit.interest.head")}
-              </Text.Title1>
+              <Text.Title1 color="gray900">관심사</Text.Title1>
             </S.Left>
             <Text.Body1
               color={isModified ? "gray900" : "gray500"}
               onClick={handleSubmit}
               pointer={isModified}
             >
-              {t("profile:edit.done")}
+              완료
             </Text.Body1>
           </S.Header>
           <SelectInterest parentFunction={parentFunction} />
