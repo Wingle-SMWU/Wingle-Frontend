@@ -83,12 +83,15 @@ export default function StudentCard(): JSX.Element {
           ></S.QuestionLogo>
         </Text.Title1>
         <S.DescriptionContent isActive={isActive}>
-          <Text.Body4 color="gray100">학생증 인증 방법</Text.Body4>
+          <Text.Body4 color="gray100">
+            {t("auth:caption.studentCard-1")}
+          </Text.Body4>
           <Margin direction="column" size={8} />
-          <Text.Body5 color="gray100">학교, 학과, 학번, 이름</Text.Body5>
+          <Text.Body5 color="gray100">
+            {t("auth:caption.studentCard-2")}
+          </Text.Body5>
           <Text.Body6 color="gray100">
-            이 모두 나온 실물(모바일) 학생증 사진을 첨부해주세요. 대학생 인증
-            용도 이외의 다른 어떠한 용도로도 사용되지 않습니다.
+            {t("auth:caption.studentCard-3")}
           </Text.Body6>
         </S.DescriptionContent>
       </S.Header>
@@ -117,7 +120,7 @@ export default function StudentCard(): JSX.Element {
           <Image src="/auth/error.svg" alt="question" width={16} height={16} />
           <Margin direction="row" size={8} />
           <Text.Caption3 color="red500">
-            파일 업로드를 실패했습니다
+            {t("auth:caption.studentCard-error")}
           </Text.Caption3>
         </S.ErrorWrapper>
       ) : uploadedFileName ? (
