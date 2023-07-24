@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Margin, Text } from "../../ui";
 import styled from "styled-components";
 import { AgreementComponentProps } from "@/src/types/auth/agreementComponentType";
-import { useTranslation } from "next-i18next";
 
 export function AgreementComponent({
   agreementTitle,
@@ -13,7 +12,6 @@ export function AgreementComponent({
 }: AgreementComponentProps): JSX.Element {
   const [isAgreed, setAgreed] = useState(false);
   const [isActive, setActive] = useState(false);
-  const { t } = useTranslation();
 
   useEffect(() => {
     handleCheck(isAgreed);
@@ -43,11 +41,9 @@ export function AgreementComponent({
         >
           {agreementTitle}{" "}
           {isRequired ? (
-            <Text.Body2 color="orange500">
-              {t("auth:title.required")}
-            </Text.Body2>
+            <Text.Body2 color="orange500">(필수)</Text.Body2>
           ) : (
-            <Text.Body2 color="gray500">{t("auth:title.option")}</Text.Body2>
+            <Text.Body2 color="gray500">(선택)</Text.Body2>
           )}
         </Text.Body2>
         <Margin direction="row" size={3} />

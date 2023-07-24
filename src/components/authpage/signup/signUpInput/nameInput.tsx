@@ -5,18 +5,15 @@ import { useSetRecoilState } from "recoil";
 
 import TextInputUI from "@/src/components/ui/textInputUI";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
-import { useTranslation } from "next-i18next";
 
 export default function NameInput(): JSX.Element {
-  const { t } = useTranslation();
-
   const [nameInputData, setNameInputData] = useState("");
 
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
   const [isErrorName, setErrorName] = useState(false);
 
-  const [nameMent, setNameMent] = useState(`${t("auth:caption.name-1")}`);
+  const [nameMent, setNameMent] = useState("한글 또는 영문으로 입력해주세요.");
 
   // useEffect로 이름 존재 시 회원가입 폼 데이터 저장
   useEffect((): void => {
@@ -56,10 +53,10 @@ export default function NameInput(): JSX.Element {
           })
         );
         setErrorName(true);
-        setNameMent(`${t("auth:caption.name-1")}`);
+        setNameMent("한글 또는 영문으로 입력해주세요.");
       } else {
         setErrorName(false);
-        setNameMent(`${t("auth:caption.name-2")}`);
+        setNameMent("양식에 올바른 이름입니다.");
       }
     },
     []
@@ -68,16 +65,16 @@ export default function NameInput(): JSX.Element {
   return (
     <>
       <TextInputUI
-        label={t("auth:title.name")}
-        name={t("auth:title.name")}
+        label="이름"
+        name="이름"
         value={nameInputData}
         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
           handleNameInputData(e);
           handleErrorName(e);
         }}
-        placeholder={t("auth:caption.name-3")}
+        placeholder="실명을 입력하세요"
         error={isErrorName}
-        errorMessage={t("auth:caption.name-1")}
+        errorMessage="한글 또는 영문으로 입력해주세요."
         description={nameMent}
       />
       <Margin direction="column" size={24} />
