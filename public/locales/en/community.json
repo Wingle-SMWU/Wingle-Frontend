@@ -1,0 +1,25 @@
+{
+  "main": {
+    "head" : "Community",
+    "freeboard": "Free Board",
+    "free": "Free Board",
+    "Korean": "Korean Wingri",
+    "Foreign": "Foreign Wingri",
+    "exchange": "Exchange Board",
+    "notice": "Notice"
+  },
+  "comment": {
+    "Comment": "Comments",
+    "firstcomment": "Leave a First Comment!",
+    "writecomment": "Write a comment"
+  },
+  "write": { 
+    "free-head": "Write freeboard post",
+    "exchange-head": "Write a exchange board post",
+    "leavepost": "Feel free to write a post!",
+    "done": "Register"
+  },
+  "myPost": {
+    "title": "My Post"
+  }
+}
