@@ -99,7 +99,7 @@ export default function NicknameVerify(): JSX.Element {
 
   const handleCheckNickname = useCallback((): void => {
     if (nicknameInputData === "") {
-      alert("닉네임을 입력해주세요.");
+      alert(`${t("auth:alert.nickname")}`);
       return;
     }
     CheckNickname();

@@ -109,14 +109,14 @@ export default function EmailVerify(): JSX.Element {
       },
       onSuccess: (response): void => {
         setDisabledEmailButton(false);
-        setButtonMessage(`${t("auth:btn.send-4")}`);
+        setButtonMessage(`${t("auth:btn.send-3")}`);
         setEmailSendingLimitCount(response.data.requestCount || 0);
         setVerificationTimerStart(true);
       },
       onError: (error: any): void => {
         setErrorEmail(true);
         setDisabledEmailButton(true);
-        setButtonMessage("전송");
+        setButtonMessage(`${t("auth:btn.send-4")}`);
         setEmailErrorMent(
           error.response?.data?.message || `${t("auth:caption.email-2")}`
         );
@@ -137,7 +137,7 @@ export default function EmailVerify(): JSX.Element {
 
   const handleSendEmail = useCallback((): void => {
     if (email === "") {
-      alert("이메일을 입력해주세요.");
+      alert(`${t("auth:alert.email")}`);
       return;
     }
 
@@ -205,7 +205,7 @@ export default function EmailVerify(): JSX.Element {
 
   const handleVerifyEmail = useCallback((): void => {
     if (email === "") {
-      alert("이메일을 입력해주세요.");
+      alert(`${t("auth:alert.email")}`);
       return;
     }
     verifyEmail();
