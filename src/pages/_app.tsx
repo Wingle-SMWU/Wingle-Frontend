@@ -9,8 +9,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import useAppVersion from "../hooks/useAppVersion";
 import { useRedirectToMain } from "../hooks/useRedirectToMain";
+import { appWithTranslation } from "next-i18next";
 
-export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const version = useAppVersion();
   const STALE_TIME = 10 * 60 * 1000;
   const CACHE_TIME = 10 * 60 * 1000;
@@ -53,6 +54,8 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     </>
   );
 }
+
+export default appWithTranslation(MyApp);
 
 const S = {
   Wrapper: styled.div<{ version: string }>`

@@ -9,22 +9,27 @@ import {
   UniversityListType,
   universityList,
 } from "@/src/constants/universityList";
+import { useTranslation } from "next-i18next";
 
 export default function InputUnivDropdown(): JSX.Element {
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
 
+  const { t } = useTranslation();
+
   const [university, setUniversity] = useState("");
 
   const [department, setDepartment] = useState("");
-  const [departmentMent, setDepartmentMent] =
-    useState("한글 또는 영문으로 입력해주세요.");
+  const [departmentMent, setDepartmentMent] = useState(
+    `${t("auth:caption.name-1")}`
+  );
   const [isErrorDepartment, setErrorDepartment] = useState(false);
   const [departmentrrorMent, setDepartmentErrorMent] = useState("");
   const [isDisabledDepartment, setDisabledDepartment] = useState(true);
 
   const [studentNumber, setStudentNumber] = useState("");
-  const [studentNumberMent, setStudentNumberMent] =
-    useState("학번 전체를 입력해주세요.");
+  const [studentNumberMent, setStudentNumberMent] = useState(
+    `${t("auth:caption.studentId-1")}`
+  );
   const [isErrorStudentNumber, setErrorStudentNumber] = useState(false);
   const [studentNumberErrorMent, setStudentNumberErrorMent] = useState("");
   const [isDisabledStudentNumber, setDisabledStudentNumber] = useState(true);
@@ -61,8 +66,8 @@ export default function InputUnivDropdown(): JSX.Element {
         value.trim() === ""
       ) {
         setErrorDepartment(true);
-        setDepartmentMent("한글 또는 영문으로 입력해주세요.");
-        setDepartmentErrorMent("한글 또는 영문으로 입력해주세요.");
+        setDepartmentMent(`${t("auth:caption.name-1")}`);
+        setDepartmentErrorMent(`${t("auth:caption.name-1")}`);
         setDisabledStudentNumber(true);
         setSignUpFormData(
           (prev: SignUpFormData): SignUpFormData => ({
@@ -99,8 +104,8 @@ export default function InputUnivDropdown(): JSX.Element {
         value.trim() === ""
       ) {
         setErrorStudentNumber(true);
-        setStudentNumberMent("학번 전체를 입력해주세요.");
-        setStudentNumberErrorMent("입력 양식이 올바르지 않습니다.");
+        setStudentNumberMent(`${t("auth:caption.studentId-1")}`);
+        setStudentNumberErrorMent(`${t("auth:caption.studentId-2")}`);
         setSignUpFormData(
           (prev: SignUpFormData): SignUpFormData => ({
             ...prev,
@@ -125,20 +130,20 @@ export default function InputUnivDropdown(): JSX.Element {
   return (
     <>
       <DropDownCommon
-        label="학교"
+        label={t("auth:title.univ")}
         list={universityList.map(
           (item: UniversityListType): string => item.university
         )}
         selected={university}
         handleSelectedChange={handleSelectItem}
-        dropDownPlaceHolder="학교명"
+        dropDownPlaceHolder={t("auth:title.univName")}
       />
       <Margin direction="column" size={24} />
 
       <TextInputUI
-        label="학과"
-        name="학과"
-        placeholder="학과를 입력하세요"
+        label={t("auth:title.department")}
+        name={t("auth:title.department")}
+        placeholder={t("auth:caption.department")}
         value={department}
         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
           setDepartment(e.target.value);
@@ -152,8 +157,8 @@ export default function InputUnivDropdown(): JSX.Element {
       <Margin direction="column" size={24} />
 
       <TextInputUI
-        label="학번"
-        name="학번"
+        label={t("auth:title.studentId")}
+        name={t("auth:title.studentId")}
         placeholder="EX.202300000"
         value={studentNumber}
         onChange={(e: ChangeEvent<HTMLInputElement>): void => {

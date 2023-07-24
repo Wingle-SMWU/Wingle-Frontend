@@ -8,6 +8,7 @@ import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import { theme } from "@/src/styles/theme";
 import { postIdCardImage } from "@/src/api/auth/signUpApi";
 import { useMutation } from "react-query";
+import { useTranslation } from "next-i18next";
 
 export default function StudentCard(): JSX.Element {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -15,6 +16,7 @@ export default function StudentCard(): JSX.Element {
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   const handleFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -71,7 +73,7 @@ export default function StudentCard(): JSX.Element {
     <S.CertifyWrapper>
       <S.Header>
         <Text.Title1 color="gray900">
-          학생증 인증
+          {t("auth:title.ID-card")}
           <S.QuestionLogo
             src="/auth/question.svg"
             alt="question"
@@ -81,12 +83,15 @@ export default function StudentCard(): JSX.Element {
           ></S.QuestionLogo>
         </Text.Title1>
         <S.DescriptionContent isActive={isActive}>
-          <Text.Body4 color="gray100">학생증 인증 방법</Text.Body4>
+          <Text.Body4 color="gray100">
+            {t("auth:caption.studentCard-1")}
+          </Text.Body4>
           <Margin direction="column" size={8} />
-          <Text.Body5 color="gray100">학교, 학과, 학번, 이름</Text.Body5>
+          <Text.Body5 color="gray100">
+            {t("auth:caption.studentCard-2")}
+          </Text.Body5>
           <Text.Body6 color="gray100">
-            이 모두 나온 실물(모바일) 학생증 사진을 첨부해주세요. 대학생 인증
-            용도 이외의 다른 어떠한 용도로도 사용되지 않습니다.
+            {t("auth:caption.studentCard-3")}
           </Text.Body6>
         </S.DescriptionContent>
       </S.Header>
@@ -106,7 +111,7 @@ export default function StudentCard(): JSX.Element {
           width={24}
           height={24}
         />
-        <Text.Body1 color="white">학생증 업로드</Text.Body1>
+        <Text.Body1 color="white">{t("auth:btn.ID-card")}</Text.Body1>
       </S.UploadButton>
       <Margin direction="column" size={8} />
 
@@ -115,7 +120,7 @@ export default function StudentCard(): JSX.Element {
           <Image src="/auth/error.svg" alt="question" width={16} height={16} />
           <Margin direction="row" size={8} />
           <Text.Caption3 color="red500">
-            파일 업로드를 실패했습니다
+            {t("auth:caption.studentCard-error")}
           </Text.Caption3>
         </S.ErrorWrapper>
       ) : uploadedFileName ? (
@@ -130,7 +135,7 @@ export default function StudentCard(): JSX.Element {
         </S.AttagementButton>
       ) : (
         <Text.Caption3 color="gray500">
-          20MB 이하 파일을 업로드해주세요.
+          {t("auth:caption.ID-card")}
         </Text.Caption3>
       )}
       <Margin direction="column" size={52} />
