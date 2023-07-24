@@ -196,8 +196,16 @@ const S = {
     background-color: black;
     padding: 6px 12px;
     border-radius: 4px;
-    top: 55%;
-    left: 57%;
+    @media (max-width: 500px) {
+      top: 14%;
+      left: 52%;
+    }
+    @media (min-width: 501px) {
+      top: 14%;
+      left: 58%;
+    }
+    top: 14%;
+    left: 50%;
     font-size: 14px;
     white-space: nowrap;
     font-size: 12px;
