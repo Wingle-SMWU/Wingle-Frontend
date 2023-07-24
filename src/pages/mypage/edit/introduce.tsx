@@ -7,19 +7,6 @@ import { useMutation, useQueryClient } from "react-query";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { postIntroduce } from "@/src/api/mypage/profileData";
 import Loading from "@/src/components/ui/loadingUI";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
-import { useTranslation } from "react-i18next";
-
-export const getStaticProps: GetStaticProps = async ({
-  locale = "en" || "ko",
-}) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["profile"])),
-    },
-  };
-};
 
 export default function Introduce(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -30,8 +17,6 @@ export default function Introduce(): JSX.Element {
   const { profileData, isLoading } = useGetProfile();
   const router = useRouter();
   const queryClient = useQueryClient();
-
-  const { t } = useTranslation();
 
   const onChangeIntroduce = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
@@ -87,22 +72,20 @@ export default function Introduce(): JSX.Element {
                 alt="뒤로가기"
                 onClick={onClickModal}
               />
-              <Text.Title1 color="gray900">
-                {t("profile:edit.introduction.head")}
-              </Text.Title1>
+              <Text.Title1 color="gray900">자기소개</Text.Title1>
             </S.Left>
             <Text.Body1
               color={isIntroduce ? "gray900" : "gray500"} // 비활성화 상태
               onClick={handleSubmit}
               pointer={isIntroduce}
             >
-              {t("profile:edit.done")}
+              완료
             </Text.Body1>
           </S.Header>
 
           <S.Description
             maxLength={400}
-            placeholder={t("profile:edit.introduction.helptext")}
+            placeholder="자기소개를 작성해주세요! (최대 400자)"
             defaultValue={introduce}
             onChange={onChangeIntroduce}
           />

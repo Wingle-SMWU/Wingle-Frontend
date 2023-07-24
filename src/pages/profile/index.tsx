@@ -12,19 +12,6 @@ import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { useResetRecoilState } from "recoil";
 import { recipientUserId } from "@/src/atoms/message/recipientUserId";
 import { theme } from "@/src/styles/theme";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
-import { useTranslation } from "react-i18next";
-
-export const getStaticProps: GetStaticProps = async ({
-  locale = "en" || "ko",
-}) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["profile"])),
-    },
-  };
-};
 
 export default function Edit(): JSX.Element {
   const resetRecipientUserId = useResetRecoilState(recipientUserId);
@@ -34,8 +21,6 @@ export default function Edit(): JSX.Element {
   const [isError, setIsError] = useState(false);
   const [profileData, setProfileData] = useState<ProfileStateType>();
   const { profileData: myProfileData } = useGetProfile();
-
-  const { t } = useTranslation();
 
   const router = useRouter();
   const userID = router.query["userID"];
@@ -113,7 +98,7 @@ export default function Edit(): JSX.Element {
             }}
           />
           <Margin direction="row" size={13} />
-          <Text.Title1 color="gray900">{t("profile:head-2")}</Text.Title1>
+          <Text.Title1 color="gray900">프로필</Text.Title1>
         </S.Header>
         <S.Content isMe={!isMe}>
           <>
@@ -159,7 +144,7 @@ export default function Edit(): JSX.Element {
 
             <S.Column>
               <S.Language>
-                <Text.Body1 color="gray900">{t("profile:language")}</Text.Body1>
+                <Text.Body1 color="gray900">사용언어</Text.Body1>
               </S.Language>
               <S.LanguageContent>
                 {profileData &&
@@ -177,9 +162,7 @@ export default function Edit(): JSX.Element {
             <Margin direction="column" size={32} />
             <S.Column>
               <S.Introduce>
-                <Text.Body1 color="gray900">
-                  {t("profile:introduction")}
-                </Text.Body1>
+                <Text.Body1 color="gray900">자기소개</Text.Body1>
               </S.Introduce>
               <S.IntroduceContent>
                 {profileData && profileData.introduce}
@@ -189,7 +172,7 @@ export default function Edit(): JSX.Element {
             <Margin direction="column" size={32} />
             <S.Column>
               <S.Interest>
-                <Text.Body1 color="gray900">{t("profile:interest")}</Text.Body1>
+                <Text.Body1 color="gray900">관심사</Text.Body1>
               </S.Interest>
               <S.InterestBoxContainer>
                 <Margin size={8} direction={"column"} />
@@ -219,9 +202,7 @@ export default function Edit(): JSX.Element {
         )}
         {!isMe && !fromMessages ? (
           <S.SendButtonWrapper>
-            <S.SendButton onClick={sendNote}>
-              {t("profile:sendMessage")}
-            </S.SendButton>
+            <S.SendButton onClick={sendNote}>쪽지 보내기</S.SendButton>
           </S.SendButtonWrapper>
         ) : null}
       </S.Wapper>
