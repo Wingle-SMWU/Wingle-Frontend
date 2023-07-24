@@ -39,7 +39,7 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
               name="viewport"
               content="width=device-width, initial-scale=1"
             />
-            <title>국제교류 온라인 플랫폼, Wingle</title>
+            <title>WINGLE | 대학생 국제교류 플랫폼</title>
             <link rel="icon" href="/logo_favicon.jpeg" />
           </Head>
           <GlobalStyle />
