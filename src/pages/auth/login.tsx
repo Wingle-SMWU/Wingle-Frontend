@@ -71,9 +71,7 @@ export default function Login(): JSX.Element {
           height={120}
         />
         <Margin direction="column" size={8} />
-        <Text.Body6 color="gray700">
-          다함께 즐기는 대학생 국제교류 커뮤니티
-        </Text.Body6>
+        <Text.Body6 color="gray700">{t("login:title")}</Text.Body6>
       </S.Header>
 
       <form onSubmit={handleSubmit}>
