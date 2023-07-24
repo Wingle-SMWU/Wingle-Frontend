@@ -1,0 +1,25 @@
+{
+  "main": {
+    "head": "커뮤니티",
+    "freeboard": "자유게시판",
+    "free": "자유",
+    "Korean": "한국 윙그리",
+    "Foreign": "외국 윙그리", 
+    "exchange": "교류",
+    "notice": "공지"
+  },
+  "comment": {
+    "comment": "댓글",
+    "firstcomment": "첫 댓글을 작성해 보세요!",
+    "writecomment": "댓글을 입력해보세요."
+  },
+  "write": {
+    "free-head": "자유게시판 글 작성",
+    "exchange-head": "교류게시판 글 작성",
+    "leavepost": "자유롭게 글을 작성해보세요!",
+    "done": "등록"
+  },
+  "myPost": {
+    "title": "내가 쓴 게시글"
+  }
+}
