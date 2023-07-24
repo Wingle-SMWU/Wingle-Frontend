@@ -1,0 +1,15 @@
+{
+  "modal": {
+    "exit": "Are you sure to leave?",
+    "deleteArticle": "Are you sure to delete the article?",
+    "deleteComment": "Do to delete the comment?",
+    "articleAlert-1": "If you leave now,",
+    "articleAlert-2": "the post you created disappears",
+    "articleAlert-3": "You can't recover a deleted post",
+    "articleAlert-4": "Please think carefully",
+    "commentAlert-1": "Deleted comments cannot be recovered",
+    "commentAlert-2": "Please think carefully",
+    "exitAlert-1": "If you leave now,",
+    "exitAlert-2": "your changes will not be saved."
+  }
+}
