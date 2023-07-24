@@ -3,27 +3,14 @@ import Modal from "@/src/components/modal";
 import { Text } from "@/src/components/ui";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
-
-export const getStaticProps: GetStaticProps = async ({
-  locale = "en" || "ko",
-}) => {
-  return {
-    props: { ...(await serverSideTranslations(locale, ["community"])) },
-  };
-};
 
 export default function Create(): JSX.Element {
   const router = useRouter();
   const { tab: currentTab, forumId } = router.query;
   const [contents, setContents] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-
-  const { t } = useTranslation();
 
   const queryClient = useQueryClient();
 
@@ -96,13 +83,13 @@ export default function Create(): JSX.Element {
             color={contents ? "gray900" : "gray500"}
             onClick={(): void => updateArticle.mutate()}
           >
-            {t("community:write.done")}
+            등록
           </Text.Body1>
         </S.CreateButton>
       </S.Header>
       <S.Body>
         <S.Contents
-          placeholder={t("community:write.leavepost")}
+          placeholder="자유롭게 글을 작성해보세요!"
           onChange={onChangeContents}
           maxLength={3000}
           value={contents}
