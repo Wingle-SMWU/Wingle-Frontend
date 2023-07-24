@@ -7,15 +7,17 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <S.Wrapper>
-      <S.NotionLinkWrapper>
-        <Text.Caption2 color="gray500">공식 노션 바로가기</Text.Caption2>
-        <Link
-          href="https://www.notion.so/wingleeng/WINGLE-65d959f2494b4fc191fb8cbf3803eb08"
-          style={{ textDecoration: "none", color: theme.color.gray500 }}
-        >
+      <Link
+        href="https://www.notion.so/wingleeng/WINGLE-65d959f2494b4fc191fb8cbf3803eb08"
+        style={{ textDecoration: "none", color: theme.color.gray500 }}
+      >
+        <S.NotionLinkWrapper>
+          <Text.Caption2 color="gray500" pointer={true}>
+            공식 노션 바로가기
+          </Text.Caption2>
           <Image src="/golink.svg" alt="golink" width={20} height={20} />
-        </Link>
-      </S.NotionLinkWrapper>
+        </S.NotionLinkWrapper>
+      </Link>
       <Margin direction="column" size={11} />
       <Text.Caption2 color="gray500">
         <Link
