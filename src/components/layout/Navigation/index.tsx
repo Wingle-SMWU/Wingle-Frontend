@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Text } from "../../ui";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { theme } from "@/src/styles/theme";
-import { useTranslation } from "react-i18next";
 
 type Profile = {
   isRadius: boolean;
@@ -15,27 +14,25 @@ type Tab = {
 };
 
 export default function Navigation(props: Tab) {
-  const { t } = useTranslation();
-
   const router = useRouter();
   const menu = router.asPath;
 
   const { profileData } = useGetProfile();
   const NavigationMenuArr = [
     {
-      name: `${t("navbar:community")}`,
+      name: "커뮤니티",
       page: "/community",
       normalImg: "/community/list/comu-normal.svg",
       disableImg: "/community/list/comu-disable.svg",
     },
     {
-      name: `${t("navbar:message")}`,
+      name: "쪽지",
       page: "/messages",
       normalImg: "/community/list/message-normal.svg",
       disableImg: "/community/list/message-disable.svg",
     },
     {
-      name: `${t("navbar:mypage")}`,
+      name: "마이페이지",
       page: "/mypage",
       normalImg: `
       ${
@@ -58,7 +55,7 @@ export default function Navigation(props: Tab) {
         {NavigationMenuArr.map((el) => (
           <S.NavigationMenu key={el.name} href={el.page}>
             <S.NavigationMenuImg
-              isRadius={el.name === `${t("navbar:mypage")}`}
+              isRadius={el.name === "마이페이지"}
               isActive={props.tab === "mypage"}
               src={menu.includes(el.page) ? el.normalImg : el.disableImg}
             />
