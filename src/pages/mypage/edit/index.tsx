@@ -7,8 +7,23 @@ import { useState } from "react";
 import Loading from "@/src/components/ui/loadingUI";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { theme } from "@/src/styles/theme";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetStaticProps } from "next";
+import { useTranslation } from "react-i18next";
+
+export const getStaticProps: GetStaticProps = async ({
+  locale = "en" || "ko",
+}) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["profile"])),
+    },
+  };
+};
 
 export default function Edit(): JSX.Element {
+  const { t } = useTranslation();
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const { profileData, isLoading, isError } = useGetProfile();
@@ -30,7 +45,7 @@ export default function Edit(): JSX.Element {
             onClick={(): Promise<boolean> => router.push(`/mypage`)}
           />
           <Margin direction="row" size={13} />
-          <Text.Title1 color="gray900">내 프로필</Text.Title1>
+          <Text.Title1 color="gray900">{t("profile:head")}</Text.Title1>
         </S.Header>
         <S.Content>
           <>
@@ -52,7 +67,7 @@ export default function Edit(): JSX.Element {
 
             <S.Column>
               <S.Language>
-                <Text.Body1 color="gray900">사용언어</Text.Body1>
+                <Text.Body1 color="gray900">{t("profile:language")}</Text.Body1>
                 <S.EditBtn
                   src="/modify.svg"
                   alt="연필"
@@ -77,7 +92,9 @@ export default function Edit(): JSX.Element {
             <Margin direction="column" size={32} />
             <S.Column>
               <S.Introduce>
-                <Text.Body1 color="gray900">자기소개</Text.Body1>
+                <Text.Body1 color="gray900">
+                  {t("profile:introduction")}
+                </Text.Body1>
                 <S.EditBtn
                   src="/modify.svg"
                   alt="연필"
@@ -94,7 +111,7 @@ export default function Edit(): JSX.Element {
             <Margin direction="column" size={32} />
             <S.Column>
               <S.Interest>
-                <Text.Body1 color="gray900">관심사</Text.Body1>
+                <Text.Body1 color="gray900">{t("profile:interest")}</Text.Body1>
                 <S.EditBtn
                   src="/modify.svg"
                   alt="연필"
