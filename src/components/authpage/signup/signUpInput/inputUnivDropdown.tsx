@@ -56,7 +56,7 @@ export default function InputUnivDropdown(): JSX.Element {
       setErrorDepartment(false);
       setDepartmentMent("");
 
-      const DepartmentRegex = /^[a-zA-Z가-힣]+$/;
+      const DepartmentRegex = /^[a-zA-Z가-힣\s]+$/; // 공백(\s) 추가
       const value = e.target.value;
 
       if (
