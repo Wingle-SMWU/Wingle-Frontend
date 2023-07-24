@@ -3,8 +3,11 @@ import { Margin, Text } from "../../ui";
 import Link from "next/link";
 import { theme } from "@/src/styles/theme";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <S.Wrapper>
       <Link
@@ -13,7 +16,7 @@ export default function Footer() {
       >
         <S.NotionLinkWrapper>
           <Text.Caption2 color="gray500" pointer={true}>
-            공식 노션 바로가기
+            {t("footer:notion")}
           </Text.Caption2>
           <Image src="/golink.svg" alt="golink" width={20} height={20} />
         </S.NotionLinkWrapper>
@@ -24,14 +27,14 @@ export default function Footer() {
           href="https://wingleeng.notion.site/d75c38cfbedd47309a839b055d56e3d2?pvs=4"
           style={{ textDecoration: "none", color: theme.color.gray500 }}
         >
-          이용약관
+          {t("footer:terms")}
         </Link>
         &nbsp; | &nbsp;
         <Link
           href="https://wingleeng.notion.site/d9824ef9e1cb49f293137cea583ec087?pvs=4"
           style={{ textDecoration: "none", color: theme.color.gray500 }}
         >
-          개인정보처리방침
+          {t("footer:privacy")}
         </Link>
       </Text.Caption2>
     </S.Wrapper>

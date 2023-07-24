@@ -8,6 +8,14 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps = async ({
+  locale = "en" || "ko",
+}) => {
+  return { props: { ...(await serverSideTranslations(locale, ["myPage"])) } };
+};
 
 export default function PostList() {
   const router = useRouter();

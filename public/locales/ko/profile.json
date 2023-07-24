@@ -1,0 +1,37 @@
+{
+  "head": "내 프로필",
+  "head-2": "프로필",
+  "language": "사용언어",
+  "first": "1순위",
+  "second": "2순위",
+  "third": "3순위",
+  "introduction": "자기소개",
+  "interest": "관심사",
+  "sendMessage": "쪽지 보내기",
+  "edit": {
+    "profile": {
+      "head": "프로필 수정",
+      "nickname": "닉네임",
+      "imgAlert": "업로드 가능한 이미지 크기 제한을 초과했습니다.",
+      "caption-1": "한글/영문/숫자 2-10자",
+      "caption-2": "사용 가능한 닉네임입니다.",
+      "caption-3": "이미 사용 중인 닉네임입니다."
+    },
+    "language": {
+      "head": "사용 가능 언어",
+      "first": "1순위",
+      "second": "2순위",
+      "third": "3순위",
+      "reset": "선택 초기화",
+      "caption": "언어를 선택해주세요"
+    },
+    "introduction": {
+      "head": "자기소개",
+      "helptext": "자기소개를 작성해주세요! (최대 400자)"
+    },
+    "interest": {
+      "head": "관심사"
+    },
+    "done": "완료"
+  }
+}

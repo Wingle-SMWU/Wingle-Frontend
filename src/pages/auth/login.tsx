@@ -9,6 +9,15 @@ import { saveRefreshTokenToLocalStorage } from "@/src/utils/refreshTokenHandler"
 import { saveAccessTokenToLocalStorage } from "@/src/utils/accessTokenHandler";
 import TextInputUI from "@/src/components/ui/textInputUI";
 import Button from "@/src/components/ui/button";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps = async ({
+  locale = "en" || "ko",
+}) => {
+  return { props: { ...(await serverSideTranslations(locale, ["login"])) } };
+};
 
 interface StyledInputProps {
   error: boolean;
@@ -19,6 +28,8 @@ export default function Login(): JSX.Element {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+
+  const { t } = useTranslation();
 
   const { mutate: login } = useMutation(() => postLogin(email, password), {
     onSuccess: (res) => {
@@ -60,9 +71,7 @@ export default function Login(): JSX.Element {
           height={120}
         />
         <Margin direction="column" size={8} />
-        <Text.Body6 color="gray700">
-          다함께 즐기는 대학생 국제교류 커뮤니티
-        </Text.Body6>
+        <Text.Body6 color="gray700">{t("login:title")}</Text.Body6>
       </S.Header>
 
       <form onSubmit={handleSubmit}>
@@ -70,7 +79,7 @@ export default function Login(): JSX.Element {
           <TextInputUI
             type="email"
             name="email"
-            placeholder="이메일"
+            placeholder={t("login:email")}
             value={email}
             onChange={(e): void => {
               setEmail(e.target.value);
@@ -83,14 +92,14 @@ export default function Login(): JSX.Element {
           <TextInputUI
             type="password"
             name="password"
-            placeholder="비밀번호"
+            placeholder={t("login:password")}
             value={password}
             onChange={(e): void => {
               setPassword(e.target.value);
               setError(false);
             }}
             error={error}
-            errorMessage="이메일 혹은 비밀번호를 정확히 입력해 주세요."
+            errorMessage={t("login:error")}
           />
         </S.AccountWrapper>
 
@@ -102,11 +111,11 @@ export default function Login(): JSX.Element {
             type="fill"
             buttonType="submit"
           >
-            로그인
+            {t("login:login")}
           </Button>
 
           <S.RegisterButton type="button" onClick={handleSignup}>
-            회원가입
+            {t("login:signup")}
           </S.RegisterButton>
         </S.ButtonWrapper>
       </form>
@@ -152,7 +161,6 @@ const S = {
 
   RegisterButton: styled.button`
     margin: 20px;
-    width: 56px;
     border-bottom: 1px solid #49494d;
     color: #49494d;
     font-weight: 700;

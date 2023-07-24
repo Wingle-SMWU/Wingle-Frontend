@@ -1,0 +1,10 @@
+{
+  "head": "마이페이지",
+  "edit": "프로필 수정",
+  "register": "프로필 등록",
+  "mypost": "내가 쓴 게시글",
+  "feedback": "피드백 보내기",
+  "report": "신고하기",
+  "logout": "로그아웃",
+  "profileNotice": "프로필을 등록해주세요!"
+}

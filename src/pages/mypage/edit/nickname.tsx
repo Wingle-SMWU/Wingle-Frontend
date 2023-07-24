@@ -11,6 +11,19 @@ import { postUpdateProfile } from "@/src/api/mypage/updateProfile";
 import { getProfile } from "@/src/api/mypage/profileData";
 import { checkNicknameAvailable } from "../../../api/auth/emailAPI";
 import { theme } from "@/src/styles/theme";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetStaticProps } from "next";
+import { useTranslation } from "react-i18next";
+
+export const getStaticProps: GetStaticProps = async ({
+  locale = "en" || "ko",
+}) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["profile"])),
+    },
+  };
+};
 
 export default function Nickname(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,6 +38,8 @@ export default function Nickname(): JSX.Element {
   const [isImage, setIsImage] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
+
+  const { t } = useTranslation();
 
   const { mutate: updateMutation, isLoading: updateLoading } = useMutation(
     (updateData: ProfileUpdateType) => postUpdateProfile(updateData),
@@ -68,7 +83,7 @@ export default function Nickname(): JSX.Element {
 
   if (isLoading || updateLoading) return <Loading />;
   if (isError || isIdle) return <>에러</>;
-  if (fileError) alert("업로드 가능한 이미지 크기 제한을 초과했습니다.");
+  if (fileError) alert(`${t("profile:edit.profile.imgAlert")}`);
 
   const onChangeName = (e: any): void => {
     const nameRegex = /^[가-힣a-zA-Z0-9]{2,10}$/;
@@ -79,7 +94,7 @@ export default function Nickname(): JSX.Element {
       setIsName(false);
       setNameMessage("");
     } else if (!nameRegex.test(nameCurrent)) {
-      setNameMessage("한글/영문/숫자 2-10자");
+      setNameMessage(`${t("profile:edit.profile.caption-1")}`);
       setIsName(false);
     } else {
       setName(nameCurrent);
@@ -138,10 +153,10 @@ export default function Nickname(): JSX.Element {
   const checkNickname = async (name: string): Promise<void> => {
     try {
       await checkNicknameAvailable(name);
-      setNameMessage("사용 가능한 닉네임입니다.");
+      setNameMessage(`${t("profile:edit.profile.caption-2")}`);
       setIsName(true);
     } catch {
-      setNameMessage("이미 사용 중인 닉네임입니다.");
+      setNameMessage(`${t("profile:edit.profile.caption-3")}`);
       setIsName(false);
     }
   };
@@ -170,14 +185,16 @@ export default function Nickname(): JSX.Element {
                 alt="뒤로가기"
                 onClick={onClickModal}
               />
-              <Text.Title1 color="gray900">프로필 수정</Text.Title1>
+              <Text.Title1 color="gray900">
+                {t("profile:edit.profile.head")}
+              </Text.Title1>
             </S.Left>
             <Text.Body1
               color={isName || isImage ? "gray900" : "gray500"} // 비활성화 상태
               onClick={onClickComplete}
               pointer={isName || isImage}
             >
-              완료
+              {t("profile:edit.done")}
             </Text.Body1>
           </S.Header>
 
@@ -209,7 +226,9 @@ export default function Nickname(): JSX.Element {
             </S.ImageChangeBox>
 
             <S.NicknameChangeBox>
-              <Text.Body5 color="gray700">닉네임</Text.Body5>{" "}
+              <Text.Body5 color="gray700">
+                {t("profile:edit.profile.nickname")}
+              </Text.Body5>{" "}
               <Margin direction="column" size={8} />
               <S.InputNickname
                 placeholder={profileData.nickname}
