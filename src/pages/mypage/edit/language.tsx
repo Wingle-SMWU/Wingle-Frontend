@@ -82,8 +82,25 @@ export default function Language(): JSX.Element {
     return true;
   };
 
+  // useEffect(() => {
+  //   if (profileData && profileData.languages) {
+  //     if (
+  //       !checkSameArray(
+  //         profileData.languages.map((v) => v.language),
+  //         languageArr
+  //       )
+  //     ) {
+  //       if (languageArr[0]) {
+  //         setBtnActive(true);
+  //       } else {
+  //         setInitialLanguageFn();
+  //       }
+  //     }
+  //   }
+  // }, [languageArr, btnActive]);
+
   useEffect(() => {
-    if (profileData && profileData.languages) {
+    if (profileData) {
       if (
         !checkSameArray(
           profileData.languages.map((v) => v.language),
@@ -93,11 +110,12 @@ export default function Language(): JSX.Element {
         if (languageArr[0]) {
           setBtnActive(true);
         } else {
+          setBtnActive(false);
           setInitialLanguageFn();
         }
       }
     }
-  }, [languageArr, btnActive]);
+  }, [languageArr]);
 
   useEffect(() => {
     if (profileData) {
