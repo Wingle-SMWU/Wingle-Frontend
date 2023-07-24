@@ -1,0 +1,7 @@
+{
+  "email": "Email",
+  "password": "Password",
+  "login": "Log in",
+  "signup": "Sign up",
+  "error": "Please enter your email or password correctly."
+}
