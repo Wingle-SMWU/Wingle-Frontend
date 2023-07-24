@@ -13,12 +13,23 @@ import { postSignUp } from "@/src/api/auth/signUpApi";
 import { signUpFormDataAtom } from "@/src/atoms/auth/signUpAtoms";
 import { useRecoilValue } from "recoil";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps = async ({
+  locale = "en" || "ko",
+}) => {
+  return { props: { ...(await serverSideTranslations(locale, ["auth"])) } };
+};
 
 export default function SignUp(): JSX.Element {
   const [isButtonDisabled, setButtonDisabled] = useState(true);
   const [buttonMent, setButtonMent] = useState("작성완료");
 
   const signUpFormData = useRecoilValue(signUpFormDataAtom);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (
@@ -72,7 +83,7 @@ export default function SignUp(): JSX.Element {
           onClick={(): Promise<boolean> => router.push("/auth/login")}
         />
         <Margin direction="row" size={14} />
-        <Text.Title2 color="gray900">회원가입</Text.Title2>
+        <Text.Title2 color="gray900">{t("auth:head")}</Text.Title2>
       </S.HeaderWrapper>
 
       <StudentCard />

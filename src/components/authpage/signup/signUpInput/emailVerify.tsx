@@ -11,16 +11,18 @@ import TextInputWithButton from "@/src/components/ui/textInputWithButton";
 import { EmailAuthResponse } from "@/src/types/auth/emailApiType";
 import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import styled from "styled-components";
+import { useTranslation } from "next-i18next";
 
 export default function EmailVerify(): JSX.Element {
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
+  const { t } = useTranslation();
 
   const [email, setEmail] = useState("");
   const [emailMent, setEmailMent] = useState("");
   const [isErrorEmail, setErrorEmail] = useState(false);
   const [emailErrorMent, setEmailErrorMent] = useState("");
   const [isDisabledEmailButton, setDisabledEmailButton] = useState(true);
-  const [buttonMessage, setButtonMessage] = useState("인증 전송");
+  const [buttonMessage, setButtonMessage] = useState(`${t("auth:btn.send-1")}`);
   const [emailSendingLimitCount, setEmailSendingLimitCount] = useState(0);
 
   const [emailCertification, setEmailCertification] = useState("");
@@ -64,7 +66,7 @@ export default function EmailVerify(): JSX.Element {
       if (!emailRegex.test(value) || !(value.length >= 5)) {
         setErrorEmail(true);
         setDisabledEmailButton(true);
-        setEmailErrorMent("입력 형식에 맞지 않습니다.");
+        setEmailErrorMent(`${t("auth:caption.email-1")}`);
       } else {
         setErrorEmail(false);
         setDisabledEmailButton(false);
@@ -98,7 +100,7 @@ export default function EmailVerify(): JSX.Element {
     {
       onMutate: (): void => {
         setDisabledEmailButton(true);
-        setButtonMessage("전송 중");
+        setButtonMessage(`${t("auth:btn.send-2")}`);
         setVerificationTimerStart(false);
         setEmailCertificationMent("");
         setEmailCertification("");
@@ -107,7 +109,7 @@ export default function EmailVerify(): JSX.Element {
       },
       onSuccess: (response): void => {
         setDisabledEmailButton(false);
-        setButtonMessage("재전송");
+        setButtonMessage(`${t("auth:btn.send-4")}`);
         setEmailSendingLimitCount(response.data.requestCount || 0);
         setVerificationTimerStart(true);
       },
@@ -116,8 +118,7 @@ export default function EmailVerify(): JSX.Element {
         setDisabledEmailButton(true);
         setButtonMessage("전송");
         setEmailErrorMent(
-          error.response?.data?.message ||
-            "메일 인증 요청은 하루에 5회까지 가능합니다."
+          error.response?.data?.message || `${t("auth:caption.email-2")}`
         );
         setEmailSendingLimitCount(0);
         throw error;
@@ -128,7 +129,9 @@ export default function EmailVerify(): JSX.Element {
   // 이메일 전송 횟수가 변경될 때 메시지를 업데이트
   useEffect(() => {
     if (emailSendingLimitCount !== 0) {
-      setEmailMent(`인증번호가 전송되었습니다. (${emailSendingLimitCount}/5)`);
+      setEmailMent(
+        `${t("auth:caption.email-3")} (${emailSendingLimitCount}/5)`
+      );
     }
   }, [emailSendingLimitCount]);
 
@@ -160,7 +163,7 @@ export default function EmailVerify(): JSX.Element {
             setEmailMent("");
             setEmailCertification("");
             setErrorEmailCertify(true);
-            setEmailCertificationMent("유효시간이 초과되었습니다.");
+            setEmailCertificationMent(`${t("auth:caption.email-4")}`);
             setDisabledEmailCertifyButton(true);
 
             return 0;
@@ -189,7 +192,7 @@ export default function EmailVerify(): JSX.Element {
             email,
           })
         );
-        setEmailCertificationMent("인증번호가 일치합니다.");
+        setEmailCertificationMent(`${t("auth:caption.email-5")}`);
         setVerificationTimerStart(false);
       },
       onError: (error: any): never => {
@@ -211,8 +214,8 @@ export default function EmailVerify(): JSX.Element {
   return (
     <>
       <TextInputWithButton
-        label="이메일"
-        name="이메일"
+        label={t("auth:title.email")}
+        name={t("auth:title.email")}
         placeholder="abc@naver.com"
         value={email}
         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
@@ -233,7 +236,7 @@ export default function EmailVerify(): JSX.Element {
       <Margin direction="column" size={24} />
 
       <S.DropDownLabel>
-        이메일 인증{" "}
+        {t("auth:title.verify-email")}{" "}
         {isVerificationTimerStart && (
           <S.Timer>
             ({Math.floor(verificationTimer / 60)}:
@@ -244,8 +247,8 @@ export default function EmailVerify(): JSX.Element {
       </S.DropDownLabel>
       <Margin direction="column" size={8} />
       <TextInputWithButton
-        name="이메일 인증"
-        placeholder="인증번호"
+        name={t("auth:title.verify-email")}
+        placeholder={t("auth:caption.email-6")}
         value={emailCertification}
         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
           handleEmailertificationInputData(e);
@@ -253,7 +256,7 @@ export default function EmailVerify(): JSX.Element {
         }}
         error={isErrorEmailCertify}
         errorMessage={emailCertificationMent}
-        buttonMessage="인증 확인"
+        buttonMessage={t("auth:btn.verify")}
         buttonDisabled={isDisabledEmailCertifyButton}
         onClick={handleVerifyEmail}
         description={emailCertificationMent}

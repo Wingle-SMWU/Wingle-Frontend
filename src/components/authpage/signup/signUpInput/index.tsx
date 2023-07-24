@@ -4,6 +4,8 @@ import PasswordVerify from "./passwordVerify";
 import NameInput from "./nameInput";
 import NicknameVerify from "./nicknameVerify";
 import InputUnivDropdown from "./inputUnivDropdown";
+import { GetStaticProps } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function InputBox(): JSX.Element {
   return (

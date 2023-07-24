@@ -8,6 +8,7 @@ import { SignUpFormData } from "@/src/types/auth/signupFormDataType";
 import { theme } from "@/src/styles/theme";
 import { postIdCardImage } from "@/src/api/auth/signUpApi";
 import { useMutation } from "react-query";
+import { useTranslation } from "next-i18next";
 
 export default function StudentCard(): JSX.Element {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -15,6 +16,7 @@ export default function StudentCard(): JSX.Element {
   const setSignUpFormData = useSetRecoilState(signUpFormDataAtom);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   const handleFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -71,7 +73,7 @@ export default function StudentCard(): JSX.Element {
     <S.CertifyWrapper>
       <S.Header>
         <Text.Title1 color="gray900">
-          학생증 인증
+          {t("auth:title.ID-card")}
           <S.QuestionLogo
             src="/auth/question.svg"
             alt="question"
@@ -106,7 +108,7 @@ export default function StudentCard(): JSX.Element {
           width={24}
           height={24}
         />
-        <Text.Body1 color="white">학생증 업로드</Text.Body1>
+        <Text.Body1 color="white">{t("auth:btn.ID-card")}</Text.Body1>
       </S.UploadButton>
       <Margin direction="column" size={8} />
 
@@ -130,7 +132,7 @@ export default function StudentCard(): JSX.Element {
         </S.AttagementButton>
       ) : (
         <Text.Caption3 color="gray500">
-          20MB 이하 파일을 업로드해주세요.
+          {t("auth:caption.ID-card")}
         </Text.Caption3>
       )}
       <Margin direction="column" size={52} />
