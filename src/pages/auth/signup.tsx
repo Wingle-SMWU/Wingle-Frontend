@@ -25,7 +25,7 @@ export default function SignUp(): JSX.Element {
       signUpFormData.idCardImageUrl &&
       signUpFormData.email &&
       signUpFormData.password &&
-      signUpFormData.schoolId &&
+      signUpFormData.schoolCode &&
       signUpFormData.department &&
       signUpFormData.studentNumber &&
       signUpFormData.name &&

@@ -7,7 +7,7 @@ export const signUpFormDataAtom = atom<SignUpFormData>({
     idCardImageUrl: "",
     email: "",
     password: "",
-    schoolId: "",
+    schoolCode: "",
     department: "",
     studentNumber: "",
     name: "",

@@ -38,7 +38,7 @@ export default function InputUnivDropdown(): JSX.Element {
       setSignUpFormData(
         (prev: SignUpFormData): SignUpFormData => ({
           ...prev,
-          schoolId: university.code,
+          schoolCode: university.code,
         })
       );
       setDisabledDepartment(false);

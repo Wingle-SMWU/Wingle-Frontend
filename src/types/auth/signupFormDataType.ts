@@ -2,7 +2,7 @@ export interface SignUpFormData {
   idCardImageUrl: string;
   email: string;
   password: string;
-  schoolId: string;
+  schoolCode: string;
   department: string;
   studentNumber: string;
   name: string;
