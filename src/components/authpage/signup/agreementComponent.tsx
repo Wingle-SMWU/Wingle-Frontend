@@ -41,15 +41,16 @@ export function AgreementComponent({
             setAgreed((prev) => !prev);
           }}
         >
-          {agreementTitle}
+          {agreementTitle}{" "}
+          {isRequired ? (
+            <Text.Body2 color="orange500">
+              {t("auth:title.required")}
+            </Text.Body2>
+          ) : (
+            <Text.Body2 color="gray500">{t("auth:title.option")}</Text.Body2>
+          )}
         </Text.Body2>
         <Margin direction="row" size={3} />
-
-        {isRequired ? (
-          <Text.Body2 color="orange500">{t("auth:title.required")}</Text.Body2>
-        ) : (
-          <Text.Body2 color="gray500">{t("auth:title.option")}</Text.Body2>
-        )}
 
         {isActive ? (
           <S.PrivacyPolicyIconOpen Condition={isRequired}>
