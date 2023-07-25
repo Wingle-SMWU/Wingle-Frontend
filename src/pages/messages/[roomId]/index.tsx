@@ -326,6 +326,10 @@ const S = {
     padding-top: 110px;
     padding-bottom: 57px;
     background-color: ${theme.color.white};
+
+    @media (max-width: 500px) {
+      padding-top: 180px;
+    }
   `,
 
   EmptyMessage: styled.div`
