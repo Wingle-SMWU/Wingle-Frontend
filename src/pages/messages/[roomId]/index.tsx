@@ -52,21 +52,22 @@ export default function MessageSend() {
   }, []);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      const lastChildElement = scrollRef.current.lastElementChild;
+      const firstChildElement = scrollRef.current.firstElementChild;
 
-      const observer = new IntersectionObserver((entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          refetch();
-        }
-      });
-      observer.observe(scrollRef.current);
-
-      return () => {
-        observer.disconnect();
-      };
+      if (lastChildElement) {
+        lastChildElement.scrollIntoView({
+          behavior: "instant" as ScrollBehavior,
+        });
+      } else if (firstChildElement) {
+        firstChildElement.scrollIntoView({
+          behavior: "instant" as ScrollBehavior,
+          block: "start",
+        });
+      }
     }
   }, [messageData]);
 
