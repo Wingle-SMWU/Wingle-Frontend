@@ -54,10 +54,19 @@ export default function MessageSend() {
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (scrollRef.current) {
-      const lastChildElement = scrollRef.current.lastElementChild;
-      lastChildElement?.scrollIntoView({
-        behavior: "instant" as ScrollBehavior,
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+
+      const observer = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          refetch();
+        }
       });
+      observer.observe(scrollRef.current);
+
+      return () => {
+        observer.disconnect();
+      };
     }
   }, [messageData]);
 

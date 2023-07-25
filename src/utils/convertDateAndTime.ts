@@ -1,6 +1,8 @@
 export const convertDateAndTime = (data: string) => {
-  const newTime = new Date(data).toTimeString().split(" ");
-  const time = newTime[0].split(":").slice(0, 2).join(":");
-  const newDate = new Date(data).toLocaleString().split(".").slice(0, 3);
-  return `${newDate[1]}월 ${newDate[2]}일 ${time}`;
+  const date = new Date(data);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const time = date.toLocaleTimeString().slice(0, 5);
+
+  return `${month}월 ${day}일 ${time}`;
 };
