@@ -7,10 +7,10 @@ export default function Body({ content }: { content: string }): JSX.Element {
   const router = useRouter();
   const tab = router.query.tab;
   const isNotice = tab === "공지";
-
+  console.log(isNotice, tab);
   return (
     <S.Body>
-      <S.Contents>
+      <S.Contents isNotice={isNotice}>
         <Text.Body3 color="gray900">
           {content.split("\n").map((text, i) => (
             <div key={i}>
@@ -28,9 +28,9 @@ const S = {
     width: 100%;
     background-color: #fff;
   `,
-
-  Contents: styled.div`
+  Contents: styled.div<{ isNotice: boolean }>`
     padding: 16px 24px 20px 24px;
-    border-bottom: 4px solid #eeeef2;
+    border-bottom: ${({ isNotice }) =>
+      isNotice ? "none" : "4px solid #eeeef2"};
   `,
 };
