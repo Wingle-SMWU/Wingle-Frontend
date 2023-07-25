@@ -24,7 +24,7 @@ import { useTranslation } from "react-i18next";
 export default function message(page: number, size: number) {
   const { messageDataRoom } = useGetRoom(0, 10000);
 
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   if (messageDataRoom === undefined) {
     return <Loading />;
@@ -38,6 +38,7 @@ export default function message(page: number, size: number) {
       <S.MsgContainer>
         {messageDataRoom?.length > 0 ? (
           messageDataRoom.map((list: Room) => {
+            console.log(list.createdTime);
             if (list.recentChat !== null) {
               return <MsgList list={list} key={list.roomId} />;
             }
