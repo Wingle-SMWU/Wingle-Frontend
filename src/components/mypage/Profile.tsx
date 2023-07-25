@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Text } from "@/src/components/ui";
 import { getImageUrl, countryImg } from "@/src/modules/utils";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
+import UnivLabel from "../ui/univLabel";
 
 export default function Profile() {
   const { profileData } = useGetProfile();
@@ -36,9 +37,12 @@ export default function Profile() {
               alt="성별"
             />
           </S.UserNicknameAndSex>
-          <Text.Body6 color="gray800">
-            {profileData && profileData.nation}
-          </Text.Body6>
+          <S.DisplayRow>
+            <Text.Body6 color="gray800">
+              {profileData && profileData.nation}
+            </Text.Body6>
+            {profileData && <UnivLabel univ={profileData.schoolName} />}
+          </S.DisplayRow>
         </S.UserInfoBox>
       </S.UserBox>
     </>
@@ -85,6 +89,10 @@ const S = {
   `,
   UserNicknameAndSex: styled.div`
     display: flex;
+  `,
+  DisplayRow: styled.div`
+    display: flex;
+    flex-direction: row;
   `,
   UserSexImg: styled.img`
     width: 16px;

@@ -19,6 +19,7 @@ const S = {
     gap: 8px;
     border-radius: 4px;
     background: ${theme.color.orange100};
+    margin-left: 4px;
   `,
   UnivName: styled.div`
     color: ${theme.color.orange400};

@@ -15,6 +15,7 @@ import { theme } from "@/src/styles/theme";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetStaticProps } from "next";
 import { useTranslation } from "react-i18next";
+import UnivLabel from "@/src/components/ui/univLabel";
 
 export const getStaticProps: GetStaticProps = async ({
   locale = "en" || "ko",
@@ -43,6 +44,7 @@ export default function Edit(): JSX.Element {
   const getProfile = async (): Promise<void> => {
     try {
       const res = await instance.get(`/profile/${userID}`);
+      console.log(res.data.data);
       setProfileData(res.data.data);
       setIsLoading(false);
     } catch (err) {
@@ -147,9 +149,12 @@ export default function Edit(): JSX.Element {
                     alt="성별"
                   />
                 </S.UserNicknameAndSex>
-                <Text.Body6 color="gray800">
-                  {profileData && profileData.nation}
-                </Text.Body6>
+                <S.DisplayLow>
+                  <Text.Body6 color="gray800">
+                    {profileData && profileData.nation}
+                  </Text.Body6>
+                  {profileData && <UnivLabel univ={profileData.schoolName} />}
+                </S.DisplayLow>
               </S.UserInfoBox>
             </S.UserBox>
           </>
@@ -270,7 +275,10 @@ const S = {
   GoBackArrow: styled.img`
     cursor: pointer;
   `,
-
+  DisplayLow: styled.div`
+    display: flex;
+    flex-direction: row;
+  `,
   UserBox: styled.div`
     display: flex;
     align-items: center;

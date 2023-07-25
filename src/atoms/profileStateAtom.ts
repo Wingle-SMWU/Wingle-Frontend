@@ -17,6 +17,7 @@ export const profileStateAtom = atom<ProfileStateType>({
     sns: null,
     image:
       "https://wingle-bucket.s3.ap-northeast-2.amazonaws.com/idCardImage/202303071306001975874871491172.png",
+    schoolName: "",
   },
 });
 
@@ -25,6 +26,6 @@ export const profileUpdateStateAtom = atom<ProfileUpdateType>({
   default: {
     image: null,
     imageDelete: false,
-    nickname:""
+    nickname: "",
   },
 });
