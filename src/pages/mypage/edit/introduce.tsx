@@ -40,7 +40,6 @@ export default function Introduce(): JSX.Element {
     },
     []
   );
-
   useEffect(() => {
     if (profileData?.introduce && profileData?.introduce.length) {
       setTextCount(profileData.introduce.length);

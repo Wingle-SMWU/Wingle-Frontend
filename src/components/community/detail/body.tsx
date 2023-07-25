@@ -7,7 +7,6 @@ export default function Body({ content }: { content: string }): JSX.Element {
   const router = useRouter();
   const tab = router.query.tab;
   const isNotice = tab === "공지";
-  console.log(isNotice, tab);
   return (
     <S.Body>
       <S.Contents isNotice={isNotice}>
