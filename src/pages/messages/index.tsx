@@ -13,13 +13,13 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetStaticProps } from "next";
 import { useTranslation } from "react-i18next";
 
-export const getStaticProps: GetStaticProps = async ({
-  locale = "en" || "ko",
-}) => {
-  return {
-    props: { ...(await serverSideTranslations(locale, ["message", "navbar"])) },
-  };
-};
+// export const getStaticProps: GetStaticProps = async ({
+//   locale = "en" || "ko",
+// }) => {
+//   return {
+//     props: { ...(await serverSideTranslations(locale, ["message", "navbar"])) },
+//   };
+// };
 
 export default function message(page: number, size: number) {
   const { messageDataRoom } = useGetRoom(0, 10000);
@@ -33,7 +33,7 @@ export default function message(page: number, size: number) {
   return (
     <S.Container>
       <S.TopContainer>
-        <Text.Title1 color="gray900">{t("message:head")}</Text.Title1>
+        <Text.Title1 color="gray900">쪽지함</Text.Title1>
       </S.TopContainer>
       <S.MsgContainer>
         {messageDataRoom?.length > 0 ? (
