@@ -13,6 +13,8 @@ import { theme } from "@/src/styles/theme";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetStaticProps } from "next";
 import { useTranslation } from "react-i18next";
+import DropDownCommon from "@/src/components/ui/dropDownUI";
+import { languageList } from "@/src/constants/languageList";
 
 export const getStaticProps: GetStaticProps = async ({
   locale = "en" || "ko",
@@ -39,12 +41,22 @@ export default function Language(): JSX.Element {
   const queryClient = useQueryClient();
   const { profileData } = useGetProfile();
 
+  // initial Language : 설정 언어 ("" || "~");
+
   const onClickModal = (): void => {
     setModalVisible((prev) => !prev);
   };
 
+  // const handleSubmit = (): void => {
+  //   fetchLanguage.mutate(languageArr);
+  //   router.push(`/mypage/edit`);
+  // };
   const handleSubmit = (): void => {
-    fetchLanguage.mutate(languageArr);
+    fetchLanguage.mutate([
+      initialLanguageValue1,
+      initialLanguageValue2,
+      initialLanguageValue3,
+    ]);
     router.push(`/mypage/edit`);
   };
 
@@ -62,17 +74,33 @@ export default function Language(): JSX.Element {
     });
   };
 
+  // const resetBtn = (): void => {
+  //   setLanguageArr([]);
+  //   setBtnActive(false);
+  //   for (let i = 0; i < 3; i++) {
+  //     const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
+  //     if (profileData && profileData.languages[i]) {
+  //       setInitialLanguageValue("");
+  //     } else {
+  //       break;
+  //     }
+  //   }
+  // };
   const resetBtn = (): void => {
-    setLanguageArr([]);
-    setBtnActive(false);
-    for (let i = 0; i < 3; i++) {
-      const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
-      if (profileData && profileData.languages[i]) {
-        setInitialLanguageValue("");
-      } else {
-        break;
-      }
-    }
+    setInitialLanguageValue1("");
+    setInitialLanguageValue2("");
+    setInitialLanguageValue3("");
+
+    // setLanguageArr([]);
+    // setBtnActive(false);
+    // for (let i = 0; i < 3; i++) {
+    //   const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
+    //   if (profileData && profileData.languages[i]) {
+    //     setInitialLanguageValue("");
+    //   } else {
+    //     break;
+    //   }
+    // }
   };
 
   const checkSameArray = (arr1: string[], arr2: string[]): boolean => {
@@ -82,6 +110,31 @@ export default function Language(): JSX.Element {
     return true;
   };
 
+  const isSameLanguage = (arr1: string[], arr2: string[]): boolean => {
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+  };
+
+  useEffect(() => {
+    if (profileData?.languages.length) {
+      !isSameLanguage(languageArr, [
+        initialLanguageValue1,
+        initialLanguageValue2,
+        initialLanguageValue3,
+      ]) && setBtnActive(true);
+    } else if (initialLanguageValue1) {
+      setBtnActive(true);
+    } else {
+      setBtnActive(false);
+    }
+  }, [
+    languageArr,
+    initialLanguageValue1,
+    initialLanguageValue2,
+    initialLanguageValue3,
+  ]);
   // useEffect(() => {
   //   if (profileData && profileData.languages) {
   //     if (
@@ -99,46 +152,97 @@ export default function Language(): JSX.Element {
   //   }
   // }, [languageArr, btnActive]);
 
-  useEffect(() => {
-    if (profileData) {
-      if (
-        !checkSameArray(
-          profileData.languages.map((v) => v.language),
-          languageArr
-        )
-      ) {
-        if (languageArr[0]) {
-          setBtnActive(true);
-        } else {
-          setBtnActive(false);
-          setInitialLanguageFn();
-        }
-      }
-    }
-  }, [languageArr]);
+  // useEffect(() => {
+  //   if (profileData) {
+  //     console.log("test");
+  //     if (
+  //       !checkSameArray(
+  //         profileData.languages.map((v) => v.language),
+  //         languageArr
+  //       )
+  //     ) {
+  //       console.log("?");
+  //       if (languageArr[0]) {
+  //         setBtnActive(true);
+  //         console.log("dd");
+  //       } else {
+  //         setBtnActive(false);
+  //         setInitialLanguageFn();
+  //       }
+  //     }
+  //   }
+  // }, [languageArr]);
+
+  // useEffect(() => {
+  //   console.log(profileData?.languages);
+  //   if (
+  //     !profileData?.languages.length ||
+  //     (profileData?.languages.length &&
+  //       !isSameLanguage(
+  //         profileData.languages.map((v) => v.language),
+  //         languageArr
+  //       ))
+  //   ) {
+  //     if (languageArr[0]) {
+  //       console.log(languageArr);
+  //       setBtnActive(true);
+  //     } else {
+  //       setBtnActive(false);
+  //       setInitialLanguageFn();
+  //     }
+  //     console.log(btnActive);
+  //   }
+  // }, [languageArr]);
+
+  // useEffect(() => {
+  //   if (profileData) {
+  //     setInitialLanguage(profileData.languages);
+  //   }
+  // }, [profileData]);
 
   useEffect(() => {
-    if (profileData) {
+    if (profileData?.languages.length) {
       setInitialLanguage(profileData.languages);
+      setInitialLanguageValue1(profileData.languages[0].language);
+      setInitialLanguageValue2(profileData.languages[1].language || "");
+      setInitialLanguageValue3(profileData.languages[2].language || "");
+      setLanguageArr([
+        profileData.languages[0].language,
+        profileData.languages[1].language,
+        profileData.languages[2].language,
+      ]);
     }
   }, [profileData]);
 
-  const setInitialLanguageFn = () => {
-    for (let i = 0; i < 3; i++) {
-      const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
-      if (initialLanguage[i]) {
-        setInitialLanguageValue(initialLanguage[i].language);
-      } else {
-        setInitialLanguageValue("");
-      }
-    }
+  // const setInitialLanguageFn = () => {
+  //   for (let i = 0; i < 3; i++) {
+  //     const setInitialLanguageValue = eval(`setInitialLanguageValue${i + 1}`);
+  //     console.log("ㅋㅋ", initialLanguage);
+  //     if (initialLanguage[i]) {
+  //       setInitialLanguageValue(initialLanguage[i].language);
+  //     } else {
+  //       setInitialLanguageValue("");
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   setInitialLanguageFn();
+  //   setLoading(false);
+  // }, [initialLanguage]);
+  const handleChange1 = (selectedLanguage: string): void => {
+    setInitialLanguageValue1(selectedLanguage);
+    // setInitialLanguagsetInitialLanguageValue1e1(selectedLanguage);
   };
-  useEffect(() => {
-    setInitialLanguageFn();
-    setLoading(false);
-  }, [initialLanguage]);
+  const handleChange2 = (selectedLanguage: string): void => {
+    setInitialLanguageValue2(selectedLanguage);
+    // setInitialLanguagsetInitialLanguageValue1e1(selectedLanguage);
+  };
+  const handleChange3 = (selectedLanguage: string): void => {
+    setInitialLanguageValue3(selectedLanguage);
+    // setInitialLanguagsetInitialLanguageValue1e1(selectedLanguage);
+  };
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
 
   return (
     <>
@@ -162,7 +266,7 @@ export default function Language(): JSX.Element {
                   ? handleSubmit
                   : (): void => alert(`${t("profile:edit.language.caption")}`)
               }
-              pointer
+              pointer={btnActive}
             >
               {t("profile:edit.done")}
             </Text.Body1>
@@ -172,36 +276,81 @@ export default function Language(): JSX.Element {
               {t("profile:edit.language.first")}
             </Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox
+            <DropDownCommon
+              list={languageList
+                .filter(
+                  (language) => language.languageList != initialLanguageValue1
+                )
+                .map((language) => language.languageList)}
+              selected={
+                initialLanguageValue1 ? initialLanguageValue1 : "언어선택"
+              }
+              handleSelectedChange={handleChange1}
+              dropDownPlaceHolder={initialLanguageValue1}
+            />
+            {/* <SelectLanguageBox
               getLanguageAtIndex={(str): void => getLanguageAtIndex(str, 0)}
               initialLanguage={initialLanguageValue1}
               preSelctArr={languageArr}
               idx={0}
-            />
+            /> */}
 
             <Margin direction="column" size={24} />
             <Text.Body5 color={languageArr[0] !== "" ? "gray700" : "gray500"}>
               {t("profile:edit.language.second")}
             </Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox
+
+            <DropDownCommon
+              list={languageList
+                .filter(
+                  (language) =>
+                    language.languageList !== initialLanguageValue1 &&
+                    language.languageList !== initialLanguageValue2
+                )
+                .map((language) => language.languageList)}
+              selected={
+                initialLanguageValue2 ? initialLanguageValue2 : "언어선택"
+              }
+              handleSelectedChange={handleChange2}
+              dropDownPlaceHolder={initialLanguageValue2}
+              disabled={initialLanguageValue1 == ""}
+            />
+
+            {/* <SelectLanguageBox
               getLanguageAtIndex={(str): void => getLanguageAtIndex(str, 1)}
               initialLanguage={initialLanguageValue2}
               preSelctArr={languageArr}
               idx={1}
-            />
+            /> */}
 
             <Margin direction="column" size={24} />
             <Text.Body5 color={languageArr[1] !== "" ? "gray700" : "gray500"}>
               {t("profile:edit.language.third")}
             </Text.Body5>
             <Margin direction="column" size={8} />
-            <SelectLanguageBox
+            <DropDownCommon
+              list={languageList
+                .filter(
+                  (language) =>
+                    language.languageList !== initialLanguageValue1 &&
+                    language.languageList !== initialLanguageValue2 &&
+                    language.languageList !== initialLanguageValue3
+                )
+                .map((language) => language.languageList)}
+              selected={
+                initialLanguageValue3 ? initialLanguageValue3 : "언어선택"
+              }
+              handleSelectedChange={handleChange3}
+              dropDownPlaceHolder={initialLanguageValue3}
+              disabled={initialLanguageValue2 == ""}
+            />
+            {/* <SelectLanguageBox
               getLanguageAtIndex={(str): void => getLanguageAtIndex(str, 2)}
               initialLanguage={initialLanguageValue3}
               preSelctArr={languageArr}
               idx={2}
-            />
+            />  */}
           </S.SelectBox>
           <S.ResetBox>
             <S.ResetBtnBox>
