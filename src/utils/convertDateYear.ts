@@ -1,4 +1,8 @@
 export const convertDateYear = (data: string) => {
-  const newDate = new Date(data).toLocaleString().split(".").slice(0, 3);
-  return `${newDate[0]}년 ${newDate[1]}월 ${newDate[2]}일`;
+  const date = new Date(data);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  return `${year}년 ${month}월 ${day}일`;
 };
