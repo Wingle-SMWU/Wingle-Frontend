@@ -250,18 +250,16 @@ const S = {
       width: 100vw;
       background-color: white;
     }
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    position: fixed;
   `,
   Content: styled.div<{ isMe: boolean }>`
     padding: 0 24px;
     margin-top: 56px;
     background-color: ${theme.color.white};
     overflow-y: scroll;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
     padding-bottom: ${({ isMe }) => (isMe ? "100px" : "10x")};
   `,
   Header: styled.div`
