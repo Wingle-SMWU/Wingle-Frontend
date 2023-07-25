@@ -44,7 +44,6 @@ export default function Edit(): JSX.Element {
   const getProfile = async (): Promise<void> => {
     try {
       const res = await instance.get(`/profile/${userID}`);
-      console.log(res.data.data);
       setProfileData(res.data.data);
       setIsLoading(false);
     } catch (err) {
@@ -187,7 +186,10 @@ export default function Edit(): JSX.Element {
                 </Text.Body1>
               </S.Introduce>
               <S.IntroduceContent>
-                {profileData && profileData.introduce}
+                {profileData &&
+                  profileData.introduction
+                    .split("\n")
+                    .map((text, i) => <div key={i}>{text}</div>)}
               </S.IntroduceContent>
             </S.Column>
 
