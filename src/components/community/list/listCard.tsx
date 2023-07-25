@@ -68,7 +68,7 @@ export default function ListCard({
             <Text.Body6 color="gray900" pointer={true}>
               {userNickname}
             </Text.Body6>
-            <UnivLabel univ={userSchoolName} />
+            {tab === "교류" && <UnivLabel univ={userSchoolName} />}
           </S.HeaderTop>
           <Text.Caption3 color="gray500">{time}</Text.Caption3>
         </S.ContentsHeaderInfo>
