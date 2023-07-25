@@ -15,6 +15,7 @@ export const profileStateAtom = atom<ProfileStateType>({
     languages: [],
     nation: "",
     sns: null,
+    introduction: "",
     image:
       "https://wingle-bucket.s3.ap-northeast-2.amazonaws.com/idCardImage/202303071306001975874871491172.png",
     schoolName: "",
