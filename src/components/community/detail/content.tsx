@@ -42,7 +42,8 @@ export const Content = ({
   } else {
     return (
       <>
-        <div>{text}</div>
+        {text}
+        <br />
       </>
     );
   }
