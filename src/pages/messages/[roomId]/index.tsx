@@ -65,7 +65,8 @@ export default function MessageSend() {
       } else if (firstChildElement) {
         firstChildElement.scrollIntoView({
           behavior: "instant" as ScrollBehavior,
-          block: "start",
+          block: "center",
+          inline: "center",
         });
       }
     }
@@ -292,7 +293,7 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+    height: 100vh;
     /* height: 100vh;
     width: 100%;
     max-width: 500px; */
