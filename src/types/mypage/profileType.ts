@@ -13,6 +13,7 @@ export type ProfileStateType = {
   nation: string;
   sns: any;
   image: string;
+  schoolName: string;
 };
 
 export type ProfileUpdateType = {
