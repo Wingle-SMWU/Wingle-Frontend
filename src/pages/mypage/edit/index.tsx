@@ -104,7 +104,7 @@ export default function Edit(): JSX.Element {
                 />
               </S.Introduce>
               <S.IntroduceContent>
-                {profileData &&
+                {profileData?.introduce &&
                   profileData.introduce
                     .split("\n")
                     .map((text, i) => <div key={i}>{text}</div>)}
