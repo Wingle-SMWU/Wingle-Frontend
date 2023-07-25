@@ -62,12 +62,8 @@ export default function MessageSend() {
         lastChildElement.scrollIntoView({
           behavior: "instant" as ScrollBehavior,
         });
-      } else if (firstChildElement) {
-        firstChildElement.scrollIntoView({
-          behavior: "instant" as ScrollBehavior,
-          block: "center",
-          inline: "center",
-        });
+      } else if (firstChildElement?.scrollTop) {
+        firstChildElement.scrollTop = 0;
       }
     }
   }, [messageData]);
