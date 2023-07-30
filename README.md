@@ -183,7 +183,7 @@ DB에서 가져온 검색 및 장소 데이터의 마커 호출 관련 기능 �
 ![Web App Reference Architecture V2 (2)](https://user-images.githubusercontent.com/94962427/215998062-cb0ea846-3f4b-42e7-8373-70002c792061.png)
 
 ### 📄 API 명세서
-<img width="1440" alt="image" src="https://github.com/Wingle-SMWU/Wingle-Frontend/assets/94962427/c08b7d28-c9c5-4921-b134-ebadfb51f0eb">
+<img width="1440" alt="image" src="https://github.com/Wingle-SMWU/Wingle-Frontend/assets/94962427/7b0041e5-2773-4cbb-844a-731a6ccfa8ef">
 
 ## ✔️ 커밋 규칙
 
