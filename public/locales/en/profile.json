@@ -1,0 +1,37 @@
+{
+  "head": "My Profile",
+  "head-2": "Profile",
+  "language": "Languages",
+  "first": "1st",
+  "second": "2nd",
+  "third": "3rd",
+  "introduction": "Introduction",
+  "interest": "Interests",
+  "sendMessage": "Send Message",
+  "edit": {
+    "profile": {
+      "head": "Edit Profile",
+      "nickname": "nickname",
+      "imgAlert": "You have exceeded the uploadable image size limit",
+      "caption-1": "Korean/English/numeric 2-10 characters",
+      "caption-2": "Available nicknames.",
+      "caption-3": "Nickname already in use."
+    },
+    "language": {
+      "head": "Available Languages",
+      "first": "1st",
+      "second": "2nd",
+      "third": "3rd",
+      "reset": "Reset",
+      "caption": "Please select your language"
+    },
+    "introduction": {
+      "head": "About Me",
+      "helptext": "Please write a self-introduction! (Up to 400 characters)"
+    },
+    "interest": {
+      "head": "Interests"
+    },
+    "done": "Done" 
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "modal": {
+    "exit": "정말 나가시겠어요?",
+    "deleteArticle": "게시글을 삭제 하시겠어요?",
+    "deleteComment": "댓글을 삭제 하시겠어요?",
+    "articleAlert-1": "글 작성을 완료하지 않고 페이지를 벗어나면",
+    "articleAlert-2": "작성한 게시글이 사라져요.",
+    "articleAlert-3": "삭제된 게시글은 복구할 수 없으니",
+    "articleAlert-4": "신중하게 생각해주세요.",
+    "commentAlert-1": "삭제된 댓글은 복구할 수 없으니",
+    "commentAlert-2": "신중하게 생각해주세요.",
+    "exitAlert-1": "지금 나가시면 변경 내용이",
+    "exitAlert-2": "저장되지 않습니다."
+  }
+}
