@@ -1,4 +1,4 @@
-# 프로젝트 맛피👅
+# 프로젝트 Wingle
 
 ![맛피 뱃지](https://user-images.githubusercontent.com/94962427/215977870-e278f877-5965-467f-8cd0-0b098e002c29.png)
 안녕하세요, 맛집에 대한 경험을 공유하며 더 높은 차원을 느끼게 만들 수 있는 맛집 지도 앱, 맛피👅입니다!
@@ -152,7 +152,7 @@ DB에서 가져온 검색 및 장소 데이터의 마커 호출 관련 기능 �
 
 <div align=left>
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&amp;logo=html5&amp;logoColor=white" height="35"> 
-<img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=for-the-badge&amp;logo=tailwindcss&amp;logoColor=white" height="35">
+<img src="https://img.shields.io/badge/styled_components-db7093?style=for-the-badge&amp;logo=styled-components&amp;logoColor=white" height="35">
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&amp;logo=typeScript&amp;logoColor=white" height="35"> 
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&amp;logo=react&amp;logoColor=black" height="35"> 
 <img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&amp;logo=mui&amp;logoColor=white" height="35">
@@ -182,9 +182,8 @@ DB에서 가져온 검색 및 장소 데이터의 마커 호출 관련 기능 �
 
 ![Web App Reference Architecture V2 (2)](https://user-images.githubusercontent.com/94962427/215998062-cb0ea846-3f4b-42e7-8373-70002c792061.png)
 
-### [📄 API 명세서](https://documenter.getpostman.com/view/12973857/2s935hQn8w)
-
-<img width="1440" alt="image" src="https://user-images.githubusercontent.com/94962427/216000533-c7d49535-0183-4571-b4ed-c3ae4522a28c.png">
+### 📄 API 명세서
+<img width="1440" alt="image" src="https://github.com/Wingle-SMWU/Wingle-Frontend/assets/94962427/c08b7d28-c9c5-4921-b134-ebadfb51f0eb">
 
 ## ✔️ 커밋 규칙
 
