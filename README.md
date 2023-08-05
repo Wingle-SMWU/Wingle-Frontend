@@ -173,11 +173,9 @@ DB에서 가져온 검색 및 장소 데이터의 마커 호출 관련 기능 �
 <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white" height="35">
 </div>
 
-### [🍦 사용자 요구사항 정의서](https://docs.google.com/spreadsheets/d/1AgdlF1oqkkuDqs2wced36P0N3TJo_kuogahM_R_khtA/edit#gid=0)
+### [📺 화면 설계서](https://www.figma.com/file/NCg4EKDErVM7VTvfXDAzmC/UI%EB%94%94%EC%9E%90%EC%9D%B8-(MVP)?type=design&node-id=3578%3A14959&mode=design&t=V3gtJQUdXFC6AK7f-1)
 
-### [📺 화면 설계서](https://www.figma.com/file/6s0mZYCyyfvWVfatnZmExU/%EB%A7%9B%ED%94%BC%F0%9F%91%85-%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98%EC%84%9C?node-id=0%3A1&t=edT6PJwDQoxWPjfw-1)
-
-<img width="890" alt="image" src="https://user-images.githubusercontent.com/94962427/216000140-39fd59c2-a721-4b10-bd43-424fc13b7410.png">
+<img width="713" alt="wingle" src="https://github.com/Wingle-SMWU/Wingle-Frontend/assets/104279155/f84e692a-9aa6-40f4-ae00-4b4c6f7e2349">
 
 ### 🚧 아키텍쳐
 
