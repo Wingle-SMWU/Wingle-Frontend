@@ -14,7 +14,7 @@
 | [윤태연](https://github.com/rhino-ty) | [김유나](https://github.com/yxunakim84) | [유수빈](https://github.com/JudithHopps) | [김재훈](https://github.com/halmokme) | [양연주](https://github.com/yeonkr) | 
 | :-----------------------------------: | :-----------------------------------: | :----------------------------------: | :----------------------------------: | :------------------------------------: |
 |<img src="https://avatars.githubusercontent.com/u/94962427?v=4" width="300">|<img src="https://avatars.githubusercontent.com/u/79031435?v=4" width="300">|<img src="https://avatars.githubusercontent.com/u/113181934?v=4" width="300">|<img src="https://avatars.githubusercontent.com/u/107684690?v=4" width="300">|<img src="https://avatars.githubusercontent.com/u/104279155?v=4" width="300">|
-|            👑팀장<br>Auth              |                  역할                   |                  FE                  |                  BE                  |                   BE                   |
+|            👑팀장<br>Auth              |                  FE                   |                  FE                  |                  FE                  |                   FE                   |
   
 </div>
 
@@ -151,14 +151,15 @@ DB에서 가져온 검색 및 장소 데이터의 마커 호출 관련 기능 �
 #### **Front-end**
 
 <div align=left>
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&amp;logo=html5&amp;logoColor=white" height="35"> 
-<img src="https://img.shields.io/badge/styled_components-db7093?style=for-the-badge&amp;logo=styled-components&amp;logoColor=white" height="35">
+<img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" height="35">
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&amp;logo=typeScript&amp;logoColor=white" height="35"> 
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&amp;logo=react&amp;logoColor=black" height="35"> 
-<img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&amp;logo=mui&amp;logoColor=white" height="35">
+<img src="https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white" height="35">
 <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&amp;logo=axios&amp;logoColor=white" height="35">
+<img src="https://img.shields.io/badge/styled_components-db7093?style=for-the-badge&amp;logo=styled-components&amp;logoColor=white" height="35">
 <img src="https://img.shields.io/badge/recoil-3578EC?style=for-the-badge&amp;logo=recoil&amp;logoColor=white" height="35">
 <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&amp;logo=eslint&amp;logoColor=white" height="35">
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&amp;logo=html5&amp;logoColor=white" height="35"> 
 </div>
 
 #### **Common**
