@@ -1,7 +1,9 @@
 # 프로젝트 Wingle
 
-![맛피 뱃지](https://user-images.githubusercontent.com/94962427/215977870-e278f877-5965-467f-8cd0-0b098e002c29.png)
-안녕하세요, 맛집에 대한 경험을 공유하며 더 높은 차원을 느끼게 만들 수 있는 맛집 지도 앱, 맛피👅입니다!
+![wingle](https://github.com/Wingle-SMWU/Wingle-Frontend/assets/79031435/0b07602d-3e60-4e4f-87c2-b1aa94e6ca78)
+
+누구나, 부담없이, 안전하게 즐기는 
+대학생 국제교류 플랫폼 WINGLE 윙글
 
 ## 📅 **프로젝트 기간**
 
