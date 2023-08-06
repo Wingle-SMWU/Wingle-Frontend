@@ -1,6 +1,6 @@
 # 프로젝트 Wingle
 
-![wingle](https://github.com/Wingle-SMWU/Wingle-Frontend/assets/79031435/0b07602d-3e60-4e4f-87c2-b1aa94e6ca78)
+<img src="https://github.com/Wingle-SMWU/Wingle-Frontend/assets/79031435/0b07602d-3e60-4e4f-87c2-b1aa94e6ca78" alt="wingle" width="300" />
 
 누구나, 부담없이, 안전하게 즐기는 
 대학생 국제교류 플랫폼 WINGLE 윙글
