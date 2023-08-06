@@ -186,6 +186,36 @@ DB에서 가져온 검색 및 장소 데이터의 마커 호출 관련 기능 �
 ### 📄 API 명세서
 <img width="1440" alt="image" src="https://github.com/Wingle-SMWU/Wingle-Frontend/assets/94962427/7b0041e5-2773-4cbb-844a-731a6ccfa8ef">
 
+### 🌟 코딩 컨벤션
+
+1. **Common**
+   - 네이밍 글자 길이 : 20자 이내 (20자 이상은 팀원과 상의)
+   - 유형별 네이밍 규칙
+     - Default : camelCase
+     - Folder, File names : lowerCamelCase
+     - Component names : PascalCase
+     - Function names : lowerCamelCase, 동사 + 명사 (예: getUserInformation)
+     - Constant names : CONSTANT_CASE
+
+2. **React**
+   - 함수형 컴포넌트 사용
+   - 메모이제이션 권장
+   - 이벤트 함수 네이밍 : handle + event / const handleOnClickAlarm = () => { ... }
+   - 함수 선언 : 선언식으로 작성하되, 표현식을 사용해야 할 경우(클로저, 콜백함수 등) 화살표 함수 사용
+
+3. **Styled-Components**
+   - 해당 컴포넌트 파일에 스타일 정의
+   - 네이밍 : S-dot 패턴 사용 (예: `const Wrapper = styled.div``)
+
+4. **Recoil**
+   - 무분별한 전역상태 사용 금지 : 다수의 컴포넌트 간에 상태 의존성이 높아질 때만 전역상태로 데이터 관리(일반적인 경우 지역상태로 관리)
+   - 네이밍 : StateAtom 추가 / `export const imgModalStateAtom = atom({ ... })`
+
+5. **TypeScript**
+   - 네이밍 : PascalCase 사용, I/T prefix 사용 금지
+   - Type alias와 interface 사용 (API 데이터 등)
+
+
 ## ✔️ 커밋 규칙
 
 #### 이슈 작성 규칙
