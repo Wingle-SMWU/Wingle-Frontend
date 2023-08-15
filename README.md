@@ -223,12 +223,39 @@ DB에서 가져온 검색 및 장소 데이터의 마커 호출 관련 기능 �
 기본 형식 : [#이슈번호 -] [commit type]: [commit message]
 예시 : #1 - feat: 로그인
 
-#### 깃 커밋 규칙
-
-- feat: 새로운 기능 추가
-- fix: 버그 수정
-- docs: 문서 수정
-- style: 코드 포맷 변경, 세미콜론 누락, 코드 변경 없음
-- refactor: 프로덕션 코드 리팩터링
-- test: 테스트 추가, 테스트 코드 리팩터링, 프로덕션 코드 변경 없음
-- chore: 빌드 테스크 업데이트, 패키지 매니저 환경설정, 프로덕션 코드 변경 없음
+#### 코딩 컨벤션
+- 1. Common
+    - 네이밍 글자 길이 : 20자 이내(20자 이상 팀원과 상의)
+    - 유형별 네이밍 규칙
+    
+    <aside>
+    💡 Default : camelCase
+    Folder, File names : lowerCamelCase
+    Component Function names : PascalCase
+    Function names : lowerCamelCase, verb + noun(ex: getUserInformation)
+    Constant names : CONSTANT_CASE
+    
+    </aside>
+    
+    2. React
+        - 메모이제이션 권장
+        - 함수 선언 : 화살표 함수로 선언
+    
+    - 함수형 컴포넌트 작성시 → `export default function Example() {}`
+    - 컴포넌트 내부에 있는 함수 작성 시 → `const Example () ⇒ {}`
+        - 이벤트 함수 네이밍 : handle + event / const handleOnClickAlarm = () => { ... }
+    
+    3. Styled-Components
+        - 해당 컴포넌트 파일에 정의
+        - 네이밍(S-dot)
+    
+    4. Recoil
+        - 무분별한 전역상태 사용 금지 : 다수의 컴포넌트간에 상태 의존성이 높아질때만 전역상태로 데이터 관리(일반적인 경우 지역상태로 관리)
+        - 네이밍 : StateAtom 추가 / export const imgModalStateAtom = atom({...})
+    
+    5. TypeScript
+    - naming : PascalCase 사용, I/T prefix 사용 금지
+    - type alias + interface(API Data)
+    
+    - 충돌성 오류로 둘 중 하나의 방식만 → type 방식으로 쓰기로 결정
+    - interface 로 되어 있는 코드 type 으로 수정해주기
