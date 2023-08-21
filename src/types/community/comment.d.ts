@@ -4,7 +4,7 @@ interface Comment {
   updatedTime: string;
   id: number;
   isMine: boolean;
-  userId: number;
+  userId: string;
   userImage: string;
   userNation: string;
   userNickname: string;
