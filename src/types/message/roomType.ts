@@ -12,6 +12,7 @@ export interface Room {
   recentChat: string;
   createdTime: Date;
   schoolName: string;
+  unreadMessageCount: number;
 }
 
 export interface RoomNumberResponse {
