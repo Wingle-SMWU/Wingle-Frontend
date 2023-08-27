@@ -64,6 +64,7 @@ export default function Navigation(props: Tab) {
             >
               {el.name}
             </Text.Caption2>
+            {el.name === "쪽지" && <S.Conunt>10+</S.Conunt>}
           </S.NavigationMenu>
         ))}
       </S.Box>
@@ -110,5 +111,19 @@ const S = {
     border-radius: ${({ isRadius }) => (isRadius ? "50%" : "none")};
     box-shadow: ${({ isRadius, isActive }) =>
       isRadius && isActive ? `0 0 0 1px ${theme.color.orange500}` : "none"};
+  `,
+
+  Conunt: styled.div`
+    text-align: center;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 150%;
+    color: #fff;
+    background: var(--sub-red-red-500, #f03030);
+    border-radius: 8px;
+    height: 16px;
+    padding: 0px 6px;
+    position: absolute;
+    margin-left: 25px;
   `,
 };

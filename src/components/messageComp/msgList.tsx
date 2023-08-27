@@ -52,6 +52,7 @@ const MsgList = ({ list }: { list: Room }) => {
               <S.HeaderTop>
                 <span>{nickname}</span>
                 <UnivLabel univ={schoolName} />
+                <S.Conunt>10+</S.Conunt>
               </S.HeaderTop>
               <span>{betweenTime(String(createdTime))}</span>
             </div>
@@ -89,6 +90,18 @@ const S = {
     display: flex;
     align-items: center;
     gap: 4px;
+  `,
+
+  Conunt: styled.div`
+    text-align: center;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 150%;
+    color: #fff;
+    background: var(--sub-red-red-500, #f03030);
+    border-radius: 8px;
+    height: 16px;
+    padding: 0px 6px;
   `,
 
   NationIcon: styled.img`
