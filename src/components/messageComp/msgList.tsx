@@ -55,7 +55,9 @@ const MsgList = ({ list }: { list: Room }) => {
               <S.HeaderTop>
                 <span>{nickname}</span>
                 <UnivLabel univ={schoolName} />
-                <S.Conunt>{unreadMessage}</S.Conunt>
+                {unreadMessageCount !== 0 && (
+                  <S.Conunt>{unreadMessage}</S.Conunt>
+                )}
               </S.HeaderTop>
               <span>{betweenTime(String(createdTime))}</span>
             </div>

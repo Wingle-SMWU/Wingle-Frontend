@@ -70,7 +70,9 @@ export default function Navigation(props: Tab) {
             >
               {el.name}
             </Text.Caption2>
-            {el.name === "쪽지" && <S.Conunt>{unreadMessage}</S.Conunt>}
+            {el.name === "쪽지" && unreadMessage !== 0 && (
+              <S.Conunt>{unreadMessage}</S.Conunt>
+            )}
           </S.NavigationMenu>
         ))}
       </S.Box>
