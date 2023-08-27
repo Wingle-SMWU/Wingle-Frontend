@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Text } from "../../ui";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { theme } from "@/src/styles/theme";
+import useGetTotalUnreadCount from "@/src/hooks/message/useGetTotalUnreadCount";
 
 type Profile = {
   isRadius: boolean;
@@ -16,6 +17,11 @@ type Tab = {
 export default function Navigation(props: Tab) {
   const router = useRouter();
   const menu = router.asPath;
+  const { unreadMessageCount } = useGetTotalUnreadCount();
+  const unreadMessage =
+    unreadMessageCount?.unreadMessageCount < 10
+      ? unreadMessageCount?.unreadMessageCount
+      : "10+";
 
   const { profileData } = useGetProfile();
   const NavigationMenuArr = [
@@ -64,7 +70,7 @@ export default function Navigation(props: Tab) {
             >
               {el.name}
             </Text.Caption2>
-            {el.name === "쪽지" && <S.Conunt>10+</S.Conunt>}
+            {el.name === "쪽지" && <S.Conunt>{unreadMessage}</S.Conunt>}
           </S.NavigationMenu>
         ))}
       </S.Box>
