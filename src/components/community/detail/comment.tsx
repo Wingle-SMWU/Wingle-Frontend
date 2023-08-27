@@ -51,7 +51,6 @@ export default function Comment({
           userSchoolName,
         } = comment;
         const isUserWriter = userId === writerId;
-        // console.log(isUserWriter, userId, writerId);
         const time = betweenTime(createdTime);
         return (
           <S.Comment key={id}>
@@ -77,8 +76,9 @@ export default function Comment({
                     {currentTab === "교류" ? (
                       <UnivLabel univ={userSchoolName} />
                     ) : (
-                      isUserWriter && ""
-                      // <Text.Caption2 color="orange500">작성자</Text.Caption2>
+                      isUserWriter && (
+                        <Text.Caption2 color="orange500">작성자</Text.Caption2>
+                      )
                     )}
                   </S.HeaderTop>
                   <Text.Caption3 color="gray500">{time}</Text.Caption3>
