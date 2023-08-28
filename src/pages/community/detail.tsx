@@ -28,11 +28,10 @@ export default function Detail(): JSX.Element {
     cacheTime: 5 * 60 * 1000,
     staleTime: 0,
   });
-
   if (article.isLoading || comments.isLoading) return <Loading />;
   if (article.isError || comments.isError || article.isIdle || comments.isIdle)
     return <div>에러</div>;
-
+  // console.log(article.data.articleId, article.data.userId);
   return (
     <S.Wrapper>
       <S.DetailTop>
@@ -45,6 +44,7 @@ export default function Detail(): JSX.Element {
             currentTab={currentTab}
             forumId={forumId}
             articleId={articleId}
+            writerId={article.data.userId}
           />
         )}
       </S.DetailTop>

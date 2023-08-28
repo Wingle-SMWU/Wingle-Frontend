@@ -8,7 +8,7 @@ type Article = {
   isMine: boolean;
   likeCount: number;
   updatedTime: string;
-  userId: number;
+  userId: string;
   userNickname: string;
   userImage: string;
   userNation: string;

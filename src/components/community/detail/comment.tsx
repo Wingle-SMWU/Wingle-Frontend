@@ -14,11 +14,13 @@ export default function Comment({
   currentTab,
   forumId,
   articleId,
+  writerId,
 }: {
   comments: Comment[];
   currentTab: string;
   forumId: string;
   articleId: string;
+  writerId: string;
 }): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteInform, setDeleteInform] = useState({
@@ -48,6 +50,7 @@ export default function Comment({
           userNickname,
           userSchoolName,
         } = comment;
+        const isUserWriter = userId === writerId;
         const time = betweenTime(createdTime);
         return (
           <S.Comment key={id}>
@@ -70,7 +73,13 @@ export default function Comment({
                 <S.ProfileInfo>
                   <S.HeaderTop>
                     <Text.Body6 color="gray900">{userNickname}</Text.Body6>
-                    <UnivLabel univ={userSchoolName} />
+                    {currentTab === "교류" ? (
+                      <UnivLabel univ={userSchoolName} />
+                    ) : (
+                      isUserWriter && (
+                        <Text.Caption2 color="orange500">작성자</Text.Caption2>
+                      )
+                    )}
                   </S.HeaderTop>
                   <Text.Caption3 color="gray500">{time}</Text.Caption3>
                 </S.ProfileInfo>
