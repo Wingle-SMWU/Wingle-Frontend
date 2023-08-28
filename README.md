@@ -1,9 +1,12 @@
 # 프로젝트 Wingle
 
-<img src="https://github.com/Wingle-SMWU/Wingle-Frontend/assets/79031435/0b07602d-3e60-4e4f-87c2-b1aa94e6ca78" alt="wingle" width="200" />
+<div align="center">
+<img src="https://github.com/Wingle-SMWU/Wingle-Frontend/assets/79031435/0b07602d-3e60-4e4f-87c2-b1aa94e6ca78" alt="wingle" width="400" />
 
 누구나, 부담없이, 안전하게 즐기는 
 대학생 국제교류 플랫폼 WINGLE 윙글
+</div>
+
 
 ## 📅 **프로젝트 기간**
 

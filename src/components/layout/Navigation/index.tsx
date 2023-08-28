@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Text } from "../../ui";
 import useGetProfile from "@/src/hooks/mypage/useGetProfile";
 import { theme } from "@/src/styles/theme";
+import useGetTotalUnreadCount from "@/src/hooks/message/useGetTotalUnreadCount";
 
 type Profile = {
   isRadius: boolean;
@@ -16,6 +17,11 @@ type Tab = {
 export default function Navigation(props: Tab) {
   const router = useRouter();
   const menu = router.asPath;
+  const { unreadMessageCount } = useGetTotalUnreadCount();
+  const unreadMessage =
+    unreadMessageCount?.unreadMessageCount < 10
+      ? unreadMessageCount?.unreadMessageCount
+      : "10+";
 
   const { profileData } = useGetProfile();
   const NavigationMenuArr = [
@@ -64,6 +70,9 @@ export default function Navigation(props: Tab) {
             >
               {el.name}
             </Text.Caption2>
+            {el.name === "쪽지" && unreadMessage !== 0 && (
+              <S.Conunt>{unreadMessage}</S.Conunt>
+            )}
           </S.NavigationMenu>
         ))}
       </S.Box>
@@ -110,5 +119,19 @@ const S = {
     border-radius: ${({ isRadius }) => (isRadius ? "50%" : "none")};
     box-shadow: ${({ isRadius, isActive }) =>
       isRadius && isActive ? `0 0 0 1px ${theme.color.orange500}` : "none"};
+  `,
+
+  Conunt: styled.div`
+    text-align: center;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 150%;
+    color: #fff;
+    background: var(--sub-red-red-500, #f03030);
+    border-radius: 8px;
+    height: 16px;
+    padding: 0px 6px;
+    position: absolute;
+    margin-left: 25px;
   `,
 };

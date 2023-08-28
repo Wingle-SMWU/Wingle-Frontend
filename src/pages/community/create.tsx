@@ -29,9 +29,13 @@ export default function Create(): JSX.Element {
     if (!forumId) {
       return;
     }
+
+    const blob = new Blob([]);
+
     const formData = new FormData();
     formData.append("forumId", forumId.toString());
     formData.append("content", contents);
+    formData.append("images", new File([blob], "image.png"));
     const { data: response } = await instance.post(
       `/community/articles`,
       formData,

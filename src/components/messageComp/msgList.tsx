@@ -15,8 +15,11 @@ const MsgList = ({ list }: { list: Room }) => {
     roomId,
     nation,
     schoolName,
+    unreadMessageCount,
   } = list;
   const router = useRouter();
+
+  const unreadMessage = unreadMessageCount < 10 ? unreadMessageCount : "10+";
 
   const handleMoveChatRoom = () => {
     router.push(`/messages/${roomId}`, undefined, {});
@@ -52,6 +55,9 @@ const MsgList = ({ list }: { list: Room }) => {
               <S.HeaderTop>
                 <span>{nickname}</span>
                 <UnivLabel univ={schoolName} />
+                {unreadMessageCount !== 0 && (
+                  <S.Conunt>{unreadMessage}</S.Conunt>
+                )}
               </S.HeaderTop>
               <span>{betweenTime(String(createdTime))}</span>
             </div>
@@ -89,6 +95,18 @@ const S = {
     display: flex;
     align-items: center;
     gap: 4px;
+  `,
+
+  Conunt: styled.div`
+    text-align: center;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 150%;
+    color: #fff;
+    background: var(--sub-red-red-500, #f03030);
+    border-radius: 8px;
+    height: 16px;
+    padding: 0px 6px;
   `,
 
   NationIcon: styled.img`

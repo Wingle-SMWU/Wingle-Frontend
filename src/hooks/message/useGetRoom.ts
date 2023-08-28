@@ -3,7 +3,7 @@ import { getMessageRoom } from "@/src/api/message/messageApi";
 
 const useGetRoom = (page: number, size: number) => {
   const { data: messageDataRoom } = useQuery({
-    refetchInterval: 1000,
+    refetchInterval: 5000,
     queryKey: ["message"],
     queryFn: () => {
       return getMessageRoom(page, size);
