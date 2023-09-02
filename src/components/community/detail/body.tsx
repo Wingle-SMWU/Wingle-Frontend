@@ -32,10 +32,14 @@ export default function Body({
     if (!forumId) {
       return;
     }
+    const blob = new Blob([]);
 
     const formData = new FormData();
     formData.append("content", contents);
-    // const blob = new Blob([]);
+    // XXX: 실제 이미지를 업로드하여 전송하지는 않으므로 임시 이미지 데이터 전송
+    formData.append("originImages", "image.png");
+    formData.append("newImages", new File([blob], "image.jpg"));
+
     const { data: response } = await instance.put(
       `/community/${forumId.toString()}/articles/${articleId} `,
       formData,
@@ -58,14 +62,11 @@ export default function Body({
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries(["article", forumId, articleId]);
-      queryClient.invalidateQueries(["articles"]);
       if (!data) return;
     },
     onError: (error, payload, context) => {
       console.log(`게시글 수정 실패! ${error}`);
-      // TODO: 서버 에러 해결되면 주석 처리된 코드로 변경해야함
-      queryClient.invalidateQueries(["article", forumId, articleId]);
-      // queryClient.setQueryData("articles", context?.prevArticles);
+      queryClient.setQueryData("articles", context?.prevArticles);
     },
     onSettled: () => {
       queryClient.invalidateQueries("articles");
