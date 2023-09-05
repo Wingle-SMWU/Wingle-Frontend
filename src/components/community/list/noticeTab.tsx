@@ -19,8 +19,6 @@ export default function NoticeTab({
   } = useQuery({
     queryFn: getArticles,
     queryKey: ["articles", forumId, 0, 30, false],
-    cacheTime: 5 * 60 * 1000,
-    staleTime: 0,
   });
 
   if (isLoading) return <Loading />;

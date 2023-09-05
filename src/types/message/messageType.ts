@@ -25,3 +25,7 @@ export interface NewMsgProps {
   createdTime: string;
   sender: boolean;
 }
+
+export interface unreadMessageCount {
+  unreadMessageCount: number;
+}

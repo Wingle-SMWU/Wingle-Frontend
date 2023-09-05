@@ -25,3 +25,8 @@ export const getMessageRoom = async (page: number, size: number) => {
   );
   return response.data;
 };
+
+export const getUnreadMessageCount = async () => {
+  const { data: response } = await instance.get(`/messages/unread`);
+  return response.data;
+};

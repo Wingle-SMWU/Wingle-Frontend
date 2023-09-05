@@ -57,7 +57,7 @@ export default function Profile({
           <S.ProfileInfo>
             <S.HeaderTop>
               <Text.Body6 color="gray900">{userNickname}</Text.Body6>
-              <UnivLabel univ={userSchoolName} />
+              {currentTab === "교류" && <UnivLabel univ={userSchoolName} />}
             </S.HeaderTop>
             <Text.Caption3 color="gray500">{time}</Text.Caption3>
           </S.ProfileInfo>
