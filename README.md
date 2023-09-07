@@ -31,9 +31,10 @@
 <img width=400 src="https://blog.kakaocdn.net/dn/T85Wv/btstk5zMC05/LNfug6aicnO2KdM3CsgNBK/img.gif"><br/>
 </p>
 <p>
-👉 자신이 쓴 작성글 확인 및 자신의 맛픽커즈로 라우팅, 로그아웃 기능 구현<br/>
-<img width=700 src="https://user-images.githubusercontent.com/94962427/216275420-a0e6661e-6a59-45c1-84ca-830cec1e5f11.gif"><br/>
+👉 쿼리에서 사용자 ID 를 가져와서 사용자 정보 호출<br/>
+<img width=500 src="https://blog.kakaocdn.net/dn/bgVLr0/btstqCXDD1W/Tl8BaDDwW6mYPbl122qMh0/img.gif"><br/>
 </p>
+  
 </details>
 <!--
 <details>
