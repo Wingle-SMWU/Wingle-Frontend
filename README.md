@@ -28,7 +28,7 @@
 <summary>마이페이지 & 프로필 페이지 (유수빈) </summary><br/>
 <p>
 👉 계정 관련 정보 호출 및 계정 정보 Edit 기능 구현<br/>
-<img width=700 src="https://blog.kakaocdn.net/dn/T85Wv/btstk5zMC05/LNfug6aicnO2KdM3CsgNBK/img.gif"><br/>
+<img width=400 src="https://blog.kakaocdn.net/dn/T85Wv/btstk5zMC05/LNfug6aicnO2KdM3CsgNBK/img.gif"><br/>
 </p>
 <p>
 👉 자신이 쓴 작성글 확인 및 자신의 맛픽커즈로 라우팅, 로그아웃 기능 구현<br/>
