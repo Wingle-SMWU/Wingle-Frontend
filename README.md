@@ -10,7 +10,7 @@
 
 ## 📅 **프로젝트 기간**
 
-- 2023.02 ~ 
+- 2023.03.26 ~ 
 
 ## 🙇🏻‍♂️ **팀원소개**
 
@@ -25,22 +25,24 @@
 
 ## ⚒️ **기능 시연**  
 <details>
-<summary>로그인 페이지</summary><br/>
-👉 토큰을 받아오고, 계정 정보를 받아오면 헤더 이미지와 마이페이지, 로그인 시 자신이 저장한 픽 마커 호출되는 기능, 로그아웃하면 초기화<br/>
-<img width=700 src="https://user-images.githubusercontent.com/94962427/216275112-d1666a0e-d684-424c-a161-46de0ad44dd9.gif"><br/>
-</details>
-
-<details>
-<summary>마이페이지</summary><br/>
+<summary>마이페이지 & 프로필 페이지 (유수빈) </summary><br/>
 <p>
 👉 계정 관련 정보 호출 및 계정 정보 Edit 기능 구현<br/>
-<img width=700 src="https://user-images.githubusercontent.com/94962427/216275260-b887e8a9-1739-475b-acbf-4d31a446003f.gif"><br/>
+<img width=700 src="https://blog.kakaocdn.net/dn/T85Wv/btstk5zMC05/LNfug6aicnO2KdM3CsgNBK/img.gif"><br/>
 </p>
 <p>
 👉 자신이 쓴 작성글 확인 및 자신의 맛픽커즈로 라우팅, 로그아웃 기능 구현<br/>
 <img width=700 src="https://user-images.githubusercontent.com/94962427/216275420-a0e6661e-6a59-45c1-84ca-830cec1e5f11.gif"><br/>
 </p>
 </details>
+<!--
+<details>
+<summary>로그인 페이지</summary><br/>
+👉 토큰을 받아오고, 계정 정보를 받아오면 헤더 이미지와 마이페이지, 로그인 시 자신이 저장한 픽 마커 호출되는 기능, 로그아웃하면 초기화<br/>
+<img width=700 src="https://user-images.githubusercontent.com/94962427/216275112-d1666a0e-d684-424c-a161-46de0ad44dd9.gif"><br/>
+</details>
+
+
 
 <details>
 <summary>카카오 지도</summary><br/>
@@ -148,8 +150,11 @@ DB에서 가져온 검색 및 장소 데이터의 마커 호출 관련 기능 �
 👉 맛픽커즈 삭제<br/>
 <img width=300 src="https://user-images.githubusercontent.com/111138420/216248119-b38a4b8f-a34b-434b-839b-478c3b412051.gif"><br/>
 </details>
+-->
+
 
 ## 🧑🏻‍💻 개발 관련 기술
+
 
 ### 👩🏻‍🔧 **기술 스택**
 
